@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { useI18n } from '@/i18n/I18nProvider';
+import { IconMoon, IconSun, IconThemeAuto } from '../ui/icons';
 import styles from './ThemeToggle.module.css';
 
 type Theme = 'auto' | 'light' | 'dark';
 
 const ORDER: Theme[] = ['auto', 'light', 'dark'];
-const ICONS: Record<Theme, string> = { auto: '◐', light: '☀', dark: '☾' };
 
 function applyTheme(theme: Theme) {
   if (theme === 'auto') {
@@ -41,7 +41,7 @@ export function ThemeToggle() {
       title={`${t('theme.label')}: ${t(`theme.${theme}`)}`}
     >
       <span aria-hidden="true" className={styles.icon}>
-        {ICONS[theme]}
+        {theme === 'light' ? <IconSun /> : theme === 'dark' ? <IconMoon /> : <IconThemeAuto />}
       </span>
     </button>
   );

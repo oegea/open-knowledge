@@ -53,5 +53,6 @@
 .progressText {
   font-size: var(--ok-text-sm);
   font-weight: 700;
-  color: var(--ok-primary);
+  /* Rendered over the dark course hero in both themes. */
+  color: var(--ok-lagoon-200);
 }

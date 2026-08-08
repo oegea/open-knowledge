@@ -68,6 +68,7 @@ describe('SqliteCourseRepository (integration)', () => {
       coverImage: course.getCoverImage(),
       authors: [],
       sources: [],
+      license: null,
       aiAssisted: true,
     });
     await repository.save(renamed);

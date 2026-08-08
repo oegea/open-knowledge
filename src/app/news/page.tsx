@@ -31,14 +31,25 @@ export default async function NewsPage() {
             {posts.map((post) => (
               <li key={post.getId()}>
                 <Link href={`/news/${post.getId()}`} className={`ok-glass ${styles.post}`}>
-                  <time className={styles.date}>
-                    {new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(
-                      post.getCreatedAt()
-                    )}
-                  </time>
-                  <span className={styles.postTitle}>{post.getTitle()}</span>
-                  <span className={styles.readMore}>
-                    {translate(dictionary, 'news.readMore')} →
+                  {post.getImagePath() ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={post.getImagePath()!}
+                      alt=""
+                      className={styles.postImage}
+                      loading="lazy"
+                    />
+                  ) : null}
+                  <span className={styles.postBody}>
+                    <time className={styles.date}>
+                      {new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(
+                        post.getCreatedAt()
+                      )}
+                    </time>
+                    <span className={styles.postTitle}>{post.getTitle()}</span>
+                    <span className={styles.readMore}>
+                      {translate(dictionary, 'news.readMore')} →
+                    </span>
                   </span>
                 </Link>
               </li>

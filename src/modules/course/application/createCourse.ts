@@ -11,6 +11,7 @@ interface createCourseProps {
   coverImage?: string | null;
   authors?: string[];
   sources?: SourcePrimitive[];
+  license?: string | null;
   aiAssisted?: boolean;
   courseRepository: CourseRepository;
 }
@@ -23,6 +24,7 @@ export async function createCourse({
   coverImage,
   authors,
   sources,
+  license,
   aiAssisted,
   courseRepository,
 }: createCourseProps): Promise<Course> {
@@ -31,6 +33,7 @@ export async function createCourse({
     coverImage: coverImage ?? null,
     authors,
     sources,
+    license: license ?? null,
     aiAssisted,
   });
 

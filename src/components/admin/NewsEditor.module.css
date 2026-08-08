@@ -9,6 +9,36 @@
   font-size: var(--ok-text-sm);
 }
 
+.imageBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ok-space-2);
+}
+
+.imageLabel {
+  font-size: var(--ok-text-sm);
+  font-weight: 700;
+}
+
+.imagePreview {
+  width: 100%;
+  max-width: 22rem;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--ok-radius-lg);
+  box-shadow: var(--ok-shadow-2);
+}
+
+.fileInput {
+  display: none;
+}
+
+.imageActions {
+  display: flex;
+  gap: var(--ok-space-2);
+}
+
 .error {
   color: var(--ok-danger);
   font-size: var(--ok-text-sm);

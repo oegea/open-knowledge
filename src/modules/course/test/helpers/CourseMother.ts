@@ -11,6 +11,7 @@ export function createPrimitive(overrides: Partial<CoursePrimitive> = {}): Cours
     coverImage: '/media/covers/astronomy.jpg',
     authors: ['Carl S.'],
     sources: [{ title: 'NASA public archives', url: null }],
+    license: 'CC BY-SA 4.0',
     aiAssisted: false,
     published: false,
     sections: [SectionMother.createPrimitive()],

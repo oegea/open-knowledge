@@ -117,6 +117,7 @@ export function CourseEditor({ initialCourse }: CourseEditorProps) {
               coverImage: course.coverImage,
               authors: course.authors,
               sources: course.sources,
+              license: course.license,
               aiAssisted: course.aiAssisted,
             }}
             submitLabel={t('common.save')}

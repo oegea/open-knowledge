@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import courseFactory from '@/modules/course/application/factory';
+import settingsFactory from '@/modules/settings/application/factory';
 import { getLocale } from '@/i18n/getLocale';
 import { getDictionary, translate } from '@/i18n/dictionary';
 import { LOCALES } from '@/i18n/config';
@@ -17,6 +18,7 @@ export default async function LibraryPage({ searchParams }: PageProps<'/'>) {
   const categoryFilter = typeof params.category === 'string' ? params.category : undefined;
   const queryFilter = typeof params.q === 'string' ? params.q : undefined;
 
+  const settings = await settingsFactory.getInstanceSettings();
   const allPublished = await courseFactory.listCourses({ publishedOnly: true });
   const courses = await courseFactory.listCourses({
     publishedOnly: true,
@@ -44,8 +46,12 @@ export default async function LibraryPage({ searchParams }: PageProps<'/'>) {
       <PublicHeader />
       <main className={styles.main}>
         <section className={styles.hero}>
-          <h1 className={styles.heroTitle}>{translate(dictionary, 'home.tagline')}</h1>
-          <p className={styles.heroText}>{translate(dictionary, 'home.description')}</p>
+          <h1 className={styles.heroTitle}>
+            {settings.getHeroTitle() || translate(dictionary, 'home.tagline')}
+          </h1>
+          <p className={styles.heroText}>
+            {settings.getHeroText() || translate(dictionary, 'home.description')}
+          </p>
         </section>
 
         <form className={styles.search} action="/" method="get" role="search">

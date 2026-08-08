@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const post = await newsFactory.createNewsPost(body.title, body.markdown, body.published);
+    const post = await newsFactory.createNewsPost(body.title, body.markdown, body.published, body.imagePath);
     return Response.json({ post: post.toPrimitive() }, { status: 201 });
   } catch (error) {
     return apiError(error);

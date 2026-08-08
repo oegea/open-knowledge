@@ -92,7 +92,13 @@
     "restoreBackup": "Ripristina backup",
     "restoreHint": "Il ripristino sostituisce TUTTO l'ambiente attuale con il contenuto del backup.",
     "restoreWarning": "⚠ Questa azione sostituirà TUTTO l'ambiente attuale (corsi, utenti, progressi, media e impostazioni) con il contenuto del backup. Irreversibile. Continuare?",
-    "restoreDone": "Backup ripristinato. L'ambiente è esattamente com'era. Accedi di nuovo."
+    "restoreDone": "Backup ripristinato. L'ambiente è esattamente com'era. Accedi di nuovo.",
+    "license": "Licenza dei contenuti",
+    "licenseHint": "Come può essere riutilizzato questo corso (es. CC BY-SA 4.0). Facoltativo.",
+    "heroTitle": "Titolo della home",
+    "heroText": "Sottotitolo della home",
+    "heroHint": "Vuoto = testo predefinito nella lingua del visitatore.",
+    "featuredImage": "Immagine in evidenza"
   },
   "material": {
     "type": {
@@ -133,7 +139,9 @@
     "aiNoticeTitle": "Contenuto assistito dall'IA",
     "aiNotice": "Questo corso include contenuti generati o assistiti dall'intelligenza artificiale. Le fonti sono indicate ove applicabile.",
     "materialsCount": "{count} materiali",
-    "bibliography": "Bibliografia e fonti"
+    "bibliography": "Bibliografia e fonti",
+    "license": "Licenza",
+    "aboutCourse": "Su questo corso"
   },
   "study": {
     "progress": "Progresso",

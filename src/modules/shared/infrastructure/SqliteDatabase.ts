@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS courses (
   cover_image TEXT,
   authors TEXT NOT NULL DEFAULT '[]',
   sources TEXT NOT NULL DEFAULT '[]',
+  license TEXT,
   ai_assisted INTEGER NOT NULL DEFAULT 0,
   published INTEGER NOT NULL DEFAULT 0,
   created_at TEXT NOT NULL,
@@ -96,6 +97,7 @@ CREATE TABLE IF NOT EXISTS news_posts (
   id TEXT PRIMARY KEY,
   title TEXT NOT NULL,
   markdown TEXT NOT NULL,
+  image_path TEXT,
   published INTEGER NOT NULL DEFAULT 0,
   created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL
@@ -143,6 +145,21 @@ let instanceInode: number | null = null;
 
 function migrate(db: Database.Database): void {
   db.exec(SCHEMA);
+  // Additive migrations for databases created by earlier versions.
+  addColumnIfMissing(db, 'courses', 'license', 'TEXT');
+  addColumnIfMissing(db, 'news_posts', 'image_path', 'TEXT');
+}
+
+function addColumnIfMissing(
+  db: Database.Database,
+  table: string,
+  column: string,
+  definition: string
+): void {
+  const columns = db.prepare(`PRAGMA table_info(${table})`).all() as { name: string }[];
+  if (!columns.some((candidate) => candidate.name === column)) {
+    db.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${definition}`);
+  }
 }
 
 export function getDatabase(): Database.Database {

@@ -92,7 +92,13 @@
     "restoreBackup": "Leheneratu kopia",
     "restoreHint": "Leheneratzeak uneko ingurune OSOA kopiaren edukiarekin ordezkatzen du.",
     "restoreWarning": "⚠ Ekintza honek uneko ingurune OSOA (ikastaroak, erabiltzaileak, aurrerapena, multimedia eta ezarpenak) kopiaren edukiarekin ordezkatuko du. Ezin da desegin. Jarraitu?",
-    "restoreDone": "Kopia leheneratua. Ingurunea kopian zegoen bezalaxe geratu da. Hasi saioa berriro."
+    "restoreDone": "Kopia leheneratua. Ingurunea kopian zegoen bezalaxe geratu da. Hasi saioa berriro.",
+    "license": "Edukiaren lizentzia",
+    "licenseHint": "Ikastaro hau nola berrerabil daitekeen (adib. CC BY-SA 4.0). Aukerakoa.",
+    "heroTitle": "Azaleko izenburua",
+    "heroText": "Azaleko azpititulua",
+    "heroHint": "Hutsik = testu lehenetsia bisitariaren hizkuntzan.",
+    "featuredImage": "Irudi nabarmendua"
   },
   "material": {
     "type": {
@@ -133,7 +139,9 @@
     "aiNoticeTitle": "AA bidez lagundutako edukia",
     "aiNotice": "Ikastaro honek adimen artifizialaren bidez sortutako edo lagundutako edukia dauka. Iturriak dagokionean adierazten dira.",
     "materialsCount": "{count} material",
-    "bibliography": "Bibliografia eta iturriak"
+    "bibliography": "Bibliografia eta iturriak",
+    "license": "Lizentzia",
+    "aboutCourse": "Ikastaro honi buruz"
   },
   "study": {
     "progress": "Aurrerapena",

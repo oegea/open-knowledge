@@ -12,21 +12,34 @@ const notifyNewsPublished = async (post: NewsPost) => {
 };
 
 export default {
-  createNewsPost: async (title: string, markdown: string, published: boolean) =>
+  createNewsPost: async (
+    title: string,
+    markdown: string,
+    published: boolean,
+    imagePath?: string | null
+  ) =>
     await createNewsPost({
       title,
       markdown,
       published,
+      imagePath,
       newsRepository: new SqliteNewsRepository(),
       onNewsPublished: notifyNewsPublished,
     }),
 
-  updateNewsPost: async (id: string, title: string, markdown: string, published: boolean) =>
+  updateNewsPost: async (
+    id: string,
+    title: string,
+    markdown: string,
+    published: boolean,
+    imagePath?: string | null
+  ) =>
     await updateNewsPost({
       id,
       title,
       markdown,
       published,
+      imagePath,
       newsRepository: new SqliteNewsRepository(),
       onNewsPublished: notifyNewsPublished,
     }),

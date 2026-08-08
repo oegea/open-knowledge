@@ -29,11 +29,23 @@
 .post {
   display: flex;
   flex-direction: column;
-  gap: var(--ok-space-2);
-  padding: var(--ok-space-4) var(--ok-space-5);
+  overflow: hidden;
   transition:
     transform var(--ok-duration-fast) var(--ok-ease),
     box-shadow var(--ok-duration-fast) var(--ok-ease);
+}
+
+.postImage {
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+}
+
+.postBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-2);
+  padding: var(--ok-space-4) var(--ok-space-5);
 }
 
 .post:hover {

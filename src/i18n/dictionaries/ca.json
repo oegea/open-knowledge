@@ -92,7 +92,13 @@
     "restoreBackup": "Restaura la còpia",
     "restoreHint": "Restaurar reemplaça TOT l'entorn actual pel contingut de la còpia.",
     "restoreWarning": "⚠ Aquesta acció reemplaçarà TOT l'entorn actual (cursos, usuaris, progrés, multimèdia i configuració) pel contingut de la còpia. No es pot desfer. Continuar?",
-    "restoreDone": "Còpia restaurada. L'entorn ha quedat exactament com era. Torna a iniciar la sessió."
+    "restoreDone": "Còpia restaurada. L'entorn ha quedat exactament com era. Torna a iniciar la sessió.",
+    "license": "Llicència del contingut",
+    "licenseHint": "Com es pot reutilitzar aquest curs (p. ex. CC BY-SA 4.0). Opcional.",
+    "heroTitle": "Títol de la portada",
+    "heroText": "Subtítol de la portada",
+    "heroHint": "Buit = text per defecte en l’idioma del visitant.",
+    "featuredImage": "Imatge destacada"
   },
   "material": {
     "type": {
@@ -133,7 +139,9 @@
     "aiNoticeTitle": "Contingut assistit per IA",
     "aiNotice": "Aquest curs inclou contingut generat o assistit per intel·ligència artificial. Les fonts s'indiquen sempre que correspon.",
     "materialsCount": "{count} materials",
-    "bibliography": "Bibliografia i fonts"
+    "bibliography": "Bibliografia i fonts",
+    "license": "Llicència",
+    "aboutCourse": "Sobre aquest curs"
   },
   "study": {
     "progress": "Progrés",

@@ -32,6 +32,10 @@ export default async function NewsPostPage({ params }: PageProps<'/news/[id]'>) 
       <PublicHeader />
       <main className={styles.main}>
         <article className={`ok-glass ${styles.article}`}>
+          {post.getImagePath() ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={post.getImagePath()!} alt="" className={styles.featuredImage} />
+          ) : null}
           <Link href="/news" className={styles.back}>
             ← {translate(dictionary, 'news.title')}
           </Link>

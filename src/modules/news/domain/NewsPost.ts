@@ -2,6 +2,8 @@ export interface NewsPostPrimitive {
   id: string | null;
   title: string;
   markdown: string;
+  /** Optional featured image shown in the list and post header. */
+  imagePath: string | null;
   published: boolean;
   createdAt: string;
   updatedAt: string;
@@ -12,6 +14,7 @@ export class NewsPost {
     private readonly id: string | null,
     private readonly title: string,
     private readonly markdown: string,
+    private readonly imagePath: string | null,
     private readonly published: boolean,
     private readonly createdAt: Date,
     private readonly updatedAt: Date
@@ -22,12 +25,21 @@ export class NewsPost {
     title: string,
     markdown: string,
     published: boolean,
+    imagePath: string | null = null,
     createdAt?: Date,
     updatedAt?: Date
   ): NewsPost {
     NewsPost.ensurePostIsValid(title, markdown);
     const now = new Date();
-    return new NewsPost(id, title.trim(), markdown, published, createdAt ?? now, updatedAt ?? now);
+    return new NewsPost(
+      id,
+      title.trim(),
+      markdown,
+      imagePath?.trim() || null,
+      published,
+      createdAt ?? now,
+      updatedAt ?? now
+    );
   }
 
   static fromPrimitive(data: NewsPostPrimitive): NewsPost {
@@ -37,6 +49,7 @@ export class NewsPost {
       data.title,
       data.markdown,
       Boolean(data.published),
+      data.imagePath ?? null,
       data.createdAt ? new Date(data.createdAt) : undefined,
       data.updatedAt ? new Date(data.updatedAt) : undefined
     );
@@ -66,6 +79,10 @@ export class NewsPost {
     return this.markdown;
   }
 
+  getImagePath(): string | null {
+    return this.imagePath;
+  }
+
   isPublished(): boolean {
     return this.published;
   }
@@ -78,8 +95,13 @@ export class NewsPost {
     return new Date(this.updatedAt);
   }
 
-  setContent(title: string, markdown: string, published: boolean): NewsPost {
-    return NewsPost.create(this.id, title, markdown, published, this.createdAt, new Date());
+  setContent(
+    title: string,
+    markdown: string,
+    published: boolean,
+    imagePath: string | null
+  ): NewsPost {
+    return NewsPost.create(this.id, title, markdown, published, imagePath, this.createdAt, new Date());
   }
 
   equals(other: NewsPost): boolean {
@@ -91,6 +113,7 @@ export class NewsPost {
       id: this.id,
       title: this.title,
       markdown: this.markdown,
+      imagePath: this.imagePath,
       published: this.published,
       createdAt: this.createdAt.toISOString(),
       updatedAt: this.updatedAt.toISOString(),

@@ -258,12 +258,10 @@ body {
   line-height: var(--ok-leading-normal);
   -webkit-font-smoothing: antialiased;
   min-height: 100dvh;
+  /* Column flex so short pages still push the footer to the bottom;
+     children stretch to full width minus their own margins. */
   display: flex;
   flex-direction: column;
-}
-
-body > * {
-  width: 100%;
 }
 
 ::selection {

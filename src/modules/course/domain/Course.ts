@@ -14,6 +14,8 @@ export interface CoursePrimitive {
   coverImage: string | null;
   authors: string[];
   sources: SourcePrimitive[];
+  /** Content license (e.g. "CC BY-SA 4.0"); null when unspecified. */
+  license: string | null;
   aiAssisted: boolean;
   published: boolean;
   sections: SectionPrimitive[];
@@ -30,6 +32,7 @@ export interface CourseDetailsInput {
   coverImage: string | null;
   authors: string[];
   sources: SourcePrimitive[];
+  license: string | null;
   aiAssisted: boolean;
 }
 
@@ -42,6 +45,7 @@ interface CourseProps {
   coverImage: string | null;
   authors: string[];
   sources: Source[];
+  license: string | null;
   aiAssisted: boolean;
   published: boolean;
   sections: SectionList;
@@ -62,6 +66,7 @@ export class Course {
       coverImage?: string | null;
       authors?: string[];
       sources?: (SourcePrimitive | string)[];
+      license?: string | null;
       aiAssisted?: boolean;
       published?: boolean;
       sections?: SectionList;
@@ -80,6 +85,7 @@ export class Course {
       coverImage: options.coverImage ?? null,
       authors: options.authors ?? [],
       sources: (options.sources ?? []).map((source) => Source.fromPrimitive(source)),
+      license: options.license?.trim() || null,
       aiAssisted: options.aiAssisted ?? false,
       published: options.published ?? false,
       sections: options.sections ?? SectionList.create(null),
@@ -95,6 +101,7 @@ export class Course {
       coverImage: data.coverImage,
       authors: data.authors ?? [],
       sources: data.sources ?? [],
+      license: data.license ?? null,
       aiAssisted: Boolean(data.aiAssisted),
       published: Boolean(data.published),
       sections: SectionList.fromPrimitive(data.sections ?? []),
@@ -141,6 +148,10 @@ export class Course {
     return [...this.props.sources];
   }
 
+  getLicense(): string | null {
+    return this.props.license;
+  }
+
   isAiAssisted(): boolean {
     return this.props.aiAssisted;
   }
@@ -176,6 +187,7 @@ export class Course {
       coverImage: details.coverImage,
       authors: details.authors,
       sources: details.sources.map((source) => Source.fromPrimitive(source)),
+      license: details.license?.trim() || null,
       aiAssisted: details.aiAssisted,
       updatedAt: new Date(),
     });
@@ -217,6 +229,7 @@ export class Course {
       coverImage: this.props.coverImage,
       authors: [...this.props.authors],
       sources: this.props.sources.map((source) => source.toPrimitive()),
+      license: this.props.license,
       aiAssisted: this.props.aiAssisted,
       published: this.props.published,
       sections: this.props.sections.toPrimitive(),

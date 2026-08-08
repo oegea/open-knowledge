@@ -17,6 +17,8 @@ test.describe('Public library', () => {
     await expect(page.getByRole('note')).toBeVisible(); // AI-assisted notice
     await expect(page.getByText('Primeros pasos')).toBeVisible();
     await expect(page.getByText('¿Qué es el Sistema Solar?')).toBeVisible();
+    // The "about" panel states the content license.
+    await expect(page.getByText('CC BY-SA 4.0')).toBeVisible();
   });
 
   test('news section lists the published post', async ({ page }) => {

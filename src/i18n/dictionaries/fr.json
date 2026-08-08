@@ -92,7 +92,13 @@
     "restoreBackup": "Restaurer une sauvegarde",
     "restoreHint": "La restauration remplace TOUT l'environnement actuel par le contenu de la sauvegarde.",
     "restoreWarning": "⚠ Cette action remplacera TOUT l'environnement actuel (cours, utilisateurs, progression, médias et paramètres) par le contenu de la sauvegarde. Irréversible. Continuer ?",
-    "restoreDone": "Sauvegarde restaurée. L'environnement est exactement tel qu'il était. Reconnectez-vous."
+    "restoreDone": "Sauvegarde restaurée. L'environnement est exactement tel qu'il était. Reconnectez-vous.",
+    "license": "Licence du contenu",
+    "licenseHint": "Comment ce cours peut être réutilisé (p. ex. CC BY-SA 4.0). Facultatif.",
+    "heroTitle": "Titre de la page d’accueil",
+    "heroText": "Sous-titre de la page d’accueil",
+    "heroHint": "Vide = texte par défaut dans la langue du visiteur.",
+    "featuredImage": "Image à la une"
   },
   "material": {
     "type": {
@@ -133,7 +139,9 @@
     "aiNoticeTitle": "Contenu assisté par IA",
     "aiNotice": "Ce cours comprend du contenu généré ou assisté par intelligence artificielle. Les sources sont citées chaque fois que nécessaire.",
     "materialsCount": "{count} contenus",
-    "bibliography": "Bibliographie et sources"
+    "bibliography": "Bibliographie et sources",
+    "license": "Licence",
+    "aboutCourse": "À propos de ce cours"
   },
   "study": {
     "progress": "Progression",

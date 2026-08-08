@@ -1,4 +1,5 @@
 import AdmZip from 'adm-zip';
+import { randomUUID } from 'crypto';
 import path from 'path';
 import fs from 'fs';
 import { BackupRepository } from '../domain/BackupRepository';
@@ -19,10 +20,16 @@ export class FilesystemBackupRepository implements BackupRepository {
   async createArchive(): Promise<Buffer> {
     const zip = new AdmZip();
 
-    // Consistent snapshot of the live database (safe under WAL).
-    const snapshotPath = path.join(this.dataDir, '.backup-snapshot.db');
-    await getDatabase().backup(snapshotPath);
+    // Consistent snapshot of the live database (safe under WAL). Unique name
+    // plus one retry: a concurrent write can briefly hold the file busy.
+    const snapshotPath = path.join(this.dataDir, `.backup-${randomUUID()}.db`);
     try {
+      try {
+        await getDatabase().backup(snapshotPath);
+      } catch {
+        await new Promise((resolve) => setTimeout(resolve, 150));
+        await getDatabase().backup(snapshotPath);
+      }
       zip.addLocalFile(snapshotPath, '', DB_FILE);
     } finally {
       fs.rmSync(snapshotPath, { force: true });

@@ -24,6 +24,7 @@ const EMPTY_DETAILS: CourseDetailsInput = {
   coverImage: null,
   authors: [],
   sources: [],
+  license: null,
   aiAssisted: false,
 };
 
@@ -148,6 +149,28 @@ export function CourseDetailsForm({ initial, submitLabel, onSubmit }: CourseDeta
           sources={details.sources}
           onChange={(sources) => setDetails({ ...details, sources })}
         />
+      </div>
+
+      <div className={styles.row}>
+        <div>
+          <TextField
+            label={t('admin.license')}
+            hint={t('admin.licenseHint')}
+            list="ok-license-suggestions"
+            value={details.license ?? ''}
+            onChange={(event) => setDetails({ ...details, license: event.target.value || null })}
+            maxLength={100}
+          />
+          <datalist id="ok-license-suggestions">
+            <option value="CC BY 4.0" />
+            <option value="CC BY-SA 4.0" />
+            <option value="CC BY-NC 4.0" />
+            <option value="CC BY-NC-SA 4.0" />
+            <option value="CC0 1.0" />
+            <option value="Public Domain" />
+            <option value="MIT" />
+          </datalist>
+        </div>
       </div>
 
       <CheckboxField

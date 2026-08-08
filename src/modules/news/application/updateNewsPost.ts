@@ -6,6 +6,7 @@ interface updateNewsPostProps {
   title: string;
   markdown: string;
   published: boolean;
+  imagePath?: string | null;
   newsRepository: NewsRepository;
   /** Port: notifies readers when the post transitions to published. */
   onNewsPublished?: (post: NewsPost) => Promise<void>;
@@ -16,6 +17,7 @@ export async function updateNewsPost({
   title,
   markdown,
   published,
+  imagePath,
   newsRepository,
   onNewsPublished,
 }: updateNewsPostProps): Promise<NewsPost> {
@@ -29,7 +31,7 @@ export async function updateNewsPost({
   }
 
   const wasPublished = post.isPublished();
-  const updated = post.setContent(title, markdown, published);
+  const updated = post.setContent(title, markdown, published, imagePath ?? null);
   const saved = await newsRepository.save(updated);
 
   if (!wasPublished && saved.isPublished() && onNewsPublished) {

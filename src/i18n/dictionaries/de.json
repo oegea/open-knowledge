@@ -92,7 +92,13 @@
     "restoreBackup": "Sicherung wiederherstellen",
     "restoreHint": "Die Wiederherstellung ersetzt die GESAMTE aktuelle Umgebung durch den Inhalt der Sicherung.",
     "restoreWarning": "⚠ Dies ersetzt die GESAMTE aktuelle Umgebung (Kurse, Nutzer, Fortschritt, Medien und Einstellungen) durch den Inhalt der Sicherung. Nicht rückgängig zu machen. Fortfahren?",
-    "restoreDone": "Sicherung wiederhergestellt. Die Umgebung ist exakt wie in der Sicherung. Bitte melde dich erneut an."
+    "restoreDone": "Sicherung wiederhergestellt. Die Umgebung ist exakt wie in der Sicherung. Bitte melde dich erneut an.",
+    "license": "Inhaltslizenz",
+    "licenseHint": "Wie dieser Kurs weiterverwendet werden darf (z. B. CC BY-SA 4.0). Optional.",
+    "heroTitle": "Startseiten-Überschrift",
+    "heroText": "Startseiten-Untertitel",
+    "heroHint": "Leer = Standardtext in der Sprache der Besucher.",
+    "featuredImage": "Beitragsbild"
   },
   "material": {
     "type": {
@@ -133,7 +139,9 @@
     "aiNoticeTitle": "KI-unterstützte Inhalte",
     "aiNotice": "Dieser Kurs enthält Inhalte, die mit künstlicher Intelligenz erstellt oder unterstützt wurden. Quellen werden angegeben, wo zutreffend.",
     "materialsCount": "{count} Materialien",
-    "bibliography": "Bibliographie und Quellen"
+    "bibliography": "Bibliographie und Quellen",
+    "license": "Lizenz",
+    "aboutCourse": "Über diesen Kurs"
   },
   "study": {
     "progress": "Fortschritt",

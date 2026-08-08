@@ -10,6 +10,7 @@ const details = {
   coverImage: '/media/covers/new.jpg',
   authors: ['New Author'],
   sources: [],
+  license: 'CC BY-SA 4.0' as string | null,
   aiAssisted: true,
 };
 

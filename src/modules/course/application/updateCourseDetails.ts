@@ -11,6 +11,7 @@ interface updateCourseDetailsProps {
   coverImage: string | null;
   authors: string[];
   sources: SourcePrimitive[];
+  license: string | null;
   aiAssisted: boolean;
   courseRepository: CourseRepository;
 }
@@ -24,6 +25,7 @@ export async function updateCourseDetails({
   coverImage,
   authors,
   sources,
+  license,
   aiAssisted,
   courseRepository,
 }: updateCourseDetailsProps): Promise<Course> {
@@ -44,6 +46,7 @@ export async function updateCourseDetails({
     coverImage,
     authors,
     sources,
+    license,
     aiAssisted,
   });
 

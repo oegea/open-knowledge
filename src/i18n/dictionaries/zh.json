@@ -92,7 +92,13 @@
     "restoreBackup": "恢复备份",
     "restoreHint": "恢复会用备份内容替换当前整个环境。",
     "restoreWarning": "⚠ 此操作将用备份内容替换当前整个环境（课程、用户、进度、媒体和设置）。无法撤销。继续吗？",
-    "restoreDone": "备份已恢复。环境已完全恢复到备份时的状态。请重新登录。"
+    "restoreDone": "备份已恢复。环境已完全恢复到备份时的状态。请重新登录。",
+    "license": "内容许可证",
+    "licenseHint": "本课程的复用方式（例如 CC BY-SA 4.0）。可选。",
+    "heroTitle": "首页标题",
+    "heroText": "首页副标题",
+    "heroHint": "留空 = 使用访客语言的默认文本。",
+    "featuredImage": "特色图片"
   },
   "material": {
     "type": {
@@ -133,7 +139,9 @@
     "aiNoticeTitle": "AI 辅助内容",
     "aiNotice": "本课程包含由人工智能生成或辅助的内容。来源在适用时均已注明。",
     "materialsCount": "{count} 个材料",
-    "bibliography": "参考书目与来源"
+    "bibliography": "参考书目与来源",
+    "license": "许可证",
+    "aboutCourse": "关于本课程"
   },
   "study": {
     "progress": "进度",

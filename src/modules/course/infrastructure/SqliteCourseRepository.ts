@@ -15,6 +15,7 @@ interface CourseRow {
   cover_image: string | null;
   authors: string;
   sources: string;
+  license: string | null;
   ai_assisted: number;
   published: number;
   created_at: string;
@@ -57,8 +58,8 @@ export class SqliteCourseRepository implements CourseRepository {
     const saveTransaction = this.db.transaction((primitive: CoursePrimitive) => {
       this.db
         .prepare(
-          `INSERT INTO courses (id, title, description, language, category, cover_image, authors, sources, ai_assisted, published, created_at, updated_at)
-           VALUES (@id, @title, @description, @language, @category, @coverImage, @authors, @sources, @aiAssisted, @published, @createdAt, @updatedAt)
+          `INSERT INTO courses (id, title, description, language, category, cover_image, authors, sources, license, ai_assisted, published, created_at, updated_at)
+           VALUES (@id, @title, @description, @language, @category, @coverImage, @authors, @sources, @license, @aiAssisted, @published, @createdAt, @updatedAt)
            ON CONFLICT(id) DO UPDATE SET
              title = @title,
              description = @description,
@@ -67,6 +68,7 @@ export class SqliteCourseRepository implements CourseRepository {
              cover_image = @coverImage,
              authors = @authors,
              sources = @sources,
+             license = @license,
              ai_assisted = @aiAssisted,
              published = @published,
              updated_at = @updatedAt`
@@ -80,6 +82,7 @@ export class SqliteCourseRepository implements CourseRepository {
           coverImage: primitive.coverImage,
           authors: JSON.stringify(primitive.authors),
           sources: JSON.stringify(primitive.sources),
+          license: primitive.license,
           aiAssisted: primitive.aiAssisted ? 1 : 0,
           published: primitive.published ? 1 : 0,
           createdAt: primitive.createdAt,
@@ -190,6 +193,7 @@ export class SqliteCourseRepository implements CourseRepository {
       coverImage: row.cover_image,
       authors: JSON.parse(row.authors),
       sources: JSON.parse(row.sources),
+      license: row.license,
       aiAssisted: row.ai_assisted === 1,
       published: row.published === 1,
       sections,

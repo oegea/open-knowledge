@@ -102,6 +102,22 @@ export function SettingsForm({ initial }: SettingsFormProps) {
       </div>
 
       <TextField
+        label={t('admin.heroTitle')}
+        hint={t('admin.heroHint')}
+        value={settings.heroTitle}
+        onChange={(event) => setSettings({ ...settings, heroTitle: event.target.value })}
+        maxLength={120}
+      />
+
+      <TextField
+        label={t('admin.heroText')}
+        hint={t('admin.heroHint')}
+        value={settings.heroText}
+        onChange={(event) => setSettings({ ...settings, heroText: event.target.value })}
+        maxLength={200}
+      />
+
+      <TextField
         label={t('admin.ownerName')}
         hint={t('admin.ownerNameHint')}
         value={settings.ownerName}

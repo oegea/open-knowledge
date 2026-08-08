@@ -15,8 +15,9 @@
 }
 
 .icon {
-  font-size: var(--ok-text-lg);
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: transform var(--ok-duration-med) var(--ok-ease);
 }
 

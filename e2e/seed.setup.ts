@@ -40,6 +40,7 @@ setup('seed a fresh instance', async ({ request }) => {
       coverImage: coverPath,
       authors: ['Equipo E2E'],
       sources: [{ title: 'Archivos públicos de NASA', url: 'https://images.nasa.gov' }],
+      license: 'CC BY-SA 4.0',
       aiAssisted: true,
     },
   });
@@ -88,6 +89,9 @@ setup('seed a fresh instance', async ({ request }) => {
     data: {
       libraryName: 'Open Knowledge',
       ownerName: 'Equipo E2E',
+      logoPath: null,
+      heroTitle: '',
+      heroText: '',
       registrationOpen: true,
       newsEnabled: true,
     },

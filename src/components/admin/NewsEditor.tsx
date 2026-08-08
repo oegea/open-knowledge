@@ -1,8 +1,9 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { NewsPostPrimitive } from '@/modules/news/domain/NewsPost';
+import { HttpCourseAdminRepository } from '@/modules/course/infrastructure/HttpCourseAdminRepository';
 import { useI18n } from '@/i18n/I18nProvider';
 import { Button } from '../ui/Button';
 import { CheckboxField, TextAreaField, TextField } from '../ui/Field';
@@ -17,9 +18,26 @@ export function NewsEditor({ initial }: NewsEditorProps) {
   const router = useRouter();
   const [title, setTitle] = useState(initial?.title ?? '');
   const [markdown, setMarkdown] = useState(initial?.markdown ?? '');
+  const [imagePath, setImagePath] = useState<string | null>(initial?.imagePath ?? null);
   const [published, setPublished] = useState(initial?.published ?? false);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageChange = async (file: File | undefined) => {
+    if (!file) return;
+    setUploading(true);
+    setErrorMessage(null);
+    try {
+      const repository = new HttpCourseAdminRepository();
+      setImagePath(await repository.uploadMedia('images', file));
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : t('common.error'));
+    } finally {
+      setUploading(false);
+    }
+  };
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -29,7 +47,7 @@ export function NewsEditor({ initial }: NewsEditorProps) {
       const response = await fetch(initial?.id ? `/api/news/${initial.id}` : '/api/news', {
         method: initial?.id ? 'PUT' : 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, markdown, published }),
+        body: JSON.stringify({ title, markdown, published, imagePath }),
       });
       const body = await response.json();
       if (!response.ok) throw new Error(body.error ?? t('common.error'));
@@ -51,6 +69,37 @@ export function NewsEditor({ initial }: NewsEditorProps) {
         required
         maxLength={200}
       />
+
+      <div className={styles.imageBlock}>
+        <span className={styles.imageLabel}>{t('admin.featuredImage')}</span>
+        {imagePath ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={imagePath} alt="" className={styles.imagePreview} />
+        ) : null}
+        <input
+          ref={imageInputRef}
+          type="file"
+          accept="image/*"
+          className={styles.fileInput}
+          onChange={(event) => handleImageChange(event.target.files?.[0])}
+        />
+        <div className={styles.imageActions}>
+          <Button
+            type="button"
+            variant="soft"
+            size="sm"
+            disabled={uploading}
+            onClick={() => imageInputRef.current?.click()}
+          >
+            {uploading ? t('admin.uploading') : t('admin.upload')}
+          </Button>
+          {imagePath ? (
+            <Button type="button" variant="danger" size="sm" onClick={() => setImagePath(null)}>
+              {t('common.delete')}
+            </Button>
+          ) : null}
+        </div>
+      </div>
 
       <TextAreaField
         label={t('admin.content')}

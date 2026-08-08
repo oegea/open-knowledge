@@ -92,7 +92,13 @@
     "restoreBackup": "Restore backup",
     "restoreHint": "Restoring replaces the ENTIRE current environment with the backup contents.",
     "restoreWarning": "⚠ This will replace the ENTIRE current environment (courses, users, progress, media and settings) with the backup contents. It cannot be undone. Continue?",
-    "restoreDone": "Backup restored. The environment is exactly as it was in the backup. Please sign in again."
+    "restoreDone": "Backup restored. The environment is exactly as it was in the backup. Please sign in again.",
+    "license": "Content license",
+    "licenseHint": "How this course may be reused (e.g. CC BY-SA 4.0). Optional.",
+    "heroTitle": "Home headline",
+    "heroText": "Home subtitle",
+    "heroHint": "Empty = default text in the visitor’s language.",
+    "featuredImage": "Featured image"
   },
   "material": {
     "type": {
@@ -133,7 +139,9 @@
     "aiNoticeTitle": "AI-assisted content",
     "aiNotice": "This course includes content generated or assisted by artificial intelligence. Sources are credited wherever applicable.",
     "materialsCount": "{count} materials",
-    "bibliography": "Bibliography & sources"
+    "bibliography": "Bibliography & sources",
+    "license": "License",
+    "aboutCourse": "About this course"
   },
   "study": {
     "progress": "Progress",

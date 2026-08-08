@@ -4,6 +4,10 @@ export interface InstanceSettingsPrimitive {
   ownerName: string;
   /** Media path of the library logo; shown instead of the name when set. */
   logoPath: string | null;
+  /** Custom home headline; empty falls back to the localized default. */
+  heroTitle: string;
+  /** Custom home subtitle; empty falls back to the localized default. */
+  heroText: string;
   registrationOpen: boolean;
   newsEnabled: boolean;
 }
@@ -13,6 +17,8 @@ export class InstanceSettings {
     private readonly libraryName: string,
     private readonly ownerName: string,
     private readonly logoPath: string | null,
+    private readonly heroTitle: string,
+    private readonly heroText: string,
     private readonly registrationOpen: boolean,
     private readonly newsEnabled: boolean
   ) {}
@@ -21,6 +27,8 @@ export class InstanceSettings {
     libraryName: string,
     ownerName: string,
     logoPath: string | null,
+    heroTitle: string,
+    heroText: string,
     registrationOpen: boolean,
     newsEnabled: boolean
   ): InstanceSettings {
@@ -29,13 +37,15 @@ export class InstanceSettings {
       libraryName.trim(),
       ownerName.trim(),
       logoPath?.trim() || null,
+      heroTitle.trim(),
+      heroText.trim(),
       registrationOpen,
       newsEnabled
     );
   }
 
   static createDefault(): InstanceSettings {
-    return InstanceSettings.create('Open Knowledge', '', null, true, false);
+    return InstanceSettings.create('Open Knowledge', '', null, '', '', true, false);
   }
 
   static fromPrimitive(data: InstanceSettingsPrimitive): InstanceSettings {
@@ -44,6 +54,8 @@ export class InstanceSettings {
       data.libraryName ?? 'Open Knowledge',
       data.ownerName ?? '',
       data.logoPath ?? null,
+      data.heroTitle ?? '',
+      data.heroText ?? '',
       Boolean(data.registrationOpen),
       Boolean(data.newsEnabled)
     );
@@ -73,6 +85,14 @@ export class InstanceSettings {
     return this.logoPath;
   }
 
+  getHeroTitle(): string {
+    return this.heroTitle;
+  }
+
+  getHeroText(): string {
+    return this.heroText;
+  }
+
   isRegistrationOpen(): boolean {
     return this.registrationOpen;
   }
@@ -90,6 +110,8 @@ export class InstanceSettings {
       libraryName: this.libraryName,
       ownerName: this.ownerName,
       logoPath: this.logoPath,
+      heroTitle: this.heroTitle,
+      heroText: this.heroText,
       registrationOpen: this.registrationOpen,
       newsEnabled: this.newsEnabled,
     };

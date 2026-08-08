@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { NotificationPrimitive } from '@/modules/notification/domain/Notification';
 import { useI18n } from '@/i18n/I18nProvider';
+import { IconMegaphone } from '../ui/icons';
 import styles from './NotificationsBell.module.css';
 
 const TYPE_KEYS: Record<NotificationPrimitive['type'], string> = {
@@ -68,7 +69,7 @@ export function NotificationsBell() {
         aria-expanded={open}
         onClick={handleToggle}
       >
-        ◔
+        <IconMegaphone />
         {unreadCount > 0 ? (
           <span className={styles.badge} aria-label={String(unreadCount)}>
             {unreadCount > 9 ? '9+' : unreadCount}

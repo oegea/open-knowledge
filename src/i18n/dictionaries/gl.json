@@ -92,7 +92,13 @@
     "restoreBackup": "Restaurar copia",
     "restoreHint": "Restaurar substitúe TODO o contorno actual polo contido da copia.",
     "restoreWarning": "⚠ Esta acción substituirá TODO o contorno actual (cursos, usuarios, progreso, multimedia e axustes) polo contido da copia. Non se pode desfacer. Continuar?",
-    "restoreDone": "Copia restaurada. O contorno quedou exactamente como estaba. Volve iniciar sesión."
+    "restoreDone": "Copia restaurada. O contorno quedou exactamente como estaba. Volve iniciar sesión.",
+    "license": "Licenza do contido",
+    "licenseHint": "Como se pode reutilizar este curso (p. ex. CC BY-SA 4.0). Opcional.",
+    "heroTitle": "Título da portada",
+    "heroText": "Subtítulo da portada",
+    "heroHint": "Baleiro = texto por defecto no idioma da persoa visitante.",
+    "featuredImage": "Imaxe destacada"
   },
   "material": {
     "type": {
@@ -133,7 +139,9 @@
     "aiNoticeTitle": "Contido asistido por IA",
     "aiNotice": "Este curso inclúe contido xerado ou asistido por intelixencia artificial. As fontes indícanse sempre que corresponde.",
     "materialsCount": "{count} materiais",
-    "bibliography": "Bibliografía e fontes"
+    "bibliography": "Bibliografía e fontes",
+    "license": "Licenza",
+    "aboutCourse": "Sobre este curso"
   },
   "study": {
     "progress": "Progreso",
