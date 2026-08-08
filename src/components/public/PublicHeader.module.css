@@ -33,7 +33,8 @@
   object-fit: contain;
 }
 
-.desktopNav {
+.desktopNav,
+.desktopActions {
   display: none;
 }
 
@@ -73,13 +74,23 @@
     font-size: var(--ok-text-lg);
   }
 
+  /* Content links live next to the brand, on the left… */
   .desktopNav {
     display: flex;
     align-items: center;
     gap: var(--ok-space-1);
     flex-wrap: wrap;
-    justify-content: flex-end;
-    margin-left: auto;
+    min-width: 0;
+    margin-left: var(--ok-space-2);
+    margin-right: auto;
+  }
+
+  /* …while actions (theme, language, notifications, account) stay right. */
+  .desktopActions {
+    display: flex;
+    align-items: center;
+    gap: var(--ok-space-1);
+    flex-shrink: 0;
   }
 
   .mobileNav {

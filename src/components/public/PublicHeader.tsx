@@ -35,7 +35,7 @@ export async function PublicHeader() {
         )}
       </Link>
 
-      {/* Desktop: inline navigation */}
+      {/* Desktop: content links sit next to the brand; actions go right. */}
       <nav className={styles.desktopNav} aria-label={translate(dictionary, 'nav.menu')}>
         {settings.isNewsEnabled() ? (
           <Link href="/news" className={styles.navLink}>
@@ -43,15 +43,21 @@ export async function PublicHeader() {
           </Link>
         ) : null}
         {menuPages.map((page) => (
-          <Link key={page.getId()} href={`/p/${page.getSlug() || page.getId()}`} className={styles.navLink}>
+          <Link
+            key={page.getId()}
+            href={`/p/${page.getSlug() || page.getId()}`}
+            className={styles.navLink}
+          >
             {page.getTitle()}
           </Link>
         ))}
+      </nav>
+      <div className={styles.desktopActions}>
         <ThemeToggle />
         <LanguageSelector />
         {user !== null ? <NotificationsBell /> : null}
         <UserMenu user={userInfo} />
-      </nav>
+      </div>
 
       {/* Mobile: bell + app-like menu sheet */}
       <div className={styles.mobileNav}>
