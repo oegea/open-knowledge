@@ -1,11 +1,18 @@
 import type { NextRequest } from 'next/server';
 import courseFactory from '@/modules/course/application/factory';
+import { getCurrentUser, requireAdmin } from '@/app/serverAuth';
 import { apiError } from '../../apiError';
 
 export async function GET(_request: NextRequest, ctx: RouteContext<'/api/courses/[id]'>) {
   try {
     const { id } = await ctx.params;
     const course = await courseFactory.getCourse(id);
+    if (!course.isPublished()) {
+      const user = await getCurrentUser();
+      if (!user?.isAdmin()) {
+        return Response.json({ error: `Course with id ${id} not found` }, { status: 404 });
+      }
+    }
     return Response.json({ course: course.toPrimitive() });
   } catch (error) {
     return apiError(error);
@@ -13,6 +20,9 @@ export async function GET(_request: NextRequest, ctx: RouteContext<'/api/courses
 }
 
 export async function PUT(request: NextRequest, ctx: RouteContext<'/api/courses/[id]'>) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const { id } = await ctx.params;
     const body = await request.json();
@@ -24,6 +34,9 @@ export async function PUT(request: NextRequest, ctx: RouteContext<'/api/courses/
 }
 
 export async function DELETE(_request: NextRequest, ctx: RouteContext<'/api/courses/[id]'>) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const { id } = await ctx.params;
     await courseFactory.deleteCourse(id);

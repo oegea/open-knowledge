@@ -64,7 +64,11 @@
     "authorsPlaceholder": "每行一个作者",
     "sourcesPlaceholder": "每行一个来源",
     "courseTitle": "标题",
-    "courseDescription": "描述"
+    "courseDescription": "描述",
+    "settings": "设置",
+    "libraryName": "课程库名称",
+    "registrationOpen": "开放注册",
+    "registrationOpenHint": "关闭后，其他人将无法创建账户。课程库仍然公开。"
   },
   "material": {
     "type": {
@@ -109,5 +113,27 @@
     "markComplete": "标记为已完成",
     "next": "下一个",
     "previous": "上一个"
+  },
+  "auth": {
+    "register": "创建身份",
+    "yourIdentifier": "你的标识符",
+    "refreshIdentifier": "换一个",
+    "scanQr": "使用身份验证器应用扫描二维码",
+    "enterCode": "输入 6 位验证码",
+    "noPersonalData": "无需姓名、邮箱或任何个人数据。只是一个用于保存学习进度的假名身份。",
+    "firstUserAdmin": "这是该实例的第一个账户：它将成为管理员。",
+    "recoveryCodeTitle": "请保存你的恢复代码",
+    "recoveryCodeHint": "如果你无法再使用身份验证器，这是恢复账户的唯一方式。它只显示一次。",
+    "recoveryCodeSaved": "我已保存",
+    "signIn": "登录",
+    "identifierLabel": "标识符",
+    "codeLabel": "验证码",
+    "noAccount": "还没有身份？",
+    "haveAccount": "已有身份？",
+    "lostAccess": "我无法使用身份验证器了",
+    "recoveryTitle": "恢复账户",
+    "recoveryCodeLabel": "恢复代码",
+    "registrationClosed": "该课程库已关闭注册。你仍可以在没有账户的情况下继续学习。",
+    "myAccount": "我的账户"
   }
 }

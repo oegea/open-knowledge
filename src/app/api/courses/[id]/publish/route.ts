@@ -1,8 +1,12 @@
 import type { NextRequest } from 'next/server';
 import courseFactory from '@/modules/course/application/factory';
+import { requireAdmin } from '@/app/serverAuth';
 import { apiError } from '../../../apiError';
 
 export async function POST(_request: NextRequest, ctx: RouteContext<'/api/courses/[id]/publish'>) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const { id } = await ctx.params;
     const course = await courseFactory.publishCourse(id);
@@ -16,6 +20,9 @@ export async function DELETE(
   _request: NextRequest,
   ctx: RouteContext<'/api/courses/[id]/publish'>
 ) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const { id } = await ctx.params;
     const course = await courseFactory.unpublishCourse(id);

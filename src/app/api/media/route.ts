@@ -1,8 +1,12 @@
 import type { NextRequest } from 'next/server';
 import mediaFactory from '@/modules/media/application/factory';
+import { requireAdmin } from '@/app/serverAuth';
 import { apiError } from '../apiError';
 
 export async function POST(request: NextRequest) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
+
   try {
     const formData = await request.formData();
     const file = formData.get('file');

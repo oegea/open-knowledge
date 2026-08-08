@@ -64,7 +64,11 @@
     "authorsPlaceholder": "One author per line",
     "sourcesPlaceholder": "One source per line",
     "courseTitle": "Title",
-    "courseDescription": "Description"
+    "courseDescription": "Description",
+    "settings": "Settings",
+    "libraryName": "Library name",
+    "registrationOpen": "Registration open",
+    "registrationOpenHint": "If disabled, no one else can create accounts. The library stays public."
   },
   "material": {
     "type": {
@@ -109,5 +113,27 @@
     "markComplete": "Mark as completed",
     "next": "Next",
     "previous": "Previous"
+  },
+  "auth": {
+    "register": "Create identity",
+    "yourIdentifier": "Your identifier",
+    "refreshIdentifier": "Generate another",
+    "scanQr": "Scan the QR code with your authenticator app",
+    "enterCode": "Enter the 6-digit code",
+    "noPersonalData": "No name, no email, no personal data. Just a pseudonymous identity to keep your learning.",
+    "firstUserAdmin": "This will be the first account of this instance: it will be the administrator.",
+    "recoveryCodeTitle": "Save your recovery code",
+    "recoveryCodeHint": "It is the only way to recover your account if you lose access to your authenticator. It is shown only once.",
+    "recoveryCodeSaved": "I have saved it",
+    "signIn": "Sign in",
+    "identifierLabel": "Identifier",
+    "codeLabel": "Verification code",
+    "noAccount": "No identity yet?",
+    "haveAccount": "Already have an identity?",
+    "lostAccess": "I lost access to my authenticator",
+    "recoveryTitle": "Recover account",
+    "recoveryCodeLabel": "Recovery code",
+    "registrationClosed": "Registration is closed on this library. You can keep studying without an account.",
+    "myAccount": "My account"
   }
 }

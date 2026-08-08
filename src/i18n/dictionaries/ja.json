@@ -64,7 +64,11 @@
     "authorsPlaceholder": "1行に1人ずつ",
     "sourcesPlaceholder": "1行に1つずつ",
     "courseTitle": "タイトル",
-    "courseDescription": "説明"
+    "courseDescription": "説明",
+    "settings": "設定",
+    "libraryName": "ライブラリ名",
+    "registrationOpen": "登録を受付中",
+    "registrationOpenHint": "無効にすると、誰も新しくアカウントを作成できません。ライブラリは公開のままです。"
   },
   "material": {
     "type": {
@@ -109,5 +113,27 @@
     "markComplete": "完了にする",
     "next": "次へ",
     "previous": "前へ"
+  },
+  "auth": {
+    "register": "アカウントを作成",
+    "yourIdentifier": "あなたの ID",
+    "refreshIdentifier": "別のものを生成",
+    "scanQr": "認証アプリで QR コードをスキャンしてください",
+    "enterCode": "6桁のコードを入力",
+    "noPersonalData": "名前もメールも個人情報も不要。学習を保存するための仮名 ID だけです。",
+    "firstUserAdmin": "これはこのインスタンスの最初のアカウントであり、管理者になります。",
+    "recoveryCodeTitle": "リカバリーコードを保存してください",
+    "recoveryCodeHint": "認証アプリにアクセスできなくなった場合、アカウントを回復する唯一の方法です。一度しか表示されません。",
+    "recoveryCodeSaved": "保存しました",
+    "signIn": "ログイン",
+    "identifierLabel": "ID",
+    "codeLabel": "認証コード",
+    "noAccount": "まだ ID がありませんか？",
+    "haveAccount": "すでに ID をお持ちですか？",
+    "lostAccess": "認証アプリにアクセスできなくなった",
+    "recoveryTitle": "アカウントを回復",
+    "recoveryCodeLabel": "リカバリーコード",
+    "registrationClosed": "このライブラリでは登録が停止されています。アカウントなしでも学習を続けられます。",
+    "myAccount": "マイアカウント"
   }
 }

@@ -64,7 +64,11 @@
     "authorsPlaceholder": "Un autor per línia",
     "sourcesPlaceholder": "Una font per línia",
     "courseTitle": "Títol",
-    "courseDescription": "Descripció"
+    "courseDescription": "Descripció",
+    "settings": "Configuració",
+    "libraryName": "Nom de la llibreria",
+    "registrationOpen": "Registre obert",
+    "registrationOpenHint": "Si el desactives, ningú més podrà crear comptes. La llibreria continuarà sent pública."
   },
   "material": {
     "type": {
@@ -109,5 +113,27 @@
     "markComplete": "Marca com a completat",
     "next": "Següent",
     "previous": "Anterior"
+  },
+  "auth": {
+    "register": "Crea una identitat",
+    "yourIdentifier": "El teu identificador",
+    "refreshIdentifier": "Genera un altre",
+    "scanQr": "Escaneja el codi QR amb la teva aplicació Authenticator",
+    "enterCode": "Introdueix el codi de 6 dígits",
+    "noPersonalData": "Sense nom, sense email, sense dades personals. Només una identitat pseudònima per guardar el teu aprenentatge.",
+    "firstUserAdmin": "Aquest serà el primer compte de la instància: serà l’administrador.",
+    "recoveryCodeTitle": "Guarda el teu codi de recuperació",
+    "recoveryCodeHint": "És l’única manera de recuperar el teu compte si perds l’accés al teu Authenticator. Només es mostra una vegada.",
+    "recoveryCodeSaved": "L’he guardat",
+    "signIn": "Inicia la sessió",
+    "identifierLabel": "Identificador",
+    "codeLabel": "Codi de verificació",
+    "noAccount": "Encara no tens identitat?",
+    "haveAccount": "Ja tens identitat?",
+    "lostAccess": "He perdut l’accés al meu Authenticator",
+    "recoveryTitle": "Recupera el compte",
+    "recoveryCodeLabel": "Codi de recuperació",
+    "registrationClosed": "El registre està tancat en aquesta llibreria. Pots continuar estudiant sense compte.",
+    "myAccount": "El meu compte"
   }
 }

@@ -64,7 +64,11 @@
     "authorsPlaceholder": "Un auteur par ligne",
     "sourcesPlaceholder": "Une source par ligne",
     "courseTitle": "Titre",
-    "courseDescription": "Description"
+    "courseDescription": "Description",
+    "settings": "Paramètres",
+    "libraryName": "Nom de la bibliothèque",
+    "registrationOpen": "Inscription ouverte",
+    "registrationOpenHint": "Si désactivée, personne d’autre ne pourra créer de compte. La bibliothèque reste publique."
   },
   "material": {
     "type": {
@@ -109,5 +113,27 @@
     "markComplete": "Marquer comme terminé",
     "next": "Suivant",
     "previous": "Précédent"
+  },
+  "auth": {
+    "register": "Créer une identité",
+    "yourIdentifier": "Votre identifiant",
+    "refreshIdentifier": "En générer un autre",
+    "scanQr": "Scannez le code QR avec votre application Authenticator",
+    "enterCode": "Saisissez le code à 6 chiffres",
+    "noPersonalData": "Pas de nom, pas d’email, pas de données personnelles. Juste une identité pseudonyme pour conserver votre apprentissage.",
+    "firstUserAdmin": "Ce sera le premier compte de cette instance : il sera administrateur.",
+    "recoveryCodeTitle": "Conservez votre code de récupération",
+    "recoveryCodeHint": "C’est le seul moyen de récupérer votre compte si vous perdez l’accès à votre Authenticator. Il n’est affiché qu’une seule fois.",
+    "recoveryCodeSaved": "Je l’ai conservé",
+    "signIn": "Se connecter",
+    "identifierLabel": "Identifiant",
+    "codeLabel": "Code de vérification",
+    "noAccount": "Pas encore d’identité ?",
+    "haveAccount": "Vous avez déjà une identité ?",
+    "lostAccess": "J’ai perdu l’accès à mon Authenticator",
+    "recoveryTitle": "Récupérer le compte",
+    "recoveryCodeLabel": "Code de récupération",
+    "registrationClosed": "L’inscription est fermée sur cette bibliothèque. Vous pouvez continuer à étudier sans compte.",
+    "myAccount": "Mon compte"
   }
 }

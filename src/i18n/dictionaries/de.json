@@ -64,7 +64,11 @@
     "authorsPlaceholder": "Ein Autor pro Zeile",
     "sourcesPlaceholder": "Eine Quelle pro Zeile",
     "courseTitle": "Titel",
-    "courseDescription": "Beschreibung"
+    "courseDescription": "Beschreibung",
+    "settings": "Einstellungen",
+    "libraryName": "Name der Bibliothek",
+    "registrationOpen": "Registrierung geöffnet",
+    "registrationOpenHint": "Wenn deaktiviert, kann niemand mehr Konten erstellen. Die Bibliothek bleibt öffentlich."
   },
   "material": {
     "type": {
@@ -109,5 +113,27 @@
     "markComplete": "Als abgeschlossen markieren",
     "next": "Weiter",
     "previous": "Zurück"
+  },
+  "auth": {
+    "register": "Identität erstellen",
+    "yourIdentifier": "Deine Kennung",
+    "refreshIdentifier": "Neu generieren",
+    "scanQr": "Scanne den QR-Code mit deiner Authenticator-App",
+    "enterCode": "Gib den 6-stelligen Code ein",
+    "noPersonalData": "Kein Name, keine E-Mail, keine persönlichen Daten. Nur eine pseudonyme Identität für deinen Lernfortschritt.",
+    "firstUserAdmin": "Dies wird das erste Konto dieser Instanz sein: es wird der Administrator.",
+    "recoveryCodeTitle": "Bewahre deinen Wiederherstellungscode auf",
+    "recoveryCodeHint": "Es ist die einzige Möglichkeit, dein Konto wiederherzustellen, wenn du den Zugriff auf deinen Authenticator verlierst. Er wird nur einmal angezeigt.",
+    "recoveryCodeSaved": "Ich habe ihn gespeichert",
+    "signIn": "Anmelden",
+    "identifierLabel": "Kennung",
+    "codeLabel": "Verifizierungscode",
+    "noAccount": "Noch keine Identität?",
+    "haveAccount": "Schon eine Identität?",
+    "lostAccess": "Ich habe den Zugriff auf meinen Authenticator verloren",
+    "recoveryTitle": "Konto wiederherstellen",
+    "recoveryCodeLabel": "Wiederherstellungscode",
+    "registrationClosed": "Die Registrierung ist in dieser Bibliothek geschlossen. Du kannst ohne Konto weiterlernen.",
+    "myAccount": "Mein Konto"
   }
 }

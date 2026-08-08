@@ -25,6 +25,30 @@
   align-items: center;
 }
 
+.headerNav {
+  display: flex;
+  gap: var(--ok-space-1);
+}
+
+.headerLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--ok-touch-target);
+  padding: 0 var(--ok-space-3);
+  border-radius: var(--ok-radius-full);
+  font-size: var(--ok-text-sm);
+  font-weight: 600;
+  color: var(--ok-fg-muted);
+  transition:
+    background var(--ok-duration-fast) var(--ok-ease),
+    color var(--ok-duration-fast) var(--ok-ease);
+}
+
+.headerLink:hover {
+  background: var(--ok-primary-soft);
+  color: var(--ok-primary);
+}
+
 .headerTitle {
   color: var(--ok-fg-muted);
   font-size: var(--ok-text-sm);

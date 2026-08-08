@@ -64,7 +64,11 @@
     "authorsPlaceholder": "Egile bat lerroko",
     "sourcesPlaceholder": "Iturri bat lerroko",
     "courseTitle": "Izenburua",
-    "courseDescription": "Deskribapena"
+    "courseDescription": "Deskribapena",
+    "settings": "Ezarpenak",
+    "libraryName": "Liburutegiaren izena",
+    "registrationOpen": "Erregistroa irekita",
+    "registrationOpenHint": "Desaktibatzen baduzu, beste inork ezingo du konturik sortu. Liburutegia publikoa izaten jarraituko du."
   },
   "material": {
     "type": {
@@ -109,5 +113,27 @@
     "markComplete": "Markatu osatutzat",
     "next": "Hurrengoa",
     "previous": "Aurrekoa"
+  },
+  "auth": {
+    "register": "Sortu nortasuna",
+    "yourIdentifier": "Zure identifikatzailea",
+    "refreshIdentifier": "Sortu beste bat",
+    "scanQr": "Eskaneatu QR kodea zure Authenticator aplikazioarekin",
+    "enterCode": "Sartu 6 digituko kodea",
+    "noPersonalData": "Izenik ez, emailik ez, datu pertsonalik ez. Zure ikaskuntza gordetzeko ezizen-nortasun bat besterik ez.",
+    "firstUserAdmin": "Hau instantziako lehen kontua izango da: administratzailea izango da.",
+    "recoveryCodeTitle": "Gorde zure berreskuratze-kodea",
+    "recoveryCodeHint": "Zure kontua berreskuratzeko modu bakarra da Authenticator-erako sarbidea galtzen baduzu. Behin bakarrik erakusten da.",
+    "recoveryCodeSaved": "Gorde dut",
+    "signIn": "Hasi saioa",
+    "identifierLabel": "Identifikatzailea",
+    "codeLabel": "Egiaztapen-kodea",
+    "noAccount": "Oraindik ez duzu nortasunik?",
+    "haveAccount": "Baduzu nortasunik?",
+    "lostAccess": "Authenticator-erako sarbidea galdu dut",
+    "recoveryTitle": "Berreskuratu kontua",
+    "recoveryCodeLabel": "Berreskuratze-kodea",
+    "registrationClosed": "Erregistroa itxita dago liburutegi honetan. Konturik gabe ikasten jarrai dezakezu.",
+    "myAccount": "Nire kontua"
   }
 }

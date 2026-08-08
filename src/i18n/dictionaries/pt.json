@@ -64,7 +64,11 @@
     "authorsPlaceholder": "Um autor por linha",
     "sourcesPlaceholder": "Uma fonte por linha",
     "courseTitle": "Título",
-    "courseDescription": "Descrição"
+    "courseDescription": "Descrição",
+    "settings": "Definições",
+    "libraryName": "Nome da biblioteca",
+    "registrationOpen": "Registo aberto",
+    "registrationOpenHint": "Se desativado, mais ninguém poderá criar contas. A biblioteca continua pública."
   },
   "material": {
     "type": {
@@ -109,5 +113,27 @@
     "markComplete": "Marcar como concluído",
     "next": "Seguinte",
     "previous": "Anterior"
+  },
+  "auth": {
+    "register": "Criar identidade",
+    "yourIdentifier": "O seu identificador",
+    "refreshIdentifier": "Gerar outro",
+    "scanQr": "Digitalize o código QR com a sua aplicação de autenticação",
+    "enterCode": "Introduza o código de 6 dígitos",
+    "noPersonalData": "Sem nome, sem email, sem dados pessoais. Apenas uma identidade pseudónima para guardar a sua aprendizagem.",
+    "firstUserAdmin": "Esta será a primeira conta da instância: será a administradora.",
+    "recoveryCodeTitle": "Guarde o seu código de recuperação",
+    "recoveryCodeHint": "É a única forma de recuperar a sua conta se perder o acesso ao seu autenticador. É mostrado apenas uma vez.",
+    "recoveryCodeSaved": "Guardei-o",
+    "signIn": "Iniciar sessão",
+    "identifierLabel": "Identificador",
+    "codeLabel": "Código de verificação",
+    "noAccount": "Ainda não tem identidade?",
+    "haveAccount": "Já tem identidade?",
+    "lostAccess": "Perdi o acesso ao meu autenticador",
+    "recoveryTitle": "Recuperar conta",
+    "recoveryCodeLabel": "Código de recuperação",
+    "registrationClosed": "O registo está fechado nesta biblioteca. Pode continuar a estudar sem conta.",
+    "myAccount": "A minha conta"
   }
 }

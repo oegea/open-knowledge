@@ -1,0 +1,6 @@
+.main {
+  width: 100%;
+  max-width: 30rem;
+  margin: 0 auto;
+  padding: var(--ok-space-5) var(--ok-space-3) var(--ok-space-8);
+}
