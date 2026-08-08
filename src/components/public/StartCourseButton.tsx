@@ -4,15 +4,21 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { getCourseProgress } from '@/modules/study/application/getCourseProgress';
 import { LocalStorageProgressRepository } from '@/modules/study/infrastructure/LocalStorageProgressRepository';
+import { HttpProgressRepository } from '@/modules/study/infrastructure/HttpProgressRepository';
 import { useI18n } from '@/i18n/I18nProvider';
 import styles from './StartCourseButton.module.css';
 
 interface StartCourseButtonProps {
   courseId: string;
   orderedMaterialIds: string[];
+  authenticated: boolean;
 }
 
-export function StartCourseButton({ courseId, orderedMaterialIds }: StartCourseButtonProps) {
+export function StartCourseButton({
+  courseId,
+  orderedMaterialIds,
+  authenticated,
+}: StartCourseButtonProps) {
   const { t } = useI18n();
   const [started, setStarted] = useState(false);
   const [target, setTarget] = useState<string | null>(orderedMaterialIds[0] ?? null);
@@ -23,7 +29,9 @@ export function StartCourseButton({ courseId, orderedMaterialIds }: StartCourseB
     (async () => {
       const progress = await getCourseProgress({
         courseId,
-        progressRepository: new LocalStorageProgressRepository(),
+        progressRepository: authenticated
+          ? new HttpProgressRepository()
+          : new LocalStorageProgressRepository(),
       });
       if (!active) return;
       setStarted(progress.getCompletedMaterialIds().length > 0);
@@ -33,7 +41,7 @@ export function StartCourseButton({ courseId, orderedMaterialIds }: StartCourseB
     return () => {
       active = false;
     };
-  }, [courseId, orderedMaterialIds]);
+  }, [authenticated, courseId, orderedMaterialIds]);
 
   if (!target) return null;
 

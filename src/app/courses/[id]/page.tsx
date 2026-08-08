@@ -5,6 +5,7 @@ import { getDictionary, translate } from '@/i18n/dictionary';
 import { LOCALES } from '@/i18n/config';
 import { PublicHeader } from '@/components/public/PublicHeader';
 import { StartCourseButton } from '@/components/public/StartCourseButton';
+import { getCurrentUser } from '@/app/serverAuth';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -63,6 +64,7 @@ export default async function CourseDetailPage({ params }: PageProps<'/courses/[
             <StartCourseButton
               courseId={course.getId()!}
               orderedMaterialIds={orderedMaterialIds}
+              authenticated={(await getCurrentUser()) !== null}
             />
           </div>
         </section>

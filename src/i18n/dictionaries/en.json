@@ -112,7 +112,9 @@
     "completed": "Completed",
     "markComplete": "Mark as completed",
     "next": "Next",
-    "previous": "Previous"
+    "previous": "Previous",
+    "courseCompleted": "Course completed!",
+    "registerToKeep": "Register to keep your progress and certificates across devices."
   },
   "auth": {
     "register": "Create identity",
@@ -135,5 +137,18 @@
     "recoveryCodeLabel": "Recovery code",
     "registrationClosed": "Registration is closed on this library. You can keep studying without an account.",
     "myAccount": "My account"
+  },
+  "certificate": {
+    "title": "Certificate of completion",
+    "awardedTo": "Awarded to",
+    "completedCourse": "for completing the course",
+    "issuedOn": "Issued on",
+    "get": "Get certificate",
+    "view": "View certificate",
+    "note": "This certificate attests that this identity has completed the learning path of the course in this library."
+  },
+  "account": {
+    "certificates": "Certificates",
+    "noCertificates": "No certificates yet."
   }
 }

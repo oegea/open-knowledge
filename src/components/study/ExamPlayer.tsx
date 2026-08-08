@@ -8,18 +8,21 @@ import styles from './ExamPlayer.module.css';
 interface ExamPlayerProps {
   exam: ExamPrimitive;
   onPassed: () => Promise<void> | void;
+  /** Called once with all answers when the attempt finishes (pass or fail). */
+  onFinished?: (answers: Record<string, string>, passed: boolean) => Promise<void> | void;
 }
 
 /**
  * One question at a time: answer, check, read the explanation, move on.
  * At the end, score against the passing threshold.
  */
-export function ExamPlayer({ exam, onPassed }: ExamPlayerProps) {
+export function ExamPlayer({ exam, onPassed, onFinished }: ExamPlayerProps) {
   const { t } = useI18n();
   const [questionIndex, setQuestionIndex] = useState(0);
   const [selectedChoiceId, setSelectedChoiceId] = useState<string | null>(null);
   const [checked, setChecked] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
+  const [answers, setAnswers] = useState<Record<string, string>>({});
   const [finished, setFinished] = useState(false);
   const [passedNotified, setPassedNotified] = useState(false);
 
@@ -33,6 +36,7 @@ export function ExamPlayer({ exam, onPassed }: ExamPlayerProps) {
   const handleCheck = () => {
     if (!selectedChoiceId) return;
     setChecked(true);
+    setAnswers((current) => ({ ...current, [question.id]: selectedChoiceId }));
     if (selectedChoiceId === question.correctChoiceId) {
       setCorrectCount((count) => count + 1);
     }
@@ -45,7 +49,9 @@ export function ExamPlayer({ exam, onPassed }: ExamPlayerProps) {
       setChecked(false);
     } else {
       setFinished(true);
-      if (correctCount / total >= exam.passingScore && !passedNotified) {
+      const didPass = correctCount / total >= exam.passingScore;
+      await onFinished?.(answers, didPass);
+      if (didPass && !passedNotified) {
         setPassedNotified(true);
         await onPassed();
       }

@@ -69,6 +69,38 @@ CREATE TABLE IF NOT EXISTS settings (
   key TEXT PRIMARY KEY,
   value TEXT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS progress (
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  course_id TEXT NOT NULL,
+  completed_material_ids TEXT NOT NULL DEFAULT '[]',
+  last_material_id TEXT,
+  PRIMARY KEY (user_id, course_id)
+);
+
+CREATE TABLE IF NOT EXISTS exam_results (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  course_id TEXT NOT NULL,
+  material_id TEXT NOT NULL,
+  correct_count INTEGER NOT NULL,
+  total_count INTEGER NOT NULL,
+  score REAL NOT NULL,
+  passed INTEGER NOT NULL,
+  created_at TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_exam_results_user_course ON exam_results(user_id, course_id);
+
+CREATE TABLE IF NOT EXISTS certificates (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  course_id TEXT NOT NULL,
+  course_title TEXT NOT NULL,
+  identifier TEXT NOT NULL,
+  issued_at TEXT NOT NULL,
+  UNIQUE (user_id, course_id)
+);
 `;
 
 let instance: Database.Database | null = null;

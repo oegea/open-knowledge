@@ -112,7 +112,9 @@
     "completed": "Osatuta",
     "markComplete": "Markatu osatutzat",
     "next": "Hurrengoa",
-    "previous": "Aurrekoa"
+    "previous": "Aurrekoa",
+    "courseCompleted": "Ikastaroa osatuta!",
+    "registerToKeep": "Erregistratu zure aurrerapena eta ziurtagiriak gailu guztietan gordetzeko."
   },
   "auth": {
     "register": "Sortu nortasuna",
@@ -135,5 +137,18 @@
     "recoveryCodeLabel": "Berreskuratze-kodea",
     "registrationClosed": "Erregistroa itxita dago liburutegi honetan. Konturik gabe ikasten jarrai dezakezu.",
     "myAccount": "Nire kontua"
+  },
+  "certificate": {
+    "title": "Amaiera-ziurtagiria",
+    "awardedTo": "Honi emana:",
+    "completedCourse": "ikastaroa osatzeagatik",
+    "issuedOn": "Jaulkitze-data",
+    "get": "Lortu ziurtagiria",
+    "view": "Ikusi ziurtagiria",
+    "note": "Ziurtagiri honek egiaztatzen du nortasun honek ikastaroaren ikaskuntza-ibilbidea osatu duela liburutegi honetan."
+  },
+  "account": {
+    "certificates": "Ziurtagiriak",
+    "noCertificates": "Oraindik ez duzu ziurtagiririk."
   }
 }

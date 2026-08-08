@@ -112,7 +112,9 @@
     "completed": "Completat",
     "markComplete": "Marca com a completat",
     "next": "Següent",
-    "previous": "Anterior"
+    "previous": "Anterior",
+    "courseCompleted": "Curs completat!",
+    "registerToKeep": "Registra't per conservar el teu progrés i certificats entre dispositius."
   },
   "auth": {
     "register": "Crea una identitat",
@@ -135,5 +137,18 @@
     "recoveryCodeLabel": "Codi de recuperació",
     "registrationClosed": "El registre està tancat en aquesta llibreria. Pots continuar estudiant sense compte.",
     "myAccount": "El meu compte"
+  },
+  "certificate": {
+    "title": "Certificat de finalització",
+    "awardedTo": "Atorgat a",
+    "completedCourse": "per completar el curs",
+    "issuedOn": "Emès el",
+    "get": "Obtén el certificat",
+    "view": "Mostra el certificat",
+    "note": "Aquest certificat acredita que aquesta identitat ha completat el recorregut d’aprenentatge del curs en aquesta llibreria."
+  },
+  "account": {
+    "certificates": "Certificats",
+    "noCertificates": "Encara no tens certificats."
   }
 }

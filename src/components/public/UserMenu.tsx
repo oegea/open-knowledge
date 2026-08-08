@@ -34,9 +34,9 @@ export function UserMenu({ user }: UserMenuProps) {
           {t('nav.admin')}
         </Link>
       ) : null}
-      <span className={styles.identifier} title={user.identifier}>
+      <Link href="/account" className={styles.identifier} title={user.identifier}>
         {user.identifier}
-      </span>
+      </Link>
       <button className={styles.logout} onClick={handleLogout} aria-label={t('nav.signOut')}>
         ⎋
       </button>

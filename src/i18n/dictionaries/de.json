@@ -112,7 +112,9 @@
     "completed": "Abgeschlossen",
     "markComplete": "Als abgeschlossen markieren",
     "next": "Weiter",
-    "previous": "Zurück"
+    "previous": "Zurück",
+    "courseCompleted": "Kurs abgeschlossen!",
+    "registerToKeep": "Registriere dich, um Fortschritt und Zertifikate geräteübergreifend zu behalten."
   },
   "auth": {
     "register": "Identität erstellen",
@@ -135,5 +137,18 @@
     "recoveryCodeLabel": "Wiederherstellungscode",
     "registrationClosed": "Die Registrierung ist in dieser Bibliothek geschlossen. Du kannst ohne Konto weiterlernen.",
     "myAccount": "Mein Konto"
+  },
+  "certificate": {
+    "title": "Abschlusszertifikat",
+    "awardedTo": "Verliehen an",
+    "completedCourse": "für den Abschluss des Kurses",
+    "issuedOn": "Ausgestellt am",
+    "get": "Zertifikat erhalten",
+    "view": "Zertifikat ansehen",
+    "note": "Dieses Zertifikat bescheinigt, dass diese Identität den Lernpfad des Kurses in dieser Bibliothek abgeschlossen hat."
+  },
+  "account": {
+    "certificates": "Zertifikate",
+    "noCertificates": "Noch keine Zertifikate."
   }
 }

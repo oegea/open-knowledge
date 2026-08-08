@@ -1,0 +1,67 @@
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import certificateFactory from '@/modules/certificate/application/factory';
+import { getCurrentUser } from '@/app/serverAuth';
+import { getLocale } from '@/i18n/getLocale';
+import { getDictionary, translate } from '@/i18n/dictionary';
+import { PublicHeader } from '@/components/public/PublicHeader';
+import styles from './page.module.css';
+
+export const dynamic = 'force-dynamic';
+
+export default async function AccountPage() {
+  const user = await getCurrentUser();
+  if (user === null) redirect('/login');
+
+  const locale = await getLocale();
+  const dictionary = await getDictionary(locale);
+  const certificates = await certificateFactory.listCertificates(user.getId()!);
+
+  return (
+    <>
+      <PublicHeader />
+      <main className={styles.main}>
+        <section className={`ok-glass ${styles.identityCard}`}>
+          <h1 className={styles.title}>{translate(dictionary, 'auth.myAccount')}</h1>
+          <p className={styles.identifier}>{user.getIdentifier()}</p>
+        </section>
+
+        <section className={styles.certificates}>
+          <h2 className={styles.sectionTitle}>
+            {translate(dictionary, 'account.certificates')}
+          </h2>
+          {certificates.length === 0 ? (
+            <p className={`ok-glass ${styles.empty}`}>
+              {translate(dictionary, 'account.noCertificates')}
+            </p>
+          ) : (
+            <ul className={styles.certificateList}>
+              {certificates.map((certificate) => (
+                <li key={certificate.getId()}>
+                  <Link
+                    href={`/certificates/${certificate.getId()}`}
+                    className={`ok-glass ${styles.certificateItem}`}
+                  >
+                    <span className={styles.certificateIcon} aria-hidden="true">
+                      ❦
+                    </span>
+                    <span className={styles.certificateInfo}>
+                      <span className={styles.certificateCourse}>
+                        {certificate.getCourseTitle()}
+                      </span>
+                      <span className={styles.certificateDate}>
+                        {new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(
+                          certificate.getIssuedAt()
+                        )}
+                      </span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      </main>
+    </>
+  );
+}

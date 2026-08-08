@@ -1,0 +1,104 @@
+.main {
+  width: 100%;
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: var(--ok-space-5) var(--ok-space-3) var(--ok-space-8);
+}
+
+.certificate {
+  position: relative;
+  padding: var(--ok-space-7) var(--ok-space-5);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-3);
+  overflow: hidden;
+}
+
+.ornamentTop,
+.ornamentBottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--ok-lagoon-400), var(--ok-ember-300), var(--ok-lagoon-600));
+}
+
+.ornamentTop {
+  top: 0;
+}
+
+.ornamentBottom {
+  bottom: 0;
+}
+
+.library {
+  font-size: var(--ok-text-sm);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ok-primary);
+}
+
+.title {
+  font-family: var(--ok-font-reading);
+  font-size: var(--ok-text-2xl);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.awardedTo,
+.completed {
+  font-size: var(--ok-text-sm);
+  color: var(--ok-fg-muted);
+  margin-top: var(--ok-space-2);
+}
+
+.identity {
+  font-family: var(--ok-font-mono);
+  font-size: var(--ok-text-2xl);
+  font-weight: 700;
+  color: var(--ok-primary);
+}
+
+.courseTitle {
+  font-family: var(--ok-font-reading);
+  font-size: var(--ok-text-xl);
+  font-style: italic;
+}
+
+.issued {
+  margin-top: var(--ok-space-3);
+  font-size: var(--ok-text-sm);
+  font-weight: 600;
+}
+
+.note {
+  font-size: var(--ok-text-xs);
+  color: var(--ok-fg-subtle);
+  max-width: 28rem;
+  margin: var(--ok-space-2) auto 0;
+  line-height: var(--ok-leading-normal);
+}
+
+.certificateId {
+  font-family: var(--ok-font-mono);
+  font-size: var(--ok-text-xs);
+  color: var(--ok-fg-subtle);
+}
+
+@media (min-width: 768px) {
+  .certificate {
+    padding: var(--ok-space-8) var(--ok-space-7);
+  }
+
+  .title {
+    font-size: var(--ok-text-3xl);
+  }
+}
+
+@media print {
+  .certificate {
+    box-shadow: none;
+  }
+}

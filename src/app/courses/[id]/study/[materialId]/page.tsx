@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import courseFactory from '@/modules/course/application/factory';
+import { getCurrentUser } from '@/app/serverAuth';
 import { StudyView } from '@/components/study/StudyView';
 
 export const dynamic = 'force-dynamic';
@@ -23,5 +24,13 @@ export default async function StudyMaterialPage({
     .some((section) => section.getMaterials().getMaterialById(materialId) !== null);
   if (!materialExists) notFound();
 
-  return <StudyView course={course.toPrimitive()} currentMaterialId={materialId} />;
+  const user = await getCurrentUser();
+
+  return (
+    <StudyView
+      course={course.toPrimitive()}
+      currentMaterialId={materialId}
+      authenticated={user !== null}
+    />
+  );
 }

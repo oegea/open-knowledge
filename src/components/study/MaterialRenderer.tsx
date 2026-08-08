@@ -9,7 +9,7 @@ import styles from './MaterialRenderer.module.css';
 interface MaterialRendererProps {
   material: MaterialPrimitive;
   onExamPassed: () => Promise<void> | void;
-  onExamRetry?: () => void;
+  onExamFinished?: (answers: Record<string, string>, passed: boolean) => Promise<void> | void;
 }
 
 function Markdown({ content }: { content: string }) {
@@ -20,7 +20,7 @@ function Markdown({ content }: { content: string }) {
   );
 }
 
-export function MaterialRenderer({ material, onExamPassed }: MaterialRendererProps) {
+export function MaterialRenderer({ material, onExamPassed, onExamFinished }: MaterialRendererProps) {
   switch (material.type) {
     case 'markdown':
       return <Markdown content={material.markdown} />;
@@ -44,6 +44,8 @@ export function MaterialRenderer({ material, onExamPassed }: MaterialRendererPro
       );
 
     case 'exam':
-      return material.exam ? <ExamPlayer exam={material.exam} onPassed={onExamPassed} /> : null;
+      return material.exam ? (
+        <ExamPlayer exam={material.exam} onPassed={onExamPassed} onFinished={onExamFinished} />
+      ) : null;
   }
 }

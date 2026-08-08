@@ -9,7 +9,9 @@ import { CourseProgress } from '@/modules/study/domain/CourseProgress';
 import { getCourseProgress } from '@/modules/study/application/getCourseProgress';
 import { markMaterialCompleted } from '@/modules/study/application/markMaterialCompleted';
 import { trackMaterialVisit } from '@/modules/study/application/trackMaterialVisit';
+import { mergeProgress } from '@/modules/study/application/mergeProgress';
 import { LocalStorageProgressRepository } from '@/modules/study/infrastructure/LocalStorageProgressRepository';
+import { HttpProgressRepository } from '@/modules/study/infrastructure/HttpProgressRepository';
 import { useI18n } from '@/i18n/I18nProvider';
 import { MaterialRenderer } from './MaterialRenderer';
 import styles from './StudyView.module.css';
@@ -17,6 +19,7 @@ import styles from './StudyView.module.css';
 interface StudyViewProps {
   course: CoursePrimitive;
   currentMaterialId: string;
+  authenticated: boolean;
 }
 
 interface FlatMaterial {
@@ -26,12 +29,31 @@ interface FlatMaterial {
   sectionIndex: number;
 }
 
-export function StudyView({ course, currentMaterialId }: StudyViewProps) {
+export function StudyView({ course, currentMaterialId, authenticated }: StudyViewProps) {
   const { t } = useI18n();
   const router = useRouter();
   const [progress, setProgress] = useState<CourseProgress | null>(null);
   const [contentsOpen, setContentsOpen] = useState(false);
-  const progressRepository = useMemo(() => new LocalStorageProgressRepository(), []);
+  const [certificateId, setCertificateId] = useState<string | null>(null);
+  const progressRepository = useMemo(
+    () => (authenticated ? new HttpProgressRepository() : new LocalStorageProgressRepository()),
+    [authenticated]
+  );
+
+  // Signing in adopts the progress made anonymously on this device.
+  useEffect(() => {
+    if (!authenticated) return;
+    (async () => {
+      const localRepository = new LocalStorageProgressRepository();
+      const merged = await mergeProgress({
+        courseId: course.id!,
+        sourceRepository: localRepository,
+        targetRepository: new HttpProgressRepository(),
+      });
+      localRepository.clear(course.id!);
+      setProgress(merged);
+    })();
+  }, [authenticated, course.id]);
 
   const flatMaterials: FlatMaterial[] = useMemo(
     () =>
@@ -89,10 +111,43 @@ export function StudyView({ course, currentMaterialId }: StudyViewProps) {
     refreshProgress();
   }, [refreshProgress]);
 
+  // Registered users get their attempt graded and recorded server-side.
+  const handleExamFinished = useCallback(
+    async (answers: Record<string, string>) => {
+      if (!authenticated) return;
+      await fetch('/api/exam-attempts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ courseId: course.id, materialId: currentMaterialId, answers }),
+      });
+    },
+    [authenticated, course.id, currentMaterialId]
+  );
+
+  const handleGetCertificate = useCallback(async () => {
+    const response = await fetch('/api/certificates', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ courseId: course.id }),
+    });
+    const body = await response.json();
+    if (response.ok) {
+      setCertificateId(body.certificate.id);
+      router.push(`/certificates/${body.certificate.id}`);
+    }
+  }, [course.id, router]);
+
   if (!current) return null;
 
   const ratio = progress ? progress.completionRatio(orderedMaterialIds) : 0;
   const isCompleted = progress?.isMaterialCompleted(currentMaterialId) ?? false;
+  const requiredMaterialIds = flatMaterials
+    .filter((entry) => entry.material.required)
+    .map((entry) => entry.material.id);
+  const courseCompleted =
+    progress !== null &&
+    requiredMaterialIds.length > 0 &&
+    requiredMaterialIds.every((id) => progress.isMaterialCompleted(id));
 
   return (
     <div className={styles.study}>
@@ -184,6 +239,28 @@ export function StudyView({ course, currentMaterialId }: StudyViewProps) {
         </aside>
 
         <main className={styles.content}>
+          {courseCompleted ? (
+            <aside className={`ok-glass ${styles.completedBanner}`} role="status">
+              <p className={styles.completedTitle}>🎉 {t('study.courseCompleted')}</p>
+              {authenticated ? (
+                <button
+                  className={styles.certificateButton}
+                  onClick={handleGetCertificate}
+                  disabled={certificateId !== null}
+                >
+                  {t('certificate.get')}
+                </button>
+              ) : (
+                <p className={styles.completedHint}>
+                  {t('study.registerToKeep')}{' '}
+                  <Link href="/register" className={styles.completedLink}>
+                    {t('auth.register')}
+                  </Link>
+                </p>
+              )}
+            </aside>
+          ) : null}
+
           <p className={styles.breadcrumb}>
             {current.sectionIndex + 1} · {current.sectionTitle}
           </p>
@@ -192,7 +269,7 @@ export function StudyView({ course, currentMaterialId }: StudyViewProps) {
           <MaterialRenderer
             material={current.material}
             onExamPassed={handleComplete}
-            onExamRetry={refreshProgress}
+            onExamFinished={handleExamFinished}
           />
 
           {current.material.sources.length > 0 ? (

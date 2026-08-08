@@ -112,7 +112,9 @@
     "completed": "完了",
     "markComplete": "完了にする",
     "next": "次へ",
-    "previous": "前へ"
+    "previous": "前へ",
+    "courseCompleted": "コース修了！",
+    "registerToKeep": "登録すると、進捗と証明書をデバイス間で保持できます。"
   },
   "auth": {
     "register": "アカウントを作成",
@@ -135,5 +137,18 @@
     "recoveryCodeLabel": "リカバリーコード",
     "registrationClosed": "このライブラリでは登録が停止されています。アカウントなしでも学習を続けられます。",
     "myAccount": "マイアカウント"
+  },
+  "certificate": {
+    "title": "修了証書",
+    "awardedTo": "授与者",
+    "completedCourse": "コース修了により",
+    "issuedOn": "発行日",
+    "get": "証明書を取得",
+    "view": "証明書を見る",
+    "note": "この証明書は、この ID がこのライブラリでコースの学習パスを修了したことを証明します。"
+  },
+  "account": {
+    "certificates": "証明書",
+    "noCertificates": "まだ証明書がありません。"
   }
 }

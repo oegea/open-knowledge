@@ -112,7 +112,9 @@
     "completed": "已完成",
     "markComplete": "标记为已完成",
     "next": "下一个",
-    "previous": "上一个"
+    "previous": "上一个",
+    "courseCompleted": "课程已完成！",
+    "registerToKeep": "注册以在设备间保存学习进度和证书。"
   },
   "auth": {
     "register": "创建身份",
@@ -135,5 +137,18 @@
     "recoveryCodeLabel": "恢复代码",
     "registrationClosed": "该课程库已关闭注册。你仍可以在没有账户的情况下继续学习。",
     "myAccount": "我的账户"
+  },
+  "certificate": {
+    "title": "结业证书",
+    "awardedTo": "授予",
+    "completedCourse": "完成课程",
+    "issuedOn": "颁发日期",
+    "get": "获取证书",
+    "view": "查看证书",
+    "note": "本证书证明该身份已在本课程库中完成该课程的学习路径。"
+  },
+  "account": {
+    "certificates": "证书",
+    "noCertificates": "还没有证书。"
   }
 }

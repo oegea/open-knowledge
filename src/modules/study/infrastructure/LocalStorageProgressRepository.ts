@@ -24,4 +24,9 @@ export class LocalStorageProgressRepository implements ProgressRepository {
       JSON.stringify(progress.toPrimitive())
     );
   }
+
+  /** Removes the device-local record (after merging into an account). */
+  clear(courseId: string): void {
+    window.localStorage.removeItem(`${STORAGE_PREFIX}${courseId}`);
+  }
 }

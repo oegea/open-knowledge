@@ -112,7 +112,9 @@
     "completed": "Concluído",
     "markComplete": "Marcar como concluído",
     "next": "Seguinte",
-    "previous": "Anterior"
+    "previous": "Anterior",
+    "courseCompleted": "Curso concluído!",
+    "registerToKeep": "Registe-se para manter o progresso e os certificados em todos os dispositivos."
   },
   "auth": {
     "register": "Criar identidade",
@@ -135,5 +137,18 @@
     "recoveryCodeLabel": "Código de recuperação",
     "registrationClosed": "O registo está fechado nesta biblioteca. Pode continuar a estudar sem conta.",
     "myAccount": "A minha conta"
+  },
+  "certificate": {
+    "title": "Certificado de conclusão",
+    "awardedTo": "Atribuído a",
+    "completedCourse": "por concluir o curso",
+    "issuedOn": "Emitido em",
+    "get": "Obter certificado",
+    "view": "Ver certificado",
+    "note": "Este certificado atesta que esta identidade concluiu o percurso de aprendizagem do curso nesta biblioteca."
+  },
+  "account": {
+    "certificates": "Certificados",
+    "noCertificates": "Ainda não tem certificados."
   }
 }
