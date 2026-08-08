@@ -81,6 +81,33 @@
     "addChoice": "Adicionar resposta",
     "correct": "Correta",
     "explanation": "Explicação",
-    "passingScore": "Nota de aprovação (%)"
+    "passingScore": "Nota de aprovação (%)",
+    "check": "Verificar",
+    "correctFeedback": "Correto!",
+    "incorrectFeedback": "Não está correto",
+    "results": "Resultado",
+    "passed": "Aprovado",
+    "failed": "Não aprovado",
+    "retry": "Tentar novamente",
+    "scoreLabel": "Pontuação"
+  },
+  "library": {
+    "all": "Todos",
+    "empty": "Esta biblioteca ainda não tem cursos publicados."
+  },
+  "course": {
+    "start": "Começar o curso",
+    "continue": "Continuar o curso",
+    "contents": "Conteúdo",
+    "aiNoticeTitle": "Conteúdo assistido por IA",
+    "aiNotice": "Este curso inclui conteúdo gerado ou assistido por inteligência artificial. As fontes são indicadas sempre que aplicável.",
+    "materialsCount": "{count} materiais"
+  },
+  "study": {
+    "progress": "Progresso",
+    "completed": "Concluído",
+    "markComplete": "Marcar como concluído",
+    "next": "Seguinte",
+    "previous": "Anterior"
   }
 }

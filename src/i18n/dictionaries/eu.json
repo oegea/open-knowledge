@@ -81,6 +81,33 @@
     "addChoice": "Gehitu erantzuna",
     "correct": "Zuzena",
     "explanation": "Azalpena",
-    "passingScore": "Gainditzeko nota (%)"
+    "passingScore": "Gainditzeko nota (%)",
+    "check": "Egiaztatu",
+    "correctFeedback": "Zuzena!",
+    "incorrectFeedback": "Ez da zuzena",
+    "results": "Emaitza",
+    "passed": "Gaindituta",
+    "failed": "Ez da gainditu",
+    "retry": "Saiatu berriro",
+    "scoreLabel": "Puntuazioa"
+  },
+  "library": {
+    "all": "Guztiak",
+    "empty": "Liburutegi honek ez du oraindik argitaratutako ikastarorik."
+  },
+  "course": {
+    "start": "Hasi ikastaroa",
+    "continue": "Jarraitu ikastaroa",
+    "contents": "Edukia",
+    "aiNoticeTitle": "AA bidez lagundutako edukia",
+    "aiNotice": "Ikastaro honek adimen artifizialaren bidez sortutako edo lagundutako edukia dauka. Iturriak dagokionean adierazten dira.",
+    "materialsCount": "{count} material"
+  },
+  "study": {
+    "progress": "Aurrerapena",
+    "completed": "Osatuta",
+    "markComplete": "Markatu osatutzat",
+    "next": "Hurrengoa",
+    "previous": "Aurrekoa"
   }
 }

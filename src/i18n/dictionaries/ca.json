@@ -81,6 +81,33 @@
     "addChoice": "Afegeix una resposta",
     "correct": "Correcta",
     "explanation": "Explicació",
-    "passingScore": "Nota per aprovar (%)"
+    "passingScore": "Nota per aprovar (%)",
+    "check": "Comprova",
+    "correctFeedback": "Correcte!",
+    "incorrectFeedback": "No és correcte",
+    "results": "Resultat",
+    "passed": "Aprovat",
+    "failed": "No superat",
+    "retry": "Torna-ho a provar",
+    "scoreLabel": "Encerts"
+  },
+  "library": {
+    "all": "Tots",
+    "empty": "Aquesta llibreria encara no té cursos publicats."
+  },
+  "course": {
+    "start": "Comença el curs",
+    "continue": "Continua el curs",
+    "contents": "Contingut",
+    "aiNoticeTitle": "Contingut assistit per IA",
+    "aiNotice": "Aquest curs inclou contingut generat o assistit per intel·ligència artificial. Les fonts s'indiquen sempre que correspon.",
+    "materialsCount": "{count} materials"
+  },
+  "study": {
+    "progress": "Progrés",
+    "completed": "Completat",
+    "markComplete": "Marca com a completat",
+    "next": "Següent",
+    "previous": "Anterior"
   }
 }

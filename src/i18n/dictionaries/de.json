@@ -81,6 +81,33 @@
     "addChoice": "Antwort hinzufügen",
     "correct": "Richtig",
     "explanation": "Erklärung",
-    "passingScore": "Bestehensgrenze (%)"
+    "passingScore": "Bestehensgrenze (%)",
+    "check": "Prüfen",
+    "correctFeedback": "Richtig!",
+    "incorrectFeedback": "Leider falsch",
+    "results": "Ergebnis",
+    "passed": "Bestanden",
+    "failed": "Nicht bestanden",
+    "retry": "Erneut versuchen",
+    "scoreLabel": "Punkte"
+  },
+  "library": {
+    "all": "Alle",
+    "empty": "Diese Bibliothek hat noch keine veröffentlichten Kurse."
+  },
+  "course": {
+    "start": "Kurs starten",
+    "continue": "Kurs fortsetzen",
+    "contents": "Inhalt",
+    "aiNoticeTitle": "KI-unterstützte Inhalte",
+    "aiNotice": "Dieser Kurs enthält Inhalte, die mit künstlicher Intelligenz erstellt oder unterstützt wurden. Quellen werden angegeben, wo zutreffend.",
+    "materialsCount": "{count} Materialien"
+  },
+  "study": {
+    "progress": "Fortschritt",
+    "completed": "Abgeschlossen",
+    "markComplete": "Als abgeschlossen markieren",
+    "next": "Weiter",
+    "previous": "Zurück"
   }
 }

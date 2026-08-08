@@ -81,6 +81,33 @@
     "addChoice": "Aggiungi risposta",
     "correct": "Corretta",
     "explanation": "Spiegazione",
-    "passingScore": "Punteggio minimo (%)"
+    "passingScore": "Punteggio minimo (%)",
+    "check": "Verifica",
+    "correctFeedback": "Corretto!",
+    "incorrectFeedback": "Non è corretto",
+    "results": "Risultato",
+    "passed": "Superato",
+    "failed": "Non superato",
+    "retry": "Riprova",
+    "scoreLabel": "Punteggio"
+  },
+  "library": {
+    "all": "Tutti",
+    "empty": "Questa libreria non ha ancora corsi pubblicati."
+  },
+  "course": {
+    "start": "Inizia il corso",
+    "continue": "Continua il corso",
+    "contents": "Contenuto",
+    "aiNoticeTitle": "Contenuto assistito dall'IA",
+    "aiNotice": "Questo corso include contenuti generati o assistiti dall'intelligenza artificiale. Le fonti sono indicate ove applicabile.",
+    "materialsCount": "{count} materiali"
+  },
+  "study": {
+    "progress": "Progresso",
+    "completed": "Completato",
+    "markComplete": "Segna come completato",
+    "next": "Avanti",
+    "previous": "Indietro"
   }
 }

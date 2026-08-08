@@ -1,0 +1,57 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-3);
+  margin-top: var(--ok-space-3);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  background: var(--ok-primary);
+  color: var(--ok-primary-fg);
+  font-weight: 700;
+  border-radius: var(--ok-radius-full);
+  padding: 0 var(--ok-space-6);
+  min-height: var(--ok-touch-target);
+  box-shadow: var(--ok-shadow-2);
+  transition:
+    background var(--ok-duration-fast) var(--ok-ease),
+    transform var(--ok-duration-fast) var(--ok-ease);
+}
+
+.button:hover {
+  background: var(--ok-primary-hover);
+  transform: translateY(-1px);
+}
+
+.progressWrap {
+  display: flex;
+  align-items: center;
+  gap: var(--ok-space-3);
+  max-width: 20rem;
+}
+
+.progressBar {
+  flex: 1;
+  height: 8px;
+  border-radius: var(--ok-radius-full);
+  background: var(--ok-border);
+  overflow: hidden;
+}
+
+.progressFill {
+  display: block;
+  height: 100%;
+  border-radius: var(--ok-radius-full);
+  background: linear-gradient(90deg, var(--ok-primary), var(--ok-accent));
+  transition: width var(--ok-duration-slow) var(--ok-ease);
+}
+
+.progressText {
+  font-size: var(--ok-text-sm);
+  font-weight: 700;
+  color: var(--ok-primary);
+}

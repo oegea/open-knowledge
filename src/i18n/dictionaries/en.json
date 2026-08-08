@@ -81,6 +81,33 @@
     "addChoice": "Add choice",
     "correct": "Correct",
     "explanation": "Explanation",
-    "passingScore": "Passing score (%)"
+    "passingScore": "Passing score (%)",
+    "check": "Check",
+    "correctFeedback": "Correct!",
+    "incorrectFeedback": "Not quite",
+    "results": "Results",
+    "passed": "Passed",
+    "failed": "Not passed",
+    "retry": "Try again",
+    "scoreLabel": "Score"
+  },
+  "library": {
+    "all": "All",
+    "empty": "This library has no published courses yet."
+  },
+  "course": {
+    "start": "Start course",
+    "continue": "Continue course",
+    "contents": "Contents",
+    "aiNoticeTitle": "AI-assisted content",
+    "aiNotice": "This course includes content generated or assisted by artificial intelligence. Sources are credited wherever applicable.",
+    "materialsCount": "{count} materials"
+  },
+  "study": {
+    "progress": "Progress",
+    "completed": "Completed",
+    "markComplete": "Mark as completed",
+    "next": "Next",
+    "previous": "Previous"
   }
 }

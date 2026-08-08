@@ -1,0 +1,139 @@
+.media {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-5);
+}
+
+.audioCard {
+  padding: var(--ok-space-4);
+}
+
+.audio {
+  width: 100%;
+}
+
+.video {
+  width: 100%;
+  border-radius: var(--ok-radius-lg);
+  box-shadow: var(--ok-shadow-2);
+  background: black;
+}
+
+/* ------------------------------------------------------------------ */
+/* Long-form reading typography                                        */
+/* ------------------------------------------------------------------ */
+.prose {
+  font-family: var(--ok-font-reading);
+  font-size: var(--ok-text-lg);
+  line-height: var(--ok-leading-reading);
+  color: var(--ok-fg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-4);
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  font-family: var(--ok-font-ui);
+  line-height: var(--ok-leading-tight);
+  letter-spacing: -0.01em;
+  margin-top: var(--ok-space-4);
+}
+
+.prose h1 {
+  font-size: var(--ok-text-2xl);
+}
+
+.prose h2 {
+  font-size: var(--ok-text-xl);
+}
+
+.prose h3 {
+  font-size: var(--ok-text-lg);
+}
+
+.prose a {
+  color: var(--ok-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.prose strong {
+  font-weight: 700;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: var(--ok-space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-2);
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--ok-primary);
+  padding: var(--ok-space-2) var(--ok-space-4);
+  background: var(--ok-primary-soft);
+  border-radius: 0 var(--ok-radius-md) var(--ok-radius-md) 0;
+  font-style: italic;
+}
+
+.prose code {
+  font-family: var(--ok-font-mono);
+  font-size: 0.85em;
+  background: var(--ok-bg-raised);
+  border: 1px solid var(--ok-border);
+  border-radius: var(--ok-radius-sm);
+  padding: 0.1em 0.35em;
+}
+
+.prose pre {
+  background: var(--ok-mist-900);
+  color: var(--ok-mist-100);
+  border-radius: var(--ok-radius-md);
+  padding: var(--ok-space-4);
+  overflow-x: auto;
+}
+
+.prose pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+}
+
+.prose img {
+  border-radius: var(--ok-radius-lg);
+  box-shadow: var(--ok-shadow-2);
+  margin: var(--ok-space-2) 0;
+}
+
+.prose table {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: var(--ok-font-ui);
+  font-size: var(--ok-text-sm);
+  display: block;
+  overflow-x: auto;
+}
+
+.prose th,
+.prose td {
+  border: 1px solid var(--ok-border);
+  padding: var(--ok-space-2) var(--ok-space-3);
+  text-align: left;
+}
+
+.prose th {
+  background: var(--ok-bg-raised);
+  font-weight: 700;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--ok-border);
+  margin: var(--ok-space-4) 0;
+}

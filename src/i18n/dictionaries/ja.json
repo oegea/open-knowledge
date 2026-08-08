@@ -81,6 +81,33 @@
     "addChoice": "選択肢を追加",
     "correct": "正解",
     "explanation": "解説",
-    "passingScore": "合格ライン（%）"
+    "passingScore": "合格ライン（%）",
+    "check": "確認",
+    "correctFeedback": "正解！",
+    "incorrectFeedback": "不正解",
+    "results": "結果",
+    "passed": "合格",
+    "failed": "不合格",
+    "retry": "もう一度",
+    "scoreLabel": "スコア"
+  },
+  "library": {
+    "all": "すべて",
+    "empty": "このライブラリにはまだ公開されたコースがありません。"
+  },
+  "course": {
+    "start": "コースを始める",
+    "continue": "コースを続ける",
+    "contents": "目次",
+    "aiNoticeTitle": "AI 支援コンテンツ",
+    "aiNotice": "このコースには、人工知能によって生成または支援されたコンテンツが含まれています。出典は該当する場合に明記されています。",
+    "materialsCount": "{count} 件の教材"
+  },
+  "study": {
+    "progress": "進捗",
+    "completed": "完了",
+    "markComplete": "完了にする",
+    "next": "次へ",
+    "previous": "前へ"
   }
 }
