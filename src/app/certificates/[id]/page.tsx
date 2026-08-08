@@ -32,7 +32,16 @@ export default async function CertificatePage({ params }: PageProps<'/certificat
       <main className={styles.main}>
         <article className={`ok-glass-strong ${styles.certificate}`}>
           <div className={styles.ornamentTop} aria-hidden="true" />
-          <p className={styles.library}>{settings.getLibraryName()}</p>
+          {settings.getLogoPath() ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={settings.getLogoPath()!}
+              alt={settings.getLibraryName()}
+              className={styles.libraryLogo}
+            />
+          ) : (
+            <p className={styles.library}>{settings.getLibraryName()}</p>
+          )}
           <h1 className={styles.title}>{translate(dictionary, 'certificate.title')}</h1>
 
           <p className={styles.awardedTo}>{translate(dictionary, 'certificate.awardedTo')}</p>

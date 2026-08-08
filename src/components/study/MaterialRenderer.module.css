@@ -5,7 +5,50 @@
 }
 
 .audioCard {
-  padding: var(--ok-space-4);
+  position: relative;
+  border-radius: var(--ok-radius-xl);
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--ok-mist-900), var(--ok-lagoon-900));
+  box-shadow: var(--ok-shadow-3);
+}
+
+.audioBackdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(24px) saturate(140%);
+  transform: scale(1.15);
+  opacity: 0.55;
+}
+
+.audioScrim {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--ok-mist-950) 45%, transparent);
+}
+
+.audioInner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ok-space-4);
+  padding: var(--ok-space-6) var(--ok-space-5);
+}
+
+.audioGlyph {
+  width: 4rem;
+  height: 4rem;
+  border-radius: var(--ok-radius-full);
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: white;
+  font-size: var(--ok-text-2xl);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .audio {

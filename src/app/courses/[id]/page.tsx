@@ -166,6 +166,23 @@ export default async function CourseDetailPage({ params }: PageProps<'/courses/[
                 </div>
               ) : null}
 
+              <div className={styles.downloads}>
+                <a
+                  href={`/api/courses/${course.getId()}/export/epub`}
+                  className={styles.downloadButton}
+                  download
+                >
+                  ↓ {translate(dictionary, 'course.downloadEpub')}
+                </a>
+                <a
+                  href={`/api/courses/${course.getId()}/export/pdf`}
+                  className={styles.downloadButton}
+                  download
+                >
+                  ↓ {translate(dictionary, 'course.downloadPdf')}
+                </a>
+              </div>
+
               {course.getSources().length > 0 ? (
                 <div className={styles.asideBlock}>
                   <h3 className={styles.asideBlockTitle}>

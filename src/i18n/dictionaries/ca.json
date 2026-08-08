@@ -141,7 +141,9 @@
     "materialsCount": "{count} materials",
     "bibliography": "Bibliografia i fonts",
     "license": "Llicència",
-    "aboutCourse": "Sobre aquest curs"
+    "aboutCourse": "Sobre aquest curs",
+    "downloadEpub": "Descarrega l'EPUB",
+    "downloadPdf": "Descarrega el PDF"
   },
   "study": {
     "progress": "Progrés",
@@ -151,7 +153,8 @@
     "previous": "Anterior",
     "courseCompleted": "Curs completat!",
     "registerToKeep": "Registra't per conservar el teu progrés i certificats entre dispositius.",
-    "unmarkComplete": "Desmarca com a completat"
+    "unmarkComplete": "Desmarca com a completat",
+    "readingTime": "{min} min de lectura"
   },
   "auth": {
     "register": "Crea una identitat",
@@ -215,5 +218,13 @@
     "menu": "Al menú",
     "footer": "Al peu de pàgina",
     "hidden": "Oculta (només per enllaç)"
+  },
+  "export": {
+    "generatedNote": "Document generat el {date} des de {url}.",
+    "generatedWith": "Generat amb Open Knowledge.",
+    "aboutOpenKnowledge": "Open Knowledge és una aplicació de codi obert (llicència MIT) per crear llibreries de coneixement curat i compartir-les obertament amb Internet, com un regal.",
+    "responsible": "El contingut és responsabilitat del titular de la llibreria on s'ha publicat: {owner}.",
+    "consultOnline": "Aquest material es consulta en línia a l'adreça següent:",
+    "toc": "Índex"
   }
 }

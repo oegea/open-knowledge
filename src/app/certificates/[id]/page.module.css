@@ -40,6 +40,13 @@
   color: var(--ok-primary);
 }
 
+.libraryLogo {
+  max-height: 3rem;
+  max-width: 14rem;
+  object-fit: contain;
+  align-self: center;
+}
+
 .title {
   font-family: var(--ok-font-reading);
   font-size: var(--ok-text-2xl);

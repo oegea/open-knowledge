@@ -26,17 +26,25 @@
 }
 
 .headerNav {
-  display: flex;
+  /* Inline links on wide screens; the sheet menu takes over on mobile. */
+  display: none;
   gap: var(--ok-space-1);
-  /* Horizontal scroll instead of clipping on narrow screens. */
-  overflow-x: auto;
-  scrollbar-width: none;
   min-width: 0;
   flex: 1;
 }
 
-.headerNav::-webkit-scrollbar {
-  display: none;
+.mobileMenu {
+  margin-left: auto;
+}
+
+@media (min-width: 900px) {
+  .headerNav {
+    display: flex;
+  }
+
+  .mobileMenu {
+    display: none;
+  }
 }
 
 .headerLink {

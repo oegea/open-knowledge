@@ -290,6 +290,15 @@
   font-size: var(--ok-text-sm);
   font-weight: 700;
   color: var(--ok-primary);
+  display: flex;
+  align-items: baseline;
+  gap: var(--ok-space-3);
+  flex-wrap: wrap;
+}
+
+.readingTime {
+  font-weight: 500;
+  color: var(--ok-fg-muted);
 }
 
 .materialTitle {

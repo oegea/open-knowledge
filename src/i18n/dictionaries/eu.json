@@ -141,7 +141,9 @@
     "materialsCount": "{count} material",
     "bibliography": "Bibliografia eta iturriak",
     "license": "Lizentzia",
-    "aboutCourse": "Ikastaro honi buruz"
+    "aboutCourse": "Ikastaro honi buruz",
+    "downloadEpub": "Deskargatu EPUB",
+    "downloadPdf": "Deskargatu PDF"
   },
   "study": {
     "progress": "Aurrerapena",
@@ -151,7 +153,8 @@
     "previous": "Aurrekoa",
     "courseCompleted": "Ikastaroa osatuta!",
     "registerToKeep": "Erregistratu zure aurrerapena eta ziurtagiriak gailu guztietan gordetzeko.",
-    "unmarkComplete": "Kendu osatutako marka"
+    "unmarkComplete": "Kendu osatutako marka",
+    "readingTime": "{min} min irakurketa"
   },
   "auth": {
     "register": "Sortu nortasuna",
@@ -215,5 +218,13 @@
     "menu": "Menuan",
     "footer": "Orri-oinean",
     "hidden": "Ezkutua (esteka bidez soilik)"
+  },
+  "export": {
+    "generatedNote": "Dokumentua {date} egunean sortua, hemendik: {url}.",
+    "generatedWith": "Open Knowledge-rekin sortua.",
+    "aboutOpenKnowledge": "Open Knowledge kode irekiko aplikazio bat da (MIT lizentzia), jakintza landuko liburutegiak sortu eta Internetekin modu irekian partekatzeko, opari gisa.",
+    "responsible": "Edukiaren ardura argitaratu den liburutegiaren titularrarena da: {owner}.",
+    "consultOnline": "Material hau sarean kontsultatzen da helbide honetan:",
+    "toc": "Aurkibidea"
   }
 }

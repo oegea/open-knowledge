@@ -141,7 +141,9 @@
     "materialsCount": "{count} 件の教材",
     "bibliography": "参考文献・出典",
     "license": "ライセンス",
-    "aboutCourse": "このコースについて"
+    "aboutCourse": "このコースについて",
+    "downloadEpub": "EPUB をダウンロード",
+    "downloadPdf": "PDF をダウンロード"
   },
   "study": {
     "progress": "進捗",
@@ -151,7 +153,8 @@
     "previous": "前へ",
     "courseCompleted": "コース修了！",
     "registerToKeep": "登録すると、進捗と証明書をデバイス間で保持できます。",
-    "unmarkComplete": "完了を取り消す"
+    "unmarkComplete": "完了を取り消す",
+    "readingTime": "読了目安 {min} 分"
   },
   "auth": {
     "register": "アカウントを作成",
@@ -215,5 +218,13 @@
     "menu": "メニュー内",
     "footer": "フッター内",
     "hidden": "非表示（リンクのみ）"
+  },
+  "export": {
+    "generatedNote": "{date} に {url} から生成されたドキュメントです。",
+    "generatedWith": "Open Knowledge で生成。",
+    "aboutOpenKnowledge": "Open Knowledge は、精選された知識のライブラリを作成しインターネットに贈り物として公開共有するためのオープンソースアプリ（MIT ライセンス）です。",
+    "responsible": "コンテンツの責任は、公開元ライブラリの所有者にあります：{owner}。",
+    "consultOnline": "この教材は次の URL でオンライン視聴してください：",
+    "toc": "目次"
   }
 }

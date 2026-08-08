@@ -1,0 +1,37 @@
+import { exportCourse } from './exportCourse';
+import { ExportStrings } from '../domain/CourseExportRepository';
+import { EpubCourseExportRepository } from '../infrastructure/EpubCourseExportRepository';
+import { PdfCourseExportRepository } from '../infrastructure/PdfCourseExportRepository';
+import { SqliteCourseRepository } from '../../course/infrastructure/SqliteCourseRepository';
+import { SqliteSettingsRepository } from '../../settings/infrastructure/SqliteSettingsRepository';
+import { getDictionary, translate } from '@/i18n/dictionary';
+import { DEFAULT_LOCALE, isLocale } from '@/i18n/config';
+
+/** The document speaks the course's language, not the visitor's. */
+async function stringsProvider(language: string): Promise<ExportStrings> {
+  const dictionary = await getDictionary(isLocale(language) ? language : DEFAULT_LOCALE);
+  return {
+    generatedNote: translate(dictionary, 'export.generatedNote'),
+    generatedWith: translate(dictionary, 'export.generatedWith'),
+    aboutOpenKnowledge: translate(dictionary, 'export.aboutOpenKnowledge'),
+    responsible: translate(dictionary, 'export.responsible'),
+    consultOnline: translate(dictionary, 'export.consultOnline'),
+    toc: translate(dictionary, 'export.toc'),
+    license: translate(dictionary, 'course.license'),
+    authors: translate(dictionary, 'admin.authors'),
+    bibliography: translate(dictionary, 'course.bibliography'),
+  };
+}
+
+export default {
+  exportCourse: async (courseId: string, format: 'epub' | 'pdf', baseUrl: string) =>
+    await exportCourse({
+      courseId,
+      baseUrl,
+      courseRepository: new SqliteCourseRepository(),
+      settingsRepository: new SqliteSettingsRepository(),
+      exportRepository:
+        format === 'epub' ? new EpubCourseExportRepository() : new PdfCourseExportRepository(),
+      stringsProvider,
+    }),
+};

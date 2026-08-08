@@ -141,7 +141,9 @@
     "materialsCount": "{count} 个材料",
     "bibliography": "参考书目与来源",
     "license": "许可证",
-    "aboutCourse": "关于本课程"
+    "aboutCourse": "关于本课程",
+    "downloadEpub": "下载 EPUB",
+    "downloadPdf": "下载 PDF"
   },
   "study": {
     "progress": "进度",
@@ -151,7 +153,8 @@
     "previous": "上一个",
     "courseCompleted": "课程已完成！",
     "registerToKeep": "注册以在设备间保存学习进度和证书。",
-    "unmarkComplete": "取消完成标记"
+    "unmarkComplete": "取消完成标记",
+    "readingTime": "阅读约 {min} 分钟"
   },
   "auth": {
     "register": "创建身份",
@@ -215,5 +218,13 @@
     "menu": "在菜单中",
     "footer": "在页脚",
     "hidden": "隐藏（仅限链接）"
+  },
+  "export": {
+    "generatedNote": "本文档生成于 {date}，来源：{url}。",
+    "generatedWith": "由 Open Knowledge 生成。",
+    "aboutOpenKnowledge": "Open Knowledge 是一款开源应用（MIT 许可证），用于创建精选知识库并作为礼物向互联网开放分享。",
+    "responsible": "内容责任由发布该内容的课程库所有者承担：{owner}。",
+    "consultOnline": "该材料需在线查看，地址如下：",
+    "toc": "目录"
   }
 }

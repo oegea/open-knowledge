@@ -15,8 +15,10 @@
   "dependencies": {
     "adm-zip": "^0.6.0",
     "better-sqlite3": "^13.0.3",
+    "marked": "^18.0.9",
     "next": "16.3.0",
     "otplib": "^13.4.1",
+    "pdfkit": "^0.19.1",
     "qrcode": "^1.5.4",
     "react": "19.2.8",
     "react-dom": "19.2.8",
@@ -32,6 +34,7 @@
     "@types/better-sqlite3": "^9.6.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^20",
+    "@types/pdfkit": "^0.17.6",
     "@types/qrcode": "^1.5.6",
     "@types/react": "^19",
     "@types/react-dom": "^19",

@@ -15,6 +15,7 @@ import { LocalStorageProgressRepository } from '@/modules/study/infrastructure/L
 import { HttpProgressRepository } from '@/modules/study/infrastructure/HttpProgressRepository';
 import { useI18n } from '@/i18n/I18nProvider';
 import { MaterialRenderer } from './MaterialRenderer';
+import { ReadingProgress } from './ReadingProgress';
 import styles from './StudyView.module.css';
 
 interface StudyViewProps {
@@ -174,6 +175,12 @@ export function StudyView({ course, currentMaterialId, authenticated }: StudyVie
 
   if (!current) return null;
 
+  // Editorial touch: estimated reading time for text materials (~200 wpm).
+  const readingMinutes =
+    current.material.type === 'markdown'
+      ? Math.max(1, Math.round(current.material.markdown.split(/\s+/).length / 200))
+      : null;
+
   const ratio = progress ? progress.completionRatio(orderedMaterialIds) : 0;
   const isCompleted = progress?.isMaterialCompleted(currentMaterialId) ?? false;
   const requiredMaterialIds = flatMaterials
@@ -186,6 +193,7 @@ export function StudyView({ course, currentMaterialId, authenticated }: StudyVie
 
   return (
     <div className={styles.study}>
+      <ReadingProgress key={currentMaterialId} />
       <header className={`ok-glass-strong ${styles.header}`}>
         <Link
           href={`/courses/${course.id}`}
@@ -298,11 +306,17 @@ export function StudyView({ course, currentMaterialId, authenticated }: StudyVie
 
           <p className={styles.breadcrumb}>
             {current.sectionIndex + 1} · {current.sectionTitle}
+            {readingMinutes !== null ? (
+              <span className={styles.readingTime}>
+                {t('study.readingTime', { min: readingMinutes })}
+              </span>
+            ) : null}
           </p>
           <h1 className={styles.materialTitle}>{current.material.title}</h1>
 
           <MaterialRenderer
             material={current.material}
+            coverImage={course.coverImage}
             onExamPassed={handleComplete}
             onExamFinished={handleExamFinished}
           />

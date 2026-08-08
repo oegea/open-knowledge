@@ -1,0 +1,17 @@
+.track {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: calc(var(--ok-z-header) + 1);
+  pointer-events: none;
+}
+
+.fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ok-primary), var(--ok-accent));
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 80ms linear;
+}

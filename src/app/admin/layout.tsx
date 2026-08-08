@@ -4,6 +4,7 @@ import { getLocale } from '@/i18n/getLocale';
 import { getDictionary, translate } from '@/i18n/dictionary';
 import { getCurrentUser } from '@/app/serverAuth';
 import identityFactory from '@/modules/identity/application/factory';
+import { AdminMobileMenu } from '@/components/admin/AdminMobileMenu';
 import styles from './layout.module.css';
 
 export default async function AdminLayout({ children }: LayoutProps<'/admin'>) {
@@ -38,6 +39,9 @@ export default async function AdminLayout({ children }: LayoutProps<'/admin'>) {
           </Link>
         </nav>
         <span className={styles.headerTitle}>{translate(dictionary, 'nav.admin')}</span>
+        <div className={styles.mobileMenu}>
+          <AdminMobileMenu />
+        </div>
       </header>
       <main className={styles.main}>{children}</main>
     </div>

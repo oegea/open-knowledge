@@ -141,7 +141,9 @@
     "materialsCount": "{count} Materialien",
     "bibliography": "Bibliographie und Quellen",
     "license": "Lizenz",
-    "aboutCourse": "Über diesen Kurs"
+    "aboutCourse": "Über diesen Kurs",
+    "downloadEpub": "EPUB herunterladen",
+    "downloadPdf": "PDF herunterladen"
   },
   "study": {
     "progress": "Fortschritt",
@@ -151,7 +153,8 @@
     "previous": "Zurück",
     "courseCompleted": "Kurs abgeschlossen!",
     "registerToKeep": "Registriere dich, um Fortschritt und Zertifikate geräteübergreifend zu behalten.",
-    "unmarkComplete": "Als nicht abgeschlossen markieren"
+    "unmarkComplete": "Als nicht abgeschlossen markieren",
+    "readingTime": "{min} Min. Lesezeit"
   },
   "auth": {
     "register": "Identität erstellen",
@@ -215,5 +218,13 @@
     "menu": "Im Menü",
     "footer": "In der Fußzeile",
     "hidden": "Versteckt (nur per Link)"
+  },
+  "export": {
+    "generatedNote": "Dokument erstellt am {date} von {url}.",
+    "generatedWith": "Erstellt mit Open Knowledge.",
+    "aboutOpenKnowledge": "Open Knowledge ist eine Open-Source-Anwendung (MIT-Lizenz) zum Erstellen von Bibliotheken kuratierten Wissens, die offen mit dem Internet geteilt werden — als Geschenk.",
+    "responsible": "Für den Inhalt verantwortlich ist der Inhaber der Bibliothek, in der er veröffentlicht wurde: {owner}.",
+    "consultOnline": "Dieses Material wird online unter folgender Adresse genutzt:",
+    "toc": "Inhaltsverzeichnis"
   }
 }
