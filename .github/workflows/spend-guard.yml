@@ -33,7 +33,8 @@ jobs:
       - name: Read 30-day egress and decide
         id: egress
         env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          # Read-only org token: can query metrics, cannot touch machines.
+          FLY_API_TOKEN: ${{ secrets.FLY_METRICS_TOKEN }}
         run: |
           SENT=$(curl -sf -H "Authorization: $FLY_API_TOKEN" \
             --data-urlencode "query=sum(increase(fly_instance_net_sent_bytes{app=\"$FLY_APP\"}[30d]))" \
@@ -49,19 +50,26 @@ jobs:
 
       - name: Set up flyctl
         if: ${{ steps.egress.outputs.kill == 'true' }}
-        uses: superfly/flyctl-actions/setup-flyctl@master
+        # Pinned to a commit SHA: a mutable tag from a third party could be
+        # repointed at token-stealing code.
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
 
       - name: 'KILL SWITCH: scale app to zero'
         if: ${{ steps.egress.outputs.kill == 'true' }}
         env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          # App-scoped deploy token: can stop THIS app, cannot create
+          # machines elsewhere in the org.
+          FLY_API_TOKEN: ${{ secrets.FLY_DEPLOY_TOKEN }}
         run: flyctl scale count 0 --yes --app "$FLY_APP"
 
       - name: Open an alert issue
         if: ${{ steps.egress.outputs.kill == 'true' }}
         env:
           GH_TOKEN: ${{ github.token }}
+          # Through env, not inline interpolation: never splice runtime
+          # values into a script GitHub assembles textually.
+          SENT: ${{ steps.egress.outputs.sent }}
         run: |
           gh issue create --repo "$GITHUB_REPOSITORY" \
             --title "🚨 spend-guard: app suspended after crossing the egress limit" \
-            --body "30-day egress reached ${{ steps.egress.outputs.sent }} bytes (limit $EGRESS_LIMIT_BYTES). Machines were scaled to zero; the volume and all data are intact. When you have reviewed the traffic, bring the app back with: \`fly scale count 1 --yes --app $FLY_APP\`."
+            --body "30-day egress reached $SENT bytes (limit $EGRESS_LIMIT_BYTES). Machines were scaled to zero; the volume and all data are intact. When you have reviewed the traffic, bring the app back with: \`fly scale count 1 --yes --app $FLY_APP\`."
