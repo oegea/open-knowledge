@@ -24,3 +24,35 @@
 .toggle:active .icon {
   transform: rotate(40deg) scale(0.9);
 }
+
+/* The visible icon mirrors the resolved theme: system preference by default,
+   the explicit data-theme attribute once the visitor toggles. */
+.moon {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .sun {
+    display: none;
+  }
+
+  .moon {
+    display: inline-flex;
+  }
+}
+
+:global([data-theme='light']) .sun {
+  display: inline-flex;
+}
+
+:global([data-theme='light']) .moon {
+  display: none;
+}
+
+:global([data-theme='dark']) .sun {
+  display: none;
+}
+
+:global([data-theme='dark']) .moon {
+  display: inline-flex;
+}

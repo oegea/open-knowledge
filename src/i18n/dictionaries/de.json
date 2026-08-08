@@ -102,7 +102,14 @@
     "logoHeader": "Logo der Kopfzeile",
     "logoCertificates": "Logo der Zertifikate",
     "logoDocuments": "Logo der Dokumente (EPUB/PDF)",
-    "logoFallbackHint": "Wenn leer, wird das Kopfzeilen-Logo verwendet."
+    "logoFallbackHint": "Wenn leer, wird das Kopfzeilen-Logo verwendet.",
+    "postAuthor": "Autor (optional)",
+    "postAuthorHint": "Wird neben dem Veröffentlichungsdatum angezeigt.",
+    "users": "Benutzer",
+    "makeAdmin": "Zum Admin machen",
+    "adminRole": "Admin",
+    "you": "du",
+    "deleteUserWarning": "Dies löscht den Benutzer, seinen Fortschritt, seine Prüfungsergebnisse und Zertifikate dauerhaft."
   },
   "material": {
     "type": {
@@ -202,7 +209,8 @@
   "news": {
     "title": "Neuigkeiten",
     "empty": "Noch keine Neuigkeiten.",
-    "readMore": "Weiterlesen"
+    "readMore": "Weiterlesen",
+    "byAuthor": "Von {author}"
   },
   "notifications": {
     "title": "Benachrichtigungen",
@@ -217,10 +225,7 @@
     "taglineOwned": "Diese Bibliothek gehört {owner} und wird von Open Knowledge betrieben."
   },
   "theme": {
-    "label": "Design",
-    "light": "Hell",
-    "dark": "Dunkel",
-    "auto": "Auto"
+    "label": "Design wechseln"
   },
   "placement": {
     "menu": "Im Menü",

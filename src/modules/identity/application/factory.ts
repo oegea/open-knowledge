@@ -6,6 +6,9 @@ import { getSessionUser } from './getSessionUser';
 import { deleteSession } from './deleteSession';
 import { initAccountRecovery, confirmAccountRecovery } from './recoverAccount';
 import { updateDisplayName } from './updateDisplayName';
+import { listUsers } from './listUsers';
+import { promoteUserToAdmin } from './promoteUserToAdmin';
+import { deleteUser } from './deleteUser';
 import { SqliteUserRepository } from '../infrastructure/SqliteUserRepository';
 import { SqliteSessionRepository } from '../infrastructure/SqliteSessionRepository';
 import { OtplibTotpRepository } from '../infrastructure/OtplibTotpRepository';
@@ -13,6 +16,7 @@ import { SqliteSettingsRepository } from '../../settings/infrastructure/SqliteSe
 import pagesFactory from '../../pages/application/factory';
 import courseFactory from '../../course/application/factory';
 import certificateFactory from '../../certificate/application/factory';
+import notificationFactory from '../../notification/application/factory';
 
 export default {
   hasUsers: async () => (await new SqliteUserRepository().countUsers()) > 0,
@@ -45,6 +49,21 @@ export default {
       userRepository: new SqliteUserRepository(),
       onDisplayNameChanged: async (id, name) => {
         await certificateFactory.updateCertificateHolderName(id, name);
+      },
+    }),
+
+  listUsers: async () => await listUsers({ userRepository: new SqliteUserRepository() }),
+
+  promoteUserToAdmin: async (userId: string) =>
+    await promoteUserToAdmin({ userId, userRepository: new SqliteUserRepository() }),
+
+  deleteUser: async (userId: string, actingUserId: string) =>
+    await deleteUser({
+      userId,
+      actingUserId,
+      userRepository: new SqliteUserRepository(),
+      onUserDeleted: async (id) => {
+        await notificationFactory.deleteNotificationsForUser(id);
       },
     }),
 

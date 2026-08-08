@@ -69,6 +69,45 @@ test.describe('Identity and administration', () => {
     expect(body.courses.length).toBeGreaterThan(0);
   });
 
+  test('the admin manages users: list, promote and delete', async ({ page, request }) => {
+    const { adminIdentifier, adminSecret } = loadState();
+
+    // A second identity, registered through an isolated request context so
+    // the admin session in the page is untouched.
+    const challenge = await (await request.post('/api/identity/challenge')).json();
+    const registered = await request.post('/api/identity/register', {
+      data: {
+        identifier: challenge.identifier,
+        secret: challenge.secret,
+        code: await generate({ secret: challenge.secret }),
+      },
+    });
+    expect(registered.status()).toBe(201);
+
+    await page.goto('/login');
+    await page.getByPlaceholder('Erudito#4821').fill(adminIdentifier);
+    await page
+      .locator('input[inputmode="numeric"]')
+      .fill(await generate({ secret: adminSecret }));
+    await page.getByRole('button', { name: /Iniciar sesión|Sign in/ }).click();
+    await page.waitForURL('**/admin');
+
+    await page.goto('/admin/users');
+    const ownRow = page.locator('li', { hasText: adminIdentifier });
+    await expect(ownRow.getByText(/Admin/)).toBeVisible();
+
+    const newRow = page.locator('li', { hasText: challenge.identifier });
+    await expect(newRow).toBeVisible();
+
+    await newRow.getByRole('button', { name: /Nombrar admin/ }).click();
+    await expect(newRow.getByText(/Admin/)).toBeVisible();
+
+    await newRow.getByRole('button', { name: 'Eliminar' }).click();
+    await expect(newRow.getByText(/elimina permanentemente/)).toBeVisible();
+    await newRow.getByRole('button', { name: 'Eliminar' }).click();
+    await expect(newRow).toHaveCount(0);
+  });
+
   test('the notifications bell shows library activity to signed-in users', async ({ page }) => {
     const { adminIdentifier, adminSecret } = loadState();
 

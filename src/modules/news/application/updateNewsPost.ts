@@ -7,6 +7,7 @@ interface updateNewsPostProps {
   markdown: string;
   published: boolean;
   imagePath?: string | null;
+  author?: string;
   newsRepository: NewsRepository;
   /** Port: notifies readers when the post transitions to published. */
   onNewsPublished?: (post: NewsPost) => Promise<void>;
@@ -18,6 +19,7 @@ export async function updateNewsPost({
   markdown,
   published,
   imagePath,
+  author,
   newsRepository,
   onNewsPublished,
 }: updateNewsPostProps): Promise<NewsPost> {
@@ -31,7 +33,7 @@ export async function updateNewsPost({
   }
 
   const wasPublished = post.isPublished();
-  const updated = post.setContent(title, markdown, published, imagePath ?? null);
+  const updated = post.setContent(title, markdown, published, imagePath ?? null, author ?? '');
   const saved = await newsRepository.save(updated);
 
   if (!wasPublished && saved.isPublished() && onNewsPublished) {

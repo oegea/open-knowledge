@@ -41,6 +41,18 @@ describe('news post use cases (unit)', () => {
       expect(onNewsPublished).not.toHaveBeenCalled();
     });
 
+    it('keeps the manually written byline, trimmed', async () => {
+      const post = await createNewsPost({
+        title: 'Hello',
+        markdown: 'World',
+        published: false,
+        author: '  Oriol Egea  ',
+        newsRepository: NewsRepositoryMother.create(),
+      });
+
+      expect(post.getAuthor()).toBe('Oriol Egea');
+    });
+
     it('rejects empty content', async () => {
       await expect(
         createNewsPost({
@@ -91,6 +103,24 @@ describe('news post use cases (unit)', () => {
       });
 
       expect(onNewsPublished).not.toHaveBeenCalled();
+    });
+
+    it('updates and clears the byline', async () => {
+      const withAuthor = NewsPostMother.create({ author: 'Oriol Egea' });
+      const newsRepository = NewsRepositoryMother.create({
+        findById: jest.fn().mockResolvedValue(withAuthor),
+      });
+
+      const updated = await updateNewsPost({
+        id: 'post-1',
+        title: withAuthor.getTitle(),
+        markdown: withAuthor.getMarkdown(),
+        published: false,
+        author: '',
+        newsRepository,
+      });
+
+      expect(updated.getAuthor()).toBe('');
     });
 
     it('throws when the post does not exist', async () => {

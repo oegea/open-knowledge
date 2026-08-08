@@ -26,7 +26,14 @@ export async function PUT(request: NextRequest, ctx: RouteContext<'/api/news/[id
   try {
     const { id } = await ctx.params;
     const body = await request.json();
-    const post = await newsFactory.updateNewsPost(id, body.title, body.markdown, body.published, body.imagePath);
+    const post = await newsFactory.updateNewsPost(
+      id,
+      body.title,
+      body.markdown,
+      body.published,
+      body.imagePath,
+      body.author
+    );
     return Response.json({ post: post.toPrimitive() });
   } catch (error) {
     return apiError(error);

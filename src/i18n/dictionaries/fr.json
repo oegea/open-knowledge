@@ -102,7 +102,14 @@
     "logoHeader": "Logo de l'en-tête",
     "logoCertificates": "Logo des certificats",
     "logoDocuments": "Logo des documents (EPUB/PDF)",
-    "logoFallbackHint": "Si vide, le logo de l'en-tête est utilisé."
+    "logoFallbackHint": "Si vide, le logo de l'en-tête est utilisé.",
+    "postAuthor": "Auteur (facultatif)",
+    "postAuthorHint": "Affiché à côté de la date de publication.",
+    "users": "Utilisateurs",
+    "makeAdmin": "Nommer admin",
+    "adminRole": "Admin",
+    "you": "vous",
+    "deleteUserWarning": "Cela supprime définitivement l’utilisateur, sa progression, ses résultats d’examens et ses certificats."
   },
   "material": {
     "type": {
@@ -202,7 +209,8 @@
   "news": {
     "title": "Actualités",
     "empty": "Pas d'actualités pour l'instant.",
-    "readMore": "Lire la suite"
+    "readMore": "Lire la suite",
+    "byAuthor": "Par {author}"
   },
   "notifications": {
     "title": "Notifications",
@@ -217,10 +225,7 @@
     "taglineOwned": "Cette bibliothèque appartient à {owner} et est propulsée par Open Knowledge."
   },
   "theme": {
-    "label": "Thème",
-    "light": "Clair",
-    "dark": "Sombre",
-    "auto": "Auto"
+    "label": "Changer de thème"
   },
   "placement": {
     "menu": "Dans le menu",

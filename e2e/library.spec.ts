@@ -29,6 +29,8 @@ test.describe('Public library', () => {
     await page.goto(`/news/${newsPostId}`);
     await expect(page.getByRole('heading', { name: 'Bienvenida a la librería' })).toBeVisible();
     await expect(page.getByText('primer curso')).toBeVisible();
+    // The manually written byline sits next to the publication date.
+    await expect(page.getByText('Por Equipo de la librería')).toBeVisible();
   });
 
   test('footer states the library ownership and engine', async ({ page }) => {
@@ -54,13 +56,15 @@ test.describe('Public library', () => {
     if (await menuTrigger.isVisible()) {
       await menuTrigger.click();
     }
-    const toggle = page.getByRole('button', { name: /Tema/ });
+    const toggle = page.getByRole('button', { name: /tema/i });
 
-    await toggle.click(); // auto -> light
-    await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
-
-    await toggle.click(); // light -> dark
+    // The browser runs with a light system preference, so the first toggle
+    // moves to the opposite: dark.
+    await toggle.click();
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+
+    await toggle.click();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
   });
 
   test('course bibliography renders titled web links', async ({ page }) => {

@@ -41,11 +41,18 @@ export default async function NewsPage() {
                     />
                   ) : null}
                   <span className={styles.postBody}>
-                    <time className={styles.date}>
-                      {new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(
-                        post.getCreatedAt()
-                      )}
-                    </time>
+                    <span className={styles.meta}>
+                      <time className={styles.date}>
+                        {new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(
+                          post.getCreatedAt()
+                        )}
+                      </time>
+                      {post.getAuthor() ? (
+                        <span className={styles.author}>
+                          {translate(dictionary, 'news.byAuthor', { author: post.getAuthor() })}
+                        </span>
+                      ) : null}
+                    </span>
                     <span className={styles.postTitle}>{post.getTitle()}</span>
                     <span className={styles.readMore}>
                       {translate(dictionary, 'news.readMore')} →

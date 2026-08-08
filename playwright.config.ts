@@ -18,7 +18,7 @@ export default defineConfig({
     extraHTTPHeaders: { 'Accept-Language': 'es-ES,es;q=0.9' },
   },
   webServer: {
-    command: 'OK_DATA_DIR=.e2e-data PORT=3100 pnpm dev',
+    command: 'OK_DATA_DIR=.e2e-data OK_DISABLE_RATE_LIMIT=1 PORT=3100 pnpm dev',
     url: 'http://localhost:3100',
     reuseExistingServer: false,
     timeout: 120_000,

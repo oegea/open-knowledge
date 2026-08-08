@@ -100,15 +100,6 @@ export function IconSearch(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-export function IconMegaphone(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg {...base(props)}>
-      <path d="M3 11v2a1 1 0 0 0 1 1h2l4 4V6L6 10H4a1 1 0 0 0-1 1z" />
-      <path d="M14 8.5a4 4 0 0 1 0 7M17.5 6a8 8 0 0 1 0 12" />
-    </svg>
-  );
-}
-
 export function IconSun(props: SVGProps<SVGSVGElement>) {
   return (
     <svg {...base(props)}>
@@ -122,15 +113,6 @@ export function IconMoon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg {...base(props)}>
       <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z" />
-    </svg>
-  );
-}
-
-export function IconThemeAuto(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg {...base(props)}>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none" />
     </svg>
   );
 }

@@ -102,7 +102,14 @@
     "logoHeader": "Логотип шапки",
     "logoCertificates": "Логотип сертификатов",
     "logoDocuments": "Логотип документов (EPUB/PDF)",
-    "logoFallbackHint": "Если пусто, используется логотип шапки."
+    "logoFallbackHint": "Если пусто, используется логотип шапки.",
+    "postAuthor": "Автор (необязательно)",
+    "postAuthorHint": "Отображается рядом с датой публикации.",
+    "users": "Пользователи",
+    "makeAdmin": "Сделать админом",
+    "adminRole": "Админ",
+    "you": "вы",
+    "deleteUserWarning": "Это навсегда удалит пользователя, его прогресс, результаты экзаменов и сертификаты."
   },
   "material": {
     "type": {
@@ -202,7 +209,8 @@
   "news": {
     "title": "Новости",
     "empty": "Новостей пока нет.",
-    "readMore": "Читать далее"
+    "readMore": "Читать далее",
+    "byAuthor": "Автор: {author}"
   },
   "notifications": {
     "title": "Уведомления",
@@ -217,10 +225,7 @@
     "taglineOwned": "Эта библиотека принадлежит {owner} и работает на Open Knowledge."
   },
   "theme": {
-    "label": "Тема",
-    "light": "Светлая",
-    "dark": "Тёмная",
-    "auto": "Авто"
+    "label": "Переключить тему"
   },
   "placement": {
     "menu": "В меню",

@@ -33,7 +33,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 - Tests: Object Mothers (functions) + `RepositoryMother` factories of `jest.fn()` mocks. Unit tests for use cases are mandatory. Run `pnpm test` and `pnpm test:e2e`.
 - Frontend unit tests use RTL with ARIA-role queries; never assert on CSS classes.
-- E2E: Playwright against an isolated instance (`.e2e-data`, port 3100) with a `seed.setup.ts` project dependency; locale pinned to `es-ES`; runs at mobile/tablet/desktop viewports. Registration does real TOTP via otplib.
+- E2E: Playwright against an isolated instance (`.e2e-data`, port 3100) with a `seed.setup.ts` project dependency; locale pinned to `es-ES`; runs at mobile/tablet/desktop viewports. Registration does real TOTP via otplib. The instance runs with `OK_DISABLE_RATE_LIMIT=1` — the suite exceeds the identity endpoints' per-IP limits by design.
 - Next 16 refuses a second `next dev` per project — kill the dev server before `pnpm test:e2e`.
 - Validation is empirical, not just tests: run the app and visually verify UI at ~360, 768, and 1440 px, in BOTH themes, INCLUDING logged-in admin views, before claiming anything done. For generated files, inspect the real artifact (unzip the EPUB, render the PDF to png with `sips`).
 

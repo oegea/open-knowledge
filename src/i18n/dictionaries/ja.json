@@ -102,7 +102,14 @@
     "logoHeader": "ヘッダーのロゴ",
     "logoCertificates": "証明書のロゴ",
     "logoDocuments": "ドキュメントのロゴ（EPUB/PDF）",
-    "logoFallbackHint": "空欄の場合はヘッダーのロゴが使われます。"
+    "logoFallbackHint": "空欄の場合はヘッダーのロゴが使われます。",
+    "postAuthor": "著者（任意）",
+    "postAuthorHint": "公開日の横に表示されます。",
+    "users": "ユーザー",
+    "makeAdmin": "管理者にする",
+    "adminRole": "管理者",
+    "you": "あなた",
+    "deleteUserWarning": "ユーザーとその学習進捗、試験結果、証明書が完全に削除されます。"
   },
   "material": {
     "type": {
@@ -202,7 +209,8 @@
   "news": {
     "title": "ニュース",
     "empty": "まだニュースがありません。",
-    "readMore": "続きを読む"
+    "readMore": "続きを読む",
+    "byAuthor": "著者: {author}"
   },
   "notifications": {
     "title": "通知",
@@ -217,10 +225,7 @@
     "taglineOwned": "このライブラリは {owner} が所有し、Open Knowledge が支えています。"
   },
   "theme": {
-    "label": "テーマ",
-    "light": "ライト",
-    "dark": "ダーク",
-    "auto": "自動"
+    "label": "テーマを切り替える"
   },
   "placement": {
     "menu": "メニュー内",

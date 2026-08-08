@@ -102,7 +102,14 @@
     "logoHeader": "Goiburuko logoa",
     "logoCertificates": "Ziurtagirien logoa",
     "logoDocuments": "Dokumentuen logoa (EPUB/PDF)",
-    "logoFallbackHint": "Hutsik uzten baduzu, goiburuko logoa erabiliko da."
+    "logoFallbackHint": "Hutsik uzten baduzu, goiburuko logoa erabiliko da.",
+    "postAuthor": "Egilea (aukerakoa)",
+    "postAuthorHint": "Argitalpen-dataren ondoan agertzen da.",
+    "users": "Erabiltzaileak",
+    "makeAdmin": "Admin izendatu",
+    "adminRole": "Admin",
+    "you": "zu",
+    "deleteUserWarning": "Honek erabiltzailea, haren aurrerapena, azterketa-emaitzak eta ziurtagiriak betiko ezabatzen ditu."
   },
   "material": {
     "type": {
@@ -202,7 +209,8 @@
   "news": {
     "title": "Berriak",
     "empty": "Oraindik ez dago berririk.",
-    "readMore": "Irakurri gehiago"
+    "readMore": "Irakurri gehiago",
+    "byAuthor": "{author} egilea"
   },
   "notifications": {
     "title": "Jakinarazpenak",
@@ -217,10 +225,7 @@
     "taglineOwned": "Liburutegi hau {owner}(r)ena da eta Open Knowledge-k bultzatzen du."
   },
   "theme": {
-    "label": "Gaia",
-    "light": "Argia",
-    "dark": "Iluna",
-    "auto": "Automatikoa"
+    "label": "Gaia aldatu"
   },
   "placement": {
     "menu": "Menuan",

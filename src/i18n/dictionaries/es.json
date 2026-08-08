@@ -102,7 +102,14 @@
     "logoHeader": "Logo del encabezado",
     "logoCertificates": "Logo de los certificados",
     "logoDocuments": "Logo de los documentos (EPUB/PDF)",
-    "logoFallbackHint": "Si lo dejas vacío se usará el logo del encabezado."
+    "logoFallbackHint": "Si lo dejas vacío se usará el logo del encabezado.",
+    "postAuthor": "Autor (opcional)",
+    "postAuthorHint": "Se muestra junto a la fecha de publicación.",
+    "users": "Usuarios",
+    "makeAdmin": "Nombrar admin",
+    "adminRole": "Admin",
+    "you": "tú",
+    "deleteUserWarning": "Esto elimina permanentemente al usuario, su progreso, resultados de exámenes y certificados."
   },
   "material": {
     "type": {
@@ -202,7 +209,8 @@
   "news": {
     "title": "Noticias",
     "empty": "Aún no hay noticias.",
-    "readMore": "Leer más"
+    "readMore": "Leer más",
+    "byAuthor": "Por {author}"
   },
   "notifications": {
     "title": "Notificaciones",
@@ -217,10 +225,7 @@
     "taglineOwned": "Esta librería pertenece a {owner} y está impulsada por Open Knowledge."
   },
   "theme": {
-    "label": "Tema",
-    "light": "Claro",
-    "dark": "Oscuro",
-    "auto": "Automático"
+    "label": "Cambiar tema"
   },
   "placement": {
     "menu": "En el menú",

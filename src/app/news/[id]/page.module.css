@@ -31,6 +31,24 @@
   align-self: flex-start;
 }
 
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--ok-space-2);
+  margin: 0;
+}
+
+.author {
+  font-size: 0.85rem;
+  color: var(--ok-fg-muted);
+}
+
+.author::before {
+  content: '·';
+  margin-inline-end: var(--ok-space-2);
+}
+
 .date {
   font-size: var(--ok-text-xs);
   font-weight: 700;

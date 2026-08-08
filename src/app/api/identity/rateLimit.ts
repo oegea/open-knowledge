@@ -10,6 +10,10 @@ export function allowRequest(
   windowMs: number,
   now: number = Date.now()
 ): boolean {
+  // E2E suites register and sign in far more often than any human; the
+  // isolated test instance opts out explicitly.
+  if (process.env.OK_DISABLE_RATE_LIMIT === '1') return true;
+
   const windowStart = now - windowMs;
   const timestamps = (buckets.get(key) ?? []).filter((t) => t > windowStart);
   if (timestamps.length >= limit) {

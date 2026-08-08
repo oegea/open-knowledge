@@ -62,6 +62,15 @@ export class SqliteUserRepository implements UserRepository {
     return row ? this.mapRow(row) : null;
   }
 
+  async findAll(): Promise<User[]> {
+    const rows = this.db.prepare('SELECT * FROM users ORDER BY created_at ASC').all() as UserRow[];
+    return rows.map((row) => this.mapRow(row));
+  }
+
+  async delete(id: string): Promise<boolean> {
+    return this.db.prepare('DELETE FROM users WHERE id = ?').run(id).changes > 0;
+  }
+
   async countUsers(): Promise<number> {
     const row = this.db.prepare('SELECT COUNT(*) AS count FROM users').get() as { count: number };
     return row.count;

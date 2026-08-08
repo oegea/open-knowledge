@@ -6,6 +6,7 @@ export function create(overrides?: Partial<NotificationRepository>): Notificatio
     findForUser: jest.fn().mockResolvedValue([]),
     getSeenAt: jest.fn().mockResolvedValue(null),
     markSeen: jest.fn().mockResolvedValue(undefined),
+    deleteForUser: jest.fn().mockResolvedValue(undefined),
     ...overrides,
   };
 }

@@ -100,6 +100,7 @@ setup('seed a fresh instance', async ({ request }) => {
     data: {
       title: 'Bienvenida a la librería',
       markdown: 'Acabamos de publicar nuestro **primer curso**.',
+      author: 'Equipo de la librería',
       published: true,
     },
   });

@@ -16,13 +16,15 @@ export default {
     title: string,
     markdown: string,
     published: boolean,
-    imagePath?: string | null
+    imagePath?: string | null,
+    author?: string
   ) =>
     await createNewsPost({
       title,
       markdown,
       published,
       imagePath,
+      author,
       newsRepository: new SqliteNewsRepository(),
       onNewsPublished: notifyNewsPublished,
     }),
@@ -32,7 +34,8 @@ export default {
     title: string,
     markdown: string,
     published: boolean,
-    imagePath?: string | null
+    imagePath?: string | null,
+    author?: string
   ) =>
     await updateNewsPost({
       id,
@@ -40,6 +43,7 @@ export default {
       markdown,
       published,
       imagePath,
+      author,
       newsRepository: new SqliteNewsRepository(),
       onNewsPublished: notifyNewsPublished,
     }),

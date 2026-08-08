@@ -113,6 +113,18 @@ export class User {
     );
   }
 
+  promoteToAdmin(): User {
+    return User.create(
+      this.id,
+      this.identifier.toPrimitive(),
+      this.totpSecret,
+      this.recoveryCodeHash,
+      true,
+      this.displayName,
+      this.createdAt
+    );
+  }
+
   getCreatedAt(): Date {
     return new Date(this.createdAt);
   }

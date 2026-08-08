@@ -99,6 +99,7 @@ CREATE TABLE IF NOT EXISTS news_posts (
   title TEXT NOT NULL,
   markdown TEXT NOT NULL,
   image_path TEXT,
+  author TEXT NOT NULL DEFAULT '',
   published INTEGER NOT NULL DEFAULT 0,
   created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL
@@ -152,6 +153,7 @@ function migrate(db: Database.Database): void {
   addColumnIfMissing(db, 'news_posts', 'image_path', 'TEXT');
   addColumnIfMissing(db, 'users', 'display_name', "TEXT NOT NULL DEFAULT ''");
   addColumnIfMissing(db, 'certificates', 'display_name', "TEXT NOT NULL DEFAULT ''");
+  addColumnIfMissing(db, 'news_posts', 'author', "TEXT NOT NULL DEFAULT ''");
 }
 
 function addColumnIfMissing(

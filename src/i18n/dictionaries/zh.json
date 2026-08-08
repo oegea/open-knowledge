@@ -102,7 +102,14 @@
     "logoHeader": "页眉标志",
     "logoCertificates": "证书标志",
     "logoDocuments": "文档标志（EPUB/PDF）",
-    "logoFallbackHint": "留空则使用页眉标志。"
+    "logoFallbackHint": "留空则使用页眉标志。",
+    "postAuthor": "作者（可选）",
+    "postAuthorHint": "显示在发布日期旁边。",
+    "users": "用户",
+    "makeAdmin": "设为管理员",
+    "adminRole": "管理员",
+    "you": "你",
+    "deleteUserWarning": "这将永久删除该用户及其学习进度、考试成绩和证书。"
   },
   "material": {
     "type": {
@@ -202,7 +209,8 @@
   "news": {
     "title": "动态",
     "empty": "暂无动态。",
-    "readMore": "阅读更多"
+    "readMore": "阅读更多",
+    "byAuthor": "作者：{author}"
   },
   "notifications": {
     "title": "通知",
@@ -217,10 +225,7 @@
     "taglineOwned": "本课程库归 {owner} 所有，由 Open Knowledge 驱动。"
   },
   "theme": {
-    "label": "主题",
-    "light": "浅色",
-    "dark": "深色",
-    "auto": "自动"
+    "label": "切换主题"
   },
   "placement": {
     "menu": "在菜单中",

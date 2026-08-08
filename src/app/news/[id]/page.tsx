@@ -39,9 +39,16 @@ export default async function NewsPostPage({ params }: PageProps<'/news/[id]'>) 
           <Link href="/news" className={styles.back}>
             ← {translate(dictionary, 'news.title')}
           </Link>
-          <time className={styles.date}>
-            {new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(post.getCreatedAt())}
-          </time>
+          <p className={styles.meta}>
+            <time className={styles.date}>
+              {new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(post.getCreatedAt())}
+            </time>
+            {post.getAuthor() ? (
+              <span className={styles.author}>
+                {translate(dictionary, 'news.byAuthor', { author: post.getAuthor() })}
+              </span>
+            ) : null}
+          </p>
           <h1 className={styles.title}>{post.getTitle()}</h1>
           <Prose content={post.getMarkdown()} />
         </article>

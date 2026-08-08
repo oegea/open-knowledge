@@ -6,4 +6,6 @@ export interface NotificationRepository {
   findForUser(userId: string, limit: number): Promise<Notification[]>;
   getSeenAt(userId: string): Promise<Date | null>;
   markSeen(userId: string, at: Date): Promise<void>;
+  /** Removes the user's personal notifications (broadcasts stay). */
+  deleteForUser(userId: string): Promise<void>;
 }

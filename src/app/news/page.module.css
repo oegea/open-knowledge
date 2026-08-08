@@ -53,6 +53,23 @@
   box-shadow: var(--ok-shadow-3);
 }
 
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--ok-space-2);
+}
+
+.author {
+  font-size: 0.8rem;
+  color: var(--ok-fg-muted);
+}
+
+.author::before {
+  content: '·';
+  margin-inline-end: var(--ok-space-2);
+}
+
 .date {
   font-size: var(--ok-text-xs);
   font-weight: 700;

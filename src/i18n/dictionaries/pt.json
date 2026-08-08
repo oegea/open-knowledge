@@ -102,7 +102,14 @@
     "logoHeader": "Logótipo do cabeçalho",
     "logoCertificates": "Logótipo dos certificados",
     "logoDocuments": "Logótipo dos documentos (EPUB/PDF)",
-    "logoFallbackHint": "Se vazio, é usado o logótipo do cabeçalho."
+    "logoFallbackHint": "Se vazio, é usado o logótipo do cabeçalho.",
+    "postAuthor": "Autor (opcional)",
+    "postAuthorHint": "Mostrado junto à data de publicação.",
+    "users": "Utilizadores",
+    "makeAdmin": "Tornar admin",
+    "adminRole": "Admin",
+    "you": "tu",
+    "deleteUserWarning": "Isto elimina permanentemente o utilizador, o seu progresso, resultados de exames e certificados."
   },
   "material": {
     "type": {
@@ -202,7 +209,8 @@
   "news": {
     "title": "Notícias",
     "empty": "Ainda não há notícias.",
-    "readMore": "Ler mais"
+    "readMore": "Ler mais",
+    "byAuthor": "Por {author}"
   },
   "notifications": {
     "title": "Notificações",
@@ -217,10 +225,7 @@
     "taglineOwned": "Esta biblioteca pertence a {owner} e é impulsionada por Open Knowledge."
   },
   "theme": {
-    "label": "Tema",
-    "light": "Claro",
-    "dark": "Escuro",
-    "auto": "Automático"
+    "label": "Alternar tema"
   },
   "placement": {
     "menu": "No menu",

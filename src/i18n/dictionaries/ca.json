@@ -102,7 +102,14 @@
     "logoHeader": "Logotip de la capçalera",
     "logoCertificates": "Logotip dels certificats",
     "logoDocuments": "Logotip dels documents (EPUB/PDF)",
-    "logoFallbackHint": "Si el deixes buit, s'usarà el logotip de la capçalera."
+    "logoFallbackHint": "Si el deixes buit, s'usarà el logotip de la capçalera.",
+    "postAuthor": "Autor (opcional)",
+    "postAuthorHint": "Es mostra al costat de la data de publicació.",
+    "users": "Usuaris",
+    "makeAdmin": "Nomenar admin",
+    "adminRole": "Admin",
+    "you": "tu",
+    "deleteUserWarning": "Això elimina permanentment l’usuari, el seu progrés, els resultats dels exàmens i els certificats."
   },
   "material": {
     "type": {
@@ -202,7 +209,8 @@
   "news": {
     "title": "Notícies",
     "empty": "Encara no hi ha notícies.",
-    "readMore": "Llegeix més"
+    "readMore": "Llegeix més",
+    "byAuthor": "Per {author}"
   },
   "notifications": {
     "title": "Notificacions",
@@ -217,10 +225,7 @@
     "taglineOwned": "Aquesta llibreria pertany a {owner} i funciona amb Open Knowledge."
   },
   "theme": {
-    "label": "Tema",
-    "light": "Clar",
-    "dark": "Fosc",
-    "auto": "Automàtic"
+    "label": "Canviar el tema"
   },
   "placement": {
     "menu": "Al menú",

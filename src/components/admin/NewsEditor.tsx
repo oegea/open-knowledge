@@ -19,6 +19,7 @@ export function NewsEditor({ initial }: NewsEditorProps) {
   const [title, setTitle] = useState(initial?.title ?? '');
   const [markdown, setMarkdown] = useState(initial?.markdown ?? '');
   const [imagePath, setImagePath] = useState<string | null>(initial?.imagePath ?? null);
+  const [author, setAuthor] = useState(initial?.author ?? '');
   const [published, setPublished] = useState(initial?.published ?? false);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -47,7 +48,7 @@ export function NewsEditor({ initial }: NewsEditorProps) {
       const response = await fetch(initial?.id ? `/api/news/${initial.id}` : '/api/news', {
         method: initial?.id ? 'PUT' : 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, markdown, published, imagePath }),
+        body: JSON.stringify({ title, markdown, published, imagePath, author }),
       });
       const body = await response.json();
       if (!response.ok) throw new Error(body.error ?? t('common.error'));
@@ -68,6 +69,14 @@ export function NewsEditor({ initial }: NewsEditorProps) {
         onChange={(event) => setTitle(event.target.value)}
         required
         maxLength={200}
+      />
+
+      <TextField
+        label={t('admin.postAuthor')}
+        value={author}
+        onChange={(event) => setAuthor(event.target.value)}
+        maxLength={100}
+        hint={t('admin.postAuthorHint')}
       />
 
       <div className={styles.imageBlock}>

@@ -1,35 +1,27 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { useI18n } from '@/i18n/I18nProvider';
-import { IconMoon, IconSun, IconThemeAuto } from '../ui/icons';
+import { IconMoon, IconSun } from '../ui/icons';
 import styles from './ThemeToggle.module.css';
 
-type Theme = 'auto' | 'light' | 'dark';
-
-const ORDER: Theme[] = ['auto', 'light', 'dark'];
-
-function applyTheme(theme: Theme) {
-  if (theme === 'auto') {
-    delete document.documentElement.dataset.theme;
-  } else {
-    document.documentElement.dataset.theme = theme;
-  }
+function resolveTheme(): 'light' | 'dark' {
+  const explicit = document.documentElement.dataset.theme;
+  if (explicit === 'light' || explicit === 'dark') return explicit;
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
 
+/**
+ * Binary light/dark switch. The system preference only decides the initial
+ * theme (no cookie, no data-theme attribute); toggling always moves to the
+ * opposite of whatever is currently resolved. Which icon shows is driven
+ * purely by CSS, so the server render never mismatches the client.
+ */
 export function ThemeToggle() {
   const { t } = useI18n();
-  const [theme, setTheme] = useState<Theme>('auto');
-
-  useEffect(() => {
-    const current = document.documentElement.dataset.theme;
-    if (current === 'light' || current === 'dark') setTheme(current);
-  }, []);
 
   const handleToggle = () => {
-    const next = ORDER[(ORDER.indexOf(theme) + 1) % ORDER.length];
-    setTheme(next);
-    applyTheme(next);
+    const next = resolveTheme() === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
     document.cookie = `ok_theme=${next};path=/;max-age=31536000;samesite=lax`;
   };
 
@@ -37,11 +29,14 @@ export function ThemeToggle() {
     <button
       className={styles.toggle}
       onClick={handleToggle}
-      aria-label={`${t('theme.label')}: ${t(`theme.${theme}`)}`}
-      title={`${t('theme.label')}: ${t(`theme.${theme}`)}`}
+      aria-label={t('theme.label')}
+      title={t('theme.label')}
     >
-      <span aria-hidden="true" className={styles.icon}>
-        {theme === 'light' ? <IconSun /> : theme === 'dark' ? <IconMoon /> : <IconThemeAuto />}
+      <span aria-hidden="true" className={`${styles.icon} ${styles.sun}`}>
+        <IconSun />
+      </span>
+      <span aria-hidden="true" className={`${styles.icon} ${styles.moon}`}>
+        <IconMoon />
       </span>
     </button>
   );

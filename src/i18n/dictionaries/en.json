@@ -102,7 +102,14 @@
     "logoHeader": "Header logo",
     "logoCertificates": "Certificates logo",
     "logoDocuments": "Documents logo (EPUB/PDF)",
-    "logoFallbackHint": "If empty, the header logo is used."
+    "logoFallbackHint": "If empty, the header logo is used.",
+    "postAuthor": "Author (optional)",
+    "postAuthorHint": "Shown next to the publication date.",
+    "users": "Users",
+    "makeAdmin": "Make admin",
+    "adminRole": "Admin",
+    "you": "you",
+    "deleteUserWarning": "This permanently deletes the user, their progress, exam results and certificates."
   },
   "material": {
     "type": {
@@ -202,7 +209,8 @@
   "news": {
     "title": "News",
     "empty": "No news yet.",
-    "readMore": "Read more"
+    "readMore": "Read more",
+    "byAuthor": "By {author}"
   },
   "notifications": {
     "title": "Notifications",
@@ -217,10 +225,7 @@
     "taglineOwned": "This library belongs to {owner} and is powered by Open Knowledge."
   },
   "theme": {
-    "label": "Theme",
-    "light": "Light",
-    "dark": "Dark",
-    "auto": "Auto"
+    "label": "Toggle theme"
   },
   "placement": {
     "menu": "In the menu",

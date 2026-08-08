@@ -102,7 +102,14 @@
     "logoHeader": "Логотип шапки",
     "logoCertificates": "Логотип сертифікатів",
     "logoDocuments": "Логотип документів (EPUB/PDF)",
-    "logoFallbackHint": "Якщо порожньо, використовується логотип шапки."
+    "logoFallbackHint": "Якщо порожньо, використовується логотип шапки.",
+    "postAuthor": "Автор (необов’язково)",
+    "postAuthorHint": "Показується поруч із датою публікації.",
+    "users": "Користувачі",
+    "makeAdmin": "Зробити адміном",
+    "adminRole": "Адмін",
+    "you": "ви",
+    "deleteUserWarning": "Це назавжди видалить користувача, його прогрес, результати іспитів і сертифікати."
   },
   "material": {
     "type": {
@@ -202,7 +209,8 @@
   "news": {
     "title": "Новини",
     "empty": "Новин поки немає.",
-    "readMore": "Читати далі"
+    "readMore": "Читати далі",
+    "byAuthor": "Автор: {author}"
   },
   "notifications": {
     "title": "Сповіщення",
@@ -217,10 +225,7 @@
     "taglineOwned": "Ця бібліотека належить {owner} і працює на Open Knowledge."
   },
   "theme": {
-    "label": "Тема",
-    "light": "Світла",
-    "dark": "Темна",
-    "auto": "Авто"
+    "label": "Змінити тему"
   },
   "placement": {
     "menu": "У меню",

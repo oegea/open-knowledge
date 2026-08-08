@@ -72,4 +72,10 @@ export class SqliteNotificationRepository implements NotificationRepository {
       )
       .run(userId, at.toISOString());
   }
+
+  async deleteForUser(userId: string): Promise<void> {
+    // The notifications table has no foreign key (broadcast rows have a
+    // NULL user_id), so personal rows are removed explicitly.
+    this.db.prepare('DELETE FROM notifications WHERE user_id = ?').run(userId);
+  }
 }

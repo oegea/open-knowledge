@@ -8,6 +8,7 @@ interface NewsRow {
   title: string;
   markdown: string;
   image_path: string | null;
+  author: string;
   published: number;
   created_at: string;
   updated_at: string;
@@ -28,12 +29,13 @@ export class SqliteNewsRepository implements NewsRepository {
 
     this.db
       .prepare(
-        `INSERT INTO news_posts (id, title, markdown, image_path, published, created_at, updated_at)
-         VALUES (@id, @title, @markdown, @imagePath, @published, @createdAt, @updatedAt)
+        `INSERT INTO news_posts (id, title, markdown, image_path, author, published, created_at, updated_at)
+         VALUES (@id, @title, @markdown, @imagePath, @author, @published, @createdAt, @updatedAt)
          ON CONFLICT(id) DO UPDATE SET
            title = @title,
            markdown = @markdown,
            image_path = @imagePath,
+           author = @author,
            published = @published,
            updated_at = @updatedAt`
       )
@@ -42,6 +44,7 @@ export class SqliteNewsRepository implements NewsRepository {
         title: data.title,
         markdown: data.markdown,
         imagePath: data.imagePath,
+        author: data.author,
         published: data.published ? 1 : 0,
         createdAt: data.createdAt,
         updatedAt: data.updatedAt,
@@ -75,6 +78,7 @@ export class SqliteNewsRepository implements NewsRepository {
       title: row.title,
       markdown: row.markdown,
       imagePath: row.image_path,
+      author: row.author ?? '',
       published: row.published === 1,
       createdAt: row.created_at,
       updatedAt: row.updated_at,
