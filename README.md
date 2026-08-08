@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Open Knowledge
 
-## Getting Started
+**An open, self-hosted library of knowledge.** Deploy your own instance, curate and publish courses, and offer them openly to anyone who wants to learn.
 
-First, run the development server:
+In a world where AI lets us distill knowledge at a scale that used to be unthinkable, Open Knowledge is the open tool to organize that knowledge, publish it, and offer it to others — as a gift, not a business. The learner is not a product: no names, no emails, no profiles. If someone just wants to read, they can. If they want to keep their progress, they get a pseudonymous identity and nothing more.
+
+## What it does
+
+- **Public course library** — anyone can browse the catalog, filter by language and category, and study complete courses without registering (audit-style).
+- **Study mode** — careful long-form reading typography, markdown/audio/video materials, sequential navigation, visual progress, continue-where-you-left-off.
+- **Exams with feedback** — simple open JSON question format; after answering you see why an answer was right or wrong, not just a score.
+- **Pseudonymous accounts** — a random identity like `Erudito#4821` plus a TOTP authenticator. No personal data, ever. Recovery via a one-time code.
+- **Progress, results and certificates** — registered learners keep progress across devices, exam results are graded and recorded server-side, and completing a course earns a beautiful shareable certificate.
+- **Single administrator** — the first account registered becomes the admin: full course editor (sections, materials, exam builder, media uploads), instance settings, optional news/blog section.
+- **Notifications** — new courses, news and earned certificates, right in the header. Nothing social.
+- **13 languages** — Español, English, Français, Deutsch, Italiano, 简体中文, Русский, Українська, Català, Galego, Euskara, Português, 日本語. Courses declare their own language and the catalog filters by it.
+- **Mobile-first** — designed for phones and tablets first, with touch-sized controls and fluid, subtle animations. Light and dark themes.
+
+## Self-hosting
+
+Requirements: Node.js 20+ and pnpm.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+pnpm build
+pnpm start          # serves on port 3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open the instance, register the first account (it becomes the administrator, guard its recovery code), and start publishing.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+All instance state — SQLite database, uploaded media, encryption key — lives in the `data/` directory. **Backing up your library is copying that folder.** Set `OK_DATA_DIR` to relocate it.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Development
 
-## Learn More
+```bash
+pnpm dev            # dev server on :3000
+pnpm test           # unit + integration tests (Jest)
+pnpm test:e2e       # end-to-end suite (Playwright: mobile / tablet / desktop)
+pnpm lint
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Architecture
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Next.js (App Router) full-stack monolith. Business logic lives in framework-agnostic modules under `src/modules/{context}/` following Clean Architecture with DDD-style bounded contexts (domain / application / infrastructure / test). Every architectural, product and design decision is recorded in [`docs/adr`](./docs/adr/README.md).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Philosophy
 
-## Deploy on Vercel
+Knowledge takes the center. The interface disappears around it. Technology makes publishing simpler, AI helps structure knowledge without hiding where it came from — and the quality of the experience proves that an open, self-hostable, free tool conceived as a gift doesn't have to feel worse than a commercial product.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Someone deploys Open Knowledge. Publishes knowledge. Someone else walks in. And learns.
