@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { cookies } from 'next/headers';
 import { Manrope, Source_Serif_4, Geist_Mono } from 'next/font/google';
 import { getLocale } from '@/i18n/getLocale';
@@ -21,6 +21,14 @@ const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
 });
+
+export const viewport: Viewport = {
+  // Mobile browser chrome follows the active theme, like a native app.
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#f6f9fa' },
+    { media: '(prefers-color-scheme: dark)', color: '#0b1117' },
+  ],
+};
 
 export async function generateMetadata(): Promise<Metadata> {
   // The configured library name leads every tab title; child pages append
