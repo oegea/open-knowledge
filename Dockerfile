@@ -4,6 +4,9 @@
 
 FROM node:22-slim AS builder
 WORKDIR /app
+# Toolchain for native addons (better-sqlite3 compiles via node-gyp).
+RUN apt-get update && apt-get install -y --no-install-recommends python3 make g++ \
+  && rm -rf /var/lib/apt/lists/*
 RUN corepack enable
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 # Native addons (better-sqlite3, sharp) compile during install.

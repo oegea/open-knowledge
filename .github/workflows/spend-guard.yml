@@ -1,0 +1,62 @@
+# Cost kill-switch for the Fly.io deployment.
+#
+# Fly has no native spending cap, so this checks outbound traffic every
+# 15 minutes and destroys the app's machines (volume and data survive)
+# when the 30-day egress crosses the threshold — bounding a traffic
+# attack at roughly 10 USD total. Recovery is manual and deliberate:
+#   fly scale count 1 --yes
+#
+# Note: GitHub disables cron workflows on public repos after ~60 days
+# without commits; a push re-enables them.
+
+name: spend-guard
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+env:
+  FLY_APP: open-knowledge
+  FLY_ORG: personal
+  # ~450 GB ≈ 100 GB free allowance + ~350 GB billed (~7 USD) + machine
+  # cost ≈ the 10 USD ceiling.
+  EGRESS_LIMIT_BYTES: '450000000000'
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read 30-day egress from Fly metrics
+        id: egress
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          SENT=$(curl -sf -H "Authorization: $FLY_API_TOKEN" \
+            --data-urlencode "query=sum(increase(fly_instance_net_sent_bytes{app=\"$FLY_APP\"}[30d]))" \
+            "https://api.fly.io/prometheus/$FLY_ORG/api/v1/query" \
+            | jq -r '.data.result[0].value[1] // "0"' | cut -d. -f1)
+          echo "sent=$SENT" >> "$GITHUB_OUTPUT"
+          echo "Egress last 30d: $SENT bytes (limit: $EGRESS_LIMIT_BYTES)"
+
+      - name: Set up flyctl
+        if: ${{ steps.egress.outputs.sent > env.EGRESS_LIMIT_BYTES }}
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: 'KILL SWITCH: scale app to zero'
+        if: ${{ steps.egress.outputs.sent > env.EGRESS_LIMIT_BYTES }}
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: flyctl scale count 0 --yes --app "$FLY_APP"
+
+      - name: Open an alert issue
+        if: ${{ steps.egress.outputs.sent > env.EGRESS_LIMIT_BYTES }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --repo "$GITHUB_REPOSITORY" \
+            --title "🚨 spend-guard: app suspended after crossing the egress limit" \
+            --body "30-day egress reached ${{ steps.egress.outputs.sent }} bytes (limit $EGRESS_LIMIT_BYTES). Machines were scaled to zero; the volume and all data are intact. When you have reviewed the traffic, bring the app back with: \`fly scale count 1 --yes --app $FLY_APP\`."
