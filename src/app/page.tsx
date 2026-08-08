@@ -46,20 +46,40 @@ export default async function LibraryPage({ searchParams }: PageProps<'/'>) {
     <>
       <PublicHeader />
       <main className={styles.main}>
-        <section className={styles.hero}>
-          <h1 className={styles.heroTitle}>
-            {settings.getHeroTitle() || translate(dictionary, 'home.tagline')}
-          </h1>
-          <p className={styles.heroText}>
-            {settings.getHeroText() || translate(dictionary, 'home.description')}
-          </p>
-          {allPublished.count() > 0 ? (
-            <p className={styles.heroCount}>
-              {allPublished.count() === 1
-                ? translate(dictionary, 'library.courseCountOne')
-                : translate(dictionary, 'library.courseCount', { count: allPublished.count() })}
+        <section
+          className={`${styles.hero} ${settings.getHeroImagePath() ? styles.heroWithImage : ''}`}
+        >
+          {settings.getHeroImagePath() ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={settings.getHeroImagePath()!}
+              alt=""
+              aria-hidden="true"
+              className={styles.heroImage}
+            />
+          ) : (
+            <div className={styles.heroAurora} aria-hidden="true">
+              <span className={styles.auroraBlob} />
+              <span className={styles.auroraBlobAlt} />
+              <span className={styles.auroraRing} />
+            </div>
+          )}
+          <div className={styles.heroScrim} aria-hidden="true" />
+          <div className={styles.heroInner}>
+            <h1 className={styles.heroTitle}>
+              {settings.getHeroTitle() || translate(dictionary, 'home.tagline')}
+            </h1>
+            <p className={styles.heroText}>
+              {settings.getHeroText() || translate(dictionary, 'home.description')}
             </p>
-          ) : null}
+            {allPublished.count() > 0 ? (
+              <p className={styles.heroCount}>
+                {allPublished.count() === 1
+                  ? translate(dictionary, 'library.courseCountOne')
+                  : translate(dictionary, 'library.courseCount', { count: allPublished.count() })}
+              </p>
+            ) : null}
+          </div>
         </section>
 
         <form className={styles.search} action="/" method="get" role="search">

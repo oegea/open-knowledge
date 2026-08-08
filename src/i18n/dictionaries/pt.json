@@ -109,7 +109,9 @@
     "makeAdmin": "Tornar admin",
     "adminRole": "Admin",
     "you": "tu",
-    "deleteUserWarning": "Isto elimina permanentemente o utilizador, o seu progresso, resultados de exames e certificados."
+    "deleteUserWarning": "Isto elimina permanentemente o utilizador, o seu progresso, resultados de exames e certificados.",
+    "heroImage": "Imagem de fundo do hero",
+    "heroImageHint": "Opcional. Mostrada atrás do título da página inicial; sem ela usa-se um gradiente da marca."
   },
   "material": {
     "type": {

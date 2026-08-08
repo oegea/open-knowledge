@@ -109,7 +109,9 @@
     "makeAdmin": "设为管理员",
     "adminRole": "管理员",
     "you": "你",
-    "deleteUserWarning": "这将永久删除该用户及其学习进度、考试成绩和证书。"
+    "deleteUserWarning": "这将永久删除该用户及其学习进度、考试成绩和证书。",
+    "heroImage": "主页横幅背景图",
+    "heroImageHint": "可选。显示在主页标题后面；未设置时使用品牌渐变。"
   },
   "material": {
     "type": {

@@ -109,7 +109,9 @@
     "makeAdmin": "Admin izendatu",
     "adminRole": "Admin",
     "you": "zu",
-    "deleteUserWarning": "Honek erabiltzailea, haren aurrerapena, azterketa-emaitzak eta ziurtagiriak betiko ezabatzen ditu."
+    "deleteUserWarning": "Honek erabiltzailea, haren aurrerapena, azterketa-emaitzak eta ziurtagiriak betiko ezabatzen ditu.",
+    "heroImage": "Hero atzeko irudia",
+    "heroImageHint": "Aukerakoa. Azalako izenburuaren atzean agertzen da; gabe, markaren gradientea erabiltzen da."
   },
   "material": {
     "type": {

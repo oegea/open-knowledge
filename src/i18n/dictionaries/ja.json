@@ -109,7 +109,9 @@
     "makeAdmin": "管理者にする",
     "adminRole": "管理者",
     "you": "あなた",
-    "deleteUserWarning": "ユーザーとその学習進捗、試験結果、証明書が完全に削除されます。"
+    "deleteUserWarning": "ユーザーとその学習進捗、試験結果、証明書が完全に削除されます。",
+    "heroImage": "ヒーロー背景画像",
+    "heroImageHint": "任意。ホームの見出しの背景に表示されます。未設定の場合はブランドのグラデーションになります。"
   },
   "material": {
     "type": {

@@ -109,7 +109,9 @@
     "makeAdmin": "Nommer admin",
     "adminRole": "Admin",
     "you": "vous",
-    "deleteUserWarning": "Cela supprime définitivement l’utilisateur, sa progression, ses résultats d’examens et ses certificats."
+    "deleteUserWarning": "Cela supprime définitivement l’utilisateur, sa progression, ses résultats d’examens et ses certificats.",
+    "heroImage": "Image de fond du hero",
+    "heroImageHint": "Facultatif. Affichée derrière le titre d’accueil ; sans elle, un dégradé de marque est utilisé."
   },
   "material": {
     "type": {

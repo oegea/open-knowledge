@@ -22,7 +22,7 @@ export function SettingsForm({ initial }: SettingsFormProps) {
 
   const uploadLogo = async (
     file: File | undefined,
-    field: 'logoPath' | 'certificateLogoPath' | 'documentLogoPath'
+    field: 'logoPath' | 'certificateLogoPath' | 'documentLogoPath' | 'heroImagePath'
   ) => {
     if (!file) return;
     setUploading(true);
@@ -117,6 +117,18 @@ export function SettingsForm({ initial }: SettingsFormProps) {
         value={settings.heroText}
         onChange={(event) => setSettings({ ...settings, heroText: event.target.value })}
         maxLength={200}
+      />
+
+      <LogoField
+        label={t('admin.heroImage')}
+        hint={t('admin.heroImageHint')}
+        value={settings.heroImagePath}
+        uploading={uploading}
+        uploadLabel={t('admin.upload')}
+        uploadingLabel={t('admin.uploading')}
+        deleteLabel={t('common.delete')}
+        onUpload={(file) => uploadLogo(file, 'heroImagePath')}
+        onClear={() => setSettings({ ...settings, heroImagePath: null })}
       />
 
       <TextField

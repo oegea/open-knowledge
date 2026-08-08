@@ -13,6 +13,7 @@ export async function updateInstanceSettings({
   documentLogoPath,
   heroTitle,
   heroText,
+  heroImagePath,
   registrationOpen,
   newsEnabled,
   settingsRepository,
@@ -25,6 +26,7 @@ export async function updateInstanceSettings({
     documentLogoPath ?? null,
     heroTitle ?? '',
     heroText ?? '',
+    heroImagePath ?? null,
     registrationOpen,
     newsEnabled
   );

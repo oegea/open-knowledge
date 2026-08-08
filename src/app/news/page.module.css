@@ -1,6 +1,6 @@
 .main {
   width: 100%;
-  max-width: 44rem;
+  max-width: 64rem;
   margin: 0 auto;
   padding: var(--ok-space-5) var(--ok-space-3) var(--ok-space-8);
   display: flex;
@@ -9,8 +9,14 @@
 }
 
 .title {
+  padding-top: var(--ok-space-3);
   font-size: var(--ok-text-2xl);
   letter-spacing: -0.02em;
+  background: linear-gradient(100deg, var(--ok-fg) 40%, var(--ok-primary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .empty {
@@ -19,26 +25,147 @@
   color: var(--ok-fg-muted);
 }
 
-.list {
-  list-style: none;
+/* --- Featured story --- */
+.featured {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 18rem;
+  overflow: hidden;
+  animation: riseIn var(--ok-duration-slow) var(--ok-ease) both;
+  transition:
+    transform var(--ok-duration-med) var(--ok-ease),
+    box-shadow var(--ok-duration-med) var(--ok-ease);
+}
+
+.featured:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--ok-shadow-3);
+}
+
+.featuredImage,
+.featuredFallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--ok-duration-slow) var(--ok-ease);
+}
+
+.featured:hover .featuredImage {
+  transform: scale(1.03);
+}
+
+.featuredFallback {
+  background:
+    radial-gradient(circle at 80% 10%, var(--ok-primary) 0%, transparent 55%),
+    radial-gradient(circle at 10% 90%, var(--ok-accent) 0%, transparent 55%),
+    var(--ok-bg-raised);
+  opacity: 0.9;
+}
+
+.featuredScrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(11, 17, 23, 0) 30%, rgba(11, 17, 23, 0.78) 100%);
+}
+
+.featuredBody {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--ok-space-3);
+  gap: var(--ok-space-2);
+  padding: var(--ok-space-5);
+  color: #fff;
+}
+
+.featuredBody .date,
+.featuredBody .author {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.featuredBody .readMore {
+  color: #fff;
+}
+
+.featuredTitle {
+  font-size: var(--ok-text-xl);
+  font-weight: 800;
+  line-height: var(--ok-leading-tight);
+  letter-spacing: -0.02em;
+  max-width: 28ch;
+}
+
+/* --- Remaining posts --- */
+.grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--ok-space-4);
+}
+
+.grid > li {
+  animation: riseIn var(--ok-duration-slow) var(--ok-ease) both;
+}
+
+.grid > li:nth-child(2) {
+  animation-delay: 60ms;
+}
+
+.grid > li:nth-child(3) {
+  animation-delay: 120ms;
+}
+
+.grid > li:nth-child(n + 4) {
+  animation-delay: 180ms;
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .post {
   display: flex;
   flex-direction: column;
+  height: 100%;
   overflow: hidden;
   transition:
     transform var(--ok-duration-fast) var(--ok-ease),
     box-shadow var(--ok-duration-fast) var(--ok-ease);
 }
 
-.postImage {
+.post:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--ok-shadow-3);
+}
+
+.postImage,
+.postImageFallback {
   width: 100%;
   aspect-ratio: 21 / 9;
   object-fit: cover;
+  transition: transform var(--ok-duration-slow) var(--ok-ease);
+}
+
+.post:hover .postImage {
+  transform: scale(1.03);
+}
+
+.postImageFallback {
+  display: block;
+  background:
+    radial-gradient(circle at 85% 15%, var(--ok-primary) 0%, transparent 55%),
+    radial-gradient(circle at 15% 85%, var(--ok-accent) 0%, transparent 60%),
+    var(--ok-bg-raised);
+  opacity: 0.55;
 }
 
 .postBody {
@@ -46,11 +173,6 @@
   flex-direction: column;
   gap: var(--ok-space-2);
   padding: var(--ok-space-4) var(--ok-space-5);
-}
-
-.post:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--ok-shadow-3);
 }
 
 .meta {
@@ -88,4 +210,18 @@
   font-size: var(--ok-text-sm);
   font-weight: 600;
   color: var(--ok-primary);
+}
+
+@media (min-width: 768px) {
+  .featured {
+    min-height: 22rem;
+  }
+
+  .featuredTitle {
+    font-size: var(--ok-text-2xl);
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

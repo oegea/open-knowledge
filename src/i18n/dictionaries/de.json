@@ -109,7 +109,9 @@
     "makeAdmin": "Zum Admin machen",
     "adminRole": "Admin",
     "you": "du",
-    "deleteUserWarning": "Dies löscht den Benutzer, seinen Fortschritt, seine Prüfungsergebnisse und Zertifikate dauerhaft."
+    "deleteUserWarning": "Dies löscht den Benutzer, seinen Fortschritt, seine Prüfungsergebnisse und Zertifikate dauerhaft.",
+    "heroImage": "Hero-Hintergrundbild",
+    "heroImageHint": "Optional. Erscheint hinter der Startseiten-Überschrift; ohne Bild wird ein Markenverlauf verwendet."
   },
   "material": {
     "type": {

@@ -12,6 +12,8 @@ export interface InstanceSettingsPrimitive {
   heroTitle: string;
   /** Custom home subtitle; empty falls back to the localized default. */
   heroText: string;
+  /** Optional hero background image; null keeps the default gradient. */
+  heroImagePath: string | null;
   registrationOpen: boolean;
   newsEnabled: boolean;
 }
@@ -25,6 +27,7 @@ export class InstanceSettings {
     private readonly documentLogoPath: string | null,
     private readonly heroTitle: string,
     private readonly heroText: string,
+    private readonly heroImagePath: string | null,
     private readonly registrationOpen: boolean,
     private readonly newsEnabled: boolean
   ) {}
@@ -37,6 +40,7 @@ export class InstanceSettings {
     documentLogoPath: string | null,
     heroTitle: string,
     heroText: string,
+    heroImagePath: string | null,
     registrationOpen: boolean,
     newsEnabled: boolean
   ): InstanceSettings {
@@ -49,13 +53,14 @@ export class InstanceSettings {
       documentLogoPath?.trim() || null,
       heroTitle.trim(),
       heroText.trim(),
+      heroImagePath?.trim() || null,
       registrationOpen,
       newsEnabled
     );
   }
 
   static createDefault(): InstanceSettings {
-    return InstanceSettings.create('Open Knowledge', '', null, null, null, '', '', true, false);
+    return InstanceSettings.create('Open Knowledge', '', null, null, null, '', '', null, true, false);
   }
 
   static fromPrimitive(data: InstanceSettingsPrimitive): InstanceSettings {
@@ -68,6 +73,7 @@ export class InstanceSettings {
       data.documentLogoPath ?? null,
       data.heroTitle ?? '',
       data.heroText ?? '',
+      data.heroImagePath ?? null,
       Boolean(data.registrationOpen),
       Boolean(data.newsEnabled)
     );
@@ -115,6 +121,10 @@ export class InstanceSettings {
     return this.heroText;
   }
 
+  getHeroImagePath(): string | null {
+    return this.heroImagePath;
+  }
+
   isRegistrationOpen(): boolean {
     return this.registrationOpen;
   }
@@ -136,6 +146,7 @@ export class InstanceSettings {
       documentLogoPath: this.documentLogoPath,
       heroTitle: this.heroTitle,
       heroText: this.heroText,
+      heroImagePath: this.heroImagePath,
       registrationOpen: this.registrationOpen,
       newsEnabled: this.newsEnabled,
     };

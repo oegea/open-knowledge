@@ -109,7 +109,9 @@
     "makeAdmin": "Nomenar admin",
     "adminRole": "Admin",
     "you": "tu",
-    "deleteUserWarning": "Això elimina permanentment l’usuari, el seu progrés, els resultats dels exàmens i els certificats."
+    "deleteUserWarning": "Això elimina permanentment l’usuari, el seu progrés, els resultats dels exàmens i els certificats.",
+    "heroImage": "Imatge de fons del hero",
+    "heroImageHint": "Opcional. Es mostra darrere del titular de la portada; sense, s’usa un degradat de marca."
   },
   "material": {
     "type": {

@@ -9,11 +9,109 @@
 }
 
 .hero {
-  padding: var(--ok-space-6) var(--ok-space-2) var(--ok-space-4);
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--ok-radius-xl);
+  padding: var(--ok-space-7) var(--ok-space-4) var(--ok-space-6);
+  animation: heroIn var(--ok-duration-slow) var(--ok-ease);
+  border: 1px solid var(--ok-glass-border);
+  box-shadow: var(--ok-shadow-1);
+}
+
+.heroInner {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   gap: var(--ok-space-3);
-  animation: heroIn var(--ok-duration-slow) var(--ok-ease);
+}
+
+/* --- Default backdrop: a soft brand aurora, no image needed. --- */
+.heroAurora {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(135deg, var(--ok-primary-soft), transparent 55%);
+}
+
+.auroraBlob,
+.auroraBlobAlt,
+.auroraRing {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.auroraBlob {
+  width: 34rem;
+  height: 34rem;
+  right: -10rem;
+  top: -18rem;
+  background: radial-gradient(circle, var(--ok-primary) 0%, transparent 65%);
+  opacity: 0.28;
+  animation: auroraDrift 14s ease-in-out infinite alternate;
+}
+
+.auroraBlobAlt {
+  width: 26rem;
+  height: 26rem;
+  left: -8rem;
+  bottom: -16rem;
+  background: radial-gradient(circle, var(--ok-accent) 0%, transparent 65%);
+  opacity: 0.2;
+  animation: auroraDrift 18s ease-in-out infinite alternate-reverse;
+}
+
+.auroraRing {
+  width: 18rem;
+  height: 18rem;
+  right: 12%;
+  bottom: -9rem;
+  border: 1.5px solid var(--ok-primary);
+  opacity: 0.12;
+  background: none;
+}
+
+@keyframes auroraDrift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(-2.5rem, 1.5rem, 0) scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auroraBlob,
+  .auroraBlobAlt {
+    animation: none;
+  }
+}
+
+/* --- Optional admin-configured hero image. --- */
+.heroImage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.heroScrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* Image needs a scrim so the headline stays readable in both themes. */
+.heroWithImage .heroScrim {
+  background: linear-gradient(
+    100deg,
+    var(--ok-bg) 0%,
+    color-mix(in srgb, var(--ok-bg) 72%, transparent) 45%,
+    color-mix(in srgb, var(--ok-bg) 25%, transparent) 100%
+  );
 }
 
 @keyframes heroIn {

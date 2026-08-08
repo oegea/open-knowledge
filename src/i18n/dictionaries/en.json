@@ -109,7 +109,9 @@
     "makeAdmin": "Make admin",
     "adminRole": "Admin",
     "you": "you",
-    "deleteUserWarning": "This permanently deletes the user, their progress, exam results and certificates."
+    "deleteUserWarning": "This permanently deletes the user, their progress, exam results and certificates.",
+    "heroImage": "Hero background image",
+    "heroImageHint": "Optional. Shown behind the home headline; without it a brand gradient is used."
   },
   "material": {
     "type": {
