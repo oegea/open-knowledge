@@ -111,7 +111,13 @@
     "you": "tu",
     "deleteUserWarning": "Isto elimina permanentemente o utilizador, o seu progresso, resultados de exames e certificados.",
     "heroImage": "Imagem de fundo do hero",
-    "heroImageHint": "Opcional. Mostrada atrás do título da página inicial; sem ela usa-se um gradiente da marca."
+    "heroImageHint": "Opcional. Mostrada atrás do título da página inicial; sem ela usa-se um gradiente da marca.",
+    "userProfile": "Perfil",
+    "memberSince": "Membro desde",
+    "role": "Papel",
+    "revoke": "Revogar",
+    "revokeWarning": "Isto elimina permanentemente o certificado; a sua ligação de verificação deixará de funcionar.",
+    "userDisplayNameHint": "Mostrado nos certificados desta pessoa. Vazio usa o identificador."
   },
   "material": {
     "type": {

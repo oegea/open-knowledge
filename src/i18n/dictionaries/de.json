@@ -111,7 +111,13 @@
     "you": "du",
     "deleteUserWarning": "Dies löscht den Benutzer, seinen Fortschritt, seine Prüfungsergebnisse und Zertifikate dauerhaft.",
     "heroImage": "Hero-Hintergrundbild",
-    "heroImageHint": "Optional. Erscheint hinter der Startseiten-Überschrift; ohne Bild wird ein Markenverlauf verwendet."
+    "heroImageHint": "Optional. Erscheint hinter der Startseiten-Überschrift; ohne Bild wird ein Markenverlauf verwendet.",
+    "userProfile": "Profil",
+    "memberSince": "Mitglied seit",
+    "role": "Rolle",
+    "revoke": "Widerrufen",
+    "revokeWarning": "Das Zertifikat wird dauerhaft gelöscht; sein Prüflink funktioniert nicht mehr.",
+    "userDisplayNameHint": "Erscheint auf den Zertifikaten dieser Person. Leer = Kennung wird verwendet."
   },
   "material": {
     "type": {

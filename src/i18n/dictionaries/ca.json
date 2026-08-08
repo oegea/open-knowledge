@@ -111,7 +111,13 @@
     "you": "tu",
     "deleteUserWarning": "Això elimina permanentment l’usuari, el seu progrés, els resultats dels exàmens i els certificats.",
     "heroImage": "Imatge de fons del hero",
-    "heroImageHint": "Opcional. Es mostra darrere del titular de la portada; sense, s’usa un degradat de marca."
+    "heroImageHint": "Opcional. Es mostra darrere del titular de la portada; sense, s’usa un degradat de marca.",
+    "userProfile": "Perfil",
+    "memberSince": "Membre des de",
+    "role": "Rol",
+    "revoke": "Revocar",
+    "revokeWarning": "Això elimina permanentment el certificat; el seu enllaç de verificació deixarà de funcionar.",
+    "userDisplayNameHint": "Es mostra als certificats d'aquesta persona. Buit fa servir l'identificador."
   },
   "material": {
     "type": {

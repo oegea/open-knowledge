@@ -26,6 +26,11 @@
   flex-direction: column;
   gap: var(--ok-space-1);
   min-width: 0;
+  border-radius: var(--ok-radius-md, 0.5rem);
+}
+
+.identity:hover .identifier {
+  color: var(--ok-primary);
 }
 
 .identifier {

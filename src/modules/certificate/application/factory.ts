@@ -1,6 +1,7 @@
 import { issueCertificate } from './issueCertificate';
 import { getCertificate } from './getCertificate';
 import { listCertificates } from './listCertificates';
+import { revokeCertificate } from './revokeCertificate';
 import { exportCertificatePdf } from './exportCertificatePdf';
 import { SqliteCertificateRepository } from '../infrastructure/SqliteCertificateRepository';
 import { PdfCertificateExportRepository } from '../infrastructure/PdfCertificateExportRepository';
@@ -67,4 +68,10 @@ export default {
 
   listCertificates: async (userId: string) =>
     await listCertificates({ userId, certificateRepository: new SqliteCertificateRepository() }),
+
+  revokeCertificate: async (certificateId: string) =>
+    await revokeCertificate({
+      certificateId,
+      certificateRepository: new SqliteCertificateRepository(),
+    }),
 };

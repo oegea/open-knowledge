@@ -111,7 +111,13 @@
     "you": "zu",
     "deleteUserWarning": "Honek erabiltzailea, haren aurrerapena, azterketa-emaitzak eta ziurtagiriak betiko ezabatzen ditu.",
     "heroImage": "Hero atzeko irudia",
-    "heroImageHint": "Aukerakoa. Azalako izenburuaren atzean agertzen da; gabe, markaren gradientea erabiltzen da."
+    "heroImageHint": "Aukerakoa. Azalako izenburuaren atzean agertzen da; gabe, markaren gradientea erabiltzen da.",
+    "userProfile": "Profila",
+    "memberSince": "Noiztik kide",
+    "role": "Rola",
+    "revoke": "Baliogabetu",
+    "revokeWarning": "Honek ziurtagiria betiko ezabatzen du; egiaztapen-estekak funtzionatzeari utziko dio.",
+    "userDisplayNameHint": "Erabiltzaile honen ziurtagirietan agertzen da. Hutsik utzita identifikatzailea erabiltzen da."
   },
   "material": {
     "type": {

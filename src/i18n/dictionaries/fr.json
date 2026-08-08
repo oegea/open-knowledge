@@ -111,7 +111,13 @@
     "you": "vous",
     "deleteUserWarning": "Cela supprime définitivement l’utilisateur, sa progression, ses résultats d’examens et ses certificats.",
     "heroImage": "Image de fond du hero",
-    "heroImageHint": "Facultatif. Affichée derrière le titre d’accueil ; sans elle, un dégradé de marque est utilisé."
+    "heroImageHint": "Facultatif. Affichée derrière le titre d’accueil ; sans elle, un dégradé de marque est utilisé.",
+    "userProfile": "Profil",
+    "memberSince": "Membre depuis",
+    "role": "Rôle",
+    "revoke": "Révoquer",
+    "revokeWarning": "Cela supprime définitivement le certificat ; son lien de vérification cessera de fonctionner.",
+    "userDisplayNameHint": "Affiché sur les certificats de cette personne. Vide : l'identifiant est utilisé."
   },
   "material": {
     "type": {

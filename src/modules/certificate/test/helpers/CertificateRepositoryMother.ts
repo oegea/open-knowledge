@@ -7,6 +7,7 @@ export function create(overrides?: Partial<CertificateRepository>): CertificateR
     findByUserAndCourse: jest.fn().mockResolvedValue(null),
     findByUser: jest.fn().mockResolvedValue([]),
     updateDisplayNameForUser: jest.fn().mockResolvedValue(undefined),
+    delete: jest.fn().mockResolvedValue(true),
     ...overrides,
   };
 }

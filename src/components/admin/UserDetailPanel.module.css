@@ -1,0 +1,128 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-4);
+}
+
+.card {
+  padding: var(--ok-space-5);
+  border-radius: var(--ok-radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-4);
+}
+
+.cardTitle {
+  font-size: var(--ok-text-md);
+  font-weight: 700;
+}
+
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ok-space-4) var(--ok-space-6);
+  margin: 0;
+}
+
+.fact dt {
+  font-size: var(--ok-text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ok-fg-muted);
+}
+
+.fact dd {
+  margin: var(--ok-space-1) 0 0;
+}
+
+.identifier {
+  font-family: var(--ok-font-mono);
+}
+
+.nameForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-2);
+  max-width: 26rem;
+}
+
+.nameActions {
+  display: flex;
+  align-items: center;
+  gap: var(--ok-space-3);
+}
+
+.saved {
+  font-size: var(--ok-text-sm);
+  color: var(--ok-primary);
+  font-weight: 600;
+}
+
+.empty {
+  color: var(--ok-fg-muted);
+}
+
+.certificates {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-3);
+}
+
+.certificate {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-2);
+  padding: var(--ok-space-3) 0;
+  border-bottom: 1px solid var(--ok-border);
+}
+
+.certificate:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.certificateInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-1);
+  min-width: 0;
+}
+
+.certificateCourse {
+  font-weight: 600;
+}
+
+.certificateMeta {
+  font-size: var(--ok-text-sm);
+  color: var(--ok-fg-muted);
+}
+
+.confirm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ok-space-2);
+}
+
+.confirmText {
+  font-size: 0.8rem;
+  color: var(--ok-danger);
+  max-width: 32ch;
+}
+
+.error {
+  color: var(--ok-danger);
+  font-size: 0.9rem;
+}
+
+@media (min-width: 768px) {
+  .certificate {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

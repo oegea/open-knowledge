@@ -10,10 +10,19 @@ export async function PATCH(request: NextRequest, ctx: RouteContext<'/api/identi
   try {
     const { id } = await ctx.params;
     const body = await request.json();
-    if (body.isAdmin !== true) {
-      return Response.json({ error: 'Only promoting to admin is supported' }, { status: 400 });
+    let user;
+    if (typeof body.displayName === 'string') {
+      // Same use case the learner uses on their own account, so issued
+      // certificates stay in sync through the onDisplayNameChanged port.
+      user = await identityFactory.updateDisplayName(id, body.displayName);
+    } else if (body.isAdmin === true) {
+      user = await identityFactory.promoteUserToAdmin(id);
+    } else {
+      return Response.json(
+        { error: 'Provide displayName or isAdmin: true' },
+        { status: 400 }
+      );
     }
-    const user = await identityFactory.promoteUserToAdmin(id);
     return Response.json({
       user: {
         id: user.getId(),

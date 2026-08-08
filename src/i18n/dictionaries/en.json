@@ -111,7 +111,13 @@
     "you": "you",
     "deleteUserWarning": "This permanently deletes the user, their progress, exam results and certificates.",
     "heroImage": "Hero background image",
-    "heroImageHint": "Optional. Shown behind the home headline; without it a brand gradient is used."
+    "heroImageHint": "Optional. Shown behind the home headline; without it a brand gradient is used.",
+    "userProfile": "Profile",
+    "memberSince": "Member since",
+    "role": "Role",
+    "revoke": "Revoke",
+    "revokeWarning": "This permanently deletes the certificate; its verification link will stop working.",
+    "userDisplayNameHint": "Shown on this user's certificates. Leave empty to use the identifier."
   },
   "material": {
     "type": {

@@ -99,6 +99,16 @@ test.describe('Identity and administration', () => {
     const newRow = page.locator('li', { hasText: challenge.identifier });
     await expect(newRow).toBeVisible();
 
+    // Detail page: the admin renames the user; the name shows on the list.
+    await newRow.getByRole('link', { name: new RegExp(challenge.identifier) }).click();
+    await page.waitForURL('**/admin/users/**');
+    await page.getByLabel(/Nombre para certificados/).fill('Grace Hopper');
+    await page.getByRole('button', { name: 'Guardar' }).click();
+    await expect(page.getByText('Guardado')).toBeVisible();
+
+    await page.goto('/admin/users');
+    await expect(newRow.getByText('Grace Hopper')).toBeVisible();
+
     await newRow.getByRole('button', { name: /Nombrar admin/ }).click();
     await expect(newRow.getByText(/Admin/)).toBeVisible();
 

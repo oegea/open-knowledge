@@ -65,6 +65,10 @@ export class SqliteCertificateRepository implements CertificateRepository {
     return rows.map((row) => this.mapRow(row));
   }
 
+  async delete(id: string): Promise<boolean> {
+    return this.db.prepare('DELETE FROM certificates WHERE id = ?').run(id).changes > 0;
+  }
+
   async updateDisplayNameForUser(userId: string, displayName: string): Promise<void> {
     this.db
       .prepare('UPDATE certificates SET display_name = ? WHERE user_id = ?')

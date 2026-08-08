@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { useI18n } from '@/i18n/I18nProvider';
 import { Button } from '../ui/Button';
 import styles from './UsersPanel.module.css';
@@ -74,7 +75,7 @@ export function UsersPanel({ currentUserId, initialUsers }: UsersPanelProps) {
           const isBusy = busyId === user.id;
           return (
             <li key={user.id} className={`ok-glass ${styles.row}`}>
-              <div className={styles.identity}>
+              <Link href={`/admin/users/${user.id}`} className={styles.identity}>
                 <span className={styles.identifier}>{user.identifier}</span>
                 {user.displayName ? (
                   <span className={styles.displayName}>{user.displayName}</span>
@@ -84,7 +85,7 @@ export function UsersPanel({ currentUserId, initialUsers }: UsersPanelProps) {
                     new Date(user.createdAt)
                   )}
                 </span>
-              </div>
+              </Link>
 
               <div className={styles.actions}>
                 {user.isAdmin ? (

@@ -111,7 +111,13 @@
     "you": "tú",
     "deleteUserWarning": "Esto elimina permanentemente al usuario, su progreso, resultados de exámenes y certificados.",
     "heroImage": "Imagen de fondo del hero",
-    "heroImageHint": "Opcional. Se muestra tras el titular de la portada; sin ella se usa un degradado de marca."
+    "heroImageHint": "Opcional. Se muestra tras el titular de la portada; sin ella se usa un degradado de marca.",
+    "userProfile": "Perfil",
+    "memberSince": "Miembro desde",
+    "role": "Rol",
+    "revoke": "Revocar",
+    "revokeWarning": "Esto elimina permanentemente el certificado; su enlace de verificación dejará de funcionar.",
+    "userDisplayNameHint": "Se muestra en los certificados de esta persona. Vacío usa el identificador."
   },
   "material": {
     "type": {

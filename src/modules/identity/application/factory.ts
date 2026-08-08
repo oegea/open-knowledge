@@ -54,6 +54,8 @@ export default {
 
   listUsers: async () => await listUsers({ userRepository: new SqliteUserRepository() }),
 
+  getUser: async (userId: string) => await new SqliteUserRepository().findById(userId),
+
   promoteUserToAdmin: async (userId: string) =>
     await promoteUserToAdmin({ userId, userRepository: new SqliteUserRepository() }),
 

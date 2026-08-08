@@ -7,4 +7,5 @@ export interface CertificateRepository {
   findByUser(userId: string): Promise<Certificate[]>;
   /** Keeps issued certificates in sync when the learner renames themselves. */
   updateDisplayNameForUser(userId: string, displayName: string): Promise<void>;
+  delete(id: string): Promise<boolean>;
 }
