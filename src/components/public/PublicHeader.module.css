@@ -13,18 +13,52 @@
 
 .brand {
   font-weight: 800;
-  font-size: var(--ok-text-lg);
+  font-size: var(--ok-text-md);
   letter-spacing: -0.02em;
   color: var(--ok-primary);
   min-height: var(--ok-touch-target);
   display: inline-flex;
   align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
 }
 
 .nav {
   display: flex;
   align-items: center;
-  gap: var(--ok-space-2);
+  gap: var(--ok-space-1);
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .brand {
+    font-size: var(--ok-text-lg);
+  }
+
+  .nav {
+    gap: var(--ok-space-2);
+  }
+}
+
+.navLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--ok-touch-target);
+  padding: 0 var(--ok-space-3);
+  border-radius: var(--ok-radius-full);
+  font-size: var(--ok-text-sm);
+  font-weight: 600;
+  color: var(--ok-fg-muted);
+  transition:
+    background var(--ok-duration-fast) var(--ok-ease),
+    color var(--ok-duration-fast) var(--ok-ease);
+}
+
+.navLink:hover {
+  background: var(--ok-primary-soft);
+  color: var(--ok-primary);
 }
 
 @media (min-width: 768px) {

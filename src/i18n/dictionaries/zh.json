@@ -68,7 +68,12 @@
     "settings": "设置",
     "libraryName": "课程库名称",
     "registrationOpen": "开放注册",
-    "registrationOpenHint": "关闭后，其他人将无法创建账户。课程库仍然公开。"
+    "registrationOpenHint": "关闭后，其他人将无法创建账户。课程库仍然公开。",
+    "news": "动态",
+    "newPost": "新建动态",
+    "postTitle": "标题",
+    "newsEnabled": "启用动态版块",
+    "newsEnabledHint": "关闭后，该版块将不会显示。"
   },
   "material": {
     "type": {
@@ -150,5 +155,18 @@
   "account": {
     "certificates": "证书",
     "noCertificates": "还没有证书。"
+  },
+  "news": {
+    "title": "动态",
+    "empty": "暂无动态。",
+    "readMore": "阅读更多"
+  },
+  "notifications": {
+    "title": "通知",
+    "empty": "暂无通知。",
+    "coursePublished": "新课程：{title}",
+    "courseUpdated": "课程已更新：{title}",
+    "newsPublished": "动态：{title}",
+    "certificateIssued": "获得证书！{title}"
   }
 }

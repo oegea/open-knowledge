@@ -5,6 +5,7 @@ import { getCurrentUser } from '@/app/serverAuth';
 import settingsFactory from '@/modules/settings/application/factory';
 import { LanguageSelector } from './LanguageSelector';
 import { UserMenu } from './UserMenu';
+import { NotificationsBell } from './NotificationsBell';
 import styles from './PublicHeader.module.css';
 
 export async function PublicHeader() {
@@ -19,7 +20,13 @@ export async function PublicHeader() {
         {settings.getLibraryName()}
       </Link>
       <nav className={styles.nav} aria-label={translate(dictionary, 'nav.library')}>
+        {settings.isNewsEnabled() ? (
+          <Link href="/news" className={styles.navLink}>
+            {translate(dictionary, 'nav.news')}
+          </Link>
+        ) : null}
         <LanguageSelector />
+        {user !== null ? <NotificationsBell /> : null}
         <UserMenu
           user={user ? { identifier: user.getIdentifier(), isAdmin: user.isAdmin() } : null}
         />

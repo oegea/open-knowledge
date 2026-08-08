@@ -14,6 +14,7 @@ import { updateMaterial } from './updateMaterial';
 import { removeMaterial } from './removeMaterial';
 import { moveMaterial } from './moveMaterial';
 import { SqliteCourseRepository } from '../infrastructure/SqliteCourseRepository';
+import notificationFactory from '../../notification/application/factory';
 import { CourseFilter } from '../domain/CourseRepository';
 import { CourseDetailsInput } from '../domain/Course';
 import { MaterialInput } from '../domain/Material';
@@ -35,7 +36,17 @@ export default {
     await deleteCourse({ id, courseRepository: new SqliteCourseRepository() }),
 
   publishCourse: async (id: string) =>
-    await publishCourse({ id, courseRepository: new SqliteCourseRepository() }),
+    await publishCourse({
+      id,
+      courseRepository: new SqliteCourseRepository(),
+      onCoursePublished: async (course) => {
+        await notificationFactory.publishNotification(
+          'course_published',
+          course.getTitle(),
+          course.getId()
+        );
+      },
+    }),
 
   unpublishCourse: async (id: string) =>
     await unpublishCourse({ id, courseRepository: new SqliteCourseRepository() }),

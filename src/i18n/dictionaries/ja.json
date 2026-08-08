@@ -68,7 +68,12 @@
     "settings": "設定",
     "libraryName": "ライブラリ名",
     "registrationOpen": "登録を受付中",
-    "registrationOpenHint": "無効にすると、誰も新しくアカウントを作成できません。ライブラリは公開のままです。"
+    "registrationOpenHint": "無効にすると、誰も新しくアカウントを作成できません。ライブラリは公開のままです。",
+    "news": "ニュース",
+    "newPost": "新しい投稿",
+    "postTitle": "タイトル",
+    "newsEnabled": "ニュースセクションを有効化",
+    "newsEnabledHint": "無効にすると、このセクションは表示されなくなります。"
   },
   "material": {
     "type": {
@@ -150,5 +155,18 @@
   "account": {
     "certificates": "証明書",
     "noCertificates": "まだ証明書がありません。"
+  },
+  "news": {
+    "title": "ニュース",
+    "empty": "まだニュースがありません。",
+    "readMore": "続きを読む"
+  },
+  "notifications": {
+    "title": "通知",
+    "empty": "通知はありません。",
+    "coursePublished": "新しいコース：{title}",
+    "courseUpdated": "コース更新：{title}",
+    "newsPublished": "ニュース：{title}",
+    "certificateIssued": "証明書を取得！{title}"
   }
 }

@@ -53,6 +53,13 @@ export function SettingsForm({ initial }: SettingsFormProps) {
         onChange={(event) => setSettings({ ...settings, registrationOpen: event.target.checked })}
       />
 
+      <CheckboxField
+        label={t('admin.newsEnabled')}
+        hint={t('admin.newsEnabledHint')}
+        checked={settings.newsEnabled}
+        onChange={(event) => setSettings({ ...settings, newsEnabled: event.target.checked })}
+      />
+
       {errorMessage ? (
         <p role="alert" className={styles.error}>
           {errorMessage}

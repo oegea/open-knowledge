@@ -1,0 +1,20 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-5);
+}
+
+.markdownArea textarea {
+  font-family: var(--ok-font-mono);
+  font-size: var(--ok-text-sm);
+}
+
+.error {
+  color: var(--ok-danger);
+  font-size: var(--ok-text-sm);
+}
+
+.actions {
+  display: flex;
+  gap: var(--ok-space-3);
+}

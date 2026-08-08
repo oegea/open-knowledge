@@ -5,6 +5,7 @@ import { getCurrentUser } from '@/app/serverAuth';
 import { getLocale } from '@/i18n/getLocale';
 import { getDictionary, translate } from '@/i18n/dictionary';
 import { PublicHeader } from '@/components/public/PublicHeader';
+import { LogoutButton } from '@/components/auth/LogoutButton';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -24,6 +25,9 @@ export default async function AccountPage() {
         <section className={`ok-glass ${styles.identityCard}`}>
           <h1 className={styles.title}>{translate(dictionary, 'auth.myAccount')}</h1>
           <p className={styles.identifier}>{user.getIdentifier()}</p>
+          <div>
+            <LogoutButton />
+          </div>
         </section>
 
         <section className={styles.certificates}>

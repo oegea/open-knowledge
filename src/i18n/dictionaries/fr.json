@@ -68,7 +68,12 @@
     "settings": "Paramètres",
     "libraryName": "Nom de la bibliothèque",
     "registrationOpen": "Inscription ouverte",
-    "registrationOpenHint": "Si désactivée, personne d’autre ne pourra créer de compte. La bibliothèque reste publique."
+    "registrationOpenHint": "Si désactivée, personne d’autre ne pourra créer de compte. La bibliothèque reste publique.",
+    "news": "Actualités",
+    "newPost": "Nouvelle actualité",
+    "postTitle": "Titre",
+    "newsEnabled": "Section actualités activée",
+    "newsEnabledHint": "Si désactivée, la section n’apparaîtra tout simplement pas."
   },
   "material": {
     "type": {
@@ -150,5 +155,18 @@
   "account": {
     "certificates": "Certificats",
     "noCertificates": "Pas encore de certificats."
+  },
+  "news": {
+    "title": "Actualités",
+    "empty": "Pas d'actualités pour l'instant.",
+    "readMore": "Lire la suite"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "empty": "Aucune notification.",
+    "coursePublished": "Nouveau cours : {title}",
+    "courseUpdated": "Cours mis à jour : {title}",
+    "newsPublished": "Actualité : {title}",
+    "certificateIssued": "Certificat obtenu ! {title}"
   }
 }

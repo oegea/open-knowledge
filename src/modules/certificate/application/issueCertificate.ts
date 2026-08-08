@@ -13,6 +13,8 @@ interface issueCertificateProps {
   progressRepository: ProgressRepository;
   examResultRepository: ExamResultRepository;
   certificateRepository: CertificateRepository;
+  /** Port: personal notification when a certificate is newly issued. */
+  onCertificateIssued?: (certificate: Certificate) => Promise<void>;
 }
 
 /**
@@ -28,6 +30,7 @@ export async function issueCertificate({
   progressRepository,
   examResultRepository,
   certificateRepository,
+  onCertificateIssued,
 }: issueCertificateProps): Promise<Certificate> {
   if (!userId) {
     throw new Error('[issueCertificate] User id must be provided');
@@ -66,5 +69,9 @@ export async function issueCertificate({
     identifier
   );
 
-  return await certificateRepository.save(certificate);
+  const saved = await certificateRepository.save(certificate);
+  if (onCertificateIssued) {
+    await onCertificateIssued(saved);
+  }
+  return saved;
 }

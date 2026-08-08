@@ -68,7 +68,12 @@
     "settings": "Einstellungen",
     "libraryName": "Name der Bibliothek",
     "registrationOpen": "Registrierung geöffnet",
-    "registrationOpenHint": "Wenn deaktiviert, kann niemand mehr Konten erstellen. Die Bibliothek bleibt öffentlich."
+    "registrationOpenHint": "Wenn deaktiviert, kann niemand mehr Konten erstellen. Die Bibliothek bleibt öffentlich.",
+    "news": "Neuigkeiten",
+    "newPost": "Neuer Beitrag",
+    "postTitle": "Titel",
+    "newsEnabled": "Neuigkeiten-Bereich aktiviert",
+    "newsEnabledHint": "Wenn deaktiviert, erscheint der Bereich einfach nicht."
   },
   "material": {
     "type": {
@@ -150,5 +155,18 @@
   "account": {
     "certificates": "Zertifikate",
     "noCertificates": "Noch keine Zertifikate."
+  },
+  "news": {
+    "title": "Neuigkeiten",
+    "empty": "Noch keine Neuigkeiten.",
+    "readMore": "Weiterlesen"
+  },
+  "notifications": {
+    "title": "Benachrichtigungen",
+    "empty": "Keine Benachrichtigungen.",
+    "coursePublished": "Neuer Kurs: {title}",
+    "courseUpdated": "Kurs aktualisiert: {title}",
+    "newsPublished": "Neuigkeit: {title}",
+    "certificateIssued": "Zertifikat erhalten! {title}"
   }
 }

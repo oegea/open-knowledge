@@ -68,7 +68,12 @@
     "settings": "Налаштування",
     "libraryName": "Назва бібліотеки",
     "registrationOpen": "Реєстрація відкрита",
-    "registrationOpenHint": "Якщо вимкнути, ніхто більше не зможе створювати облікові записи. Бібліотека залишиться публічною."
+    "registrationOpenHint": "Якщо вимкнути, ніхто більше не зможе створювати облікові записи. Бібліотека залишиться публічною.",
+    "news": "Новини",
+    "newPost": "Новий запис",
+    "postTitle": "Заголовок",
+    "newsEnabled": "Розділ новин увімкнено",
+    "newsEnabledHint": "Якщо вимкнути, розділ просто не зʼявлятиметься."
   },
   "material": {
     "type": {
@@ -150,5 +155,18 @@
   "account": {
     "certificates": "Сертифікати",
     "noCertificates": "Поки немає сертифікатів."
+  },
+  "news": {
+    "title": "Новини",
+    "empty": "Новин поки немає.",
+    "readMore": "Читати далі"
+  },
+  "notifications": {
+    "title": "Сповіщення",
+    "empty": "Немає сповіщень.",
+    "coursePublished": "Новий курс: {title}",
+    "courseUpdated": "Курс оновлено: {title}",
+    "newsPublished": "Новина: {title}",
+    "certificateIssued": "Сертифікат отримано! {title}"
   }
 }

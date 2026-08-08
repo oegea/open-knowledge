@@ -27,6 +27,9 @@ export default async function AdminLayout({ children }: LayoutProps<'/admin'>) {
           <Link href="/admin" className={styles.headerLink}>
             {translate(dictionary, 'admin.courses')}
           </Link>
+          <Link href="/admin/news" className={styles.headerLink}>
+            {translate(dictionary, 'admin.news')}
+          </Link>
           <Link href="/admin/settings" className={styles.headerLink}>
             {translate(dictionary, 'admin.settings')}
           </Link>

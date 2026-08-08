@@ -92,6 +92,31 @@ CREATE TABLE IF NOT EXISTS exam_results (
 
 CREATE INDEX IF NOT EXISTS idx_exam_results_user_course ON exam_results(user_id, course_id);
 
+CREATE TABLE IF NOT EXISTS news_posts (
+  id TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  markdown TEXT NOT NULL,
+  published INTEGER NOT NULL DEFAULT 0,
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS notifications (
+  id TEXT PRIMARY KEY,
+  user_id TEXT,
+  type TEXT NOT NULL,
+  title TEXT NOT NULL,
+  ref_id TEXT,
+  created_at TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_notifications_created ON notifications(created_at);
+
+CREATE TABLE IF NOT EXISTS notification_state (
+  user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+  seen_at TEXT NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS certificates (
   id TEXT PRIMARY KEY,
   user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,

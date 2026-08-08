@@ -68,7 +68,12 @@
     "settings": "Settings",
     "libraryName": "Library name",
     "registrationOpen": "Registration open",
-    "registrationOpenHint": "If disabled, no one else can create accounts. The library stays public."
+    "registrationOpenHint": "If disabled, no one else can create accounts. The library stays public.",
+    "news": "News",
+    "newPost": "New post",
+    "postTitle": "Title",
+    "newsEnabled": "News section enabled",
+    "newsEnabledHint": "If disabled, the section simply will not appear."
   },
   "material": {
     "type": {
@@ -150,5 +155,18 @@
   "account": {
     "certificates": "Certificates",
     "noCertificates": "No certificates yet."
+  },
+  "news": {
+    "title": "News",
+    "empty": "No news yet.",
+    "readMore": "Read more"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "empty": "No notifications.",
+    "coursePublished": "New course: {title}",
+    "courseUpdated": "Course updated: {title}",
+    "newsPublished": "News: {title}",
+    "certificateIssued": "Certificate earned! {title}"
   }
 }

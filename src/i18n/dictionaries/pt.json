@@ -68,7 +68,12 @@
     "settings": "Definições",
     "libraryName": "Nome da biblioteca",
     "registrationOpen": "Registo aberto",
-    "registrationOpenHint": "Se desativado, mais ninguém poderá criar contas. A biblioteca continua pública."
+    "registrationOpenHint": "Se desativado, mais ninguém poderá criar contas. A biblioteca continua pública.",
+    "news": "Notícias",
+    "newPost": "Nova notícia",
+    "postTitle": "Título",
+    "newsEnabled": "Secção de notícias ativada",
+    "newsEnabledHint": "Se desativada, a secção simplesmente não aparecerá."
   },
   "material": {
     "type": {
@@ -150,5 +155,18 @@
   "account": {
     "certificates": "Certificados",
     "noCertificates": "Ainda não tem certificados."
+  },
+  "news": {
+    "title": "Notícias",
+    "empty": "Ainda não há notícias.",
+    "readMore": "Ler mais"
+  },
+  "notifications": {
+    "title": "Notificações",
+    "empty": "Sem notificações.",
+    "coursePublished": "Novo curso: {title}",
+    "courseUpdated": "Curso atualizado: {title}",
+    "newsPublished": "Notícia: {title}",
+    "certificateIssued": "Certificado obtido! {title}"
   }
 }

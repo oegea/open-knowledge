@@ -68,7 +68,12 @@
     "settings": "Impostazioni",
     "libraryName": "Nome della libreria",
     "registrationOpen": "Registrazione aperta",
-    "registrationOpenHint": "Se disattivata, nessun altro potrà creare account. La libreria resta pubblica."
+    "registrationOpenHint": "Se disattivata, nessun altro potrà creare account. La libreria resta pubblica.",
+    "news": "Notizie",
+    "newPost": "Nuova notizia",
+    "postTitle": "Titolo",
+    "newsEnabled": "Sezione notizie attiva",
+    "newsEnabledHint": "Se disattivata, la sezione semplicemente non apparirà."
   },
   "material": {
     "type": {
@@ -150,5 +155,18 @@
   "account": {
     "certificates": "Certificati",
     "noCertificates": "Ancora nessun certificato."
+  },
+  "news": {
+    "title": "Notizie",
+    "empty": "Ancora nessuna notizia.",
+    "readMore": "Leggi di più"
+  },
+  "notifications": {
+    "title": "Notifiche",
+    "empty": "Nessuna notifica.",
+    "coursePublished": "Nuovo corso: {title}",
+    "courseUpdated": "Corso aggiornato: {title}",
+    "newsPublished": "Notizia: {title}",
+    "certificateIssued": "Certificato ottenuto! {title}"
   }
 }

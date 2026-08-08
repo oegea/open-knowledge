@@ -68,7 +68,12 @@
     "settings": "Ezarpenak",
     "libraryName": "Liburutegiaren izena",
     "registrationOpen": "Erregistroa irekita",
-    "registrationOpenHint": "Desaktibatzen baduzu, beste inork ezingo du konturik sortu. Liburutegia publikoa izaten jarraituko du."
+    "registrationOpenHint": "Desaktibatzen baduzu, beste inork ezingo du konturik sortu. Liburutegia publikoa izaten jarraituko du.",
+    "news": "Berriak",
+    "newPost": "Berri berria",
+    "postTitle": "Izenburua",
+    "newsEnabled": "Berrien atala gaituta",
+    "newsEnabledHint": "Desaktibatzen baduzu, atala ez da agertuko besterik gabe."
   },
   "material": {
     "type": {
@@ -150,5 +155,18 @@
   "account": {
     "certificates": "Ziurtagiriak",
     "noCertificates": "Oraindik ez duzu ziurtagiririk."
+  },
+  "news": {
+    "title": "Berriak",
+    "empty": "Oraindik ez dago berririk.",
+    "readMore": "Irakurri gehiago"
+  },
+  "notifications": {
+    "title": "Jakinarazpenak",
+    "empty": "Ez duzu jakinarazpenik.",
+    "coursePublished": "Ikastaro berria: {title}",
+    "courseUpdated": "Ikastaroa eguneratua: {title}",
+    "newsPublished": "Berria: {title}",
+    "certificateIssued": "Ziurtagiria lortuta! {title}"
   }
 }

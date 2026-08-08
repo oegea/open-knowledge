@@ -68,7 +68,12 @@
     "settings": "Настройки",
     "libraryName": "Название библиотеки",
     "registrationOpen": "Регистрация открыта",
-    "registrationOpenHint": "Если отключить, никто больше не сможет создавать учётные записи. Библиотека останется публичной."
+    "registrationOpenHint": "Если отключить, никто больше не сможет создавать учётные записи. Библиотека останется публичной.",
+    "news": "Новости",
+    "newPost": "Новая запись",
+    "postTitle": "Заголовок",
+    "newsEnabled": "Раздел новостей включён",
+    "newsEnabledHint": "Если отключить, раздел просто не будет отображаться."
   },
   "material": {
     "type": {
@@ -150,5 +155,18 @@
   "account": {
     "certificates": "Сертификаты",
     "noCertificates": "Пока нет сертификатов."
+  },
+  "news": {
+    "title": "Новости",
+    "empty": "Новостей пока нет.",
+    "readMore": "Читать далее"
+  },
+  "notifications": {
+    "title": "Уведомления",
+    "empty": "Нет уведомлений.",
+    "coursePublished": "Новый курс: {title}",
+    "courseUpdated": "Курс обновлён: {title}",
+    "newsPublished": "Новость: {title}",
+    "certificateIssued": "Сертификат получен! {title}"
   }
 }

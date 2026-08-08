@@ -5,6 +5,7 @@ import { SqliteCertificateRepository } from '../infrastructure/SqliteCertificate
 import { SqliteCourseRepository } from '../../course/infrastructure/SqliteCourseRepository';
 import { SqliteProgressRepository } from '../../study/infrastructure/SqliteProgressRepository';
 import { SqliteExamResultRepository } from '../../assessment/infrastructure/SqliteExamResultRepository';
+import notificationFactory from '../../notification/application/factory';
 
 export default {
   issueCertificate: async (userId: string, identifier: string, courseId: string) =>
@@ -16,6 +17,14 @@ export default {
       progressRepository: new SqliteProgressRepository(userId),
       examResultRepository: new SqliteExamResultRepository(),
       certificateRepository: new SqliteCertificateRepository(),
+      onCertificateIssued: async (certificate) => {
+        await notificationFactory.publishNotification(
+          'certificate_issued',
+          certificate.getCourseTitle(),
+          certificate.getId(),
+          certificate.getUserId()
+        );
+      },
     }),
 
   getCertificate: async (id: string) =>
