@@ -82,7 +82,7 @@ pnpm lint
 
 ## Architecture
 
-Next.js (App Router) full-stack monolith. Business logic lives in framework-agnostic modules under `src/modules/{context}/` following Clean Architecture with DDD-style bounded contexts (domain / application / infrastructure / test). Every architectural, product and design decision is recorded in [`docs/adr`](./docs/adr/README.md).
+Next.js (App Router) full-stack monolith. Business logic lives in framework-agnostic modules under `src/modules/{context}/` following Clean Architecture with DDD-style bounded contexts (domain / application / infrastructure / test). Every architectural, product and design decision is recorded in [`docs/adr`](./docs/adr/README.md); the product's mission and principles live in [`docs/product-vision.md`](./docs/product-vision.md).
 
 ## License & contributing
 
