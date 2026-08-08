@@ -5,6 +5,22 @@ import settingsFactory from '@/modules/settings/application/factory';
 import pagesFactory from '@/modules/pages/application/factory';
 import styles from './PublicFooter.module.css';
 
+const PROJECT_URL = 'https://github.com/oegea/open-knowledge';
+
+/** Every locale keeps the literal "Open Knowledge" — link that fragment. */
+function taglineWithLink(text: string, linkClassName: string) {
+  const [before, ...after] = text.split('Open Knowledge');
+  return (
+    <>
+      {before}
+      <a href={PROJECT_URL} target="_blank" rel="noopener noreferrer" className={linkClassName}>
+        Open Knowledge
+      </a>
+      {after.join('Open Knowledge')}
+    </>
+  );
+}
+
 export async function PublicFooter() {
   const locale = await getLocale();
   const dictionary = await getDictionary(locale);
@@ -27,9 +43,12 @@ export async function PublicFooter() {
         <span className={styles.mark} aria-hidden="true">
           ✦
         </span>{' '}
-        {owner
-          ? translate(dictionary, 'footer.taglineOwned', { owner })
-          : translate(dictionary, 'footer.tagline')}
+        {taglineWithLink(
+          owner
+            ? translate(dictionary, 'footer.taglineOwned', { owner })
+            : translate(dictionary, 'footer.tagline'),
+          styles.projectLink
+        )}
       </p>
     </footer>
   );

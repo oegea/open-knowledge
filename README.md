@@ -84,6 +84,10 @@ pnpm lint
 
 Next.js (App Router) full-stack monolith. Business logic lives in framework-agnostic modules under `src/modules/{context}/` following Clean Architecture with DDD-style bounded contexts (domain / application / infrastructure / test). Every architectural, product and design decision is recorded in [`docs/adr`](./docs/adr/README.md).
 
+## License & contributing
+
+Open Knowledge is released under the [MIT license](./LICENSE.md), conceived by [Oriol Egea](https://github.com/oegea). Code contributions are not accepted, but **ideas, suggestions and bug reports are very welcome as [issues](https://github.com/oegea/open-knowledge/issues)** — see [CONTRIBUTING.md](./CONTRIBUTING.md).
+
 ## Philosophy
 
 Knowledge takes the center. The interface disappears around it. Technology makes publishing simpler, AI helps structure knowledge without hiding where it came from — and the quality of the experience proves that an open, self-hostable, free tool conceived as a gift doesn't have to feel worse than a commercial product.

@@ -40,3 +40,15 @@
   max-width: 30rem;
   line-height: var(--ok-leading-normal);
 }
+
+.projectLink {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--ok-duration-fast) var(--ok-ease);
+}
+
+.projectLink:hover {
+  color: var(--ok-primary);
+}
