@@ -1,0 +1,59 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-3);
+  border-top: 1px solid var(--ok-border);
+  padding-top: var(--ok-space-5);
+}
+
+.title {
+  font-size: var(--ok-text-xl);
+  letter-spacing: -0.01em;
+}
+
+.hint {
+  font-size: var(--ok-text-sm);
+  color: var(--ok-fg-muted);
+  line-height: var(--ok-leading-normal);
+}
+
+.actions {
+  display: flex;
+  gap: var(--ok-space-3);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.downloadButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ok-space-2);
+  min-height: var(--ok-touch-target);
+  padding: 0 var(--ok-space-5);
+  border-radius: var(--ok-radius-full);
+  background: var(--ok-primary);
+  color: var(--ok-primary-fg);
+  font-weight: 700;
+  font-size: var(--ok-text-sm);
+  box-shadow: var(--ok-shadow-1);
+  transition: background var(--ok-duration-fast) var(--ok-ease);
+}
+
+.downloadButton:hover {
+  background: var(--ok-primary-hover);
+}
+
+.fileInput {
+  display: none;
+}
+
+.warning {
+  font-size: var(--ok-text-xs);
+  color: var(--ok-warning);
+  line-height: var(--ok-leading-normal);
+}
+
+.error {
+  color: var(--ok-danger);
+  font-size: var(--ok-text-sm);
+}

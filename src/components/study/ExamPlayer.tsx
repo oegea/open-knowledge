@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { ExamPrimitive } from '@/modules/course/domain/Exam';
+import { ExamQuestionPrimitive } from '@/modules/course/domain/ExamQuestion';
 import { useI18n } from '@/i18n/I18nProvider';
 import styles from './ExamPlayer.module.css';
 
@@ -12,12 +13,33 @@ interface ExamPlayerProps {
   onFinished?: (answers: Record<string, string>, passed: boolean) => Promise<void> | void;
 }
 
+function shuffle<T>(items: T[]): T[] {
+  const result = [...items];
+  for (let i = result.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
+/**
+ * Draws this attempt's questions: a random sample of `questionCount` from
+ * the pool (or all of them), with shuffled choice order.
+ */
+function drawAttempt(exam: ExamPrimitive): ExamQuestionPrimitive[] {
+  const count = exam.questionCount ?? exam.questions.length;
+  return shuffle(exam.questions)
+    .slice(0, count)
+    .map((question) => ({ ...question, choices: shuffle(question.choices) }));
+}
+
 /**
  * One question at a time: answer, check, read the explanation, move on.
  * At the end, score against the passing threshold.
  */
 export function ExamPlayer({ exam, onPassed, onFinished }: ExamPlayerProps) {
   const { t } = useI18n();
+  const [attempt, setAttempt] = useState<ExamQuestionPrimitive[]>(() => drawAttempt(exam));
   const [questionIndex, setQuestionIndex] = useState(0);
   const [selectedChoiceId, setSelectedChoiceId] = useState<string | null>(null);
   const [checked, setChecked] = useState(false);
@@ -26,8 +48,8 @@ export function ExamPlayer({ exam, onPassed, onFinished }: ExamPlayerProps) {
   const [finished, setFinished] = useState(false);
   const [passedNotified, setPassedNotified] = useState(false);
 
-  const question = exam.questions[questionIndex];
-  const total = exam.questions.length;
+  const question = attempt[questionIndex];
+  const total = attempt.length;
   const passed = useMemo(
     () => finished && correctCount / total >= exam.passingScore,
     [finished, correctCount, total, exam.passingScore]
@@ -59,10 +81,13 @@ export function ExamPlayer({ exam, onPassed, onFinished }: ExamPlayerProps) {
   };
 
   const handleRetry = () => {
+    // A fresh attempt draws a fresh random sample from the pool.
+    setAttempt(drawAttempt(exam));
     setQuestionIndex(0);
     setSelectedChoiceId(null);
     setChecked(false);
     setCorrectCount(0);
+    setAnswers({});
     setFinished(false);
   };
 

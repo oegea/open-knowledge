@@ -18,6 +18,8 @@ interface registerUserProps {
   userRepository: UserRepository;
   totpRepository: TotpRepository;
   settingsRepository: SettingsRepository;
+  /** Port: instance bootstrap hooks (e.g. seed the default about page). */
+  onFirstAdminRegistered?: () => Promise<void>;
 }
 
 export function hashRecoveryCode(recoveryCode: string): string {
@@ -36,6 +38,7 @@ export async function registerUser({
   userRepository,
   totpRepository,
   settingsRepository,
+  onFirstAdminRegistered,
 }: registerUserProps): Promise<RegistrationResult> {
   UserIdentifier.ensureIdentifierIsValid(identifier);
 
@@ -71,5 +74,10 @@ export async function registerUser({
   );
 
   const saved = await userRepository.save(user);
+
+  if (isFirstUser && onFirstAdminRegistered) {
+    await onFirstAdminRegistered();
+  }
+
   return { user: saved, recoveryCode };
 }

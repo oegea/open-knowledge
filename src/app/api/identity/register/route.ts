@@ -2,6 +2,7 @@ import type { NextRequest } from 'next/server';
 import identityFactory from '@/modules/identity/application/factory';
 import { SESSION_DURATION_MS } from '@/modules/identity/application/createSession';
 import { buildSessionCookie } from '@/app/serverAuth';
+import { getLocale } from '@/i18n/getLocale';
 import { apiError } from '../../apiError';
 import { allowRequest, clientIp } from '../rateLimit';
 
@@ -15,7 +16,8 @@ export async function POST(request: NextRequest) {
     const { user, recoveryCode } = await identityFactory.registerUser(
       body.identifier,
       body.secret,
-      body.code
+      body.code,
+      await getLocale()
     );
     const { token } = await identityFactory.createSession(user.getId()!);
 

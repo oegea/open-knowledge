@@ -22,7 +22,8 @@
     "notifications": "Jakinarazpenak",
     "admin": "Administrazioa",
     "signIn": "Hasi saioa",
-    "signOut": "Amaitu saioa"
+    "signOut": "Amaitu saioa",
+    "menu": "Menua"
   },
   "language": {
     "label": "Hizkuntza"
@@ -77,7 +78,21 @@
     "addSource": "Gehitu iturria",
     "sourceTitlePlaceholder": "Izenburua edo erreferentzia",
     "ownerName": "Liburutegiaren jabea",
-    "ownerNameHint": "Orri-oinean agertuko da. Utzi hutsik ez erakusteko."
+    "ownerNameHint": "Orri-oinean agertuko da. Utzi hutsik ez erakusteko.",
+    "logo": "Liburutegiaren logoa",
+    "logoHint": "Logo bat igotzen baduzu, izenaren ordez erakutsiko da.",
+    "pages": "Orriak",
+    "newPage": "Orri berria",
+    "noPages": "Oraindik ez dago orririk.",
+    "placement": "Kokapena",
+    "placementHint": "Aukeratu orria non estekatuko den.",
+    "backup": "Segurtasun-kopia",
+    "backupHint": "Deskargatu ingurune osoa duen zip bat: datu-basea, multimedia-fitxategiak eta zifratze-gakoa.",
+    "downloadBackup": "Deskargatu kopia",
+    "restoreBackup": "Leheneratu kopia",
+    "restoreHint": "Leheneratzeak uneko ingurune OSOA kopiaren edukiarekin ordezkatzen du.",
+    "restoreWarning": "⚠ Ekintza honek uneko ingurune OSOA (ikastaroak, erabiltzaileak, aurrerapena, multimedia eta ezarpenak) kopiaren edukiarekin ordezkatuko du. Ezin da desegin. Jarraitu?",
+    "restoreDone": "Kopia leheneratua. Ingurunea kopian zegoen bezalaxe geratu da. Hasi saioa berriro."
   },
   "material": {
     "type": {
@@ -102,7 +117,9 @@
     "passed": "Gaindituta",
     "failed": "Ez da gainditu",
     "retry": "Saiatu berriro",
-    "scoreLabel": "Puntuazioa"
+    "scoreLabel": "Puntuazioa",
+    "questionCount": "Galderak saiakerako",
+    "questionCountHint": "Hutsik = guztiak. 100 galderako bankuarekin eta 10 balioarekin, saiakera bakoitzak 10 ausaz aterako ditu."
   },
   "library": {
     "all": "Guztiak",
@@ -185,5 +202,10 @@
     "light": "Argia",
     "dark": "Iluna",
     "auto": "Automatikoa"
+  },
+  "placement": {
+    "menu": "Menuan",
+    "footer": "Orri-oinean",
+    "hidden": "Ezkutua (esteka bidez soilik)"
   }
 }

@@ -46,6 +46,12 @@ test.describe('Public library', () => {
 
   test('the theme toggle switches between light and dark', async ({ page }) => {
     await page.goto('/');
+
+    // On small screens the toggle lives inside the menu sheet.
+    const menuTrigger = page.getByRole('button', { name: 'Menú' });
+    if (await menuTrigger.isVisible()) {
+      await menuTrigger.click();
+    }
     const toggle = page.getByRole('button', { name: /Tema/ });
 
     await toggle.click(); // auto -> light
@@ -73,6 +79,30 @@ test.describe('Public library', () => {
     await expect(
       page.getByRole('heading', { name: 'El Sistema Solar', exact: true })
     ).toBeVisible();
+  });
+
+  test('the default about page is seeded and linked in the footer', async ({ page }) => {
+    await page.goto('/');
+    await page.getByRole('link', { name: 'Acerca de esta librería' }).click();
+    await page.waitForURL('**/p/**');
+
+    await expect(page.getByRole('heading', { name: 'Acerca de esta librería' })).toBeVisible();
+    await expect(page.getByText(/licencia MIT/)).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Oriol Egea' })).toHaveAttribute(
+      'href',
+      'https://github.com/oegea'
+    );
+  });
+
+  test('small screens navigate through the app-like menu sheet', async ({ page }) => {
+    await page.goto('/');
+    const trigger = page.getByRole('button', { name: 'Menú' });
+    test.skip(!(await trigger.isVisible()), 'inline navigation on this viewport');
+
+    await trigger.click();
+    await expect(page.getByRole('navigation', { name: 'Menú' })).toBeVisible();
+    await page.getByRole('link', { name: 'Iniciar sesión' }).click();
+    await page.waitForURL('**/login');
   });
 
   test('drafts are not exposed to anonymous readers', async ({ request }) => {

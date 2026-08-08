@@ -164,6 +164,25 @@ export function ExamEditor({ exam, onChange }: ExamEditorProps) {
         </Button>
 
         <label className={styles.passingScoreLabel}>
+          {t('exam.questionCount')}
+          <input
+            type="number"
+            min={1}
+            max={exam.questions.length || 1}
+            placeholder={String(exam.questions.length)}
+            title={t('exam.questionCountHint')}
+            className={styles.passingScore}
+            value={exam.questionCount ?? ''}
+            onChange={(event) =>
+              onChange({
+                ...exam,
+                questionCount: event.target.value === '' ? null : Number(event.target.value),
+              })
+            }
+          />
+        </label>
+
+        <label className={styles.passingScoreLabel}>
           {t('exam.passingScore')}
           <input
             type="number"
@@ -177,6 +196,7 @@ export function ExamEditor({ exam, onChange }: ExamEditorProps) {
           />
         </label>
       </div>
+      <p className={styles.poolHint}>{t('exam.questionCountHint')}</p>
     </div>
   );
 }

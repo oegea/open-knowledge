@@ -22,7 +22,8 @@
     "notifications": "通知",
     "admin": "管理",
     "signIn": "ログイン",
-    "signOut": "ログアウト"
+    "signOut": "ログアウト",
+    "menu": "メニュー"
   },
   "language": {
     "label": "言語"
@@ -77,7 +78,21 @@
     "addSource": "出典を追加",
     "sourceTitlePlaceholder": "タイトルまたは参考文献",
     "ownerName": "ライブラリの所有者",
-    "ownerNameHint": "フッターに表示されます。空にすると非表示になります。"
+    "ownerNameHint": "フッターに表示されます。空にすると非表示になります。",
+    "logo": "ライブラリのロゴ",
+    "logoHint": "ロゴをアップロードすると、名前の代わりに表示されます。",
+    "pages": "ページ",
+    "newPage": "新しいページ",
+    "noPages": "まだページがありません。",
+    "placement": "表示場所",
+    "placementHint": "ページのリンク先を選択します。",
+    "backup": "バックアップ",
+    "backupHint": "データベース、メディアファイル、暗号化キーを含む環境全体の zip をダウンロードします。",
+    "downloadBackup": "バックアップをダウンロード",
+    "restoreBackup": "バックアップを復元",
+    "restoreHint": "復元すると、現在の環境全体がバックアップの内容に置き換えられます。",
+    "restoreWarning": "⚠ この操作は現在の環境全体（コース、ユーザー、進捗、メディア、設定）をバックアップの内容で置き換えます。取り消せません。続行しますか？",
+    "restoreDone": "バックアップを復元しました。環境はバックアップ時の状態に戻りました。再度ログインしてください。"
   },
   "material": {
     "type": {
@@ -102,7 +117,9 @@
     "passed": "合格",
     "failed": "不合格",
     "retry": "もう一度",
-    "scoreLabel": "スコア"
+    "scoreLabel": "スコア",
+    "questionCount": "1回あたりの問題数",
+    "questionCountHint": "空欄 = 全問。100問のプールで10を設定すると、毎回ランダムに10問出題されます。"
   },
   "library": {
     "all": "すべて",
@@ -185,5 +202,10 @@
     "light": "ライト",
     "dark": "ダーク",
     "auto": "自動"
+  },
+  "placement": {
+    "menu": "メニュー内",
+    "footer": "フッター内",
+    "hidden": "非表示（リンクのみ）"
   }
 }

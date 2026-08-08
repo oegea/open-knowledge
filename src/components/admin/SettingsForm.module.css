@@ -4,6 +4,42 @@
   gap: var(--ok-space-5);
 }
 
+.logoBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ok-space-2);
+}
+
+.logoLabel {
+  font-size: var(--ok-text-sm);
+  font-weight: 700;
+}
+
+.logoHint {
+  font-size: var(--ok-text-xs);
+  color: var(--ok-fg-muted);
+}
+
+.logoPreview {
+  max-height: 3.5rem;
+  max-width: 16rem;
+  object-fit: contain;
+  border-radius: var(--ok-radius-md);
+  background: var(--ok-bg-raised);
+  border: 1px solid var(--ok-border);
+  padding: var(--ok-space-2);
+}
+
+.fileInput {
+  display: none;
+}
+
+.logoActions {
+  display: flex;
+  gap: var(--ok-space-2);
+}
+
 .error {
   color: var(--ok-danger);
   font-size: var(--ok-text-sm);

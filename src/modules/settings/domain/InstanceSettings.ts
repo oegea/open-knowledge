@@ -2,6 +2,8 @@ export interface InstanceSettingsPrimitive {
   libraryName: string;
   /** Shown in the public footer; empty hides the ownership line. */
   ownerName: string;
+  /** Media path of the library logo; shown instead of the name when set. */
+  logoPath: string | null;
   registrationOpen: boolean;
   newsEnabled: boolean;
 }
@@ -10,6 +12,7 @@ export class InstanceSettings {
   private constructor(
     private readonly libraryName: string,
     private readonly ownerName: string,
+    private readonly logoPath: string | null,
     private readonly registrationOpen: boolean,
     private readonly newsEnabled: boolean
   ) {}
@@ -17,15 +20,22 @@ export class InstanceSettings {
   static create(
     libraryName: string,
     ownerName: string,
+    logoPath: string | null,
     registrationOpen: boolean,
     newsEnabled: boolean
   ): InstanceSettings {
     InstanceSettings.ensureSettingsAreValid(libraryName, ownerName);
-    return new InstanceSettings(libraryName.trim(), ownerName.trim(), registrationOpen, newsEnabled);
+    return new InstanceSettings(
+      libraryName.trim(),
+      ownerName.trim(),
+      logoPath?.trim() || null,
+      registrationOpen,
+      newsEnabled
+    );
   }
 
   static createDefault(): InstanceSettings {
-    return InstanceSettings.create('Open Knowledge', '', true, false);
+    return InstanceSettings.create('Open Knowledge', '', null, true, false);
   }
 
   static fromPrimitive(data: InstanceSettingsPrimitive): InstanceSettings {
@@ -33,6 +43,7 @@ export class InstanceSettings {
     return InstanceSettings.create(
       data.libraryName ?? 'Open Knowledge',
       data.ownerName ?? '',
+      data.logoPath ?? null,
       Boolean(data.registrationOpen),
       Boolean(data.newsEnabled)
     );
@@ -58,6 +69,10 @@ export class InstanceSettings {
     return this.ownerName;
   }
 
+  getLogoPath(): string | null {
+    return this.logoPath;
+  }
+
   isRegistrationOpen(): boolean {
     return this.registrationOpen;
   }
@@ -74,6 +89,7 @@ export class InstanceSettings {
     return {
       libraryName: this.libraryName,
       ownerName: this.ownerName,
+      logoPath: this.logoPath,
       registrationOpen: this.registrationOpen,
       newsEnabled: this.newsEnabled,
     };

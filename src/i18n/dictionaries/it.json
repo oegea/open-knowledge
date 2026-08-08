@@ -22,7 +22,8 @@
     "notifications": "Notifiche",
     "admin": "Amministrazione",
     "signIn": "Accedi",
-    "signOut": "Esci"
+    "signOut": "Esci",
+    "menu": "Menu"
   },
   "language": {
     "label": "Lingua"
@@ -77,7 +78,21 @@
     "addSource": "Aggiungi fonte",
     "sourceTitlePlaceholder": "Titolo o riferimento",
     "ownerName": "Proprietario della libreria",
-    "ownerNameHint": "Mostrato nel piè di pagina. Lascia vuoto per nasconderlo."
+    "ownerNameHint": "Mostrato nel piè di pagina. Lascia vuoto per nasconderlo.",
+    "logo": "Logo della libreria",
+    "logoHint": "Se carichi un logo, verrà mostrato al posto del nome.",
+    "pages": "Pagine",
+    "newPage": "Nuova pagina",
+    "noPages": "Ancora nessuna pagina.",
+    "placement": "Posizione",
+    "placementHint": "Scegli dove collegare la pagina.",
+    "backup": "Backup",
+    "backupHint": "Scarica uno zip con l'intero ambiente: database, file multimediali e chiave di cifratura.",
+    "downloadBackup": "Scarica backup",
+    "restoreBackup": "Ripristina backup",
+    "restoreHint": "Il ripristino sostituisce TUTTO l'ambiente attuale con il contenuto del backup.",
+    "restoreWarning": "⚠ Questa azione sostituirà TUTTO l'ambiente attuale (corsi, utenti, progressi, media e impostazioni) con il contenuto del backup. Irreversibile. Continuare?",
+    "restoreDone": "Backup ripristinato. L'ambiente è esattamente com'era. Accedi di nuovo."
   },
   "material": {
     "type": {
@@ -102,7 +117,9 @@
     "passed": "Superato",
     "failed": "Non superato",
     "retry": "Riprova",
-    "scoreLabel": "Punteggio"
+    "scoreLabel": "Punteggio",
+    "questionCount": "Domande per tentativo",
+    "questionCountHint": "Vuoto = tutte. Con 100 domande e valore 10, ogni tentativo ne estrae 10 a caso."
   },
   "library": {
     "all": "Tutti",
@@ -185,5 +202,10 @@
     "light": "Chiaro",
     "dark": "Scuro",
     "auto": "Automatico"
+  },
+  "placement": {
+    "menu": "Nel menu",
+    "footer": "Nel piè di pagina",
+    "hidden": "Nascosta (solo tramite link)"
   }
 }

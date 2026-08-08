@@ -101,6 +101,16 @@ CREATE TABLE IF NOT EXISTS news_posts (
   updated_at TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS pages (
+  id TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  markdown TEXT NOT NULL,
+  placement TEXT NOT NULL DEFAULT 'hidden',
+  position INTEGER NOT NULL DEFAULT 0,
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS notifications (
   id TEXT PRIMARY KEY,
   user_id TEXT,
@@ -129,21 +139,52 @@ CREATE TABLE IF NOT EXISTS certificates (
 `;
 
 let instance: Database.Database | null = null;
+let instanceInode: number | null = null;
 
 function migrate(db: Database.Database): void {
   db.exec(SCHEMA);
 }
 
 export function getDatabase(): Database.Database {
+  const dataDir = process.env.OK_DATA_DIR || path.join(process.cwd(), 'data');
+  const dbPath = path.join(dataDir, 'openknowledge.db');
+
+  // A backup restore replaces the database file on disk. Bundlers may keep
+  // several copies of this module alive, so each copy re-checks the inode
+  // and reopens its handle when the file changed underneath it.
+  if (instance) {
+    let replaced = false;
+    try {
+      replaced = fs.statSync(dbPath).ino !== instanceInode;
+    } catch {
+      replaced = true;
+    }
+    if (replaced) {
+      instance.close();
+      instance = null;
+    }
+  }
+
   if (!instance) {
-    const dataDir = process.env.OK_DATA_DIR || path.join(process.cwd(), 'data');
     fs.mkdirSync(dataDir, { recursive: true });
-    instance = new Database(path.join(dataDir, 'openknowledge.db'));
+    instance = new Database(dbPath);
     instance.pragma('journal_mode = WAL');
     instance.pragma('foreign_keys = ON');
     migrate(instance);
+    instanceInode = fs.statSync(dbPath).ino;
   }
   return instance;
+}
+
+/**
+ * Closes the singleton connection (used before a backup restore replaces the
+ * database file). The next getDatabase() call reopens it.
+ */
+export function closeDatabase(): void {
+  if (instance) {
+    instance.close();
+    instance = null;
+  }
 }
 
 /** Fresh isolated database for integration tests. */

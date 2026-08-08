@@ -99,6 +99,11 @@
   font-weight: 700;
 }
 
+.poolHint {
+  font-size: var(--ok-text-xs);
+  color: var(--ok-fg-muted);
+}
+
 .passingScore {
   font: inherit;
   color: var(--ok-fg);

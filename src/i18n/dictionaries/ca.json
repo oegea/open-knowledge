@@ -22,7 +22,8 @@
     "notifications": "Notificacions",
     "admin": "Administració",
     "signIn": "Inicia la sessió",
-    "signOut": "Tanca la sessió"
+    "signOut": "Tanca la sessió",
+    "menu": "Menú"
   },
   "language": {
     "label": "Idioma"
@@ -77,7 +78,21 @@
     "addSource": "Afegeix una font",
     "sourceTitlePlaceholder": "Títol o referència",
     "ownerName": "Propietari/ària de la llibreria",
-    "ownerNameHint": "Apareixerà al peu de pàgina. Deixa-ho buit per no mostrar-ho."
+    "ownerNameHint": "Apareixerà al peu de pàgina. Deixa-ho buit per no mostrar-ho.",
+    "logo": "Logotip de la llibreria",
+    "logoHint": "Si puges un logotip, es mostrarà en lloc del nom.",
+    "pages": "Pàgines",
+    "newPage": "Pàgina nova",
+    "noPages": "Encara no hi ha pàgines.",
+    "placement": "Ubicació",
+    "placementHint": "Tria on s'enllaça la pàgina.",
+    "backup": "Còpia de seguretat",
+    "backupHint": "Descarrega un zip amb tot l'entorn: base de dades, fitxers multimèdia i clau de xifratge.",
+    "downloadBackup": "Descarrega la còpia",
+    "restoreBackup": "Restaura la còpia",
+    "restoreHint": "Restaurar reemplaça TOT l'entorn actual pel contingut de la còpia.",
+    "restoreWarning": "⚠ Aquesta acció reemplaçarà TOT l'entorn actual (cursos, usuaris, progrés, multimèdia i configuració) pel contingut de la còpia. No es pot desfer. Continuar?",
+    "restoreDone": "Còpia restaurada. L'entorn ha quedat exactament com era. Torna a iniciar la sessió."
   },
   "material": {
     "type": {
@@ -102,7 +117,9 @@
     "passed": "Aprovat",
     "failed": "No superat",
     "retry": "Torna-ho a provar",
-    "scoreLabel": "Encerts"
+    "scoreLabel": "Encerts",
+    "questionCount": "Preguntes per intent",
+    "questionCountHint": "Buit = totes. Amb 100 preguntes i valor 10, cada intent en treu 10 a l'atzar."
   },
   "library": {
     "all": "Tots",
@@ -185,5 +202,10 @@
     "light": "Clar",
     "dark": "Fosc",
     "auto": "Automàtic"
+  },
+  "placement": {
+    "menu": "Al menú",
+    "footer": "Al peu de pàgina",
+    "hidden": "Oculta (només per enllaç)"
   }
 }

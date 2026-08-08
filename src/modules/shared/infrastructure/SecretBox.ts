@@ -9,16 +9,35 @@ import fs from 'fs';
  */
 
 let cachedKey: Buffer | null = null;
+let cachedKeyInode: number | null = null;
+
+/** Clears the cached key (a backup restore may replace the key file). */
+export function resetSecretBox(): void {
+  cachedKey = null;
+  cachedKeyInode = null;
+}
 
 function getKey(): Buffer {
-  if (cachedKey) return cachedKey;
   const dataDir = process.env.OK_DATA_DIR || path.join(process.cwd(), 'data');
   const keyPath = path.join(dataDir, 'instance.key');
+
+  // Restores replace the key file; stale module copies must notice (see
+  // the inode check in SqliteDatabase for the full rationale).
+  if (cachedKey) {
+    try {
+      if (fs.statSync(keyPath).ino === cachedKeyInode) return cachedKey;
+    } catch {
+      /* fall through and reload */
+    }
+    resetSecretBox();
+  }
+
   if (!fs.existsSync(keyPath)) {
     fs.mkdirSync(dataDir, { recursive: true });
     fs.writeFileSync(keyPath, randomBytes(32), { mode: 0o600 });
   }
   cachedKey = fs.readFileSync(keyPath);
+  cachedKeyInode = fs.statSync(keyPath).ino;
   return cachedKey;
 }
 

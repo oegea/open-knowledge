@@ -22,7 +22,8 @@
     "notifications": "Notificacións",
     "admin": "Administración",
     "signIn": "Iniciar sesión",
-    "signOut": "Pechar sesión"
+    "signOut": "Pechar sesión",
+    "menu": "Menú"
   },
   "language": {
     "label": "Idioma"
@@ -77,7 +78,21 @@
     "addSource": "Engadir fonte",
     "sourceTitlePlaceholder": "Título ou referencia",
     "ownerName": "Propietario/a da libraría",
-    "ownerNameHint": "Aparecerá no pé de páxina. Déixao baleiro para non mostralo."
+    "ownerNameHint": "Aparecerá no pé de páxina. Déixao baleiro para non mostralo.",
+    "logo": "Logotipo da libraría",
+    "logoHint": "Se subes un logotipo, mostrarase no canto do nome.",
+    "pages": "Páxinas",
+    "newPage": "Nova páxina",
+    "noPages": "Aínda non hai páxinas.",
+    "placement": "Localización",
+    "placementHint": "Escolle onde se liga a páxina.",
+    "backup": "Copia de seguridade",
+    "backupHint": "Descarga un zip con todo o contorno: base de datos, ficheiros multimedia e clave de cifrado.",
+    "downloadBackup": "Descargar copia",
+    "restoreBackup": "Restaurar copia",
+    "restoreHint": "Restaurar substitúe TODO o contorno actual polo contido da copia.",
+    "restoreWarning": "⚠ Esta acción substituirá TODO o contorno actual (cursos, usuarios, progreso, multimedia e axustes) polo contido da copia. Non se pode desfacer. Continuar?",
+    "restoreDone": "Copia restaurada. O contorno quedou exactamente como estaba. Volve iniciar sesión."
   },
   "material": {
     "type": {
@@ -102,7 +117,9 @@
     "passed": "Aprobado",
     "failed": "Non superado",
     "retry": "Tentar de novo",
-    "scoreLabel": "Acertos"
+    "scoreLabel": "Acertos",
+    "questionCount": "Preguntas por intento",
+    "questionCountHint": "Baleiro = todas. Cun banco de 100 preguntas e valor 10, cada intento saca 10 ao chou."
   },
   "library": {
     "all": "Todos",
@@ -185,5 +202,10 @@
     "light": "Claro",
     "dark": "Escuro",
     "auto": "Automático"
+  },
+  "placement": {
+    "menu": "No menú",
+    "footer": "No pé de páxina",
+    "hidden": "Oculta (só por ligazón)"
   }
 }

@@ -22,7 +22,8 @@
     "notifications": "Notificaciones",
     "admin": "Administración",
     "signIn": "Iniciar sesión",
-    "signOut": "Cerrar sesión"
+    "signOut": "Cerrar sesión",
+    "menu": "Menú"
   },
   "language": {
     "label": "Idioma"
@@ -77,7 +78,21 @@
     "addSource": "Añadir fuente",
     "sourceTitlePlaceholder": "Título o referencia",
     "ownerName": "Propietario/a de la librería",
-    "ownerNameHint": "Aparecerá en el pie de página. Déjalo vacío para no mostrarlo."
+    "ownerNameHint": "Aparecerá en el pie de página. Déjalo vacío para no mostrarlo.",
+    "logo": "Logo de la librería",
+    "logoHint": "Si subes un logo, se mostrará en lugar del nombre.",
+    "pages": "Páginas",
+    "newPage": "Nueva página",
+    "noPages": "Aún no hay páginas.",
+    "placement": "Ubicación",
+    "placementHint": "Decide dónde se enlaza la página.",
+    "backup": "Copia de seguridad",
+    "backupHint": "Descarga un zip con todo el entorno: base de datos, archivos multimedia y clave de cifrado.",
+    "downloadBackup": "Descargar copia",
+    "restoreBackup": "Restaurar copia",
+    "restoreHint": "Restaurar reemplaza TODO el entorno actual por el contenido de la copia.",
+    "restoreWarning": "⚠ Esta acción reemplazará TODO el entorno actual (cursos, usuarios, progreso, multimedia y ajustes) por el contenido de la copia de seguridad. No se puede deshacer. ¿Continuar?",
+    "restoreDone": "Copia restaurada. El entorno ha quedado exactamente como estaba en la copia. Vuelve a iniciar sesión."
   },
   "material": {
     "type": {
@@ -102,7 +117,9 @@
     "passed": "Aprobado",
     "failed": "No superado",
     "retry": "Intentar de nuevo",
-    "scoreLabel": "Aciertos"
+    "scoreLabel": "Aciertos",
+    "questionCount": "Preguntas por intento",
+    "questionCountHint": "Vacío = todas. Si el banco tiene 100 preguntas y pones 10, cada intento presenta 10 al azar."
   },
   "library": {
     "all": "Todos",
@@ -185,5 +202,10 @@
     "light": "Claro",
     "dark": "Oscuro",
     "auto": "Automático"
+  },
+  "placement": {
+    "menu": "En el menú",
+    "footer": "Al pie de página",
+    "hidden": "Oculta (solo por enlace)"
   }
 }

@@ -39,6 +39,36 @@ test.describe('Identity and administration', () => {
     await expect(page.locator('code')).toBeVisible();
   });
 
+  test('the admin can download a backup and restore it', async ({ page }) => {
+    const { adminIdentifier, adminSecret } = loadState();
+
+    await page.goto('/login');
+    await page.getByPlaceholder('Erudito#4821').fill(adminIdentifier);
+    await page
+      .locator('input[inputmode="numeric"]')
+      .fill(await generate({ secret: adminSecret }));
+    await page.getByRole('button', { name: /Iniciar sesión|Sign in/ }).click();
+    await page.waitForURL('**/admin');
+
+    const download = await page.request.get('/api/backup');
+    expect(download.status()).toBe(200);
+    expect(download.headers()['content-type']).toBe('application/zip');
+    const archive = await download.body();
+    expect(archive.byteLength).toBeGreaterThan(1000);
+
+    // Restoring the freshly taken backup leaves everything exactly as it was.
+    const restore = await page.request.post('/api/backup', {
+      multipart: {
+        file: { name: 'backup.zip', mimeType: 'application/zip', buffer: archive },
+      },
+    });
+    expect(restore.ok()).toBeTruthy();
+
+    const courses = await page.request.get('/api/courses');
+    const body = await courses.json();
+    expect(body.courses.length).toBeGreaterThan(0);
+  });
+
   test('the notifications bell shows library activity to signed-in users', async ({ page }) => {
     const { adminIdentifier, adminSecret } = loadState();
 

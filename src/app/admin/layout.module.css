@@ -28,6 +28,15 @@
 .headerNav {
   display: flex;
   gap: var(--ok-space-1);
+  /* Horizontal scroll instead of clipping on narrow screens. */
+  overflow-x: auto;
+  scrollbar-width: none;
+  min-width: 0;
+  flex: 1;
+}
+
+.headerNav::-webkit-scrollbar {
+  display: none;
 }
 
 .headerLink {
@@ -50,10 +59,22 @@
 }
 
 .headerTitle {
+  display: none;
   color: var(--ok-fg-muted);
   font-size: var(--ok-text-sm);
   font-weight: 600;
   margin-left: auto;
+}
+
+.headerLink {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .headerTitle {
+    display: inline;
+  }
 }
 
 .main {

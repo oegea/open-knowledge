@@ -22,7 +22,8 @@
     "notifications": "Notifications",
     "admin": "Administration",
     "signIn": "Se connecter",
-    "signOut": "Se déconnecter"
+    "signOut": "Se déconnecter",
+    "menu": "Menu"
   },
   "language": {
     "label": "Langue"
@@ -77,7 +78,21 @@
     "addSource": "Ajouter une source",
     "sourceTitlePlaceholder": "Titre ou référence",
     "ownerName": "Propriétaire de la bibliothèque",
-    "ownerNameHint": "Affiché dans le pied de page. Laissez vide pour le masquer."
+    "ownerNameHint": "Affiché dans le pied de page. Laissez vide pour le masquer.",
+    "logo": "Logo de la bibliothèque",
+    "logoHint": "Si vous téléversez un logo, il s'affiche à la place du nom.",
+    "pages": "Pages",
+    "newPage": "Nouvelle page",
+    "noPages": "Pas encore de pages.",
+    "placement": "Emplacement",
+    "placementHint": "Choisissez où la page est liée.",
+    "backup": "Sauvegarde",
+    "backupHint": "Téléchargez un zip avec tout l'environnement : base de données, fichiers multimédias et clé de chiffrement.",
+    "downloadBackup": "Télécharger la sauvegarde",
+    "restoreBackup": "Restaurer une sauvegarde",
+    "restoreHint": "La restauration remplace TOUT l'environnement actuel par le contenu de la sauvegarde.",
+    "restoreWarning": "⚠ Cette action remplacera TOUT l'environnement actuel (cours, utilisateurs, progression, médias et paramètres) par le contenu de la sauvegarde. Irréversible. Continuer ?",
+    "restoreDone": "Sauvegarde restaurée. L'environnement est exactement tel qu'il était. Reconnectez-vous."
   },
   "material": {
     "type": {
@@ -102,7 +117,9 @@
     "passed": "Réussi",
     "failed": "Non réussi",
     "retry": "Réessayer",
-    "scoreLabel": "Score"
+    "scoreLabel": "Score",
+    "questionCount": "Questions par tentative",
+    "questionCountHint": "Vide = toutes. Avec 100 questions et une valeur de 10, chaque tentative en tire 10 au hasard."
   },
   "library": {
     "all": "Tous",
@@ -185,5 +202,10 @@
     "light": "Clair",
     "dark": "Sombre",
     "auto": "Auto"
+  },
+  "placement": {
+    "menu": "Dans le menu",
+    "footer": "En pied de page",
+    "hidden": "Masquée (lien uniquement)"
   }
 }

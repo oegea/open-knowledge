@@ -51,11 +51,23 @@ export async function gradeExam({
   }
 
   const exam = material.getExam()!;
-  const questions = exam.getQuestions();
-  const correctCount = questions.filter((question) =>
-    question.isCorrectChoice(answers[question.getId()] ?? '')
+  // Attempts answer a sample of `questionCount` questions from the pool.
+  const expectedCount = exam.effectiveQuestionCount();
+  const answeredIds = Object.keys(answers);
+
+  if (answeredIds.length !== expectedCount) {
+    throw new Error(`[gradeExam] The attempt must answer exactly ${expectedCount} questions`);
+  }
+  for (const questionId of answeredIds) {
+    if (exam.getQuestionById(questionId) === null) {
+      throw new Error(`[gradeExam] Question ${questionId} does not belong to this exam`);
+    }
+  }
+
+  const correctCount = answeredIds.filter((questionId) =>
+    exam.getQuestionById(questionId)!.isCorrectChoice(answers[questionId])
   ).length;
-  const passed = correctCount / questions.length >= exam.getPassingScore();
+  const passed = correctCount / expectedCount >= exam.getPassingScore();
 
   const result = ExamResult.create(
     randomUUID(),
@@ -63,7 +75,7 @@ export async function gradeExam({
     courseId,
     materialId,
     correctCount,
-    questions.length,
+    expectedCount,
     passed
   );
 

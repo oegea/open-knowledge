@@ -22,7 +22,8 @@
     "notifications": "Notifications",
     "admin": "Admin",
     "signIn": "Sign in",
-    "signOut": "Sign out"
+    "signOut": "Sign out",
+    "menu": "Menu"
   },
   "language": {
     "label": "Language"
@@ -77,7 +78,21 @@
     "addSource": "Add source",
     "sourceTitlePlaceholder": "Title or reference",
     "ownerName": "Library owner",
-    "ownerNameHint": "Shown in the footer. Leave empty to hide it."
+    "ownerNameHint": "Shown in the footer. Leave empty to hide it.",
+    "logo": "Library logo",
+    "logoHint": "If you upload a logo, it is shown instead of the name.",
+    "pages": "Pages",
+    "newPage": "New page",
+    "noPages": "No pages yet.",
+    "placement": "Placement",
+    "placementHint": "Choose where the page is linked.",
+    "backup": "Backup",
+    "backupHint": "Download a zip with the whole environment: database, media files and encryption key.",
+    "downloadBackup": "Download backup",
+    "restoreBackup": "Restore backup",
+    "restoreHint": "Restoring replaces the ENTIRE current environment with the backup contents.",
+    "restoreWarning": "⚠ This will replace the ENTIRE current environment (courses, users, progress, media and settings) with the backup contents. It cannot be undone. Continue?",
+    "restoreDone": "Backup restored. The environment is exactly as it was in the backup. Please sign in again."
   },
   "material": {
     "type": {
@@ -102,7 +117,9 @@
     "passed": "Passed",
     "failed": "Not passed",
     "retry": "Try again",
-    "scoreLabel": "Score"
+    "scoreLabel": "Score",
+    "questionCount": "Questions per attempt",
+    "questionCountHint": "Empty = all. With a pool of 100 questions and a value of 10, each attempt draws 10 at random."
   },
   "library": {
     "all": "All",
@@ -185,5 +202,10 @@
     "light": "Light",
     "dark": "Dark",
     "auto": "Auto"
+  },
+  "placement": {
+    "menu": "In the menu",
+    "footer": "In the footer",
+    "hidden": "Hidden (link only)"
   }
 }

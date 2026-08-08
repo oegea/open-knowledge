@@ -22,7 +22,8 @@
     "notifications": "Benachrichtigungen",
     "admin": "Verwaltung",
     "signIn": "Anmelden",
-    "signOut": "Abmelden"
+    "signOut": "Abmelden",
+    "menu": "Menü"
   },
   "language": {
     "label": "Sprache"
@@ -77,7 +78,21 @@
     "addSource": "Quelle hinzufügen",
     "sourceTitlePlaceholder": "Titel oder Referenz",
     "ownerName": "Inhaber der Bibliothek",
-    "ownerNameHint": "Wird in der Fußzeile angezeigt. Leer lassen, um es auszublenden."
+    "ownerNameHint": "Wird in der Fußzeile angezeigt. Leer lassen, um es auszublenden.",
+    "logo": "Logo der Bibliothek",
+    "logoHint": "Wenn du ein Logo hochlädst, wird es anstelle des Namens angezeigt.",
+    "pages": "Seiten",
+    "newPage": "Neue Seite",
+    "noPages": "Noch keine Seiten.",
+    "placement": "Platzierung",
+    "placementHint": "Lege fest, wo die Seite verlinkt wird.",
+    "backup": "Sicherung",
+    "backupHint": "Lade ein Zip mit der gesamten Umgebung herunter: Datenbank, Mediendateien und Verschlüsselungsschlüssel.",
+    "downloadBackup": "Sicherung herunterladen",
+    "restoreBackup": "Sicherung wiederherstellen",
+    "restoreHint": "Die Wiederherstellung ersetzt die GESAMTE aktuelle Umgebung durch den Inhalt der Sicherung.",
+    "restoreWarning": "⚠ Dies ersetzt die GESAMTE aktuelle Umgebung (Kurse, Nutzer, Fortschritt, Medien und Einstellungen) durch den Inhalt der Sicherung. Nicht rückgängig zu machen. Fortfahren?",
+    "restoreDone": "Sicherung wiederhergestellt. Die Umgebung ist exakt wie in der Sicherung. Bitte melde dich erneut an."
   },
   "material": {
     "type": {
@@ -102,7 +117,9 @@
     "passed": "Bestanden",
     "failed": "Nicht bestanden",
     "retry": "Erneut versuchen",
-    "scoreLabel": "Punkte"
+    "scoreLabel": "Punkte",
+    "questionCount": "Fragen pro Versuch",
+    "questionCountHint": "Leer = alle. Bei 100 Fragen und dem Wert 10 zieht jeder Versuch 10 zufällige."
   },
   "library": {
     "all": "Alle",
@@ -185,5 +202,10 @@
     "light": "Hell",
     "dark": "Dunkel",
     "auto": "Auto"
+  },
+  "placement": {
+    "menu": "Im Menü",
+    "footer": "In der Fußzeile",
+    "hidden": "Versteckt (nur per Link)"
   }
 }

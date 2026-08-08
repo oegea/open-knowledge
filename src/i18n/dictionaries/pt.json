@@ -22,7 +22,8 @@
     "notifications": "Notificações",
     "admin": "Administração",
     "signIn": "Iniciar sessão",
-    "signOut": "Terminar sessão"
+    "signOut": "Terminar sessão",
+    "menu": "Menu"
   },
   "language": {
     "label": "Idioma"
@@ -77,7 +78,21 @@
     "addSource": "Adicionar fonte",
     "sourceTitlePlaceholder": "Título ou referência",
     "ownerName": "Proprietário da biblioteca",
-    "ownerNameHint": "Aparece no rodapé. Deixe vazio para ocultar."
+    "ownerNameHint": "Aparece no rodapé. Deixe vazio para ocultar.",
+    "logo": "Logótipo da biblioteca",
+    "logoHint": "Se carregar um logótipo, será mostrado em vez do nome.",
+    "pages": "Páginas",
+    "newPage": "Nova página",
+    "noPages": "Ainda não há páginas.",
+    "placement": "Localização",
+    "placementHint": "Escolha onde a página é ligada.",
+    "backup": "Cópia de segurança",
+    "backupHint": "Descarregue um zip com todo o ambiente: base de dados, ficheiros multimédia e chave de cifragem.",
+    "downloadBackup": "Descarregar cópia",
+    "restoreBackup": "Restaurar cópia",
+    "restoreHint": "Restaurar substitui TODO o ambiente atual pelo conteúdo da cópia.",
+    "restoreWarning": "⚠ Esta ação substituirá TODO o ambiente atual (cursos, utilizadores, progresso, multimédia e definições) pelo conteúdo da cópia. Não pode ser anulada. Continuar?",
+    "restoreDone": "Cópia restaurada. O ambiente está exatamente como estava. Inicie sessão novamente."
   },
   "material": {
     "type": {
@@ -102,7 +117,9 @@
     "passed": "Aprovado",
     "failed": "Não aprovado",
     "retry": "Tentar novamente",
-    "scoreLabel": "Pontuação"
+    "scoreLabel": "Pontuação",
+    "questionCount": "Perguntas por tentativa",
+    "questionCountHint": "Vazio = todas. Com 100 perguntas e valor 10, cada tentativa sorteia 10."
   },
   "library": {
     "all": "Todos",
@@ -185,5 +202,10 @@
     "light": "Claro",
     "dark": "Escuro",
     "auto": "Automático"
+  },
+  "placement": {
+    "menu": "No menu",
+    "footer": "No rodapé",
+    "hidden": "Oculta (apenas por ligação)"
   }
 }

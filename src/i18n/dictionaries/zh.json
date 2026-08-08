@@ -22,7 +22,8 @@
     "notifications": "通知",
     "admin": "管理",
     "signIn": "登录",
-    "signOut": "退出登录"
+    "signOut": "退出登录",
+    "menu": "菜单"
   },
   "language": {
     "label": "语言"
@@ -77,7 +78,21 @@
     "addSource": "添加来源",
     "sourceTitlePlaceholder": "标题或参考文献",
     "ownerName": "课程库所有者",
-    "ownerNameHint": "显示在页脚。留空则不显示。"
+    "ownerNameHint": "显示在页脚。留空则不显示。",
+    "logo": "课程库标志",
+    "logoHint": "上传标志后将代替名称显示。",
+    "pages": "页面",
+    "newPage": "新建页面",
+    "noPages": "还没有页面。",
+    "placement": "位置",
+    "placementHint": "选择页面链接的位置。",
+    "backup": "备份",
+    "backupHint": "下载包含整个环境的 zip：数据库、媒体文件和加密密钥。",
+    "downloadBackup": "下载备份",
+    "restoreBackup": "恢复备份",
+    "restoreHint": "恢复会用备份内容替换当前整个环境。",
+    "restoreWarning": "⚠ 此操作将用备份内容替换当前整个环境（课程、用户、进度、媒体和设置）。无法撤销。继续吗？",
+    "restoreDone": "备份已恢复。环境已完全恢复到备份时的状态。请重新登录。"
   },
   "material": {
     "type": {
@@ -102,7 +117,9 @@
     "passed": "通过",
     "failed": "未通过",
     "retry": "再试一次",
-    "scoreLabel": "得分"
+    "scoreLabel": "得分",
+    "questionCount": "每次测验题数",
+    "questionCountHint": "留空 = 全部。若题库有 100 题且填 10，每次随机抽取 10 题。"
   },
   "library": {
     "all": "全部",
@@ -185,5 +202,10 @@
     "light": "浅色",
     "dark": "深色",
     "auto": "自动"
+  },
+  "placement": {
+    "menu": "在菜单中",
+    "footer": "在页脚",
+    "hidden": "隐藏（仅限链接）"
   }
 }

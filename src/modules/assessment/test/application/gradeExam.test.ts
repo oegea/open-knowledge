@@ -94,22 +94,108 @@ describe('gradeExam (unit)', () => {
       expect(result.isPassed()).toBe(false);
     });
 
-    it('counts unanswered questions as incorrect', async () => {
+    it('rejects incomplete attempts', async () => {
       const courseRepository = CourseRepositoryMother.create({
         findById: jest.fn().mockResolvedValue(courseWithExam()),
       });
 
+      await expect(
+        gradeExam({
+          userId: 'user-1',
+          courseId: 'course-1',
+          materialId: 'exam-1',
+          answers: { q1: 'b' },
+          courseRepository,
+          examResultRepository: ExamResultRepositoryMother.create(),
+        })
+      ).rejects.toThrow('[gradeExam] The attempt must answer exactly 2 questions');
+    });
+
+    it('grades a random sample against the pool when questionCount is set', async () => {
+      const course = CourseMother.create({
+        published: true,
+        sections: [
+          SectionMother.createPrimitive({
+            materials: [
+              MaterialMother.createPrimitive({
+                id: 'exam-1',
+                type: 'exam',
+                markdown: '',
+                exam: ExamMother.createPrimitive({
+                  questions: [
+                    {
+                      id: 'q1',
+                      text: 'Q1?',
+                      choices: [
+                        { id: 'a', text: 'A' },
+                        { id: 'b', text: 'B' },
+                      ],
+                      correctChoiceId: 'b',
+                      explanation: '',
+                    },
+                    {
+                      id: 'q2',
+                      text: 'Q2?',
+                      choices: [
+                        { id: 'a', text: 'A' },
+                        { id: 'b', text: 'B' },
+                      ],
+                      correctChoiceId: 'a',
+                      explanation: '',
+                    },
+                    {
+                      id: 'q3',
+                      text: 'Q3?',
+                      choices: [
+                        { id: 'a', text: 'A' },
+                        { id: 'b', text: 'B' },
+                      ],
+                      correctChoiceId: 'a',
+                      explanation: '',
+                    },
+                  ],
+                  passingScore: 0.5,
+                  questionCount: 2,
+                }),
+              }),
+            ],
+          }),
+        ],
+      });
+      const courseRepository = CourseRepositoryMother.create({
+        findById: jest.fn().mockResolvedValue(course),
+      });
+
+      // The attempt answers only the 2 sampled questions.
       const result = await gradeExam({
         userId: 'user-1',
         courseId: 'course-1',
         materialId: 'exam-1',
-        answers: { q1: 'b' },
+        answers: { q1: 'b', q3: 'a' },
         courseRepository,
         examResultRepository: ExamResultRepositoryMother.create(),
       });
 
-      expect(result.getCorrectCount()).toBe(1);
+      expect(result.getTotalCount()).toBe(2);
+      expect(result.getCorrectCount()).toBe(2);
       expect(result.isPassed()).toBe(true);
+    });
+
+    it('rejects answers for questions outside the exam', async () => {
+      const courseRepository = CourseRepositoryMother.create({
+        findById: jest.fn().mockResolvedValue(courseWithExam()),
+      });
+
+      await expect(
+        gradeExam({
+          userId: 'user-1',
+          courseId: 'course-1',
+          materialId: 'exam-1',
+          answers: { q1: 'b', intruder: 'a' },
+          courseRepository,
+          examResultRepository: ExamResultRepositoryMother.create(),
+        })
+      ).rejects.toThrow('[gradeExam] Question intruder does not belong to this exam');
     });
   });
 
