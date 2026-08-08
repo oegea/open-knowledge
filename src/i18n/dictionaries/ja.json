@@ -1,0 +1,25 @@
+{
+  "common": {
+    "appName": "Open Knowledge",
+    "loading": "読み込み中…",
+    "continue": "続ける",
+    "cancel": "キャンセル",
+    "save": "保存",
+    "search": "検索"
+  },
+  "nav": {
+    "library": "ライブラリ",
+    "news": "ニュース",
+    "notifications": "通知",
+    "admin": "管理",
+    "signIn": "ログイン",
+    "signOut": "ログアウト"
+  },
+  "language": {
+    "label": "言語"
+  },
+  "home": {
+    "tagline": "すべての人に開かれた知識",
+    "description": "コースを探して、自分のペースで学びましょう。登録は不要です。"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "common": {
+    "appName": "Open Knowledge",
+    "loading": "Загрузка…",
+    "continue": "Продолжить",
+    "cancel": "Отмена",
+    "save": "Сохранить",
+    "search": "Поиск"
+  },
+  "nav": {
+    "library": "Библиотека",
+    "news": "Новости",
+    "notifications": "Уведомления",
+    "admin": "Управление",
+    "signIn": "Войти",
+    "signOut": "Выйти"
+  },
+  "language": {
+    "label": "Язык"
+  },
+  "home": {
+    "tagline": "Открытые знания для всех",
+    "description": "Изучайте курсы в своём темпе. Регистрация не требуется."
+  }
+}

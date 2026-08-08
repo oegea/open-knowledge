@@ -1,0 +1,25 @@
+{
+  "common": {
+    "appName": "Open Knowledge",
+    "loading": "Kargatzen…",
+    "continue": "Jarraitu",
+    "cancel": "Utzi",
+    "save": "Gorde",
+    "search": "Bilatu"
+  },
+  "nav": {
+    "library": "Liburutegia",
+    "news": "Berriak",
+    "notifications": "Jakinarazpenak",
+    "admin": "Administrazioa",
+    "signIn": "Hasi saioa",
+    "signOut": "Amaitu saioa"
+  },
+  "language": {
+    "label": "Hizkuntza"
+  },
+  "home": {
+    "tagline": "Ezagutza irekia guztiontzat",
+    "description": "Arakatu ikastaroak eta ikasi zeure erritmoan. Erregistrorik gabe."
+  }
+}

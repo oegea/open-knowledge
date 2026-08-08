@@ -1,0 +1,328 @@
+/*
+ * Open Knowledge — Design Tokens
+ *
+ * Brand foundation for the whole application. Inspired by liquid-glass
+ * aesthetics: translucent layered surfaces, soft depth, subtle motion.
+ * Every component must consume these tokens instead of hardcoding values.
+ */
+
+:root {
+  /* ---------------------------------------------------------------- */
+  /* Color primitives                                                 */
+  /* ---------------------------------------------------------------- */
+
+  /* Lagoon — brand primary (teal, knowledge / clarity) */
+  --ok-lagoon-50: #eefbfa;
+  --ok-lagoon-100: #d4f5f3;
+  --ok-lagoon-200: #a9eae8;
+  --ok-lagoon-300: #6fd8d8;
+  --ok-lagoon-400: #38bdc2;
+  --ok-lagoon-500: #189ea6;
+  --ok-lagoon-600: #0e7c86;
+  --ok-lagoon-700: #0e626c;
+  --ok-lagoon-800: #114f57;
+  --ok-lagoon-900: #12424a;
+
+  /* Ember — warm accent (progress, achievement) */
+  --ok-ember-100: #fdeed4;
+  --ok-ember-300: #f7c46d;
+  --ok-ember-500: #e79b23;
+  --ok-ember-600: #c97e0e;
+  --ok-ember-700: #a3630a;
+
+  /* Mist — cool neutrals */
+  --ok-mist-0: #ffffff;
+  --ok-mist-50: #f6f9fa;
+  --ok-mist-100: #eef2f5;
+  --ok-mist-200: #dfe6eb;
+  --ok-mist-300: #c3cdd6;
+  --ok-mist-400: #94a2af;
+  --ok-mist-500: #66757f;
+  --ok-mist-600: #49555f;
+  --ok-mist-700: #333e48;
+  --ok-mist-800: #1f2831;
+  --ok-mist-900: #131a21;
+  --ok-mist-950: #0b1117;
+
+  /* Semantic */
+  --ok-success: #16875f;
+  --ok-warning: #c97e0e;
+  --ok-danger: #c94848;
+
+  /* ---------------------------------------------------------------- */
+  /* Semantic aliases — light theme                                   */
+  /* ---------------------------------------------------------------- */
+  --ok-bg: var(--ok-mist-50);
+  --ok-bg-raised: var(--ok-mist-0);
+  --ok-fg: var(--ok-mist-900);
+  --ok-fg-muted: var(--ok-mist-500);
+  --ok-fg-subtle: var(--ok-mist-400);
+  --ok-border: var(--ok-mist-200);
+  --ok-border-strong: var(--ok-mist-300);
+
+  --ok-primary: var(--ok-lagoon-600);
+  --ok-primary-hover: var(--ok-lagoon-700);
+  --ok-primary-fg: #ffffff;
+  --ok-primary-soft: var(--ok-lagoon-50);
+  --ok-accent: var(--ok-ember-600);
+  --ok-accent-soft: var(--ok-ember-100);
+
+  /* Ambient backdrop washes (behind glass surfaces) */
+  --ok-wash-a: rgba(56, 189, 194, 0.14);
+  --ok-wash-b: rgba(231, 155, 35, 0.08);
+
+  /* Glass surfaces */
+  --ok-glass-bg: rgba(255, 255, 255, 0.62);
+  --ok-glass-bg-strong: rgba(255, 255, 255, 0.8);
+  --ok-glass-border: rgba(255, 255, 255, 0.55);
+  --ok-glass-highlight: rgba(255, 255, 255, 0.9);
+  --ok-glass-blur: 18px;
+  --ok-glass-blur-strong: 28px;
+
+  /* Shadows — soft, layered depth */
+  --ok-shadow-1: 0 1px 2px rgba(19, 26, 33, 0.05), 0 2px 8px rgba(19, 26, 33, 0.05);
+  --ok-shadow-2: 0 2px 4px rgba(19, 26, 33, 0.05), 0 8px 24px rgba(19, 26, 33, 0.08);
+  --ok-shadow-3: 0 4px 8px rgba(19, 26, 33, 0.06), 0 16px 48px rgba(19, 26, 33, 0.12);
+
+  /* ---------------------------------------------------------------- */
+  /* Typography                                                       */
+  /* ---------------------------------------------------------------- */
+  --ok-font-ui: var(--font-manrope), system-ui, -apple-system, sans-serif;
+  --ok-font-reading: var(--font-source-serif), Georgia, serif;
+  --ok-font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --ok-text-xs: 0.75rem;
+  --ok-text-sm: 0.875rem;
+  --ok-text-md: 1rem;
+  --ok-text-lg: 1.125rem;
+  --ok-text-xl: 1.375rem;
+  --ok-text-2xl: 1.75rem;
+  --ok-text-3xl: 2.25rem;
+  --ok-text-4xl: 3rem;
+
+  --ok-leading-tight: 1.2;
+  --ok-leading-normal: 1.5;
+  --ok-leading-reading: 1.75;
+
+  /* Comfortable measure for long-form reading */
+  --ok-measure-reading: 42rem;
+
+  /* ---------------------------------------------------------------- */
+  /* Space, radius, motion                                             */
+  /* ---------------------------------------------------------------- */
+  --ok-space-1: 0.25rem;
+  --ok-space-2: 0.5rem;
+  --ok-space-3: 0.75rem;
+  --ok-space-4: 1rem;
+  --ok-space-5: 1.5rem;
+  --ok-space-6: 2rem;
+  --ok-space-7: 3rem;
+  --ok-space-8: 4rem;
+
+  --ok-radius-sm: 0.5rem;
+  --ok-radius-md: 0.875rem;
+  --ok-radius-lg: 1.25rem;
+  --ok-radius-xl: 1.75rem;
+  --ok-radius-full: 999px;
+
+  --ok-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ok-duration-fast: 150ms;
+  --ok-duration-med: 250ms;
+  --ok-duration-slow: 420ms;
+
+  /* Touch ergonomics */
+  --ok-touch-target: 44px;
+
+  --ok-z-header: 40;
+  --ok-z-overlay: 50;
+  --ok-z-toast: 60;
+
+  color-scheme: light;
+}
+
+/* ------------------------------------------------------------------ */
+/* Dark theme                                                          */
+/* ------------------------------------------------------------------ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ok-bg: var(--ok-mist-950);
+    --ok-bg-raised: var(--ok-mist-900);
+    --ok-fg: var(--ok-mist-100);
+    --ok-fg-muted: var(--ok-mist-400);
+    --ok-fg-subtle: var(--ok-mist-500);
+    --ok-border: rgba(255, 255, 255, 0.09);
+    --ok-border-strong: rgba(255, 255, 255, 0.16);
+
+    --ok-primary: var(--ok-lagoon-400);
+    --ok-primary-hover: var(--ok-lagoon-300);
+    --ok-primary-fg: var(--ok-mist-950);
+    --ok-primary-soft: rgba(56, 189, 194, 0.12);
+    --ok-accent: var(--ok-ember-300);
+    --ok-accent-soft: rgba(247, 196, 109, 0.12);
+
+    --ok-wash-a: rgba(24, 158, 166, 0.16);
+    --ok-wash-b: rgba(231, 155, 35, 0.07);
+
+    --ok-glass-bg: rgba(19, 26, 33, 0.6);
+    --ok-glass-bg-strong: rgba(19, 26, 33, 0.82);
+    --ok-glass-border: rgba(255, 255, 255, 0.12);
+    --ok-glass-highlight: rgba(255, 255, 255, 0.08);
+
+    --ok-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.3);
+    --ok-shadow-2: 0 2px 4px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.4);
+    --ok-shadow-3: 0 4px 8px rgba(0, 0, 0, 0.35), 0 16px 48px rgba(0, 0, 0, 0.5);
+
+    color-scheme: dark;
+  }
+}
+
+/* Explicit user override always wins over system preference */
+:root[data-theme='light'] {
+  --ok-bg: var(--ok-mist-50);
+  --ok-bg-raised: var(--ok-mist-0);
+  --ok-fg: var(--ok-mist-900);
+  --ok-fg-muted: var(--ok-mist-500);
+  --ok-fg-subtle: var(--ok-mist-400);
+  --ok-border: var(--ok-mist-200);
+  --ok-border-strong: var(--ok-mist-300);
+  --ok-primary: var(--ok-lagoon-600);
+  --ok-primary-hover: var(--ok-lagoon-700);
+  --ok-primary-fg: #ffffff;
+  --ok-primary-soft: var(--ok-lagoon-50);
+  --ok-accent: var(--ok-ember-600);
+  --ok-accent-soft: var(--ok-ember-100);
+  --ok-wash-a: rgba(56, 189, 194, 0.14);
+  --ok-wash-b: rgba(231, 155, 35, 0.08);
+  --ok-glass-bg: rgba(255, 255, 255, 0.62);
+  --ok-glass-bg-strong: rgba(255, 255, 255, 0.8);
+  --ok-glass-border: rgba(255, 255, 255, 0.55);
+  --ok-glass-highlight: rgba(255, 255, 255, 0.9);
+  --ok-shadow-1: 0 1px 2px rgba(19, 26, 33, 0.05), 0 2px 8px rgba(19, 26, 33, 0.05);
+  --ok-shadow-2: 0 2px 4px rgba(19, 26, 33, 0.05), 0 8px 24px rgba(19, 26, 33, 0.08);
+  --ok-shadow-3: 0 4px 8px rgba(19, 26, 33, 0.06), 0 16px 48px rgba(19, 26, 33, 0.12);
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --ok-bg: var(--ok-mist-950);
+  --ok-bg-raised: var(--ok-mist-900);
+  --ok-fg: var(--ok-mist-100);
+  --ok-fg-muted: var(--ok-mist-400);
+  --ok-fg-subtle: var(--ok-mist-500);
+  --ok-border: rgba(255, 255, 255, 0.09);
+  --ok-border-strong: rgba(255, 255, 255, 0.16);
+  --ok-primary: var(--ok-lagoon-400);
+  --ok-primary-hover: var(--ok-lagoon-300);
+  --ok-primary-fg: var(--ok-mist-950);
+  --ok-primary-soft: rgba(56, 189, 194, 0.12);
+  --ok-accent: var(--ok-ember-300);
+  --ok-accent-soft: rgba(247, 196, 109, 0.12);
+  --ok-wash-a: rgba(24, 158, 166, 0.16);
+  --ok-wash-b: rgba(231, 155, 35, 0.07);
+  --ok-glass-bg: rgba(19, 26, 33, 0.6);
+  --ok-glass-bg-strong: rgba(19, 26, 33, 0.82);
+  --ok-glass-border: rgba(255, 255, 255, 0.12);
+  --ok-glass-highlight: rgba(255, 255, 255, 0.08);
+  --ok-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.3);
+  --ok-shadow-2: 0 2px 4px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.4);
+  --ok-shadow-3: 0 4px 8px rgba(0, 0, 0, 0.35), 0 16px 48px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}
+
+/* ------------------------------------------------------------------ */
+/* Base                                                                */
+/* ------------------------------------------------------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--ok-bg);
+  color: var(--ok-fg);
+  font-family: var(--ok-font-ui);
+  font-size: var(--ok-text-md);
+  line-height: var(--ok-leading-normal);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+}
+
+/* Ambient brand washes behind all content */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(60rem 40rem at 110% -10%, var(--ok-wash-a), transparent 60%),
+    radial-gradient(50rem 36rem at -20% 110%, var(--ok-wash-b), transparent 60%);
+  pointer-events: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+img,
+video {
+  max-width: 100%;
+  display: block;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ok-primary);
+  outline-offset: 2px;
+  border-radius: var(--ok-radius-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Glass utility surfaces                                              */
+/* ------------------------------------------------------------------ */
+.ok-glass {
+  background: var(--ok-glass-bg);
+  -webkit-backdrop-filter: blur(var(--ok-glass-blur)) saturate(160%);
+  backdrop-filter: blur(var(--ok-glass-blur)) saturate(160%);
+  border: 1px solid var(--ok-glass-border);
+  box-shadow: var(--ok-shadow-2), inset 0 1px 0 var(--ok-glass-highlight);
+  border-radius: var(--ok-radius-lg);
+}
+
+.ok-glass-strong {
+  background: var(--ok-glass-bg-strong);
+  -webkit-backdrop-filter: blur(var(--ok-glass-blur-strong)) saturate(180%);
+  backdrop-filter: blur(var(--ok-glass-blur-strong)) saturate(180%);
+  border: 1px solid var(--ok-glass-border);
+  box-shadow: var(--ok-shadow-2), inset 0 1px 0 var(--ok-glass-highlight);
+  border-radius: var(--ok-radius-lg);
+}

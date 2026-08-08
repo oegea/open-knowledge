@@ -1,0 +1,25 @@
+{
+  "common": {
+    "appName": "Open Knowledge",
+    "loading": "Loading…",
+    "continue": "Continue",
+    "cancel": "Cancel",
+    "save": "Save",
+    "search": "Search"
+  },
+  "nav": {
+    "library": "Library",
+    "news": "News",
+    "notifications": "Notifications",
+    "admin": "Admin",
+    "signIn": "Sign in",
+    "signOut": "Sign out"
+  },
+  "language": {
+    "label": "Language"
+  },
+  "home": {
+    "tagline": "Open knowledge for everyone",
+    "description": "Browse the courses and learn at your own pace. No sign-up required."
+  }
+}

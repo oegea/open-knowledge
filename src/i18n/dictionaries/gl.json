@@ -1,0 +1,25 @@
+{
+  "common": {
+    "appName": "Open Knowledge",
+    "loading": "Cargando…",
+    "continue": "Continuar",
+    "cancel": "Cancelar",
+    "save": "Gardar",
+    "search": "Buscar"
+  },
+  "nav": {
+    "library": "Libraría",
+    "news": "Novas",
+    "notifications": "Notificacións",
+    "admin": "Administración",
+    "signIn": "Iniciar sesión",
+    "signOut": "Pechar sesión"
+  },
+  "language": {
+    "label": "Idioma"
+  },
+  "home": {
+    "tagline": "Coñecemento aberto para todas as persoas",
+    "description": "Explora os cursos e aprende ao teu ritmo. Sen rexistro."
+  }
+}

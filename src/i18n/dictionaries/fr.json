@@ -1,0 +1,25 @@
+{
+  "common": {
+    "appName": "Open Knowledge",
+    "loading": "Chargement…",
+    "continue": "Continuer",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "search": "Rechercher"
+  },
+  "nav": {
+    "library": "Bibliothèque",
+    "news": "Actualités",
+    "notifications": "Notifications",
+    "admin": "Administration",
+    "signIn": "Se connecter",
+    "signOut": "Se déconnecter"
+  },
+  "language": {
+    "label": "Langue"
+  },
+  "home": {
+    "tagline": "Le savoir ouvert pour toutes et tous",
+    "description": "Parcourez les cours et apprenez à votre rythme. Sans inscription."
+  }
+}

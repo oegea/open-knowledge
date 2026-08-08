@@ -1,0 +1,25 @@
+{
+  "common": {
+    "appName": "Open Knowledge",
+    "loading": "加载中…",
+    "continue": "继续",
+    "cancel": "取消",
+    "save": "保存",
+    "search": "搜索"
+  },
+  "nav": {
+    "library": "课程库",
+    "news": "动态",
+    "notifications": "通知",
+    "admin": "管理",
+    "signIn": "登录",
+    "signOut": "退出登录"
+  },
+  "language": {
+    "label": "语言"
+  },
+  "home": {
+    "tagline": "开放知识，人人共享",
+    "description": "浏览课程，按自己的节奏学习。无需注册。"
+  }
+}
