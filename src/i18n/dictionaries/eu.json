@@ -73,7 +73,11 @@
     "newPost": "Berri berria",
     "postTitle": "Izenburua",
     "newsEnabled": "Berrien atala gaituta",
-    "newsEnabledHint": "Desaktibatzen baduzu, atala ez da agertuko besterik gabe."
+    "newsEnabledHint": "Desaktibatzen baduzu, atala ez da agertuko besterik gabe.",
+    "addSource": "Gehitu iturria",
+    "sourceTitlePlaceholder": "Izenburua edo erreferentzia",
+    "ownerName": "Liburutegiaren jabea",
+    "ownerNameHint": "Orri-oinean agertuko da. Utzi hutsik ez erakusteko."
   },
   "material": {
     "type": {
@@ -102,7 +106,8 @@
   },
   "library": {
     "all": "Guztiak",
-    "empty": "Liburutegi honek ez du oraindik argitaratutako ikastarorik."
+    "empty": "Liburutegi honek ez du oraindik argitaratutako ikastarorik.",
+    "searchPlaceholder": "Bilatu ikastaroak…"
   },
   "course": {
     "start": "Hasi ikastaroa",
@@ -110,7 +115,8 @@
     "contents": "Edukia",
     "aiNoticeTitle": "AA bidez lagundutako edukia",
     "aiNotice": "Ikastaro honek adimen artifizialaren bidez sortutako edo lagundutako edukia dauka. Iturriak dagokionean adierazten dira.",
-    "materialsCount": "{count} material"
+    "materialsCount": "{count} material",
+    "bibliography": "Bibliografia eta iturriak"
   },
   "study": {
     "progress": "Aurrerapena",
@@ -119,7 +125,8 @@
     "next": "Hurrengoa",
     "previous": "Aurrekoa",
     "courseCompleted": "Ikastaroa osatuta!",
-    "registerToKeep": "Erregistratu zure aurrerapena eta ziurtagiriak gailu guztietan gordetzeko."
+    "registerToKeep": "Erregistratu zure aurrerapena eta ziurtagiriak gailu guztietan gordetzeko.",
+    "unmarkComplete": "Kendu osatutako marka"
   },
   "auth": {
     "register": "Sortu nortasuna",
@@ -168,5 +175,15 @@
     "courseUpdated": "Ikastaroa eguneratua: {title}",
     "newsPublished": "Berria: {title}",
     "certificateIssued": "Ziurtagiria lortuta! {title}"
+  },
+  "footer": {
+    "tagline": "Liburutegi honek Open Knowledge darabil.",
+    "taglineOwned": "Liburutegi hau {owner}(r)ena da eta Open Knowledge-k bultzatzen du."
+  },
+  "theme": {
+    "label": "Gaia",
+    "light": "Argia",
+    "dark": "Iluna",
+    "auto": "Automatikoa"
   }
 }

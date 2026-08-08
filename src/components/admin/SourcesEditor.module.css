@@ -1,0 +1,63 @@
+.editor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-2);
+  align-items: flex-start;
+}
+
+.label {
+  font-size: var(--ok-text-sm);
+  font-weight: 700;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--ok-space-2);
+  width: 100%;
+}
+
+.titleInput,
+.urlInput {
+  font: inherit;
+  font-size: var(--ok-text-sm);
+  color: var(--ok-fg);
+  background: var(--ok-bg-raised);
+  border: 1px solid var(--ok-border);
+  border-radius: var(--ok-radius-md);
+  padding: var(--ok-space-2) var(--ok-space-3);
+  min-height: 40px;
+  width: 100%;
+}
+
+.titleInput:focus,
+.urlInput:focus {
+  outline: none;
+  border-color: var(--ok-primary);
+}
+
+.urlInput {
+  grid-column: 1;
+  font-family: var(--ok-font-mono);
+  font-size: var(--ok-text-xs);
+}
+
+.row > :global(button) {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+}
+
+@media (min-width: 768px) {
+  .row {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) auto;
+  }
+
+  .urlInput {
+    grid-column: auto;
+  }
+
+  .row > :global(button) {
+    grid-row: auto;
+  }
+}

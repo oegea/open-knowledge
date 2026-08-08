@@ -1,9 +1,11 @@
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import courseFactory from '@/modules/course/application/factory';
 import { getLocale } from '@/i18n/getLocale';
 import { getDictionary, translate } from '@/i18n/dictionary';
 import { LOCALES } from '@/i18n/config';
 import { PublicHeader } from '@/components/public/PublicHeader';
+import { PublicFooter } from '@/components/public/PublicFooter';
 import { StartCourseButton } from '@/components/public/StartCourseButton';
 import { getCurrentUser } from '@/app/serverAuth';
 import styles from './page.module.css';
@@ -55,10 +57,27 @@ export default async function CourseDetailPage({ params }: PageProps<'/courses/[
               </p>
             ) : null}
             {course.getSources().length > 0 ? (
-              <p className={styles.attribution}>
-                <strong>{translate(dictionary, 'admin.sources')}:</strong>{' '}
-                {course.getSources().join(' · ')}
-              </p>
+              <div className={styles.bibliography}>
+                <strong>{translate(dictionary, 'course.bibliography')}</strong>
+                <ul className={styles.bibliographyList}>
+                  {course.getSources().map((source, index) => (
+                    <li key={index}>
+                      {source.getUrl() ? (
+                        <a
+                          href={source.getUrl()!}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={styles.bibliographyLink}
+                        >
+                          {source.getTitle()} ↗
+                        </a>
+                      ) : (
+                        source.getTitle()
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ) : null}
 
             <StartCourseButton
@@ -103,11 +122,19 @@ export default async function CourseDetailPage({ params }: PageProps<'/courses/[
                     .getMaterials()
                     .getMaterials()
                     .map((material) => (
-                      <li key={material.getId()} className={styles.materialItem}>
-                        <span className={styles.materialType}>
-                          {translate(dictionary, `material.type.${material.getType()}`)}
-                        </span>
-                        {material.getTitle()}
+                      <li key={material.getId()}>
+                        <Link
+                          href={`/courses/${course.getId()}/study/${material.getId()}`}
+                          className={styles.materialItem}
+                        >
+                          <span className={styles.materialType}>
+                            {translate(dictionary, `material.type.${material.getType()}`)}
+                          </span>
+                          <span className={styles.materialItemTitle}>{material.getTitle()}</span>
+                          <span className={styles.materialArrow} aria-hidden="true">
+                            →
+                          </span>
+                        </Link>
                       </li>
                     ))}
                 </ol>
@@ -116,6 +143,7 @@ export default async function CourseDetailPage({ params }: PageProps<'/courses/[
           </ol>
         </section>
       </main>
+      <PublicFooter />
     </>
   );
 }

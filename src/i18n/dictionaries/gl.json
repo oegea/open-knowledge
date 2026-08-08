@@ -73,7 +73,11 @@
     "newPost": "Nova nova",
     "postTitle": "Título",
     "newsEnabled": "Sección de novas activada",
-    "newsEnabledHint": "Se a desactivas, a sección simplemente non aparecerá."
+    "newsEnabledHint": "Se a desactivas, a sección simplemente non aparecerá.",
+    "addSource": "Engadir fonte",
+    "sourceTitlePlaceholder": "Título ou referencia",
+    "ownerName": "Propietario/a da libraría",
+    "ownerNameHint": "Aparecerá no pé de páxina. Déixao baleiro para non mostralo."
   },
   "material": {
     "type": {
@@ -102,7 +106,8 @@
   },
   "library": {
     "all": "Todos",
-    "empty": "Esta libraría aínda non ten cursos publicados."
+    "empty": "Esta libraría aínda non ten cursos publicados.",
+    "searchPlaceholder": "Buscar cursos…"
   },
   "course": {
     "start": "Comezar o curso",
@@ -110,7 +115,8 @@
     "contents": "Contido",
     "aiNoticeTitle": "Contido asistido por IA",
     "aiNotice": "Este curso inclúe contido xerado ou asistido por intelixencia artificial. As fontes indícanse sempre que corresponde.",
-    "materialsCount": "{count} materiais"
+    "materialsCount": "{count} materiais",
+    "bibliography": "Bibliografía e fontes"
   },
   "study": {
     "progress": "Progreso",
@@ -119,7 +125,8 @@
     "next": "Seguinte",
     "previous": "Anterior",
     "courseCompleted": "Curso completado!",
-    "registerToKeep": "Rexístrate para conservar o teu progreso e certificados entre dispositivos."
+    "registerToKeep": "Rexístrate para conservar o teu progreso e certificados entre dispositivos.",
+    "unmarkComplete": "Desmarcar como completado"
   },
   "auth": {
     "register": "Crear identidade",
@@ -168,5 +175,15 @@
     "courseUpdated": "Curso actualizado: {title}",
     "newsPublished": "Nova: {title}",
     "certificateIssued": "Certificado obtido! {title}"
+  },
+  "footer": {
+    "tagline": "Esta libraría está impulsada por Open Knowledge.",
+    "taglineOwned": "Esta libraría pertence a {owner} e está impulsada por Open Knowledge."
+  },
+  "theme": {
+    "label": "Tema",
+    "light": "Claro",
+    "dark": "Escuro",
+    "auto": "Automático"
   }
 }

@@ -1,4 +1,5 @@
 import { PublicHeader } from '@/components/public/PublicHeader';
+import { PublicFooter } from '@/components/public/PublicFooter';
 import { RecoverForm } from '@/components/auth/RecoverForm';
 import styles from '../auth.module.css';
 
@@ -11,6 +12,7 @@ export default function RecoverPage() {
       <main className={styles.main}>
         <RecoverForm />
       </main>
+      <PublicFooter />
     </>
   );
 }

@@ -5,6 +5,8 @@ export interface CourseFilter {
   publishedOnly?: boolean;
   language?: string;
   category?: string;
+  /** Free-text search over title and description. */
+  query?: string;
 }
 
 export interface CourseRepository {

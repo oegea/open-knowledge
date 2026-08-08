@@ -1,4 +1,5 @@
 import { PublicHeader } from '@/components/public/PublicHeader';
+import { PublicFooter } from '@/components/public/PublicFooter';
 import { RegisterForm } from '@/components/auth/RegisterForm';
 import styles from '../auth.module.css';
 
@@ -11,6 +12,7 @@ export default function RegisterPage() {
       <main className={styles.main}>
         <RegisterForm />
       </main>
+      <PublicFooter />
     </>
   );
 }

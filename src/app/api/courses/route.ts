@@ -13,6 +13,7 @@ export async function GET(request: NextRequest) {
       publishedOnly: isAdmin ? searchParams.get('published') === 'true' || undefined : true,
       language: searchParams.get('language') ?? undefined,
       category: searchParams.get('category') ?? undefined,
+      query: searchParams.get('q') ?? undefined,
     });
     return Response.json({ courses: courses.toPrimitive() });
   } catch (error) {

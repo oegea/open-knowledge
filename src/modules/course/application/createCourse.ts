@@ -1,5 +1,6 @@
 import { randomUUID } from 'crypto';
 import { Course } from '../domain/Course';
+import { SourcePrimitive } from '../domain/Source';
 import { CourseRepository } from '../domain/CourseRepository';
 
 interface createCourseProps {
@@ -9,7 +10,7 @@ interface createCourseProps {
   category?: string | null;
   coverImage?: string | null;
   authors?: string[];
-  sources?: string[];
+  sources?: SourcePrimitive[];
   aiAssisted?: boolean;
   courseRepository: CourseRepository;
 }

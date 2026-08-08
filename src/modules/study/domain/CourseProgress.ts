@@ -56,6 +56,15 @@ export class CourseProgress {
     );
   }
 
+  unmarkCompleted(materialId: string): CourseProgress {
+    if (!this.isMaterialCompleted(materialId)) return this;
+    return CourseProgress.create(
+      this.courseId,
+      this.completedMaterialIds.filter((id) => id !== materialId),
+      this.lastMaterialId
+    );
+  }
+
   withLastMaterial(materialId: string): CourseProgress {
     return CourseProgress.create(this.courseId, this.completedMaterialIds, materialId);
   }

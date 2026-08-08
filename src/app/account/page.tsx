@@ -5,6 +5,7 @@ import { getCurrentUser } from '@/app/serverAuth';
 import { getLocale } from '@/i18n/getLocale';
 import { getDictionary, translate } from '@/i18n/dictionary';
 import { PublicHeader } from '@/components/public/PublicHeader';
+import { PublicFooter } from '@/components/public/PublicFooter';
 import { LogoutButton } from '@/components/auth/LogoutButton';
 import styles from './page.module.css';
 
@@ -66,6 +67,7 @@ export default async function AccountPage() {
           )}
         </section>
       </main>
+      <PublicFooter />
     </>
   );
 }

@@ -29,6 +29,52 @@ test.describe('Public library', () => {
     await expect(page.getByText('primer curso')).toBeVisible();
   });
 
+  test('footer states the library ownership and engine', async ({ page }) => {
+    await page.goto('/');
+    await expect(
+      page.getByText(/pertenece a Equipo E2E y está impulsada por Open Knowledge/)
+    ).toBeVisible();
+  });
+
+  test('free-text search filters the catalog', async ({ page }) => {
+    await page.goto('/?q=Astronomía');
+    await expect(page.getByRole('link', { name: /Introducción a la Astronomía/ })).toBeVisible();
+
+    await page.goto('/?q=jardinería');
+    await expect(page.getByText(/no tiene cursos publicados/)).toBeVisible();
+  });
+
+  test('the theme toggle switches between light and dark', async ({ page }) => {
+    await page.goto('/');
+    const toggle = page.getByRole('button', { name: /Tema/ });
+
+    await toggle.click(); // auto -> light
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+
+    await toggle.click(); // light -> dark
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  });
+
+  test('course bibliography renders titled web links', async ({ page }) => {
+    const { courseId } = loadState();
+    await page.goto(`/courses/${courseId}`);
+
+    const sourceLink = page.getByRole('link', { name: /Archivos públicos de NASA/ });
+    await expect(sourceLink).toBeVisible();
+    await expect(sourceLink).toHaveAttribute('href', 'https://images.nasa.gov');
+  });
+
+  test('materials in the contents are direct links to study mode', async ({ page }) => {
+    const { courseId } = loadState();
+    await page.goto(`/courses/${courseId}`);
+
+    await page.getByRole('link', { name: /¿Qué es el Sistema Solar\?/ }).click();
+    await page.waitForURL(`**/courses/${courseId}/study/**`);
+    await expect(
+      page.getByRole('heading', { name: 'El Sistema Solar', exact: true })
+    ).toBeVisible();
+  });
+
   test('drafts are not exposed to anonymous readers', async ({ request }) => {
     const listResponse = await request.get('/api/courses');
     const { courses } = await listResponse.json();

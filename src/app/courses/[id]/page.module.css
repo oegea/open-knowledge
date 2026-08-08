@@ -63,6 +63,30 @@
   color: var(--ok-fg-muted);
 }
 
+.bibliography {
+  font-size: var(--ok-text-sm);
+  color: var(--ok-fg-muted);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-1);
+}
+
+.bibliographyList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-1);
+  padding-left: var(--ok-space-3);
+  border-left: 2px solid var(--ok-border);
+}
+
+.bibliographyLink {
+  color: var(--ok-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
 .aiNotice {
   display: flex;
   gap: var(--ok-space-3);
@@ -156,7 +180,39 @@
   align-items: center;
   gap: var(--ok-space-3);
   color: var(--ok-fg);
-  min-height: 32px;
+  min-height: var(--ok-touch-target);
+  padding: 0 var(--ok-space-2);
+  border-radius: var(--ok-radius-md);
+  transition:
+    background var(--ok-duration-fast) var(--ok-ease),
+    color var(--ok-duration-fast) var(--ok-ease);
+}
+
+.materialItem:hover {
+  background: var(--ok-primary-soft);
+  color: var(--ok-primary);
+}
+
+.materialItemTitle {
+  flex: 1;
+  min-width: 0;
+  line-height: var(--ok-leading-normal);
+  padding: var(--ok-space-2) 0;
+}
+
+.materialArrow {
+  color: var(--ok-fg-subtle);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition:
+    opacity var(--ok-duration-fast) var(--ok-ease),
+    transform var(--ok-duration-fast) var(--ok-ease);
+}
+
+.materialItem:hover .materialArrow {
+  opacity: 1;
+  transform: translateX(0);
+  color: var(--ok-primary);
 }
 
 .materialType {

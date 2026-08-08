@@ -73,7 +73,11 @@
     "newPost": "Notícia nova",
     "postTitle": "Títol",
     "newsEnabled": "Secció de notícies activada",
-    "newsEnabledHint": "Si la desactives, la secció simplement no apareixerà."
+    "newsEnabledHint": "Si la desactives, la secció simplement no apareixerà.",
+    "addSource": "Afegeix una font",
+    "sourceTitlePlaceholder": "Títol o referència",
+    "ownerName": "Propietari/ària de la llibreria",
+    "ownerNameHint": "Apareixerà al peu de pàgina. Deixa-ho buit per no mostrar-ho."
   },
   "material": {
     "type": {
@@ -102,7 +106,8 @@
   },
   "library": {
     "all": "Tots",
-    "empty": "Aquesta llibreria encara no té cursos publicats."
+    "empty": "Aquesta llibreria encara no té cursos publicats.",
+    "searchPlaceholder": "Cerca cursos…"
   },
   "course": {
     "start": "Comença el curs",
@@ -110,7 +115,8 @@
     "contents": "Contingut",
     "aiNoticeTitle": "Contingut assistit per IA",
     "aiNotice": "Aquest curs inclou contingut generat o assistit per intel·ligència artificial. Les fonts s'indiquen sempre que correspon.",
-    "materialsCount": "{count} materials"
+    "materialsCount": "{count} materials",
+    "bibliography": "Bibliografia i fonts"
   },
   "study": {
     "progress": "Progrés",
@@ -119,7 +125,8 @@
     "next": "Següent",
     "previous": "Anterior",
     "courseCompleted": "Curs completat!",
-    "registerToKeep": "Registra't per conservar el teu progrés i certificats entre dispositius."
+    "registerToKeep": "Registra't per conservar el teu progrés i certificats entre dispositius.",
+    "unmarkComplete": "Desmarca com a completat"
   },
   "auth": {
     "register": "Crea una identitat",
@@ -168,5 +175,15 @@
     "courseUpdated": "Curs actualitzat: {title}",
     "newsPublished": "Notícia: {title}",
     "certificateIssued": "Certificat obtingut! {title}"
+  },
+  "footer": {
+    "tagline": "Aquesta llibreria funciona amb Open Knowledge.",
+    "taglineOwned": "Aquesta llibreria pertany a {owner} i funciona amb Open Knowledge."
+  },
+  "theme": {
+    "label": "Tema",
+    "light": "Clar",
+    "dark": "Fosc",
+    "auto": "Automàtic"
   }
 }

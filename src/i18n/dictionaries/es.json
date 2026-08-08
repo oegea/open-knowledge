@@ -73,7 +73,11 @@
     "newPost": "Nueva noticia",
     "postTitle": "Título",
     "newsEnabled": "Sección de noticias activada",
-    "newsEnabledHint": "Si la desactivas, la sección simplemente no aparecerá."
+    "newsEnabledHint": "Si la desactivas, la sección simplemente no aparecerá.",
+    "addSource": "Añadir fuente",
+    "sourceTitlePlaceholder": "Título o referencia",
+    "ownerName": "Propietario/a de la librería",
+    "ownerNameHint": "Aparecerá en el pie de página. Déjalo vacío para no mostrarlo."
   },
   "material": {
     "type": {
@@ -102,7 +106,8 @@
   },
   "library": {
     "all": "Todos",
-    "empty": "Esta librería aún no tiene cursos publicados."
+    "empty": "Esta librería aún no tiene cursos publicados.",
+    "searchPlaceholder": "Buscar cursos…"
   },
   "course": {
     "start": "Empezar el curso",
@@ -110,7 +115,8 @@
     "contents": "Contenido",
     "aiNoticeTitle": "Contenido asistido por IA",
     "aiNotice": "Este curso incluye contenido generado o asistido mediante inteligencia artificial. Las fuentes se indican siempre que corresponde.",
-    "materialsCount": "{count} materiales"
+    "materialsCount": "{count} materiales",
+    "bibliography": "Bibliografía y fuentes"
   },
   "study": {
     "progress": "Progreso",
@@ -119,7 +125,8 @@
     "next": "Siguiente",
     "previous": "Anterior",
     "courseCompleted": "¡Curso completado!",
-    "registerToKeep": "Regístrate para conservar tu progreso y certificados entre dispositivos."
+    "registerToKeep": "Regístrate para conservar tu progreso y certificados entre dispositivos.",
+    "unmarkComplete": "Desmarcar completado"
   },
   "auth": {
     "register": "Crear identidad",
@@ -168,5 +175,15 @@
     "courseUpdated": "Curso actualizado: {title}",
     "newsPublished": "Nueva noticia: {title}",
     "certificateIssued": "¡Certificado obtenido! {title}"
+  },
+  "footer": {
+    "tagline": "Esta librería está impulsada por Open Knowledge.",
+    "taglineOwned": "Esta librería pertenece a {owner} y está impulsada por Open Knowledge."
+  },
+  "theme": {
+    "label": "Tema",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "auto": "Automático"
   }
 }

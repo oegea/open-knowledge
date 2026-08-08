@@ -33,7 +33,7 @@ describe('SqliteCourseRepository (integration)', () => {
               type: 'exam',
               markdown: '',
               exam: ExamMother.createPrimitive(),
-              sources: ['A book'],
+              sources: [{ title: 'A book', url: null }],
             }),
           ],
         }),

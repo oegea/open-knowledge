@@ -1,4 +1,5 @@
 import { CourseTitle } from './CourseTitle';
+import { Source, SourcePrimitive } from './Source';
 import { CourseDescription } from './CourseDescription';
 import { CourseLanguage } from './CourseLanguage';
 import { SectionList } from './SectionList';
@@ -12,7 +13,7 @@ export interface CoursePrimitive {
   category: string | null;
   coverImage: string | null;
   authors: string[];
-  sources: string[];
+  sources: SourcePrimitive[];
   aiAssisted: boolean;
   published: boolean;
   sections: SectionPrimitive[];
@@ -28,7 +29,7 @@ export interface CourseDetailsInput {
   category: string | null;
   coverImage: string | null;
   authors: string[];
-  sources: string[];
+  sources: SourcePrimitive[];
   aiAssisted: boolean;
 }
 
@@ -40,7 +41,7 @@ interface CourseProps {
   category: string | null;
   coverImage: string | null;
   authors: string[];
-  sources: string[];
+  sources: Source[];
   aiAssisted: boolean;
   published: boolean;
   sections: SectionList;
@@ -60,7 +61,7 @@ export class Course {
       category?: string | null;
       coverImage?: string | null;
       authors?: string[];
-      sources?: string[];
+      sources?: (SourcePrimitive | string)[];
       aiAssisted?: boolean;
       published?: boolean;
       sections?: SectionList;
@@ -78,7 +79,7 @@ export class Course {
       category: options.category?.trim() || null,
       coverImage: options.coverImage ?? null,
       authors: options.authors ?? [],
-      sources: options.sources ?? [],
+      sources: (options.sources ?? []).map((source) => Source.fromPrimitive(source)),
       aiAssisted: options.aiAssisted ?? false,
       published: options.published ?? false,
       sections: options.sections ?? SectionList.create(null),
@@ -136,7 +137,7 @@ export class Course {
     return [...this.props.authors];
   }
 
-  getSources(): string[] {
+  getSources(): Source[] {
     return [...this.props.sources];
   }
 
@@ -164,16 +165,7 @@ export class Course {
     return new Course({ ...this.props, id });
   }
 
-  setDetails(details: {
-    title: string;
-    description: string;
-    language: string;
-    category: string | null;
-    coverImage: string | null;
-    authors: string[];
-    sources: string[];
-    aiAssisted: boolean;
-  }): Course {
+  setDetails(details: CourseDetailsInput): Course {
     Course.ensureCourseIsValid(details.category);
     return new Course({
       ...this.props,
@@ -183,7 +175,7 @@ export class Course {
       category: details.category?.trim() || null,
       coverImage: details.coverImage,
       authors: details.authors,
-      sources: details.sources,
+      sources: details.sources.map((source) => Source.fromPrimitive(source)),
       aiAssisted: details.aiAssisted,
       updatedAt: new Date(),
     });
@@ -224,7 +216,7 @@ export class Course {
       category: this.props.category,
       coverImage: this.props.coverImage,
       authors: [...this.props.authors],
-      sources: [...this.props.sources],
+      sources: this.props.sources.map((source) => source.toPrimitive()),
       aiAssisted: this.props.aiAssisted,
       published: this.props.published,
       sections: this.props.sections.toPrimitive(),

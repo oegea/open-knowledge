@@ -1,4 +1,5 @@
 import { markMaterialCompleted } from '../../application/markMaterialCompleted';
+import { unmarkMaterialCompleted } from '../../application/unmarkMaterialCompleted';
 import { trackMaterialVisit } from '../../application/trackMaterialVisit';
 import { getCourseProgress } from '../../application/getCourseProgress';
 import * as CourseProgressMother from '../helpers/CourseProgressMother';
@@ -48,6 +49,38 @@ describe('study progress use cases (unit)', () => {
       await expect(
         markMaterialCompleted({ courseId: 'course-1', materialId: '', progressRepository })
       ).rejects.toThrow('[markMaterialCompleted] Material id must be provided');
+    });
+  });
+
+  describe('unmarkMaterialCompleted', () => {
+    it('removes the material from the completed set', async () => {
+      const existing = CourseProgressMother.create({
+        completedMaterialIds: ['m1', 'm2'],
+        lastMaterialId: 'm2',
+      });
+      const progressRepository = ProgressRepositoryMother.create({
+        getProgress: jest.fn().mockResolvedValue(existing),
+      });
+
+      const result = await unmarkMaterialCompleted({
+        courseId: 'course-1',
+        materialId: 'm1',
+        progressRepository,
+      });
+
+      expect(result.isMaterialCompleted('m1')).toBe(false);
+      expect(result.isMaterialCompleted('m2')).toBe(true);
+      expect(progressRepository.saveProgress).toHaveBeenCalledWith(result);
+    });
+
+    it('is a no-op for materials that were not completed', async () => {
+      const result = await unmarkMaterialCompleted({
+        courseId: 'course-1',
+        materialId: 'm9',
+        progressRepository: ProgressRepositoryMother.create(),
+      });
+
+      expect(result.getCompletedMaterialIds()).toEqual([]);
     });
   });
 

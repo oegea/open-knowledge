@@ -10,7 +10,7 @@ export function createPrimitive(overrides: Partial<CoursePrimitive> = {}): Cours
     category: 'Science',
     coverImage: '/media/covers/astronomy.jpg',
     authors: ['Carl S.'],
-    sources: ['NASA public archives'],
+    sources: [{ title: 'NASA public archives', url: null }],
     aiAssisted: false,
     published: false,
     sections: [SectionMother.createPrimitive()],

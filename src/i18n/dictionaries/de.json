@@ -73,7 +73,11 @@
     "newPost": "Neuer Beitrag",
     "postTitle": "Titel",
     "newsEnabled": "Neuigkeiten-Bereich aktiviert",
-    "newsEnabledHint": "Wenn deaktiviert, erscheint der Bereich einfach nicht."
+    "newsEnabledHint": "Wenn deaktiviert, erscheint der Bereich einfach nicht.",
+    "addSource": "Quelle hinzufügen",
+    "sourceTitlePlaceholder": "Titel oder Referenz",
+    "ownerName": "Inhaber der Bibliothek",
+    "ownerNameHint": "Wird in der Fußzeile angezeigt. Leer lassen, um es auszublenden."
   },
   "material": {
     "type": {
@@ -102,7 +106,8 @@
   },
   "library": {
     "all": "Alle",
-    "empty": "Diese Bibliothek hat noch keine veröffentlichten Kurse."
+    "empty": "Diese Bibliothek hat noch keine veröffentlichten Kurse.",
+    "searchPlaceholder": "Kurse suchen…"
   },
   "course": {
     "start": "Kurs starten",
@@ -110,7 +115,8 @@
     "contents": "Inhalt",
     "aiNoticeTitle": "KI-unterstützte Inhalte",
     "aiNotice": "Dieser Kurs enthält Inhalte, die mit künstlicher Intelligenz erstellt oder unterstützt wurden. Quellen werden angegeben, wo zutreffend.",
-    "materialsCount": "{count} Materialien"
+    "materialsCount": "{count} Materialien",
+    "bibliography": "Bibliographie und Quellen"
   },
   "study": {
     "progress": "Fortschritt",
@@ -119,7 +125,8 @@
     "next": "Weiter",
     "previous": "Zurück",
     "courseCompleted": "Kurs abgeschlossen!",
-    "registerToKeep": "Registriere dich, um Fortschritt und Zertifikate geräteübergreifend zu behalten."
+    "registerToKeep": "Registriere dich, um Fortschritt und Zertifikate geräteübergreifend zu behalten.",
+    "unmarkComplete": "Als nicht abgeschlossen markieren"
   },
   "auth": {
     "register": "Identität erstellen",
@@ -168,5 +175,15 @@
     "courseUpdated": "Kurs aktualisiert: {title}",
     "newsPublished": "Neuigkeit: {title}",
     "certificateIssued": "Zertifikat erhalten! {title}"
+  },
+  "footer": {
+    "tagline": "Diese Bibliothek wird von Open Knowledge betrieben.",
+    "taglineOwned": "Diese Bibliothek gehört {owner} und wird von Open Knowledge betrieben."
+  },
+  "theme": {
+    "label": "Design",
+    "light": "Hell",
+    "dark": "Dunkel",
+    "auto": "Auto"
   }
 }

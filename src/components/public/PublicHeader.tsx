@@ -4,6 +4,7 @@ import { getDictionary, translate } from '@/i18n/dictionary';
 import { getCurrentUser } from '@/app/serverAuth';
 import settingsFactory from '@/modules/settings/application/factory';
 import { LanguageSelector } from './LanguageSelector';
+import { ThemeToggle } from './ThemeToggle';
 import { UserMenu } from './UserMenu';
 import { NotificationsBell } from './NotificationsBell';
 import styles from './PublicHeader.module.css';
@@ -25,6 +26,7 @@ export async function PublicHeader() {
             {translate(dictionary, 'nav.news')}
           </Link>
         ) : null}
+        <ThemeToggle />
         <LanguageSelector />
         {user !== null ? <NotificationsBell /> : null}
         <UserMenu

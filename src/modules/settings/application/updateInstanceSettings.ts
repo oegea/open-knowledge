@@ -7,11 +7,12 @@ interface updateInstanceSettingsProps extends InstanceSettingsPrimitive {
 
 export async function updateInstanceSettings({
   libraryName,
+  ownerName,
   registrationOpen,
   newsEnabled,
   settingsRepository,
 }: updateInstanceSettingsProps): Promise<InstanceSettings> {
-  const settings = InstanceSettings.create(libraryName, registrationOpen, newsEnabled);
+  const settings = InstanceSettings.create(libraryName, ownerName, registrationOpen, newsEnabled);
   await settingsRepository.save(settings);
   return settings;
 }

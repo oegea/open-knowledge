@@ -3,11 +3,13 @@
 import { FormEvent, useRef, useState } from 'react';
 import { MATERIAL_TYPES, MaterialInput, MaterialPrimitive, MaterialType } from '@/modules/course/domain/Material';
 import { ExamPrimitive } from '@/modules/course/domain/Exam';
+import { SourcePrimitive } from '@/modules/course/domain/Source';
 import { HttpCourseAdminRepository } from '@/modules/course/infrastructure/HttpCourseAdminRepository';
 import { useI18n } from '@/i18n/I18nProvider';
 import { Button } from '../ui/Button';
 import { CheckboxField, SelectField, TextAreaField, TextField } from '../ui/Field';
 import { ExamEditor } from './ExamEditor';
+import { SourcesEditor } from './SourcesEditor';
 import styles from './MaterialForm.module.css';
 
 interface MaterialFormProps {
@@ -26,7 +28,7 @@ export function MaterialForm({ initial, onSubmit, onCancel }: MaterialFormProps)
   const [mediaPath, setMediaPath] = useState<string | null>(initial?.mediaPath ?? null);
   const [exam, setExam] = useState<ExamPrimitive>(initial?.exam ?? EMPTY_EXAM);
   const [required, setRequired] = useState(initial?.required ?? true);
-  const [sources, setSources] = useState<string[]>(initial?.sources ?? []);
+  const [sources, setSources] = useState<SourcePrimitive[]>(initial?.sources ?? []);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -59,7 +61,7 @@ export function MaterialForm({ initial, onSubmit, onCancel }: MaterialFormProps)
         mediaPath,
         exam: type === 'exam' ? exam : null,
         required,
-        sources,
+        sources: sources.filter((source) => source.title.trim() !== ''),
       });
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : t('common.error'));
@@ -133,15 +135,7 @@ export function MaterialForm({ initial, onSubmit, onCancel }: MaterialFormProps)
         />
       )}
 
-      <TextAreaField
-        label={t('admin.sources')}
-        hint={t('admin.sourcesPlaceholder')}
-        value={sources.join('\n')}
-        onChange={(event) =>
-          setSources(event.target.value.split('\n').filter((line) => line.trim() !== ''))
-        }
-        rows={2}
-      />
+      <SourcesEditor sources={sources} onChange={setSources} />
 
       <CheckboxField
         label={t('admin.required')}

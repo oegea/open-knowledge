@@ -4,6 +4,7 @@ import settingsFactory from '@/modules/settings/application/factory';
 import { getLocale } from '@/i18n/getLocale';
 import { getDictionary, translate } from '@/i18n/dictionary';
 import { PublicHeader } from '@/components/public/PublicHeader';
+import { PublicFooter } from '@/components/public/PublicFooter';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -51,6 +52,7 @@ export default async function CertificatePage({ params }: PageProps<'/certificat
           <div className={styles.ornamentBottom} aria-hidden="true" />
         </article>
       </main>
+      <PublicFooter />
     </>
   );
 }

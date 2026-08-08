@@ -1,4 +1,5 @@
 import type { NextRequest } from 'next/server';
+import { CourseProgress } from '@/modules/study/domain/CourseProgress';
 import { getCourseProgress } from '@/modules/study/application/getCourseProgress';
 import { SqliteProgressRepository } from '@/modules/study/infrastructure/SqliteProgressRepository';
 import { getCurrentUser } from '@/app/serverAuth';
@@ -32,17 +33,14 @@ export async function PUT(request: NextRequest, ctx: RouteContext<'/api/progress
     const { courseId } = await ctx.params;
     const body = await request.json();
     const repository = new SqliteProgressRepository(user.getId()!);
-    // Completion only grows: merging keeps concurrent devices consistent.
-    const current = await repository.getProgress(courseId);
-    let merged = current;
-    for (const materialId of body.completedMaterialIds ?? []) {
-      merged = merged.markCompleted(materialId);
-    }
-    if (body.lastMaterialId) {
-      merged = merged.withLastMaterial(body.lastMaterialId);
-    }
-    await repository.saveProgress(merged);
-    return Response.json({ progress: merged.toPrimitive() });
+    // The client state is authoritative: it supports unmarking materials.
+    const progress = CourseProgress.fromPrimitive({
+      courseId,
+      completedMaterialIds: body.completedMaterialIds ?? [],
+      lastMaterialId: body.lastMaterialId ?? null,
+    });
+    await repository.saveProgress(progress);
+    return Response.json({ progress: progress.toPrimitive() });
   } catch (error) {
     return apiError(error);
   }

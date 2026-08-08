@@ -16,8 +16,8 @@ test.describe('Anonymous study mode', () => {
     ).toBeVisible();
     await expect(page.getByText('ocho planetas')).toBeVisible();
 
-    // Mark the reading as completed; it auto-advances to the exam.
-    await page.getByRole('button', { name: /Marcar como completado/ }).click();
+    // Moving forward marks the reading as completed, like turning a page.
+    await page.getByRole('button', { name: 'Siguiente' }).click();
     await expect(page.getByText('¿Qué planeta está más cerca del Sol?')).toBeVisible();
 
     // Answer correctly and check the explanatory feedback.
@@ -36,10 +36,10 @@ test.describe('Anonymous study mode', () => {
   test('progress persists on the device and resumes where you left off', async ({ page }) => {
     const { courseId } = loadState();
 
-    // First visit: complete the first material.
+    // First visit: advance past the first material (auto-completes it).
     await page.goto(`/courses/${courseId}/study`);
     await page.waitForURL(`**/study/**`);
-    await page.getByRole('button', { name: /Marcar como completado/ }).click();
+    await page.getByRole('button', { name: 'Siguiente' }).click();
     await expect(page.getByText('¿Qué planeta está más cerca del Sol?')).toBeVisible();
 
     // Detail page now offers continuing with visible progress.

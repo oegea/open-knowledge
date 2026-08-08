@@ -258,6 +258,17 @@ body {
   line-height: var(--ok-leading-normal);
   -webkit-font-smoothing: antialiased;
   min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+body > * {
+  width: 100%;
+}
+
+::selection {
+  background: var(--ok-primary);
+  color: var(--ok-primary-fg);
 }
 
 /* Ambient brand washes behind all content */

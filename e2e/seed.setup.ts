@@ -39,7 +39,7 @@ setup('seed a fresh instance', async ({ request }) => {
       category: 'Ciencia',
       coverImage: coverPath,
       authors: ['Equipo E2E'],
-      sources: ['Archivos públicos'],
+      sources: [{ title: 'Archivos públicos de NASA', url: 'https://images.nasa.gov' }],
       aiAssisted: true,
     },
   });
@@ -85,7 +85,12 @@ setup('seed a fresh instance', async ({ request }) => {
 
   // 4. News section enabled + one published post.
   await request.put('/api/settings', {
-    data: { libraryName: 'Open Knowledge', registrationOpen: true, newsEnabled: true },
+    data: {
+      libraryName: 'Open Knowledge',
+      ownerName: 'Equipo E2E',
+      registrationOpen: true,
+      newsEnabled: true,
+    },
   });
   const newsResponse = await request.post('/api/news', {
     data: {

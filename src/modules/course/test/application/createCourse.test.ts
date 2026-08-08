@@ -33,14 +33,16 @@ describe('createCourse (unit)', () => {
         language: 'es',
         category: 'History',
         authors: ['Ada'],
-        sources: ['Public domain archives'],
+        sources: [{ title: 'Public domain archives', url: 'https://example.org/archive' }],
         aiAssisted: true,
         courseRepository,
       });
 
       expect(result.getCategory()).toBe('History');
       expect(result.getAuthors()).toEqual(['Ada']);
-      expect(result.getSources()).toEqual(['Public domain archives']);
+      expect(result.getSources().map((source) => source.toPrimitive())).toEqual([
+        { title: 'Public domain archives', url: 'https://example.org/archive' },
+      ]);
       expect(result.isAiAssisted()).toBe(true);
     });
   });

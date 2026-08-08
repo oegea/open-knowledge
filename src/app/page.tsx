@@ -4,6 +4,7 @@ import { getLocale } from '@/i18n/getLocale';
 import { getDictionary, translate } from '@/i18n/dictionary';
 import { LOCALES } from '@/i18n/config';
 import { PublicHeader } from '@/components/public/PublicHeader';
+import { PublicFooter } from '@/components/public/PublicFooter';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -14,12 +15,14 @@ export default async function LibraryPage({ searchParams }: PageProps<'/'>) {
   const params = await searchParams;
   const languageFilter = typeof params.language === 'string' ? params.language : undefined;
   const categoryFilter = typeof params.category === 'string' ? params.category : undefined;
+  const queryFilter = typeof params.q === 'string' ? params.q : undefined;
 
   const allPublished = await courseFactory.listCourses({ publishedOnly: true });
   const courses = await courseFactory.listCourses({
     publishedOnly: true,
     language: languageFilter,
     category: categoryFilter,
+    query: queryFilter,
   });
 
   const availableLanguages = [
@@ -31,6 +34,7 @@ export default async function LibraryPage({ searchParams }: PageProps<'/'>) {
     const query = new URLSearchParams();
     if (language) query.set('language', language);
     if (category) query.set('category', category);
+    if (queryFilter) query.set('q', queryFilter);
     const value = query.toString();
     return value ? `/?${value}` : '/';
   };
@@ -43,6 +47,22 @@ export default async function LibraryPage({ searchParams }: PageProps<'/'>) {
           <h1 className={styles.heroTitle}>{translate(dictionary, 'home.tagline')}</h1>
           <p className={styles.heroText}>{translate(dictionary, 'home.description')}</p>
         </section>
+
+        <form className={styles.search} action="/" method="get" role="search">
+          {languageFilter ? <input type="hidden" name="language" value={languageFilter} /> : null}
+          {categoryFilter ? <input type="hidden" name="category" value={categoryFilter} /> : null}
+          <span className={styles.searchIcon} aria-hidden="true">
+            ⌕
+          </span>
+          <input
+            type="search"
+            name="q"
+            defaultValue={queryFilter ?? ''}
+            placeholder={translate(dictionary, 'library.searchPlaceholder')}
+            aria-label={translate(dictionary, 'common.search')}
+            className={styles.searchInput}
+          />
+        </form>
 
         {availableLanguages.length > 1 || availableCategories.length > 0 ? (
           <nav className={styles.filters} aria-label={translate(dictionary, 'common.search')}>
@@ -128,6 +148,7 @@ export default async function LibraryPage({ searchParams }: PageProps<'/'>) {
           </ul>
         )}
       </main>
+      <PublicFooter />
     </>
   );
 }

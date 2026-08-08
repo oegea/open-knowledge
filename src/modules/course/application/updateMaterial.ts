@@ -2,6 +2,7 @@ import { Course } from '../domain/Course';
 import { CourseRepository } from '../domain/CourseRepository';
 import { Material, MaterialType } from '../domain/Material';
 import { Exam, ExamPrimitive } from '../domain/Exam';
+import { SourcePrimitive } from '../domain/Source';
 
 interface updateMaterialProps {
   courseId: string;
@@ -13,7 +14,7 @@ interface updateMaterialProps {
   mediaPath?: string | null;
   exam?: ExamPrimitive | null;
   required?: boolean;
-  sources?: string[];
+  sources?: SourcePrimitive[];
   courseRepository: CourseRepository;
 }
 
@@ -57,7 +58,7 @@ export async function updateMaterial({
     mediaPath ?? null,
     exam ? Exam.fromPrimitive(exam) : null,
     required ?? existing.isRequired(),
-    sources ?? existing.getSources()
+    sources ?? existing.getSources().map((source) => source.toPrimitive())
   );
 
   const updatedSection = section.setMaterials(section.getMaterials().updateMaterial(material));

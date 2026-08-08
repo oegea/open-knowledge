@@ -7,8 +7,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--ok-space-3);
+  gap: var(--ok-space-2) var(--ok-space-3);
   border-radius: var(--ok-radius-lg);
+  /* On narrow screens the actions wrap to a second row instead of clipping. */
+  flex-wrap: wrap;
 }
 
 .brand {
@@ -30,6 +32,7 @@
   align-items: center;
   gap: var(--ok-space-1);
   flex-shrink: 0;
+  margin-left: auto;
 }
 
 @media (min-width: 640px) {

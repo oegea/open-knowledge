@@ -73,7 +73,11 @@
     "newPost": "新建动态",
     "postTitle": "标题",
     "newsEnabled": "启用动态版块",
-    "newsEnabledHint": "关闭后，该版块将不会显示。"
+    "newsEnabledHint": "关闭后，该版块将不会显示。",
+    "addSource": "添加来源",
+    "sourceTitlePlaceholder": "标题或参考文献",
+    "ownerName": "课程库所有者",
+    "ownerNameHint": "显示在页脚。留空则不显示。"
   },
   "material": {
     "type": {
@@ -102,7 +106,8 @@
   },
   "library": {
     "all": "全部",
-    "empty": "该课程库还没有发布的课程。"
+    "empty": "该课程库还没有发布的课程。",
+    "searchPlaceholder": "搜索课程…"
   },
   "course": {
     "start": "开始课程",
@@ -110,7 +115,8 @@
     "contents": "目录",
     "aiNoticeTitle": "AI 辅助内容",
     "aiNotice": "本课程包含由人工智能生成或辅助的内容。来源在适用时均已注明。",
-    "materialsCount": "{count} 个材料"
+    "materialsCount": "{count} 个材料",
+    "bibliography": "参考书目与来源"
   },
   "study": {
     "progress": "进度",
@@ -119,7 +125,8 @@
     "next": "下一个",
     "previous": "上一个",
     "courseCompleted": "课程已完成！",
-    "registerToKeep": "注册以在设备间保存学习进度和证书。"
+    "registerToKeep": "注册以在设备间保存学习进度和证书。",
+    "unmarkComplete": "取消完成标记"
   },
   "auth": {
     "register": "创建身份",
@@ -168,5 +175,15 @@
     "courseUpdated": "课程已更新：{title}",
     "newsPublished": "动态：{title}",
     "certificateIssued": "获得证书！{title}"
+  },
+  "footer": {
+    "tagline": "本课程库由 Open Knowledge 驱动。",
+    "taglineOwned": "本课程库归 {owner} 所有，由 Open Knowledge 驱动。"
+  },
+  "theme": {
+    "label": "主题",
+    "light": "浅色",
+    "dark": "深色",
+    "auto": "自动"
   }
 }

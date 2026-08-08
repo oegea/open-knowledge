@@ -88,7 +88,8 @@
   max-width: 72rem;
   margin: 0 auto;
   gap: var(--ok-space-5);
-  padding: var(--ok-space-4) var(--ok-space-3) var(--ok-space-8);
+  /* Bottom padding clears the fixed navigation bar. */
+  padding: var(--ok-space-4) var(--ok-space-3) calc(var(--ok-space-8) + 72px);
 }
 
 /* Contents: overlay sheet on mobile, sidebar on desktop */
@@ -230,6 +231,18 @@
   display: flex;
   flex-direction: column;
   gap: var(--ok-space-4);
+  animation: contentIn var(--ok-duration-slow) var(--ok-ease);
+}
+
+@keyframes contentIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .completedBanner {
@@ -290,19 +303,42 @@
   color: var(--ok-fg-muted);
   border-top: 1px solid var(--ok-border);
   padding-top: var(--ok-space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-1);
+}
+
+.sourceList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-1);
+  padding-left: var(--ok-space-3);
+  border-left: 2px solid var(--ok-border);
+}
+
+.sourceLink {
+  color: var(--ok-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }
 
 .footer {
-  position: sticky;
+  /* Always visible: the reader never scrolls to find their way forward. */
+  position: fixed;
   bottom: var(--ok-space-2);
+  left: var(--ok-space-3);
+  right: var(--ok-space-3);
   z-index: var(--ok-z-header);
-  margin: 0 var(--ok-space-3) var(--ok-space-2);
   padding: var(--ok-space-2) var(--ok-space-3);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--ok-space-2);
   border-radius: var(--ok-radius-lg);
+  max-width: 46rem;
+  margin: 0 auto;
 }
 
 .navButton {
@@ -326,6 +362,60 @@
 
 .navLabel {
   display: none;
+}
+
+.navButtonPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ok-space-2);
+  min-height: var(--ok-touch-target);
+  min-width: var(--ok-touch-target);
+  justify-content: center;
+  padding: 0 var(--ok-space-4);
+  border-radius: var(--ok-radius-full);
+  font-weight: 700;
+  color: var(--ok-primary);
+  background: var(--ok-primary-soft);
+  transition:
+    background var(--ok-duration-fast) var(--ok-ease),
+    transform var(--ok-duration-fast) var(--ok-ease);
+}
+
+.navButtonPrimary:hover {
+  background: var(--ok-primary);
+  color: var(--ok-primary-fg);
+}
+
+.navButtonPrimary:active {
+  transform: scale(0.96);
+}
+
+.completedToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ok-space-2);
+  min-height: var(--ok-touch-target);
+  padding: 0 var(--ok-space-4);
+  border-radius: var(--ok-radius-full);
+  color: var(--ok-success);
+  background: color-mix(in srgb, var(--ok-success) 12%, transparent);
+  font-weight: 700;
+  font-size: var(--ok-text-sm);
+  transition: background var(--ok-duration-fast) var(--ok-ease);
+}
+
+.completedToggle:hover {
+  background: color-mix(in srgb, var(--ok-success) 20%, transparent);
+}
+
+.completeLabel {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .completeLabel {
+    display: inline;
+  }
 }
 
 .completeButton {

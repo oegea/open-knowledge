@@ -8,6 +8,7 @@ import { MaterialPrimitive } from '@/modules/course/domain/Material';
 import { CourseProgress } from '@/modules/study/domain/CourseProgress';
 import { getCourseProgress } from '@/modules/study/application/getCourseProgress';
 import { markMaterialCompleted } from '@/modules/study/application/markMaterialCompleted';
+import { unmarkMaterialCompleted } from '@/modules/study/application/unmarkMaterialCompleted';
 import { trackMaterialVisit } from '@/modules/study/application/trackMaterialVisit';
 import { mergeProgress } from '@/modules/study/application/mergeProgress';
 import { LocalStorageProgressRepository } from '@/modules/study/infrastructure/LocalStorageProgressRepository';
@@ -96,10 +97,44 @@ export function StudyView({ course, currentMaterialId, authenticated }: StudyVie
       progressRepository,
     });
     setProgress(updated);
-    if (next) {
-      router.push(`/courses/${course.id}/study/${next.material.id}`);
+  }, [course.id, currentMaterialId, progressRepository]);
+
+  const handleUnmark = useCallback(async () => {
+    const updated = await unmarkMaterialCompleted({
+      courseId: course.id!,
+      materialId: currentMaterialId,
+      progressRepository,
+    });
+    setProgress(updated);
+  }, [course.id, currentMaterialId, progressRepository]);
+
+  // Book-like navigation: moving forward marks the current reading as done.
+  const handleNext = useCallback(async () => {
+    if (!next) return;
+    const currentEntry = flatMaterials[currentIndex];
+    if (
+      currentEntry &&
+      currentEntry.material.type !== 'exam' &&
+      !(progress?.isMaterialCompleted(currentMaterialId) ?? false)
+    ) {
+      const updated = await markMaterialCompleted({
+        courseId: course.id!,
+        materialId: currentMaterialId,
+        progressRepository,
+      });
+      setProgress(updated);
     }
-  }, [course.id, currentMaterialId, next, progressRepository, router]);
+    router.push(`/courses/${course.id}/study/${next.material.id}`);
+  }, [
+    course.id,
+    currentIndex,
+    currentMaterialId,
+    flatMaterials,
+    next,
+    progress,
+    progressRepository,
+    router,
+  ]);
 
   const refreshProgress = useCallback(async () => {
     setProgress(
@@ -273,9 +308,27 @@ export function StudyView({ course, currentMaterialId, authenticated }: StudyVie
           />
 
           {current.material.sources.length > 0 ? (
-            <p className={styles.materialSources}>
-              <strong>{t('admin.sources')}:</strong> {current.material.sources.join(' · ')}
-            </p>
+            <div className={styles.materialSources}>
+              <strong>{t('course.bibliography')}</strong>
+              <ul className={styles.sourceList}>
+                {current.material.sources.map((source, index) => (
+                  <li key={index}>
+                    {source.url ? (
+                      <a
+                        href={source.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.sourceLink}
+                      >
+                        {source.title} ↗
+                      </a>
+                    ) : (
+                      source.title
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
           ) : null}
         </main>
       </div>
@@ -285,6 +338,7 @@ export function StudyView({ course, currentMaterialId, authenticated }: StudyVie
           <Link
             href={`/courses/${course.id}/study/${previous.material.id}`}
             className={styles.navButton}
+            aria-label={t('study.previous')}
           >
             ← <span className={styles.navLabel}>{t('study.previous')}</span>
           </Link>
@@ -294,21 +348,33 @@ export function StudyView({ course, currentMaterialId, authenticated }: StudyVie
 
         {current.material.type !== 'exam' ? (
           isCompleted ? (
-            <span className={styles.completedBadge}>✓ {t('study.completed')}</span>
+            <button
+              className={styles.completedToggle}
+              onClick={handleUnmark}
+              aria-label={t('study.unmarkComplete')}
+              title={t('study.unmarkComplete')}
+            >
+              ✓ <span>{t('study.completed')}</span>
+            </button>
           ) : (
-            <button className={styles.completeButton} onClick={handleComplete}>
-              ✓ <span>{t('study.markComplete')}</span>
+            <button
+              className={styles.completeButton}
+              onClick={handleComplete}
+              aria-label={t('study.markComplete')}
+            >
+              ✓ <span className={styles.completeLabel}>{t('study.markComplete')}</span>
             </button>
           )
         ) : null}
 
         {next ? (
-          <Link
-            href={`/courses/${course.id}/study/${next.material.id}`}
-            className={styles.navButton}
+          <button
+            className={styles.navButtonPrimary}
+            onClick={handleNext}
+            aria-label={t('study.next')}
           >
             <span className={styles.navLabel}>{t('study.next')}</span> →
-          </Link>
+          </button>
         ) : (
           <span />
         )}

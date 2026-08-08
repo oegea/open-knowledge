@@ -7,6 +7,7 @@ import { LOCALES } from '@/i18n/config';
 import { useI18n } from '@/i18n/I18nProvider';
 import { Button } from '../ui/Button';
 import { CheckboxField, SelectField, TextAreaField, TextField } from '../ui/Field';
+import { SourcesEditor } from './SourcesEditor';
 import styles from './CourseDetailsForm.module.css';
 
 interface CourseDetailsFormProps {
@@ -39,7 +40,10 @@ export function CourseDetailsForm({ initial, submitLabel, onSubmit }: CourseDeta
     setStatus('saving');
     setErrorMessage(null);
     try {
-      await onSubmit(details);
+      await onSubmit({
+        ...details,
+        sources: details.sources.filter((source) => source.title.trim() !== ''),
+      });
       setStatus('saved');
     } catch (error) {
       setStatus('error');
@@ -140,16 +144,9 @@ export function CourseDetailsForm({ initial, submitLabel, onSubmit }: CourseDeta
           }
         />
 
-        <TextAreaField
-          label={t('admin.sources')}
-          hint={t('admin.sourcesPlaceholder')}
-          value={details.sources.join('\n')}
-          onChange={(event) =>
-            setDetails({
-              ...details,
-              sources: event.target.value.split('\n').filter((line) => line.trim() !== ''),
-            })
-          }
+        <SourcesEditor
+          sources={details.sources}
+          onChange={(sources) => setDetails({ ...details, sources })}
         />
       </div>
 

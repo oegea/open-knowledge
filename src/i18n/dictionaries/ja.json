@@ -73,7 +73,11 @@
     "newPost": "新しい投稿",
     "postTitle": "タイトル",
     "newsEnabled": "ニュースセクションを有効化",
-    "newsEnabledHint": "無効にすると、このセクションは表示されなくなります。"
+    "newsEnabledHint": "無効にすると、このセクションは表示されなくなります。",
+    "addSource": "出典を追加",
+    "sourceTitlePlaceholder": "タイトルまたは参考文献",
+    "ownerName": "ライブラリの所有者",
+    "ownerNameHint": "フッターに表示されます。空にすると非表示になります。"
   },
   "material": {
     "type": {
@@ -102,7 +106,8 @@
   },
   "library": {
     "all": "すべて",
-    "empty": "このライブラリにはまだ公開されたコースがありません。"
+    "empty": "このライブラリにはまだ公開されたコースがありません。",
+    "searchPlaceholder": "コースを検索…"
   },
   "course": {
     "start": "コースを始める",
@@ -110,7 +115,8 @@
     "contents": "目次",
     "aiNoticeTitle": "AI 支援コンテンツ",
     "aiNotice": "このコースには、人工知能によって生成または支援されたコンテンツが含まれています。出典は該当する場合に明記されています。",
-    "materialsCount": "{count} 件の教材"
+    "materialsCount": "{count} 件の教材",
+    "bibliography": "参考文献・出典"
   },
   "study": {
     "progress": "進捗",
@@ -119,7 +125,8 @@
     "next": "次へ",
     "previous": "前へ",
     "courseCompleted": "コース修了！",
-    "registerToKeep": "登録すると、進捗と証明書をデバイス間で保持できます。"
+    "registerToKeep": "登録すると、進捗と証明書をデバイス間で保持できます。",
+    "unmarkComplete": "完了を取り消す"
   },
   "auth": {
     "register": "アカウントを作成",
@@ -168,5 +175,15 @@
     "courseUpdated": "コース更新：{title}",
     "newsPublished": "ニュース：{title}",
     "certificateIssued": "証明書を取得！{title}"
+  },
+  "footer": {
+    "tagline": "このライブラリは Open Knowledge で動いています。",
+    "taglineOwned": "このライブラリは {owner} が所有し、Open Knowledge が支えています。"
+  },
+  "theme": {
+    "label": "テーマ",
+    "light": "ライト",
+    "dark": "ダーク",
+    "auto": "自動"
   }
 }

@@ -1,0 +1,21 @@
+.footer {
+  margin-top: auto;
+  padding: var(--ok-space-6) var(--ok-space-4) var(--ok-space-5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ok-space-2);
+  text-align: center;
+}
+
+.mark {
+  color: var(--ok-accent);
+  font-size: var(--ok-text-sm);
+}
+
+.text {
+  font-size: var(--ok-text-xs);
+  color: var(--ok-fg-subtle);
+  max-width: 30rem;
+  line-height: var(--ok-leading-normal);
+}

@@ -73,7 +73,11 @@
     "newPost": "Nouvelle actualité",
     "postTitle": "Titre",
     "newsEnabled": "Section actualités activée",
-    "newsEnabledHint": "Si désactivée, la section n’apparaîtra tout simplement pas."
+    "newsEnabledHint": "Si désactivée, la section n’apparaîtra tout simplement pas.",
+    "addSource": "Ajouter une source",
+    "sourceTitlePlaceholder": "Titre ou référence",
+    "ownerName": "Propriétaire de la bibliothèque",
+    "ownerNameHint": "Affiché dans le pied de page. Laissez vide pour le masquer."
   },
   "material": {
     "type": {
@@ -102,7 +106,8 @@
   },
   "library": {
     "all": "Tous",
-    "empty": "Cette bibliothèque n'a pas encore de cours publiés."
+    "empty": "Cette bibliothèque n'a pas encore de cours publiés.",
+    "searchPlaceholder": "Rechercher des cours…"
   },
   "course": {
     "start": "Commencer le cours",
@@ -110,7 +115,8 @@
     "contents": "Contenu",
     "aiNoticeTitle": "Contenu assisté par IA",
     "aiNotice": "Ce cours comprend du contenu généré ou assisté par intelligence artificielle. Les sources sont citées chaque fois que nécessaire.",
-    "materialsCount": "{count} contenus"
+    "materialsCount": "{count} contenus",
+    "bibliography": "Bibliographie et sources"
   },
   "study": {
     "progress": "Progression",
@@ -119,7 +125,8 @@
     "next": "Suivant",
     "previous": "Précédent",
     "courseCompleted": "Cours terminé !",
-    "registerToKeep": "Inscrivez-vous pour conserver votre progression et vos certificats sur tous vos appareils."
+    "registerToKeep": "Inscrivez-vous pour conserver votre progression et vos certificats sur tous vos appareils.",
+    "unmarkComplete": "Ne plus marquer comme terminé"
   },
   "auth": {
     "register": "Créer une identité",
@@ -168,5 +175,15 @@
     "courseUpdated": "Cours mis à jour : {title}",
     "newsPublished": "Actualité : {title}",
     "certificateIssued": "Certificat obtenu ! {title}"
+  },
+  "footer": {
+    "tagline": "Cette bibliothèque est propulsée par Open Knowledge.",
+    "taglineOwned": "Cette bibliothèque appartient à {owner} et est propulsée par Open Knowledge."
+  },
+  "theme": {
+    "label": "Thème",
+    "light": "Clair",
+    "dark": "Sombre",
+    "auto": "Auto"
   }
 }

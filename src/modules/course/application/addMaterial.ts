@@ -3,6 +3,7 @@ import { Course } from '../domain/Course';
 import { CourseRepository } from '../domain/CourseRepository';
 import { Material, MaterialType } from '../domain/Material';
 import { Exam, ExamPrimitive } from '../domain/Exam';
+import { SourcePrimitive } from '../domain/Source';
 
 interface addMaterialProps {
   courseId: string;
@@ -13,7 +14,7 @@ interface addMaterialProps {
   mediaPath?: string | null;
   exam?: ExamPrimitive | null;
   required?: boolean;
-  sources?: string[];
+  sources?: SourcePrimitive[];
   courseRepository: CourseRepository;
 }
 

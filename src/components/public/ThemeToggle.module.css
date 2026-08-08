@@ -1,0 +1,25 @@
+.toggle {
+  min-width: var(--ok-touch-target);
+  min-height: var(--ok-touch-target);
+  border-radius: var(--ok-radius-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ok-fg-muted);
+  transition: background var(--ok-duration-fast) var(--ok-ease);
+}
+
+.toggle:hover {
+  background: var(--ok-primary-soft);
+  color: var(--ok-primary);
+}
+
+.icon {
+  font-size: var(--ok-text-lg);
+  display: inline-block;
+  transition: transform var(--ok-duration-med) var(--ok-ease);
+}
+
+.toggle:active .icon {
+  transform: rotate(40deg) scale(0.9);
+}

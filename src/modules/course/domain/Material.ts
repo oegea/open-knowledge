@@ -1,4 +1,5 @@
 import { Exam, ExamPrimitive } from './Exam';
+import { Source, SourcePrimitive } from './Source';
 
 export const MATERIAL_TYPES = ['markdown', 'audio', 'video', 'exam'] as const;
 export type MaterialType = (typeof MATERIAL_TYPES)[number];
@@ -11,7 +12,7 @@ export interface MaterialInput {
   mediaPath?: string | null;
   exam?: ExamPrimitive | null;
   required?: boolean;
-  sources?: string[];
+  sources?: SourcePrimitive[];
 }
 
 export interface MaterialPrimitive {
@@ -27,7 +28,7 @@ export interface MaterialPrimitive {
   /** Whether consuming this material is required to complete the course. */
   required: boolean;
   /** Optional attribution sources for this specific material. */
-  sources: string[];
+  sources: SourcePrimitive[];
 }
 
 export class Material {
@@ -39,7 +40,7 @@ export class Material {
     private readonly mediaPath: string | null,
     private readonly exam: Exam | null,
     private readonly required: boolean,
-    private readonly sources: string[]
+    private readonly sources: Source[]
   ) {}
 
   static create(
@@ -50,10 +51,19 @@ export class Material {
     mediaPath: string | null,
     exam: Exam | null,
     required: boolean,
-    sources: string[] = []
+    sources: (SourcePrimitive | string)[] = []
   ): Material {
     Material.ensureMaterialIsValid(id, title, type, markdown, mediaPath, exam);
-    return new Material(id, title.trim(), type, markdown ?? '', mediaPath, exam, required, sources);
+    return new Material(
+      id,
+      title.trim(),
+      type,
+      markdown ?? '',
+      mediaPath,
+      exam,
+      required,
+      sources.map((source) => Source.fromPrimitive(source))
+    );
   }
 
   static fromPrimitive(data: MaterialPrimitive): Material {
@@ -129,7 +139,7 @@ export class Material {
     return this.required;
   }
 
-  getSources(): string[] {
+  getSources(): Source[] {
     return [...this.sources];
   }
 
@@ -146,7 +156,7 @@ export class Material {
       mediaPath: this.mediaPath,
       exam: this.exam ? this.exam.toPrimitive() : null,
       required: this.required,
-      sources: [...this.sources],
+      sources: this.sources.map((source) => source.toPrimitive()),
     };
   }
 

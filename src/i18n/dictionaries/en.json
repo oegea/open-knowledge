@@ -73,7 +73,11 @@
     "newPost": "New post",
     "postTitle": "Title",
     "newsEnabled": "News section enabled",
-    "newsEnabledHint": "If disabled, the section simply will not appear."
+    "newsEnabledHint": "If disabled, the section simply will not appear.",
+    "addSource": "Add source",
+    "sourceTitlePlaceholder": "Title or reference",
+    "ownerName": "Library owner",
+    "ownerNameHint": "Shown in the footer. Leave empty to hide it."
   },
   "material": {
     "type": {
@@ -102,7 +106,8 @@
   },
   "library": {
     "all": "All",
-    "empty": "This library has no published courses yet."
+    "empty": "This library has no published courses yet.",
+    "searchPlaceholder": "Search courses…"
   },
   "course": {
     "start": "Start course",
@@ -110,7 +115,8 @@
     "contents": "Contents",
     "aiNoticeTitle": "AI-assisted content",
     "aiNotice": "This course includes content generated or assisted by artificial intelligence. Sources are credited wherever applicable.",
-    "materialsCount": "{count} materials"
+    "materialsCount": "{count} materials",
+    "bibliography": "Bibliography & sources"
   },
   "study": {
     "progress": "Progress",
@@ -119,7 +125,8 @@
     "next": "Next",
     "previous": "Previous",
     "courseCompleted": "Course completed!",
-    "registerToKeep": "Register to keep your progress and certificates across devices."
+    "registerToKeep": "Register to keep your progress and certificates across devices.",
+    "unmarkComplete": "Unmark as completed"
   },
   "auth": {
     "register": "Create identity",
@@ -168,5 +175,15 @@
     "courseUpdated": "Course updated: {title}",
     "newsPublished": "News: {title}",
     "certificateIssued": "Certificate earned! {title}"
+  },
+  "footer": {
+    "tagline": "This library is powered by Open Knowledge.",
+    "taglineOwned": "This library belongs to {owner} and is powered by Open Knowledge."
+  },
+  "theme": {
+    "label": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "auto": "Auto"
   }
 }

@@ -46,6 +46,14 @@ export function SettingsForm({ initial }: SettingsFormProps) {
         maxLength={100}
       />
 
+      <TextField
+        label={t('admin.ownerName')}
+        hint={t('admin.ownerNameHint')}
+        value={settings.ownerName}
+        onChange={(event) => setSettings({ ...settings, ownerName: event.target.value })}
+        maxLength={100}
+      />
+
       <CheckboxField
         label={t('admin.registrationOpen')}
         hint={t('admin.registrationOpenHint')}

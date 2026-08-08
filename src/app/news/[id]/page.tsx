@@ -5,6 +5,7 @@ import settingsFactory from '@/modules/settings/application/factory';
 import { getLocale } from '@/i18n/getLocale';
 import { getDictionary, translate } from '@/i18n/dictionary';
 import { PublicHeader } from '@/components/public/PublicHeader';
+import { PublicFooter } from '@/components/public/PublicFooter';
 import { Prose } from '@/components/shared/Prose';
 import styles from './page.module.css';
 
@@ -41,6 +42,7 @@ export default async function NewsPostPage({ params }: PageProps<'/news/[id]'>) 
           <Prose content={post.getMarkdown()} />
         </article>
       </main>
+      <PublicFooter />
     </>
   );
 }

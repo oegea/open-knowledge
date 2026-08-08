@@ -1,4 +1,5 @@
 import { Course } from '../domain/Course';
+import { SourcePrimitive } from '../domain/Source';
 import { CourseRepository } from '../domain/CourseRepository';
 
 interface updateCourseDetailsProps {
@@ -9,7 +10,7 @@ interface updateCourseDetailsProps {
   category: string | null;
   coverImage: string | null;
   authors: string[];
-  sources: string[];
+  sources: SourcePrimitive[];
   aiAssisted: boolean;
   courseRepository: CourseRepository;
 }

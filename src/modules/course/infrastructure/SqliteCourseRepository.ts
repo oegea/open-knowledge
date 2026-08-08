@@ -161,6 +161,11 @@ export class SqliteCourseRepository implements CourseRepository {
       conditions.push('category = ?');
       params.push(filter.category);
     }
+    if (filter?.query?.trim()) {
+      conditions.push('(title LIKE ? OR description LIKE ?)');
+      const like = `%${filter.query.trim()}%`;
+      params.push(like, like);
+    }
 
     const where = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
     const rows = this.db

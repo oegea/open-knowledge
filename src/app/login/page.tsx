@@ -1,4 +1,5 @@
 import { PublicHeader } from '@/components/public/PublicHeader';
+import { PublicFooter } from '@/components/public/PublicFooter';
 import { LoginForm } from '@/components/auth/LoginForm';
 import styles from '../auth.module.css';
 
@@ -11,6 +12,7 @@ export default function LoginPage() {
       <main className={styles.main}>
         <LoginForm />
       </main>
+      <PublicFooter />
     </>
   );
 }
