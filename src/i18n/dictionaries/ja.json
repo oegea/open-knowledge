@@ -195,7 +195,9 @@
   },
   "account": {
     "certificates": "証明書",
-    "noCertificates": "まだ証明書がありません。"
+    "noCertificates": "まだ証明書がありません。",
+    "displayName": "証明書に記載する名前",
+    "displayNameHint": "任意。証明書にのみ使用されます。空欄の場合は ID が使われます。いつでも変更・削除できます。"
   },
   "news": {
     "title": "ニュース",

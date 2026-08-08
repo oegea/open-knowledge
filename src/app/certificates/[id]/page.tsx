@@ -45,7 +45,10 @@ export default async function CertificatePage({ params }: PageProps<'/certificat
           <h1 className={styles.title}>{translate(dictionary, 'certificate.title')}</h1>
 
           <p className={styles.awardedTo}>{translate(dictionary, 'certificate.awardedTo')}</p>
-          <p className={styles.identity}>{certificate.getIdentifier()}</p>
+          <p className={styles.identity}>{certificate.getHolderName()}</p>
+          {certificate.getDisplayName() ? (
+            <p className={styles.identitySignature}>{certificate.getIdentifier()}</p>
+          ) : null}
 
           <p className={styles.completed}>
             {translate(dictionary, 'certificate.completedCourse')}
@@ -58,6 +61,13 @@ export default async function CertificatePage({ params }: PageProps<'/certificat
 
           <p className={styles.note}>{translate(dictionary, 'certificate.note')}</p>
           <p className={styles.certificateId}>{certificate.getId()}</p>
+          <a
+            href={`/api/certificates/${certificate.getId()}/pdf`}
+            className={styles.downloadButton}
+            download
+          >
+            ↓ {translate(dictionary, 'course.downloadPdf')}
+          </a>
           <div className={styles.ornamentBottom} aria-hidden="true" />
         </article>
       </main>

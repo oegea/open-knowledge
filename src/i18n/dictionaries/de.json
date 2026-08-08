@@ -195,7 +195,9 @@
   },
   "account": {
     "certificates": "Zertifikate",
-    "noCertificates": "Noch keine Zertifikate."
+    "noCertificates": "Noch keine Zertifikate.",
+    "displayName": "Name für Zertifikate",
+    "displayNameHint": "Optional. Wird nur auf deinen Zertifikaten verwendet; leer lassen, um deine Kennung zu nutzen. Jederzeit änderbar."
   },
   "news": {
     "title": "Neuigkeiten",

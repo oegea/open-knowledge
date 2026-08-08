@@ -10,6 +10,7 @@ interface UserRow {
   totp_secret: string;
   recovery_code_hash: string;
   is_admin: number;
+  display_name: string;
   created_at: string;
 }
 
@@ -28,12 +29,13 @@ export class SqliteUserRepository implements UserRepository {
 
     this.db
       .prepare(
-        `INSERT INTO users (id, identifier, totp_secret, recovery_code_hash, is_admin, created_at)
-         VALUES (@id, @identifier, @totpSecret, @recoveryCodeHash, @isAdmin, @createdAt)
+        `INSERT INTO users (id, identifier, totp_secret, recovery_code_hash, is_admin, display_name, created_at)
+         VALUES (@id, @identifier, @totpSecret, @recoveryCodeHash, @isAdmin, @displayName, @createdAt)
          ON CONFLICT(id) DO UPDATE SET
            totp_secret = @totpSecret,
            recovery_code_hash = @recoveryCodeHash,
-           is_admin = @isAdmin`
+           is_admin = @isAdmin,
+           display_name = @displayName`
       )
       .run({
         id: data.id,
@@ -41,6 +43,7 @@ export class SqliteUserRepository implements UserRepository {
         totpSecret: encryptSecret(data.totpSecret),
         recoveryCodeHash: data.recoveryCodeHash,
         isAdmin: data.isAdmin ? 1 : 0,
+        displayName: data.displayName,
         createdAt: data.createdAt,
       });
 
@@ -71,6 +74,7 @@ export class SqliteUserRepository implements UserRepository {
       totpSecret: decryptSecret(row.totp_secret),
       recoveryCodeHash: row.recovery_code_hash,
       isAdmin: row.is_admin === 1,
+      displayName: row.display_name ?? '',
       createdAt: row.created_at,
     });
   }

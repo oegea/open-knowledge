@@ -4,6 +4,8 @@ export interface CertificatePrimitive {
   courseId: string;
   courseTitle: string;
   identifier: string;
+  /** Friendly name chosen by the learner; empty falls back to identifier. */
+  displayName: string;
   issuedAt: string;
 }
 
@@ -14,6 +16,7 @@ export class Certificate {
     private readonly courseId: string,
     private readonly courseTitle: string,
     private readonly identifier: string,
+    private readonly displayName: string,
     private readonly issuedAt: Date
   ) {}
 
@@ -23,10 +26,19 @@ export class Certificate {
     courseId: string,
     courseTitle: string,
     identifier: string,
+    displayName: string = '',
     issuedAt?: Date
   ): Certificate {
     Certificate.ensureCertificateIsValid(userId, courseId, courseTitle, identifier);
-    return new Certificate(id, userId, courseId, courseTitle, identifier, issuedAt ?? new Date());
+    return new Certificate(
+      id,
+      userId,
+      courseId,
+      courseTitle,
+      identifier,
+      displayName.trim(),
+      issuedAt ?? new Date()
+    );
   }
 
   static fromPrimitive(data: CertificatePrimitive): Certificate {
@@ -37,6 +49,7 @@ export class Certificate {
       data.courseId,
       data.courseTitle,
       data.identifier,
+      data.displayName ?? '',
       data.issuedAt ? new Date(data.issuedAt) : undefined
     );
   }
@@ -75,6 +88,27 @@ export class Certificate {
     return this.identifier;
   }
 
+  getDisplayName(): string {
+    return this.displayName;
+  }
+
+  /** Name featured on the certificate: friendly name or the identity. */
+  getHolderName(): string {
+    return this.displayName || this.identifier;
+  }
+
+  withDisplayName(displayName: string): Certificate {
+    return Certificate.create(
+      this.id,
+      this.userId,
+      this.courseId,
+      this.courseTitle,
+      this.identifier,
+      displayName,
+      this.issuedAt
+    );
+  }
+
   getIssuedAt(): Date {
     return new Date(this.issuedAt);
   }
@@ -90,6 +124,7 @@ export class Certificate {
       courseId: this.courseId,
       courseTitle: this.courseTitle,
       identifier: this.identifier,
+      displayName: this.displayName,
       issuedAt: this.issuedAt.toISOString(),
     };
   }

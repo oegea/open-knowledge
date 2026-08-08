@@ -5,12 +5,14 @@ import { createSession } from './createSession';
 import { getSessionUser } from './getSessionUser';
 import { deleteSession } from './deleteSession';
 import { initAccountRecovery, confirmAccountRecovery } from './recoverAccount';
+import { updateDisplayName } from './updateDisplayName';
 import { SqliteUserRepository } from '../infrastructure/SqliteUserRepository';
 import { SqliteSessionRepository } from '../infrastructure/SqliteSessionRepository';
 import { OtplibTotpRepository } from '../infrastructure/OtplibTotpRepository';
 import { SqliteSettingsRepository } from '../../settings/infrastructure/SqliteSettingsRepository';
 import pagesFactory from '../../pages/application/factory';
 import courseFactory from '../../course/application/factory';
+import certificateFactory from '../../certificate/application/factory';
 
 export default {
   hasUsers: async () => (await new SqliteUserRepository().countUsers()) > 0,
@@ -33,6 +35,16 @@ export default {
         // Default content ships in English; the admin adapts it freely.
         await pagesFactory.createDefaultAboutPage();
         await courseFactory.createDefaultWelcomeCourse();
+      },
+    }),
+
+  updateDisplayName: async (userId: string, displayName: string) =>
+    await updateDisplayName({
+      userId,
+      displayName,
+      userRepository: new SqliteUserRepository(),
+      onDisplayNameChanged: async (id, name) => {
+        await certificateFactory.updateCertificateHolderName(id, name);
       },
     }),
 

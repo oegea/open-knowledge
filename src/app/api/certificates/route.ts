@@ -14,6 +14,7 @@ export async function POST(request: NextRequest) {
     const certificate = await certificateFactory.issueCertificate(
       user.getId()!,
       user.getIdentifier(),
+      user.getDisplayName(),
       body.courseId
     );
     return Response.json({ certificate: certificate.toPrimitive() }, { status: 201 });

@@ -7,6 +7,7 @@ export function create(overrides: Partial<UserPrimitive> = {}): User {
     totpSecret: 'JBSWY3DPEHPK3PXP',
     recoveryCodeHash: 'a'.repeat(64),
     isAdmin: false,
+    displayName: '',
     createdAt: '2026-08-01T10:00:00.000Z',
     ...overrides,
   });

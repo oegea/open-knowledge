@@ -7,6 +7,7 @@ export function create(overrides: Partial<CertificatePrimitive> = {}): Certifica
     courseId: 'course-1',
     courseTitle: 'Introduction to Astronomy',
     identifier: 'Erudito#4821',
+    displayName: '',
     issuedAt: '2026-08-08T10:00:00.000Z',
     ...overrides,
   });

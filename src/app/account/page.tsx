@@ -7,6 +7,7 @@ import { getDictionary, translate } from '@/i18n/dictionary';
 import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
 import { LogoutButton } from '@/components/auth/LogoutButton';
+import { DisplayNameForm } from '@/components/auth/DisplayNameForm';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -26,6 +27,7 @@ export default async function AccountPage() {
         <section className={`ok-glass ${styles.identityCard}`}>
           <h1 className={styles.title}>{translate(dictionary, 'auth.myAccount')}</h1>
           <p className={styles.identifier}>{user.getIdentifier()}</p>
+          <DisplayNameForm initial={user.getDisplayName()} />
           <div>
             <LogoutButton />
           </div>

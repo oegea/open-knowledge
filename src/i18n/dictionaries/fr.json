@@ -195,7 +195,9 @@
   },
   "account": {
     "certificates": "Certificats",
-    "noCertificates": "Pas encore de certificats."
+    "noCertificates": "Pas encore de certificats.",
+    "displayName": "Nom pour les certificats",
+    "displayNameHint": "Facultatif. Utilisé uniquement sur vos certificats ; laissez vide pour utiliser votre identifiant. Modifiable à tout moment."
   },
   "news": {
     "title": "Actualités",

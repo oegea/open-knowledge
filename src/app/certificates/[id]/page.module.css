@@ -94,6 +94,41 @@
   color: var(--ok-fg-subtle);
 }
 
+.identitySignature {
+  font-family: var(--ok-font-mono);
+  font-size: var(--ok-text-sm);
+  color: var(--ok-fg-muted);
+}
+
+.downloadButton {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ok-space-2);
+  min-height: var(--ok-touch-target);
+  padding: 0 var(--ok-space-5);
+  border-radius: var(--ok-radius-full);
+  border: 1.5px solid var(--ok-primary);
+  color: var(--ok-primary);
+  font-weight: 700;
+  font-size: var(--ok-text-sm);
+  margin-top: var(--ok-space-3);
+  transition:
+    background var(--ok-duration-fast) var(--ok-ease),
+    color var(--ok-duration-fast) var(--ok-ease);
+}
+
+.downloadButton:hover {
+  background: var(--ok-primary);
+  color: var(--ok-primary-fg);
+}
+
+@media print {
+  .downloadButton {
+    display: none;
+  }
+}
+
 @media (min-width: 768px) {
   .certificate {
     padding: var(--ok-space-8) var(--ok-space-7);

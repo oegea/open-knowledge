@@ -195,7 +195,9 @@
   },
   "account": {
     "certificates": "证书",
-    "noCertificates": "还没有证书。"
+    "noCertificates": "还没有证书。",
+    "displayName": "证书上的姓名",
+    "displayNameHint": "可选。仅用于你的证书；留空则使用你的标识符。可随时更改或删除。"
   },
   "news": {
     "title": "动态",

@@ -195,7 +195,9 @@
   },
   "account": {
     "certificates": "Ziurtagiriak",
-    "noCertificates": "Oraindik ez duzu ziurtagiririk."
+    "noCertificates": "Oraindik ez duzu ziurtagiririk.",
+    "displayName": "Ziurtagirietarako izena",
+    "displayNameHint": "Aukerakoa. Zure ziurtagirietan bakarrik erabiltzen da; utzi hutsik identifikatzailea erabiltzeko. Noiznahi alda dezakezu."
   },
   "news": {
     "title": "Berriak",

@@ -195,7 +195,9 @@
   },
   "account": {
     "certificates": "Certificats",
-    "noCertificates": "Encara no tens certificats."
+    "noCertificates": "Encara no tens certificats.",
+    "displayName": "Nom per als certificats",
+    "displayNameHint": "Opcional. Només s'usa als teus certificats; deixa-ho buit per usar el teu identificador. Canvia-ho quan vulguis."
   },
   "news": {
     "title": "Notícies",

@@ -23,7 +23,7 @@ Open Knowledge follows privacy by design: the platform does not need to know who
 
 ### Stored data (exhaustive)
 
-Pseudonymous identifier, TOTP secret (encrypted at rest), hashed recovery code, role flag (admin), progress, exam results, certificates, notifications state. Nothing else; no additional profile fields will be invented.
+Pseudonymous identifier, TOTP secret (encrypted at rest), hashed recovery code, role flag (admin), progress, exam results, certificates, notifications state, and one optional field: a **display name** the learner may set voluntarily, whose sole purpose is to feature a real name on their certificates (empty by default; the identifier is used otherwise; removable at any time). Nothing else; no additional profile fields will be invented without a concrete learner-facing purpose like this one.
 
 ### Administration controls
 

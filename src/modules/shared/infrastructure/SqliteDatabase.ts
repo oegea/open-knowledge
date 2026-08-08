@@ -55,6 +55,7 @@ CREATE TABLE IF NOT EXISTS users (
   totp_secret TEXT NOT NULL,
   recovery_code_hash TEXT NOT NULL,
   is_admin INTEGER NOT NULL DEFAULT 0,
+  display_name TEXT NOT NULL DEFAULT '',
   created_at TEXT NOT NULL
 );
 
@@ -135,6 +136,7 @@ CREATE TABLE IF NOT EXISTS certificates (
   course_id TEXT NOT NULL,
   course_title TEXT NOT NULL,
   identifier TEXT NOT NULL,
+  display_name TEXT NOT NULL DEFAULT '',
   issued_at TEXT NOT NULL,
   UNIQUE (user_id, course_id)
 );
@@ -148,6 +150,8 @@ function migrate(db: Database.Database): void {
   // Additive migrations for databases created by earlier versions.
   addColumnIfMissing(db, 'courses', 'license', 'TEXT');
   addColumnIfMissing(db, 'news_posts', 'image_path', 'TEXT');
+  addColumnIfMissing(db, 'users', 'display_name', "TEXT NOT NULL DEFAULT ''");
+  addColumnIfMissing(db, 'certificates', 'display_name', "TEXT NOT NULL DEFAULT ''");
 }
 
 function addColumnIfMissing(

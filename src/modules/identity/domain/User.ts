@@ -6,6 +6,8 @@ export interface UserPrimitive {
   totpSecret: string;
   recoveryCodeHash: string;
   isAdmin: boolean;
+  /** Optional friendly name, used on certificates. Empty = not set. */
+  displayName: string;
   createdAt: string;
 }
 
@@ -16,6 +18,7 @@ export class User {
     private readonly totpSecret: string,
     private readonly recoveryCodeHash: string,
     private readonly isAdminFlag: boolean,
+    private readonly displayName: string,
     private readonly createdAt: Date
   ) {}
 
@@ -25,15 +28,17 @@ export class User {
     totpSecret: string,
     recoveryCodeHash: string,
     isAdmin: boolean,
+    displayName: string = '',
     createdAt?: Date
   ): User {
-    User.ensureUserIsValid(totpSecret, recoveryCodeHash);
+    User.ensureUserIsValid(totpSecret, recoveryCodeHash, displayName);
     return new User(
       id,
       UserIdentifier.create(identifier),
       totpSecret,
       recoveryCodeHash,
       isAdmin,
+      displayName.trim(),
       createdAt ?? new Date()
     );
   }
@@ -46,16 +51,24 @@ export class User {
       data.totpSecret,
       data.recoveryCodeHash,
       Boolean(data.isAdmin),
+      data.displayName ?? '',
       data.createdAt ? new Date(data.createdAt) : undefined
     );
   }
 
-  static ensureUserIsValid(totpSecret: string, recoveryCodeHash: string): void {
+  static ensureUserIsValid(
+    totpSecret: string,
+    recoveryCodeHash: string,
+    displayName: string = ''
+  ): void {
     if (!totpSecret || typeof totpSecret !== 'string') {
       throw new Error('[User] totpSecret must be a non-empty string');
     }
     if (!recoveryCodeHash || typeof recoveryCodeHash !== 'string') {
       throw new Error('[User] recoveryCodeHash must be a non-empty string');
+    }
+    if (typeof displayName !== 'string' || displayName.trim().length > 100) {
+      throw new Error('[User] displayName cannot exceed 100 characters');
     }
   }
 
@@ -79,6 +92,27 @@ export class User {
     return this.isAdminFlag;
   }
 
+  getDisplayName(): string {
+    return this.displayName;
+  }
+
+  /** The name shown on certificates: friendly name or the identifier. */
+  getCertificateName(): string {
+    return this.displayName || this.identifier.toPrimitive();
+  }
+
+  setDisplayName(displayName: string): User {
+    return User.create(
+      this.id,
+      this.identifier.toPrimitive(),
+      this.totpSecret,
+      this.recoveryCodeHash,
+      this.isAdminFlag,
+      displayName,
+      this.createdAt
+    );
+  }
+
   getCreatedAt(): Date {
     return new Date(this.createdAt);
   }
@@ -90,6 +124,7 @@ export class User {
       this.totpSecret,
       this.recoveryCodeHash,
       this.isAdminFlag,
+      this.displayName,
       this.createdAt
     );
   }
@@ -102,6 +137,7 @@ export class User {
       totpSecret,
       recoveryCodeHash,
       this.isAdminFlag,
+      this.displayName,
       this.createdAt
     );
   }
@@ -117,6 +153,7 @@ export class User {
       totpSecret: this.totpSecret,
       recoveryCodeHash: this.recoveryCodeHash,
       isAdmin: this.isAdminFlag,
+      displayName: this.displayName,
       createdAt: this.createdAt.toISOString(),
     };
   }

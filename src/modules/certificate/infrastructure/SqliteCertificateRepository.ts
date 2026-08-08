@@ -9,6 +9,7 @@ interface CertificateRow {
   course_id: string;
   course_title: string;
   identifier: string;
+  display_name: string;
   issued_at: string;
 }
 
@@ -27,10 +28,18 @@ export class SqliteCertificateRepository implements CertificateRepository {
 
     this.db
       .prepare(
-        `INSERT INTO certificates (id, user_id, course_id, course_title, identifier, issued_at)
-         VALUES (?, ?, ?, ?, ?, ?)`
+        `INSERT INTO certificates (id, user_id, course_id, course_title, identifier, display_name, issued_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?)`
       )
-      .run(data.id, data.userId, data.courseId, data.courseTitle, data.identifier, data.issuedAt);
+      .run(
+        data.id,
+        data.userId,
+        data.courseId,
+        data.courseTitle,
+        data.identifier,
+        data.displayName,
+        data.issuedAt
+      );
 
     return certificate;
   }
@@ -56,6 +65,12 @@ export class SqliteCertificateRepository implements CertificateRepository {
     return rows.map((row) => this.mapRow(row));
   }
 
+  async updateDisplayNameForUser(userId: string, displayName: string): Promise<void> {
+    this.db
+      .prepare('UPDATE certificates SET display_name = ? WHERE user_id = ?')
+      .run(displayName.trim(), userId);
+  }
+
   private mapRow(row: CertificateRow): Certificate {
     return Certificate.fromPrimitive({
       id: row.id,
@@ -63,6 +78,7 @@ export class SqliteCertificateRepository implements CertificateRepository {
       courseId: row.course_id,
       courseTitle: row.course_title,
       identifier: row.identifier,
+      displayName: row.display_name ?? '',
       issuedAt: row.issued_at,
     });
   }

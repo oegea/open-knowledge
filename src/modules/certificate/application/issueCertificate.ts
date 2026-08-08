@@ -8,6 +8,8 @@ import { ExamResultRepository } from '../../assessment/domain/ExamResultReposito
 interface issueCertificateProps {
   userId: string;
   identifier: string;
+  /** Friendly name snapshot; empty means the identifier is featured. */
+  displayName?: string;
   courseId: string;
   courseRepository: CourseRepository;
   progressRepository: ProgressRepository;
@@ -25,6 +27,7 @@ interface issueCertificateProps {
 export async function issueCertificate({
   userId,
   identifier,
+  displayName,
   courseId,
   courseRepository,
   progressRepository,
@@ -66,7 +69,8 @@ export async function issueCertificate({
     userId,
     courseId,
     course.getTitle(),
-    identifier
+    identifier,
+    displayName ?? ''
   );
 
   const saved = await certificateRepository.save(certificate);
