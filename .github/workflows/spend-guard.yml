@@ -30,7 +30,7 @@ jobs:
   guard:
     runs-on: ubuntu-latest
     steps:
-      - name: Read 30-day egress from Fly metrics
+      - name: Read 30-day egress and decide
         id: egress
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
@@ -39,21 +39,26 @@ jobs:
             --data-urlencode "query=sum(increase(fly_instance_net_sent_bytes{app=\"$FLY_APP\"}[30d]))" \
             "https://api.fly.io/prometheus/$FLY_ORG/api/v1/query" \
             | jq -r '.data.result[0].value[1] // "0"' | cut -d. -f1)
+          SENT=${SENT:-0}
+          # Integer comparison in bash: GitHub expression operators proved
+          # unreliable here (a bad cast once killed a healthy app).
+          if [ "$SENT" -gt "$EGRESS_LIMIT_BYTES" ]; then KILL=true; else KILL=false; fi
           echo "sent=$SENT" >> "$GITHUB_OUTPUT"
-          echo "Egress last 30d: $SENT bytes (limit: $EGRESS_LIMIT_BYTES)"
+          echo "kill=$KILL" >> "$GITHUB_OUTPUT"
+          echo "Egress last 30d: $SENT bytes (limit: $EGRESS_LIMIT_BYTES) -> kill=$KILL"
 
       - name: Set up flyctl
-        if: ${{ steps.egress.outputs.sent > env.EGRESS_LIMIT_BYTES }}
+        if: ${{ steps.egress.outputs.kill == 'true' }}
         uses: superfly/flyctl-actions/setup-flyctl@master
 
       - name: 'KILL SWITCH: scale app to zero'
-        if: ${{ steps.egress.outputs.sent > env.EGRESS_LIMIT_BYTES }}
+        if: ${{ steps.egress.outputs.kill == 'true' }}
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: flyctl scale count 0 --yes --app "$FLY_APP"
 
       - name: Open an alert issue
-        if: ${{ steps.egress.outputs.sent > env.EGRESS_LIMIT_BYTES }}
+        if: ${{ steps.egress.outputs.kill == 'true' }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
