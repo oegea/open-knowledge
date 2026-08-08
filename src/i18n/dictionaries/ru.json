@@ -5,7 +5,16 @@
     "continue": "Продолжить",
     "cancel": "Отмена",
     "save": "Сохранить",
-    "search": "Поиск"
+    "search": "Поиск",
+    "delete": "Удалить",
+    "edit": "Изменить",
+    "back": "Назад",
+    "add": "Добавить",
+    "moveUp": "Вверх",
+    "moveDown": "Вниз",
+    "saving": "Сохранение…",
+    "saved": "Сохранено",
+    "error": "Что-то пошло не так"
   },
   "nav": {
     "library": "Библиотека",
@@ -21,5 +30,57 @@
   "home": {
     "tagline": "Открытые знания для всех",
     "description": "Изучайте курсы в своём темпе. Регистрация не требуется."
+  },
+  "admin": {
+    "courses": "Курсы",
+    "newCourse": "Новый курс",
+    "noCourses": "Курсов пока нет. Создайте первый.",
+    "details": "Сведения",
+    "structure": "Содержание курса",
+    "addSection": "Добавить раздел",
+    "sectionTitle": "Название раздела",
+    "sectionsEmpty": "В этом курсе пока нет разделов.",
+    "addMaterial": "Добавить материал",
+    "materialTitle": "Название материала",
+    "materialType": "Тип",
+    "content": "Содержимое (Markdown)",
+    "notes": "Заметки (Markdown, необязательно)",
+    "mediaFile": "Медиафайл",
+    "upload": "Загрузить",
+    "uploading": "Загрузка…",
+    "required": "Обязательный",
+    "publish": "Опубликовать",
+    "unpublish": "Снять с публикации",
+    "published": "Опубликован",
+    "draft": "Черновик",
+    "confirmDelete": "Точно удалить? Это действие необратимо.",
+    "cover": "Обложка",
+    "category": "Категория",
+    "authors": "Авторы",
+    "sources": "Источники",
+    "aiAssisted": "Создано с помощью ИИ",
+    "aiAssistedHint": "При начале курса будет показано заметное уведомление.",
+    "courseLanguage": "Язык курса",
+    "authorsPlaceholder": "По одному автору в строке",
+    "sourcesPlaceholder": "По одному источнику в строке",
+    "courseTitle": "Название",
+    "courseDescription": "Описание"
+  },
+  "material": {
+    "type": {
+      "markdown": "Текст",
+      "audio": "Аудио",
+      "video": "Видео",
+      "exam": "Экзамен"
+    }
+  },
+  "exam": {
+    "addQuestion": "Добавить вопрос",
+    "question": "Вопрос",
+    "choices": "Варианты",
+    "addChoice": "Добавить вариант",
+    "correct": "Правильный",
+    "explanation": "Объяснение",
+    "passingScore": "Проходной балл (%)"
   }
 }

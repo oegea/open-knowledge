@@ -5,7 +5,16 @@
     "continue": "继续",
     "cancel": "取消",
     "save": "保存",
-    "search": "搜索"
+    "search": "搜索",
+    "delete": "删除",
+    "edit": "编辑",
+    "back": "返回",
+    "add": "添加",
+    "moveUp": "上移",
+    "moveDown": "下移",
+    "saving": "保存中…",
+    "saved": "已保存",
+    "error": "出错了"
   },
   "nav": {
     "library": "课程库",
@@ -21,5 +30,57 @@
   "home": {
     "tagline": "开放知识，人人共享",
     "description": "浏览课程，按自己的节奏学习。无需注册。"
+  },
+  "admin": {
+    "courses": "课程",
+    "newCourse": "新建课程",
+    "noCourses": "还没有课程。创建第一个吧。",
+    "details": "详情",
+    "structure": "课程内容",
+    "addSection": "添加章节",
+    "sectionTitle": "章节标题",
+    "sectionsEmpty": "该课程还没有章节。",
+    "addMaterial": "添加材料",
+    "materialTitle": "材料标题",
+    "materialType": "类型",
+    "content": "内容（Markdown）",
+    "notes": "注释（Markdown，可选）",
+    "mediaFile": "媒体文件",
+    "upload": "上传",
+    "uploading": "上传中…",
+    "required": "必修",
+    "publish": "发布",
+    "unpublish": "取消发布",
+    "published": "已发布",
+    "draft": "草稿",
+    "confirmDelete": "确定要删除吗？此操作无法撤销。",
+    "cover": "封面图片",
+    "category": "分类",
+    "authors": "作者",
+    "sources": "来源",
+    "aiAssisted": "借助 AI 制作",
+    "aiAssistedHint": "开始课程时将显示明确的提示。",
+    "courseLanguage": "课程语言",
+    "authorsPlaceholder": "每行一个作者",
+    "sourcesPlaceholder": "每行一个来源",
+    "courseTitle": "标题",
+    "courseDescription": "描述"
+  },
+  "material": {
+    "type": {
+      "markdown": "文本",
+      "audio": "音频",
+      "video": "视频",
+      "exam": "测验"
+    }
+  },
+  "exam": {
+    "addQuestion": "添加问题",
+    "question": "问题",
+    "choices": "选项",
+    "addChoice": "添加选项",
+    "correct": "正确",
+    "explanation": "解释",
+    "passingScore": "及格分数（%）"
   }
 }

@@ -1,0 +1,57 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-4);
+  margin-top: var(--ok-space-4);
+  padding-top: var(--ok-space-4);
+  border-top: 1px solid var(--ok-border);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--ok-space-4);
+}
+
+.mediaBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ok-space-3);
+}
+
+.mediaLabel {
+  font-size: var(--ok-text-sm);
+  font-weight: 700;
+}
+
+.mediaPreview {
+  width: 100%;
+  max-width: 28rem;
+  border-radius: var(--ok-radius-md);
+}
+
+.fileInput {
+  display: none;
+}
+
+.markdownArea textarea {
+  font-family: var(--ok-font-mono);
+  font-size: var(--ok-text-sm);
+}
+
+.error {
+  color: var(--ok-danger);
+  font-size: var(--ok-text-sm);
+}
+
+.actions {
+  display: flex;
+  gap: var(--ok-space-3);
+}
+
+@media (min-width: 768px) {
+  .row {
+    grid-template-columns: 2fr 1fr;
+  }
+}

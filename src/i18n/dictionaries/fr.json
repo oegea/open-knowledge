@@ -5,7 +5,16 @@
     "continue": "Continuer",
     "cancel": "Annuler",
     "save": "Enregistrer",
-    "search": "Rechercher"
+    "search": "Rechercher",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "back": "Retour",
+    "add": "Ajouter",
+    "moveUp": "Monter",
+    "moveDown": "Descendre",
+    "saving": "Enregistrement…",
+    "saved": "Enregistré",
+    "error": "Une erreur s'est produite"
   },
   "nav": {
     "library": "Bibliothèque",
@@ -21,5 +30,57 @@
   "home": {
     "tagline": "Le savoir ouvert pour toutes et tous",
     "description": "Parcourez les cours et apprenez à votre rythme. Sans inscription."
+  },
+  "admin": {
+    "courses": "Cours",
+    "newCourse": "Nouveau cours",
+    "noCourses": "Aucun cours pour l'instant. Créez le premier.",
+    "details": "Détails",
+    "structure": "Contenu du cours",
+    "addSection": "Ajouter une section",
+    "sectionTitle": "Titre de la section",
+    "sectionsEmpty": "Ce cours n'a pas encore de sections.",
+    "addMaterial": "Ajouter un contenu",
+    "materialTitle": "Titre du contenu",
+    "materialType": "Type",
+    "content": "Contenu (Markdown)",
+    "notes": "Notes (Markdown, facultatif)",
+    "mediaFile": "Fichier multimédia",
+    "upload": "Téléverser",
+    "uploading": "Téléversement…",
+    "required": "Obligatoire",
+    "publish": "Publier",
+    "unpublish": "Dépublier",
+    "published": "Publié",
+    "draft": "Brouillon",
+    "confirmDelete": "Voulez-vous vraiment le supprimer ? Cette action est irréversible.",
+    "cover": "Image de couverture",
+    "category": "Catégorie",
+    "authors": "Auteurs",
+    "sources": "Sources",
+    "aiAssisted": "Élaboré avec l'aide de l'IA",
+    "aiAssistedHint": "Un avertissement clair sera affiché au début du cours.",
+    "courseLanguage": "Langue du cours",
+    "authorsPlaceholder": "Un auteur par ligne",
+    "sourcesPlaceholder": "Une source par ligne",
+    "courseTitle": "Titre",
+    "courseDescription": "Description"
+  },
+  "material": {
+    "type": {
+      "markdown": "Texte",
+      "audio": "Audio",
+      "video": "Vidéo",
+      "exam": "Examen"
+    }
+  },
+  "exam": {
+    "addQuestion": "Ajouter une question",
+    "question": "Question",
+    "choices": "Réponses",
+    "addChoice": "Ajouter une réponse",
+    "correct": "Correcte",
+    "explanation": "Explication",
+    "passingScore": "Note de réussite (%)"
   }
 }

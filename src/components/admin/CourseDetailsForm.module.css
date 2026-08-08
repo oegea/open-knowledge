@@ -1,0 +1,59 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-5);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--ok-space-5);
+}
+
+.coverBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ok-space-3);
+}
+
+.coverLabel {
+  font-size: var(--ok-text-sm);
+  font-weight: 700;
+}
+
+.coverPreview {
+  width: 100%;
+  max-width: 22rem;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--ok-radius-lg);
+  box-shadow: var(--ok-shadow-2);
+}
+
+.fileInput {
+  display: none;
+}
+
+.error {
+  color: var(--ok-danger);
+  font-size: var(--ok-text-sm);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--ok-space-4);
+}
+
+.savedNote {
+  color: var(--ok-success);
+  font-size: var(--ok-text-sm);
+  font-weight: 600;
+}
+
+@media (min-width: 768px) {
+  .row {
+    grid-template-columns: 1fr 1fr;
+  }
+}

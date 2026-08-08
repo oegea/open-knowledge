@@ -5,7 +5,16 @@
     "continue": "Continue",
     "cancel": "Cancel",
     "save": "Save",
-    "search": "Search"
+    "search": "Search",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "add": "Add",
+    "moveUp": "Move up",
+    "moveDown": "Move down",
+    "saving": "Saving…",
+    "saved": "Saved",
+    "error": "Something went wrong"
   },
   "nav": {
     "library": "Library",
@@ -21,5 +30,57 @@
   "home": {
     "tagline": "Open knowledge for everyone",
     "description": "Browse the courses and learn at your own pace. No sign-up required."
+  },
+  "admin": {
+    "courses": "Courses",
+    "newCourse": "New course",
+    "noCourses": "No courses yet. Create the first one.",
+    "details": "Details",
+    "structure": "Course content",
+    "addSection": "Add section",
+    "sectionTitle": "Section title",
+    "sectionsEmpty": "This course has no sections yet.",
+    "addMaterial": "Add material",
+    "materialTitle": "Material title",
+    "materialType": "Type",
+    "content": "Content (Markdown)",
+    "notes": "Notes (Markdown, optional)",
+    "mediaFile": "Media file",
+    "upload": "Upload",
+    "uploading": "Uploading…",
+    "required": "Required",
+    "publish": "Publish",
+    "unpublish": "Unpublish",
+    "published": "Published",
+    "draft": "Draft",
+    "confirmDelete": "Are you sure you want to delete it? This cannot be undone.",
+    "cover": "Cover image",
+    "category": "Category",
+    "authors": "Authors",
+    "sources": "Sources",
+    "aiAssisted": "Created with AI assistance",
+    "aiAssistedHint": "A clear notice will be shown when starting the course.",
+    "courseLanguage": "Course language",
+    "authorsPlaceholder": "One author per line",
+    "sourcesPlaceholder": "One source per line",
+    "courseTitle": "Title",
+    "courseDescription": "Description"
+  },
+  "material": {
+    "type": {
+      "markdown": "Text",
+      "audio": "Audio",
+      "video": "Video",
+      "exam": "Exam"
+    }
+  },
+  "exam": {
+    "addQuestion": "Add question",
+    "question": "Question",
+    "choices": "Choices",
+    "addChoice": "Add choice",
+    "correct": "Correct",
+    "explanation": "Explanation",
+    "passingScore": "Passing score (%)"
   }
 }

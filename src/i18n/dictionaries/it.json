@@ -5,7 +5,16 @@
     "continue": "Continua",
     "cancel": "Annulla",
     "save": "Salva",
-    "search": "Cerca"
+    "search": "Cerca",
+    "delete": "Elimina",
+    "edit": "Modifica",
+    "back": "Indietro",
+    "add": "Aggiungi",
+    "moveUp": "Sposta su",
+    "moveDown": "Sposta giù",
+    "saving": "Salvataggio…",
+    "saved": "Salvato",
+    "error": "Qualcosa è andato storto"
   },
   "nav": {
     "library": "Libreria",
@@ -21,5 +30,57 @@
   "home": {
     "tagline": "Conoscenza aperta per tutti",
     "description": "Esplora i corsi e impara al tuo ritmo. Nessuna registrazione richiesta."
+  },
+  "admin": {
+    "courses": "Corsi",
+    "newCourse": "Nuovo corso",
+    "noCourses": "Ancora nessun corso. Crea il primo.",
+    "details": "Dettagli",
+    "structure": "Contenuto del corso",
+    "addSection": "Aggiungi sezione",
+    "sectionTitle": "Titolo della sezione",
+    "sectionsEmpty": "Questo corso non ha ancora sezioni.",
+    "addMaterial": "Aggiungi materiale",
+    "materialTitle": "Titolo del materiale",
+    "materialType": "Tipo",
+    "content": "Contenuto (Markdown)",
+    "notes": "Note (Markdown, facoltativo)",
+    "mediaFile": "File multimediale",
+    "upload": "Carica",
+    "uploading": "Caricamento…",
+    "required": "Obbligatorio",
+    "publish": "Pubblica",
+    "unpublish": "Ritira",
+    "published": "Pubblicato",
+    "draft": "Bozza",
+    "confirmDelete": "Vuoi davvero eliminarlo? L'azione è irreversibile.",
+    "cover": "Immagine di copertina",
+    "category": "Categoria",
+    "authors": "Autori",
+    "sources": "Fonti",
+    "aiAssisted": "Realizzato con l'aiuto dell'IA",
+    "aiAssistedHint": "All'inizio del corso verrà mostrato un avviso chiaro.",
+    "courseLanguage": "Lingua del corso",
+    "authorsPlaceholder": "Un autore per riga",
+    "sourcesPlaceholder": "Una fonte per riga",
+    "courseTitle": "Titolo",
+    "courseDescription": "Descrizione"
+  },
+  "material": {
+    "type": {
+      "markdown": "Testo",
+      "audio": "Audio",
+      "video": "Video",
+      "exam": "Esame"
+    }
+  },
+  "exam": {
+    "addQuestion": "Aggiungi domanda",
+    "question": "Domanda",
+    "choices": "Risposte",
+    "addChoice": "Aggiungi risposta",
+    "correct": "Corretta",
+    "explanation": "Spiegazione",
+    "passingScore": "Punteggio minimo (%)"
   }
 }

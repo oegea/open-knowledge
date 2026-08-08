@@ -5,7 +5,16 @@
     "continue": "続ける",
     "cancel": "キャンセル",
     "save": "保存",
-    "search": "検索"
+    "search": "検索",
+    "delete": "削除",
+    "edit": "編集",
+    "back": "戻る",
+    "add": "追加",
+    "moveUp": "上へ",
+    "moveDown": "下へ",
+    "saving": "保存中…",
+    "saved": "保存済み",
+    "error": "エラーが発生しました"
   },
   "nav": {
     "library": "ライブラリ",
@@ -21,5 +30,57 @@
   "home": {
     "tagline": "すべての人に開かれた知識",
     "description": "コースを探して、自分のペースで学びましょう。登録は不要です。"
+  },
+  "admin": {
+    "courses": "コース",
+    "newCourse": "新しいコース",
+    "noCourses": "まだコースがありません。最初のコースを作成しましょう。",
+    "details": "詳細",
+    "structure": "コース内容",
+    "addSection": "セクションを追加",
+    "sectionTitle": "セクションのタイトル",
+    "sectionsEmpty": "このコースにはまだセクションがありません。",
+    "addMaterial": "教材を追加",
+    "materialTitle": "教材のタイトル",
+    "materialType": "種類",
+    "content": "内容（Markdown）",
+    "notes": "メモ（Markdown、任意）",
+    "mediaFile": "メディアファイル",
+    "upload": "アップロード",
+    "uploading": "アップロード中…",
+    "required": "必須",
+    "publish": "公開する",
+    "unpublish": "非公開にする",
+    "published": "公開中",
+    "draft": "下書き",
+    "confirmDelete": "本当に削除しますか？この操作は取り消せません。",
+    "cover": "カバー画像",
+    "category": "カテゴリ",
+    "authors": "作成者",
+    "sources": "出典",
+    "aiAssisted": "AI の支援で作成",
+    "aiAssistedHint": "コース開始時に明確な通知が表示されます。",
+    "courseLanguage": "コースの言語",
+    "authorsPlaceholder": "1行に1人ずつ",
+    "sourcesPlaceholder": "1行に1つずつ",
+    "courseTitle": "タイトル",
+    "courseDescription": "説明"
+  },
+  "material": {
+    "type": {
+      "markdown": "テキスト",
+      "audio": "音声",
+      "video": "動画",
+      "exam": "テスト"
+    }
+  },
+  "exam": {
+    "addQuestion": "問題を追加",
+    "question": "問題",
+    "choices": "選択肢",
+    "addChoice": "選択肢を追加",
+    "correct": "正解",
+    "explanation": "解説",
+    "passingScore": "合格ライン（%）"
   }
 }

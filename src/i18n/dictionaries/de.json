@@ -5,7 +5,16 @@
     "continue": "Weiter",
     "cancel": "Abbrechen",
     "save": "Speichern",
-    "search": "Suchen"
+    "search": "Suchen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "back": "Zurück",
+    "add": "Hinzufügen",
+    "moveUp": "Nach oben",
+    "moveDown": "Nach unten",
+    "saving": "Wird gespeichert…",
+    "saved": "Gespeichert",
+    "error": "Etwas ist schiefgelaufen"
   },
   "nav": {
     "library": "Bibliothek",
@@ -21,5 +30,57 @@
   "home": {
     "tagline": "Offenes Wissen für alle",
     "description": "Entdecke die Kurse und lerne in deinem Tempo. Keine Registrierung nötig."
+  },
+  "admin": {
+    "courses": "Kurse",
+    "newCourse": "Neuer Kurs",
+    "noCourses": "Noch keine Kurse. Erstelle den ersten.",
+    "details": "Details",
+    "structure": "Kursinhalt",
+    "addSection": "Abschnitt hinzufügen",
+    "sectionTitle": "Abschnittstitel",
+    "sectionsEmpty": "Dieser Kurs hat noch keine Abschnitte.",
+    "addMaterial": "Material hinzufügen",
+    "materialTitle": "Materialtitel",
+    "materialType": "Typ",
+    "content": "Inhalt (Markdown)",
+    "notes": "Notizen (Markdown, optional)",
+    "mediaFile": "Mediendatei",
+    "upload": "Hochladen",
+    "uploading": "Wird hochgeladen…",
+    "required": "Erforderlich",
+    "publish": "Veröffentlichen",
+    "unpublish": "Verbergen",
+    "published": "Veröffentlicht",
+    "draft": "Entwurf",
+    "confirmDelete": "Wirklich löschen? Das kann nicht rückgängig gemacht werden.",
+    "cover": "Titelbild",
+    "category": "Kategorie",
+    "authors": "Autorschaft",
+    "sources": "Quellen",
+    "aiAssisted": "Mit KI-Unterstützung erstellt",
+    "aiAssistedHint": "Beim Kursstart wird ein deutlicher Hinweis angezeigt.",
+    "courseLanguage": "Kurssprache",
+    "authorsPlaceholder": "Ein Autor pro Zeile",
+    "sourcesPlaceholder": "Eine Quelle pro Zeile",
+    "courseTitle": "Titel",
+    "courseDescription": "Beschreibung"
+  },
+  "material": {
+    "type": {
+      "markdown": "Text",
+      "audio": "Audio",
+      "video": "Video",
+      "exam": "Prüfung"
+    }
+  },
+  "exam": {
+    "addQuestion": "Frage hinzufügen",
+    "question": "Frage",
+    "choices": "Antworten",
+    "addChoice": "Antwort hinzufügen",
+    "correct": "Richtig",
+    "explanation": "Erklärung",
+    "passingScore": "Bestehensgrenze (%)"
   }
 }

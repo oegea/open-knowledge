@@ -5,7 +5,16 @@
     "continue": "Jarraitu",
     "cancel": "Utzi",
     "save": "Gorde",
-    "search": "Bilatu"
+    "search": "Bilatu",
+    "delete": "Ezabatu",
+    "edit": "Editatu",
+    "back": "Itzuli",
+    "add": "Gehitu",
+    "moveUp": "Gora",
+    "moveDown": "Behera",
+    "saving": "Gordetzen…",
+    "saved": "Gordeta",
+    "error": "Zerbait gaizki joan da"
   },
   "nav": {
     "library": "Liburutegia",
@@ -21,5 +30,57 @@
   "home": {
     "tagline": "Ezagutza irekia guztiontzat",
     "description": "Arakatu ikastaroak eta ikasi zeure erritmoan. Erregistrorik gabe."
+  },
+  "admin": {
+    "courses": "Ikastaroak",
+    "newCourse": "Ikastaro berria",
+    "noCourses": "Oraindik ez dago ikastarorik. Sortu lehena.",
+    "details": "Xehetasunak",
+    "structure": "Ikastaroaren edukia",
+    "addSection": "Gehitu atala",
+    "sectionTitle": "Atalaren izenburua",
+    "sectionsEmpty": "Ikastaro honek ez du oraindik atalik.",
+    "addMaterial": "Gehitu materiala",
+    "materialTitle": "Materialaren izenburua",
+    "materialType": "Mota",
+    "content": "Edukia (Markdown)",
+    "notes": "Oharrak (Markdown, aukerakoa)",
+    "mediaFile": "Multimedia-fitxategia",
+    "upload": "Igo",
+    "uploading": "Igotzen…",
+    "required": "Derrigorrezkoa",
+    "publish": "Argitaratu",
+    "unpublish": "Kendu argitalpena",
+    "published": "Argitaratua",
+    "draft": "Zirriborroa",
+    "confirmDelete": "Ziur ezabatu nahi duzula? Ezin da desegin.",
+    "cover": "Azaleko irudia",
+    "category": "Kategoria",
+    "authors": "Egileak",
+    "sources": "Iturriak",
+    "aiAssisted": "AA laguntzarekin sortua",
+    "aiAssistedHint": "Ikastaroa hastean ohar argi bat erakutsiko da.",
+    "courseLanguage": "Ikastaroaren hizkuntza",
+    "authorsPlaceholder": "Egile bat lerroko",
+    "sourcesPlaceholder": "Iturri bat lerroko",
+    "courseTitle": "Izenburua",
+    "courseDescription": "Deskribapena"
+  },
+  "material": {
+    "type": {
+      "markdown": "Testua",
+      "audio": "Audioa",
+      "video": "Bideoa",
+      "exam": "Azterketa"
+    }
+  },
+  "exam": {
+    "addQuestion": "Gehitu galdera",
+    "question": "Galdera",
+    "choices": "Erantzunak",
+    "addChoice": "Gehitu erantzuna",
+    "correct": "Zuzena",
+    "explanation": "Azalpena",
+    "passingScore": "Gainditzeko nota (%)"
   }
 }

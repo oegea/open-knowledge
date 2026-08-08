@@ -5,7 +5,16 @@
     "continue": "Continuar",
     "cancel": "Cancelar",
     "save": "Gardar",
-    "search": "Buscar"
+    "search": "Buscar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "back": "Volver",
+    "add": "Engadir",
+    "moveUp": "Subir",
+    "moveDown": "Baixar",
+    "saving": "Gardando…",
+    "saved": "Gardado",
+    "error": "Algo saíu mal"
   },
   "nav": {
     "library": "Libraría",
@@ -21,5 +30,57 @@
   "home": {
     "tagline": "Coñecemento aberto para todas as persoas",
     "description": "Explora os cursos e aprende ao teu ritmo. Sen rexistro."
+  },
+  "admin": {
+    "courses": "Cursos",
+    "newCourse": "Novo curso",
+    "noCourses": "Aínda non hai cursos. Crea o primeiro.",
+    "details": "Detalles",
+    "structure": "Contido do curso",
+    "addSection": "Engadir sección",
+    "sectionTitle": "Título da sección",
+    "sectionsEmpty": "Este curso aínda non ten seccións.",
+    "addMaterial": "Engadir material",
+    "materialTitle": "Título do material",
+    "materialType": "Tipo",
+    "content": "Contido (Markdown)",
+    "notes": "Notas (Markdown, opcional)",
+    "mediaFile": "Ficheiro multimedia",
+    "upload": "Subir",
+    "uploading": "Subindo…",
+    "required": "Obrigatorio",
+    "publish": "Publicar",
+    "unpublish": "Despublicar",
+    "published": "Publicado",
+    "draft": "Borrador",
+    "confirmDelete": "Seguro que queres eliminalo? Non se pode desfacer.",
+    "cover": "Imaxe de portada",
+    "category": "Categoría",
+    "authors": "Autoría",
+    "sources": "Fontes",
+    "aiAssisted": "Elaborado coa axuda da IA",
+    "aiAssistedHint": "Mostrarase un aviso claro ao comezar o curso.",
+    "courseLanguage": "Idioma do curso",
+    "authorsPlaceholder": "Un autor por liña",
+    "sourcesPlaceholder": "Unha fonte por liña",
+    "courseTitle": "Título",
+    "courseDescription": "Descrición"
+  },
+  "material": {
+    "type": {
+      "markdown": "Texto",
+      "audio": "Audio",
+      "video": "Vídeo",
+      "exam": "Exame"
+    }
+  },
+  "exam": {
+    "addQuestion": "Engadir pregunta",
+    "question": "Pregunta",
+    "choices": "Respostas",
+    "addChoice": "Engadir resposta",
+    "correct": "Correcta",
+    "explanation": "Explicación",
+    "passingScore": "Nota para aprobar (%)"
   }
 }

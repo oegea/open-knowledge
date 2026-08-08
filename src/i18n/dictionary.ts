@@ -18,9 +18,28 @@ const loaders: Record<Locale, () => Promise<{ default: Dictionary }>> = {
   ja: () => import('./dictionaries/ja.json') as Promise<{ default: Dictionary }>,
 };
 
+function deepMerge(base: Dictionary, override: Dictionary): Dictionary {
+  const merged: Dictionary = { ...base };
+  for (const [key, value] of Object.entries(override)) {
+    const baseValue = merged[key];
+    if (typeof value === 'object' && typeof baseValue === 'object') {
+      merged[key] = deepMerge(baseValue, value);
+    } else {
+      merged[key] = value;
+    }
+  }
+  return merged;
+}
+
+/**
+ * Returns the locale dictionary merged over the English base, so keys not
+ * yet translated fall back to English instead of rendering raw keys.
+ */
 export async function getDictionary(locale: Locale): Promise<Dictionary> {
-  const dictionary = await loaders[locale]();
-  return dictionary.default;
+  const english = (await loaders.en()).default;
+  if (locale === 'en') return english;
+  const dictionary = (await loaders[locale]()).default;
+  return deepMerge(english, dictionary);
 }
 
 /**

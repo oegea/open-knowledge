@@ -5,7 +5,16 @@
     "continue": "Продовжити",
     "cancel": "Скасувати",
     "save": "Зберегти",
-    "search": "Пошук"
+    "search": "Пошук",
+    "delete": "Видалити",
+    "edit": "Редагувати",
+    "back": "Назад",
+    "add": "Додати",
+    "moveUp": "Вгору",
+    "moveDown": "Вниз",
+    "saving": "Збереження…",
+    "saved": "Збережено",
+    "error": "Щось пішло не так"
   },
   "nav": {
     "library": "Бібліотека",
@@ -21,5 +30,57 @@
   "home": {
     "tagline": "Відкриті знання для всіх",
     "description": "Переглядайте курси та навчайтеся у своєму темпі. Без реєстрації."
+  },
+  "admin": {
+    "courses": "Курси",
+    "newCourse": "Новий курс",
+    "noCourses": "Курсів поки немає. Створіть перший.",
+    "details": "Деталі",
+    "structure": "Зміст курсу",
+    "addSection": "Додати розділ",
+    "sectionTitle": "Назва розділу",
+    "sectionsEmpty": "У цьому курсі поки немає розділів.",
+    "addMaterial": "Додати матеріал",
+    "materialTitle": "Назва матеріалу",
+    "materialType": "Тип",
+    "content": "Вміст (Markdown)",
+    "notes": "Нотатки (Markdown, необовʼязково)",
+    "mediaFile": "Медіафайл",
+    "upload": "Завантажити",
+    "uploading": "Завантаження…",
+    "required": "Обовʼязковий",
+    "publish": "Опублікувати",
+    "unpublish": "Зняти з публікації",
+    "published": "Опубліковано",
+    "draft": "Чернетка",
+    "confirmDelete": "Точно видалити? Цю дію не можна скасувати.",
+    "cover": "Обкладинка",
+    "category": "Категорія",
+    "authors": "Автори",
+    "sources": "Джерела",
+    "aiAssisted": "Створено за допомогою ШІ",
+    "aiAssistedHint": "На початку курсу буде показано чітке повідомлення.",
+    "courseLanguage": "Мова курсу",
+    "authorsPlaceholder": "По одному автору в рядку",
+    "sourcesPlaceholder": "По одному джерелу в рядку",
+    "courseTitle": "Назва",
+    "courseDescription": "Опис"
+  },
+  "material": {
+    "type": {
+      "markdown": "Текст",
+      "audio": "Аудіо",
+      "video": "Відео",
+      "exam": "Іспит"
+    }
+  },
+  "exam": {
+    "addQuestion": "Додати запитання",
+    "question": "Запитання",
+    "choices": "Варіанти",
+    "addChoice": "Додати варіант",
+    "correct": "Правильна",
+    "explanation": "Пояснення",
+    "passingScore": "Прохідний бал (%)"
   }
 }

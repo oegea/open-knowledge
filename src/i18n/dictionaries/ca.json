@@ -5,7 +5,16 @@
     "continue": "Continua",
     "cancel": "Cancel·la",
     "save": "Desa",
-    "search": "Cerca"
+    "search": "Cerca",
+    "delete": "Elimina",
+    "edit": "Edita",
+    "back": "Torna",
+    "add": "Afegeix",
+    "moveUp": "Puja",
+    "moveDown": "Baixa",
+    "saving": "S'està desant…",
+    "saved": "Desat",
+    "error": "Alguna cosa ha anat malament"
   },
   "nav": {
     "library": "Llibreria",
@@ -21,5 +30,57 @@
   "home": {
     "tagline": "Coneixement obert per a tothom",
     "description": "Explora els cursos i aprèn al teu ritme. Sense registre."
+  },
+  "admin": {
+    "courses": "Cursos",
+    "newCourse": "Curs nou",
+    "noCourses": "Encara no hi ha cursos. Crea el primer.",
+    "details": "Detalls",
+    "structure": "Contingut del curs",
+    "addSection": "Afegeix una secció",
+    "sectionTitle": "Títol de la secció",
+    "sectionsEmpty": "Aquest curs encara no té seccions.",
+    "addMaterial": "Afegeix material",
+    "materialTitle": "Títol del material",
+    "materialType": "Tipus",
+    "content": "Contingut (Markdown)",
+    "notes": "Notes (Markdown, opcional)",
+    "mediaFile": "Fitxer multimèdia",
+    "upload": "Puja",
+    "uploading": "S'està pujant…",
+    "required": "Obligatori",
+    "publish": "Publica",
+    "unpublish": "Despublica",
+    "published": "Publicat",
+    "draft": "Esborrany",
+    "confirmDelete": "Segur que vols eliminar-ho? No es pot desfer.",
+    "cover": "Imatge de portada",
+    "category": "Categoria",
+    "authors": "Autoria",
+    "sources": "Fonts",
+    "aiAssisted": "Elaborat amb ajuda d'IA",
+    "aiAssistedHint": "Es mostrarà un avís clar en començar el curs.",
+    "courseLanguage": "Idioma del curs",
+    "authorsPlaceholder": "Un autor per línia",
+    "sourcesPlaceholder": "Una font per línia",
+    "courseTitle": "Títol",
+    "courseDescription": "Descripció"
+  },
+  "material": {
+    "type": {
+      "markdown": "Text",
+      "audio": "Àudio",
+      "video": "Vídeo",
+      "exam": "Examen"
+    }
+  },
+  "exam": {
+    "addQuestion": "Afegeix una pregunta",
+    "question": "Pregunta",
+    "choices": "Respostes",
+    "addChoice": "Afegeix una resposta",
+    "correct": "Correcta",
+    "explanation": "Explicació",
+    "passingScore": "Nota per aprovar (%)"
   }
 }
