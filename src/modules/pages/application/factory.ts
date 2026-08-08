@@ -28,6 +28,6 @@ export default {
   deletePage: async (id: string) =>
     await deletePage({ id, pageRepository: new SqlitePageRepository() }),
 
-  createDefaultAboutPage: async (locale: string) =>
-    await createDefaultAboutPage({ locale, pageRepository: new SqlitePageRepository() }),
+  createDefaultAboutPage: async () =>
+    await createDefaultAboutPage({ pageRepository: new SqlitePageRepository() }),
 };

@@ -76,9 +76,9 @@ export default async function LibraryPage({ searchParams }: PageProps<'/'>) {
           />
         </form>
 
-        {availableLanguages.length > 1 || availableCategories.length > 0 ? (
+        {availableLanguages.length > 0 || availableCategories.length > 0 ? (
           <nav className={styles.filters} aria-label={translate(dictionary, 'common.search')}>
-            {availableLanguages.length > 1 ? (
+            {availableLanguages.length > 0 ? (
               <div className={styles.filterRow}>
                 <Link
                   href={filterHref(undefined, categoryFilter)}

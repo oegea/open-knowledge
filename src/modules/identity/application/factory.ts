@@ -10,6 +10,7 @@ import { SqliteSessionRepository } from '../infrastructure/SqliteSessionReposito
 import { OtplibTotpRepository } from '../infrastructure/OtplibTotpRepository';
 import { SqliteSettingsRepository } from '../../settings/infrastructure/SqliteSettingsRepository';
 import pagesFactory from '../../pages/application/factory';
+import courseFactory from '../../course/application/factory';
 
 export default {
   hasUsers: async () => (await new SqliteUserRepository().countUsers()) > 0,
@@ -20,7 +21,7 @@ export default {
       totpRepository: new OtplibTotpRepository(),
     }),
 
-  registerUser: async (identifier: string, secret: string, code: string, locale: string = 'en') =>
+  registerUser: async (identifier: string, secret: string, code: string) =>
     await registerUser({
       identifier,
       secret,
@@ -29,7 +30,9 @@ export default {
       totpRepository: new OtplibTotpRepository(),
       settingsRepository: new SqliteSettingsRepository(),
       onFirstAdminRegistered: async () => {
-        await pagesFactory.createDefaultAboutPage(locale);
+        // Default content ships in English; the admin adapts it freely.
+        await pagesFactory.createDefaultAboutPage();
+        await courseFactory.createDefaultWelcomeCourse();
       },
     }),
 

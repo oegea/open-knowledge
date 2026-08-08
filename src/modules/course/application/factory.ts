@@ -1,4 +1,5 @@
 import { createCourse } from './createCourse';
+import { createDefaultWelcomeCourse } from './createDefaultWelcomeCourse';
 import { getCourse } from './getCourse';
 import { listCourses } from './listCourses';
 import { updateCourseDetails } from './updateCourseDetails';
@@ -20,6 +21,9 @@ import { CourseDetailsInput } from '../domain/Course';
 import { MaterialInput } from '../domain/Material';
 
 export default {
+  createDefaultWelcomeCourse: async () =>
+    await createDefaultWelcomeCourse({ courseRepository: new SqliteCourseRepository() }),
+
   createCourse: async (details: CourseDetailsInput) =>
     await createCourse({ ...details, courseRepository: new SqliteCourseRepository() }),
 

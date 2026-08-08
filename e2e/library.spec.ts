@@ -83,17 +83,28 @@ test.describe('Public library', () => {
     ).toBeVisible();
   });
 
-  test('the default about page is seeded and linked in the footer', async ({ page }) => {
+  test('the default about page is seeded in English and linked in the footer', async ({
+    page,
+  }) => {
     await page.goto('/');
-    await page.getByRole('link', { name: 'Acerca de esta librería' }).click();
+    await page.getByRole('link', { name: 'About this library' }).click();
     await page.waitForURL('**/p/**');
 
-    await expect(page.getByRole('heading', { name: 'Acerca de esta librería' })).toBeVisible();
-    await expect(page.getByText(/licencia MIT/)).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'About this library' })).toBeVisible();
+    await expect(page.getByText(/MIT license/)).toBeVisible();
     await expect(page.getByRole('link', { name: 'Oriol Egea' })).toHaveAttribute(
       'href',
       'https://github.com/oegea'
     );
+  });
+
+  test('the default welcome course is seeded as an admin-only draft', async ({ request }) => {
+    const response = await request.get('/api/courses');
+    const { courses } = await response.json();
+    // Published catalog does not include the English welcome draft.
+    expect(
+      courses.some((course: { title: string }) => course.title === 'Creating your first course')
+    ).toBe(false);
   });
 
   test('small screens navigate through the app-like menu sheet', async ({ page }) => {
