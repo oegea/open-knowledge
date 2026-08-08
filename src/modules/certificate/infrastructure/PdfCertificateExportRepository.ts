@@ -87,8 +87,14 @@ export class PdfCertificateExportRepository implements CertificateExportReposito
       width: 400,
     });
     doc.moveDown(0.6);
+    // Explicit-x text above shifts the current box; reset to full width so
+    // the centered URL is truly centered.
     doc.font('Courier').fontSize(8);
-    doc.text(context.verificationUrl, { align: 'center', link: context.verificationUrl });
+    doc.text(context.verificationUrl, doc.page.margins.left, doc.y, {
+      align: 'center',
+      width: pageWidth - doc.page.margins.left - doc.page.margins.right,
+      link: context.verificationUrl,
+    });
 
     doc.end();
     return await finished;
