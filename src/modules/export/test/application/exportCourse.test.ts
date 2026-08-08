@@ -40,7 +40,7 @@ describe('exportCourse (unit)', () => {
       get: jest
         .fn()
         .mockResolvedValue(
-          InstanceSettings.create('My Library', 'Ada', '/api/media/images/logo.png', '', '', true, false)
+          InstanceSettings.create('My Library', 'Ada', '/api/media/images/logo.png', null, null, '', '', true, false)
         ),
     });
 

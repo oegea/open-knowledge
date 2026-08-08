@@ -87,9 +87,30 @@ export function StudyView({ course, currentMaterialId, authenticated }: StudyVie
         materialId: currentMaterialId,
         progressRepository,
       });
+
+      // Reaching the last material completes it on entry, like closing a
+      // book — except exams, which complete only when passed.
+      const isLast = orderedMaterialIds[orderedMaterialIds.length - 1] === currentMaterialId;
+      const material = flatMaterials.find((entry) => entry.material.id === currentMaterialId);
+      if (
+        isLast &&
+        material &&
+        material.material.type !== 'exam' &&
+        !updated.isMaterialCompleted(currentMaterialId)
+      ) {
+        setProgress(
+          await markMaterialCompleted({
+            courseId: course.id!,
+            materialId: currentMaterialId,
+            progressRepository,
+          })
+        );
+        return;
+      }
+
       setProgress(updated);
     })();
-  }, [course.id, currentMaterialId, progressRepository]);
+  }, [course.id, currentMaterialId, flatMaterials, orderedMaterialIds, progressRepository]);
 
   const handleComplete = useCallback(async () => {
     const updated = await markMaterialCompleted({
@@ -361,24 +382,15 @@ export function StudyView({ course, currentMaterialId, authenticated }: StudyVie
         )}
 
         {current.material.type !== 'exam' ? (
-          isCompleted ? (
-            <button
-              className={styles.completedToggle}
-              onClick={handleUnmark}
-              aria-label={t('study.unmarkComplete')}
-              title={t('study.unmarkComplete')}
-            >
-              ✓ <span>{t('study.completed')}</span>
-            </button>
-          ) : (
-            <button
-              className={styles.completeButton}
-              onClick={handleComplete}
-              aria-label={t('study.markComplete')}
-            >
-              ✓ <span className={styles.completeLabel}>{t('study.markComplete')}</span>
-            </button>
-          )
+          <button
+            className={isCompleted ? styles.checkToggleDone : styles.checkToggle}
+            onClick={isCompleted ? handleUnmark : handleComplete}
+            aria-label={t(isCompleted ? 'study.unmarkComplete' : 'study.markComplete')}
+            aria-pressed={isCompleted}
+            title={t(isCompleted ? 'study.unmarkComplete' : 'study.markComplete')}
+          >
+            ✓
+          </button>
         ) : null}
 
         {next ? (

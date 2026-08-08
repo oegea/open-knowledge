@@ -6,6 +6,7 @@ import { getDictionary, translate } from '@/i18n/dictionary';
 import { LOCALES } from '@/i18n/config';
 import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
+import { IconSearch } from '@/components/ui/icons';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -52,14 +53,19 @@ export default async function LibraryPage({ searchParams }: PageProps<'/'>) {
           <p className={styles.heroText}>
             {settings.getHeroText() || translate(dictionary, 'home.description')}
           </p>
+          {allPublished.count() > 0 ? (
+            <p className={styles.heroCount}>
+              {allPublished.count() === 1
+                ? translate(dictionary, 'library.courseCountOne')
+                : translate(dictionary, 'library.courseCount', { count: allPublished.count() })}
+            </p>
+          ) : null}
         </section>
 
         <form className={styles.search} action="/" method="get" role="search">
           {languageFilter ? <input type="hidden" name="language" value={languageFilter} /> : null}
           {categoryFilter ? <input type="hidden" name="category" value={categoryFilter} /> : null}
-          <span className={styles.searchIcon} aria-hidden="true">
-            ⌕
-          </span>
+          <IconSearch className={styles.searchIcon} />
           <input
             type="search"
             name="q"
@@ -137,14 +143,15 @@ export default async function LibraryPage({ searchParams }: PageProps<'/'>) {
                     ) : (
                       <span className={styles.cardCoverFallback} aria-hidden="true" />
                     )}
-                  </span>
-                  <span className={styles.cardBody}>
+                    <span className={styles.cardCoverScrim} aria-hidden="true" />
                     <span className={styles.cardMeta}>
                       <span className={styles.cardIso}>{course.getLanguage().toUpperCase()}</span>
                       {course.getCategory() ? (
                         <span className={styles.cardCategory}>{course.getCategory()}</span>
                       ) : null}
                     </span>
+                  </span>
+                  <span className={styles.cardBody}>
                     <span className={styles.cardTitle}>{course.getTitle()}</span>
                     <span className={styles.cardDescription}>{course.getDescription()}</span>
                   </span>

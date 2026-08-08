@@ -98,7 +98,11 @@
     "heroTitle": "Título da página inicial",
     "heroText": "Subtítulo da página inicial",
     "heroHint": "Vazio = texto predefinido no idioma do visitante.",
-    "featuredImage": "Imagem de destaque"
+    "featuredImage": "Imagem de destaque",
+    "logoHeader": "Logótipo do cabeçalho",
+    "logoCertificates": "Logótipo dos certificados",
+    "logoDocuments": "Logótipo dos documentos (EPUB/PDF)",
+    "logoFallbackHint": "Se vazio, é usado o logótipo do cabeçalho."
   },
   "material": {
     "type": {
@@ -130,7 +134,9 @@
   "library": {
     "all": "Todos",
     "empty": "Esta biblioteca ainda não tem cursos publicados.",
-    "searchPlaceholder": "Pesquisar cursos…"
+    "searchPlaceholder": "Pesquisar cursos…",
+    "courseCount": "{count} cursos publicados",
+    "courseCountOne": "1 curso publicado"
   },
   "course": {
     "start": "Começar o curso",

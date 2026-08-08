@@ -98,7 +98,11 @@
     "heroTitle": "ホームの見出し",
     "heroText": "ホームのサブタイトル",
     "heroHint": "空欄 = 訪問者の言語の既定テキスト。",
-    "featuredImage": "アイキャッチ画像"
+    "featuredImage": "アイキャッチ画像",
+    "logoHeader": "ヘッダーのロゴ",
+    "logoCertificates": "証明書のロゴ",
+    "logoDocuments": "ドキュメントのロゴ（EPUB/PDF）",
+    "logoFallbackHint": "空欄の場合はヘッダーのロゴが使われます。"
   },
   "material": {
     "type": {
@@ -130,7 +134,9 @@
   "library": {
     "all": "すべて",
     "empty": "このライブラリにはまだ公開されたコースがありません。",
-    "searchPlaceholder": "コースを検索…"
+    "searchPlaceholder": "コースを検索…",
+    "courseCount": "公開コース {count} 件",
+    "courseCountOne": "公開コース 1 件"
   },
   "course": {
     "start": "コースを始める",

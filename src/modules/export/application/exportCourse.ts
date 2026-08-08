@@ -53,7 +53,7 @@ export async function exportCourse({
   const document = await exportRepository.export(course, {
     libraryName: settings.getLibraryName(),
     ownerName: settings.getOwnerName() || settings.getLibraryName(),
-    logoMediaPath: mediaPathOf(settings.getLogoPath()),
+    logoMediaPath: mediaPathOf(settings.getDocumentLogoPath()),
     coverMediaPath: mediaPathOf(course.getCoverImage()),
     courseUrl: `${baseUrl}/courses/${courseId}`,
     materialUrl: (materialId) => `${baseUrl}/courses/${courseId}/study/${materialId}`,

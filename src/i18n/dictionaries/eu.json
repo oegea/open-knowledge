@@ -98,7 +98,11 @@
     "heroTitle": "Azaleko izenburua",
     "heroText": "Azaleko azpititulua",
     "heroHint": "Hutsik = testu lehenetsia bisitariaren hizkuntzan.",
-    "featuredImage": "Irudi nabarmendua"
+    "featuredImage": "Irudi nabarmendua",
+    "logoHeader": "Goiburuko logoa",
+    "logoCertificates": "Ziurtagirien logoa",
+    "logoDocuments": "Dokumentuen logoa (EPUB/PDF)",
+    "logoFallbackHint": "Hutsik uzten baduzu, goiburuko logoa erabiliko da."
   },
   "material": {
     "type": {
@@ -130,7 +134,9 @@
   "library": {
     "all": "Guztiak",
     "empty": "Liburutegi honek ez du oraindik argitaratutako ikastarorik.",
-    "searchPlaceholder": "Bilatu ikastaroak…"
+    "searchPlaceholder": "Bilatu ikastaroak…",
+    "courseCount": "{count} ikastaro argitaratuta",
+    "courseCountOne": "Ikastaro 1 argitaratuta"
   },
   "course": {
     "start": "Hasi ikastaroa",

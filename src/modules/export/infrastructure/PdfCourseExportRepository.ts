@@ -1,4 +1,5 @@
 import PDFDocument from 'pdfkit';
+import sharp from 'sharp';
 import { marked, type Token, type Tokens } from 'marked';
 import path from 'path';
 import { Course } from '../../course/domain/Course';
@@ -69,7 +70,8 @@ export class PdfCourseExportRepository implements CourseExportRepository {
     const logo = await this.loadRasterImage(context.logoMediaPath);
     if (logo) {
       doc.image(logo, doc.page.width / 2 - 48, doc.y, { fit: [96, 48], align: 'center' });
-      doc.moveDown(3);
+      // Explicit-coordinate images do not advance the cursor.
+      doc.y += 64;
     } else {
       doc.font('Helvetica-Bold').fontSize(12).fillColor(TEAL);
       doc.text(context.libraryName.toUpperCase(), { align: 'center', characterSpacing: 1.5 });
@@ -123,11 +125,20 @@ export class PdfCourseExportRepository implements CourseExportRepository {
     doc.addPage();
     doc.font('Helvetica-Bold').fontSize(18).fillColor(INK).text(strings.toc);
     doc.moveDown(0.5);
-    doc.font('Helvetica').fontSize(11).fillColor(INK);
-    materials.forEach((material, index) => {
-      doc.text(`${index + 1}. ${material.getTitle()}`);
+    // Grouped by section: the logical structure of the course.
+    let chapterNumber = 0;
+    for (const section of course.getSections().getSections()) {
+      doc.moveDown(0.4);
+      doc.font('Helvetica-Bold').fontSize(12).fillColor(TEAL);
+      doc.text(section.getTitle());
       doc.moveDown(0.2);
-    });
+      doc.font('Helvetica').fontSize(11).fillColor(INK);
+      for (const material of section.getMaterials().getMaterials()) {
+        chapterNumber += 1;
+        doc.text(`${chapterNumber}. ${material.getTitle()}`, { indent: 14 });
+        doc.moveDown(0.15);
+      }
+    }
 
     // ---------------------------------------------------------------- //
     // Chapters                                                          //
@@ -144,13 +155,19 @@ export class PdfCourseExportRepository implements CourseExportRepository {
     return { data: await finished, mime: 'application/pdf', extension: 'pdf' };
   }
 
-  /** pdfkit renders JPEG/PNG only; anything else falls back gracefully. */
+  /** pdfkit renders JPEG/PNG only; other formats are converted via sharp. */
   private async loadRasterImage(mediaPath: string | null): Promise<Buffer | null> {
     if (!mediaPath) return null;
-    const extension = path.extname(mediaPath).toLowerCase();
-    if (!['.jpg', '.jpeg', '.png'].includes(extension)) return null;
     const stored = await this.mediaRepository.retrieve(mediaPath);
-    return stored?.data ?? null;
+    if (!stored) return null;
+
+    const extension = path.extname(mediaPath).toLowerCase();
+    if (['.jpg', '.jpeg', '.png'].includes(extension)) return stored.data;
+    try {
+      return await sharp(stored.data, { density: 192 }).png().toBuffer();
+    } catch {
+      return null;
+    }
   }
 
   private renderMaterial(doc: PDFKit.PDFDocument, material: Material, context: ExportContext) {

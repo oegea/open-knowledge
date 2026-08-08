@@ -1,11 +1,12 @@
 'use client';
 
-import { FormEvent, useRef, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { InstanceSettingsPrimitive } from '@/modules/settings/domain/InstanceSettings';
 import { HttpCourseAdminRepository } from '@/modules/course/infrastructure/HttpCourseAdminRepository';
 import { useI18n } from '@/i18n/I18nProvider';
 import { Button } from '../ui/Button';
 import { CheckboxField, TextField } from '../ui/Field';
+import { LogoField } from './LogoField';
 import styles from './SettingsForm.module.css';
 
 interface SettingsFormProps {
@@ -18,16 +19,18 @@ export function SettingsForm({ initial }: SettingsFormProps) {
   const [status, setStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
-  const logoInputRef = useRef<HTMLInputElement>(null);
 
-  const handleLogoChange = async (file: File | undefined) => {
+  const uploadLogo = async (
+    file: File | undefined,
+    field: 'logoPath' | 'certificateLogoPath' | 'documentLogoPath'
+  ) => {
     if (!file) return;
     setUploading(true);
     setErrorMessage(null);
     try {
       const repository = new HttpCourseAdminRepository();
       const path = await repository.uploadMedia('images', file);
-      setSettings((current) => ({ ...current, logoPath: path }));
+      setSettings((current) => ({ ...current, [field]: path }));
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : t('common.error'));
     } finally {
@@ -64,42 +67,41 @@ export function SettingsForm({ initial }: SettingsFormProps) {
         maxLength={100}
       />
 
-      <div className={styles.logoBlock}>
-        <span className={styles.logoLabel}>{t('admin.logo')}</span>
-        <p className={styles.logoHint}>{t('admin.logoHint')}</p>
-        {settings.logoPath ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={settings.logoPath} alt="" className={styles.logoPreview} />
-        ) : null}
-        <input
-          ref={logoInputRef}
-          type="file"
-          accept="image/*"
-          className={styles.fileInput}
-          onChange={(event) => handleLogoChange(event.target.files?.[0])}
-        />
-        <div className={styles.logoActions}>
-          <Button
-            type="button"
-            variant="soft"
-            size="sm"
-            disabled={uploading}
-            onClick={() => logoInputRef.current?.click()}
-          >
-            {uploading ? t('admin.uploading') : t('admin.upload')}
-          </Button>
-          {settings.logoPath ? (
-            <Button
-              type="button"
-              variant="danger"
-              size="sm"
-              onClick={() => setSettings({ ...settings, logoPath: null })}
-            >
-              {t('common.delete')}
-            </Button>
-          ) : null}
-        </div>
-      </div>
+      <LogoField
+        label={t('admin.logoHeader')}
+        hint={t('admin.logoHint')}
+        value={settings.logoPath}
+        uploading={uploading}
+        uploadLabel={t('admin.upload')}
+        uploadingLabel={t('admin.uploading')}
+        deleteLabel={t('common.delete')}
+        onUpload={(file) => uploadLogo(file, 'logoPath')}
+        onClear={() => setSettings({ ...settings, logoPath: null })}
+      />
+
+      <LogoField
+        label={t('admin.logoCertificates')}
+        hint={t('admin.logoFallbackHint')}
+        value={settings.certificateLogoPath}
+        uploading={uploading}
+        uploadLabel={t('admin.upload')}
+        uploadingLabel={t('admin.uploading')}
+        deleteLabel={t('common.delete')}
+        onUpload={(file) => uploadLogo(file, 'certificateLogoPath')}
+        onClear={() => setSettings({ ...settings, certificateLogoPath: null })}
+      />
+
+      <LogoField
+        label={t('admin.logoDocuments')}
+        hint={t('admin.logoFallbackHint')}
+        value={settings.documentLogoPath}
+        uploading={uploading}
+        uploadLabel={t('admin.upload')}
+        uploadingLabel={t('admin.uploading')}
+        deleteLabel={t('common.delete')}
+        onUpload={(file) => uploadLogo(file, 'documentLogoPath')}
+        onClear={() => setSettings({ ...settings, documentLogoPath: null })}
+      />
 
       <TextField
         label={t('admin.heroTitle')}

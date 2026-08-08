@@ -98,7 +98,11 @@
     "heroTitle": "Home headline",
     "heroText": "Home subtitle",
     "heroHint": "Empty = default text in the visitor’s language.",
-    "featuredImage": "Featured image"
+    "featuredImage": "Featured image",
+    "logoHeader": "Header logo",
+    "logoCertificates": "Certificates logo",
+    "logoDocuments": "Documents logo (EPUB/PDF)",
+    "logoFallbackHint": "If empty, the header logo is used."
   },
   "material": {
     "type": {
@@ -130,7 +134,9 @@
   "library": {
     "all": "All",
     "empty": "This library has no published courses yet.",
-    "searchPlaceholder": "Search courses…"
+    "searchPlaceholder": "Search courses…",
+    "courseCount": "{count} published courses",
+    "courseCountOne": "1 published course"
   },
   "course": {
     "start": "Start course",

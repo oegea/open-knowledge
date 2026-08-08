@@ -46,6 +46,23 @@
   font-size: var(--ok-text-lg);
 }
 
+.heroCount {
+  font-size: var(--ok-text-sm);
+  font-weight: 700;
+  color: var(--ok-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ok-space-2);
+}
+
+.heroCount::before {
+  content: '';
+  width: 1.5rem;
+  height: 2px;
+  background: linear-gradient(90deg, var(--ok-primary), var(--ok-accent));
+  border-radius: var(--ok-radius-full);
+}
+
 .search {
   display: flex;
   align-items: center;
@@ -68,9 +85,12 @@
 }
 
 .searchIcon {
-  font-size: var(--ok-text-xl);
   color: var(--ok-fg-subtle);
-  transform: rotate(-45deg);
+  flex-shrink: 0;
+}
+
+.search:focus-within .searchIcon {
+  color: var(--ok-primary);
 }
 
 .searchInput {
@@ -201,8 +221,16 @@
 
 .cardCoverWrap {
   display: block;
+  position: relative;
   aspect-ratio: 16 / 9;
   overflow: hidden;
+}
+
+.cardCoverScrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(11, 17, 23, 0.35), transparent 45%);
+  pointer-events: none;
 }
 
 .cardCover {
@@ -231,25 +259,36 @@
 }
 
 .cardMeta {
+  position: absolute;
+  top: var(--ok-space-3);
+  left: var(--ok-space-3);
   display: flex;
   align-items: center;
-  gap: var(--ok-space-3);
+  gap: var(--ok-space-2);
 }
 
 .cardIso {
   font-size: var(--ok-text-xs);
   font-weight: 800;
   letter-spacing: 0.08em;
-  color: var(--ok-primary);
-  background: var(--ok-primary-soft);
+  color: white;
+  background: rgba(11, 17, 23, 0.55);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: var(--ok-radius-sm);
-  padding: 2px 6px;
+  padding: 2px 7px;
 }
 
 .cardCategory {
   font-size: var(--ok-text-xs);
   font-weight: 700;
-  color: var(--ok-accent);
+  color: white;
+  background: color-mix(in srgb, var(--ok-ember-600) 75%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-radius: var(--ok-radius-sm);
+  padding: 2px 7px;
 }
 
 .cardTitle {

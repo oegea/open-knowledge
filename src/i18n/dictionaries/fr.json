@@ -98,7 +98,11 @@
     "heroTitle": "Titre de la page d’accueil",
     "heroText": "Sous-titre de la page d’accueil",
     "heroHint": "Vide = texte par défaut dans la langue du visiteur.",
-    "featuredImage": "Image à la une"
+    "featuredImage": "Image à la une",
+    "logoHeader": "Logo de l'en-tête",
+    "logoCertificates": "Logo des certificats",
+    "logoDocuments": "Logo des documents (EPUB/PDF)",
+    "logoFallbackHint": "Si vide, le logo de l'en-tête est utilisé."
   },
   "material": {
     "type": {
@@ -130,7 +134,9 @@
   "library": {
     "all": "Tous",
     "empty": "Cette bibliothèque n'a pas encore de cours publiés.",
-    "searchPlaceholder": "Rechercher des cours…"
+    "searchPlaceholder": "Rechercher des cours…",
+    "courseCount": "{count} cours publiés",
+    "courseCountOne": "1 cours publié"
   },
   "course": {
     "start": "Commencer le cours",

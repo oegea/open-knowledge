@@ -98,7 +98,11 @@
     "heroTitle": "首页标题",
     "heroText": "首页副标题",
     "heroHint": "留空 = 使用访客语言的默认文本。",
-    "featuredImage": "特色图片"
+    "featuredImage": "特色图片",
+    "logoHeader": "页眉标志",
+    "logoCertificates": "证书标志",
+    "logoDocuments": "文档标志（EPUB/PDF）",
+    "logoFallbackHint": "留空则使用页眉标志。"
   },
   "material": {
     "type": {
@@ -130,7 +134,9 @@
   "library": {
     "all": "全部",
     "empty": "该课程库还没有发布的课程。",
-    "searchPlaceholder": "搜索课程…"
+    "searchPlaceholder": "搜索课程…",
+    "courseCount": "已发布 {count} 门课程",
+    "courseCountOne": "已发布 1 门课程"
   },
   "course": {
     "start": "开始课程",

@@ -98,7 +98,11 @@
     "heroTitle": "Título de la portada",
     "heroText": "Subtítulo de la portada",
     "heroHint": "Vacío = texto por defecto en el idioma del visitante.",
-    "featuredImage": "Imagen destacada"
+    "featuredImage": "Imagen destacada",
+    "logoHeader": "Logo del encabezado",
+    "logoCertificates": "Logo de los certificados",
+    "logoDocuments": "Logo de los documentos (EPUB/PDF)",
+    "logoFallbackHint": "Si lo dejas vacío se usará el logo del encabezado."
   },
   "material": {
     "type": {
@@ -130,7 +134,9 @@
   "library": {
     "all": "Todos",
     "empty": "Esta librería aún no tiene cursos publicados.",
-    "searchPlaceholder": "Buscar cursos…"
+    "searchPlaceholder": "Buscar cursos…",
+    "courseCount": "{count} cursos publicados",
+    "courseCountOne": "1 curso publicado"
   },
   "course": {
     "start": "Empezar el curso",

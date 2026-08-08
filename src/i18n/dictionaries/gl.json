@@ -98,7 +98,11 @@
     "heroTitle": "Título da portada",
     "heroText": "Subtítulo da portada",
     "heroHint": "Baleiro = texto por defecto no idioma da persoa visitante.",
-    "featuredImage": "Imaxe destacada"
+    "featuredImage": "Imaxe destacada",
+    "logoHeader": "Logotipo da cabeceira",
+    "logoCertificates": "Logotipo dos certificados",
+    "logoDocuments": "Logotipo dos documentos (EPUB/PDF)",
+    "logoFallbackHint": "Se o deixas baleiro, usarase o logotipo da cabeceira."
   },
   "material": {
     "type": {
@@ -130,7 +134,9 @@
   "library": {
     "all": "Todos",
     "empty": "Esta libraría aínda non ten cursos publicados.",
-    "searchPlaceholder": "Buscar cursos…"
+    "searchPlaceholder": "Buscar cursos…",
+    "courseCount": "{count} cursos publicados",
+    "courseCountOne": "1 curso publicado"
   },
   "course": {
     "start": "Comezar o curso",

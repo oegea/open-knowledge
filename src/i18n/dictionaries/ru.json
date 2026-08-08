@@ -98,7 +98,11 @@
     "heroTitle": "Заголовок главной страницы",
     "heroText": "Подзаголовок главной страницы",
     "heroHint": "Пусто = текст по умолчанию на языке посетителя.",
-    "featuredImage": "Изображение записи"
+    "featuredImage": "Изображение записи",
+    "logoHeader": "Логотип шапки",
+    "logoCertificates": "Логотип сертификатов",
+    "logoDocuments": "Логотип документов (EPUB/PDF)",
+    "logoFallbackHint": "Если пусто, используется логотип шапки."
   },
   "material": {
     "type": {
@@ -130,7 +134,9 @@
   "library": {
     "all": "Все",
     "empty": "В этой библиотеке пока нет опубликованных курсов.",
-    "searchPlaceholder": "Поиск курсов…"
+    "searchPlaceholder": "Поиск курсов…",
+    "courseCount": "Опубликовано курсов: {count}",
+    "courseCountOne": "Опубликован 1 курс"
   },
   "course": {
     "start": "Начать курс",

@@ -2,8 +2,12 @@ export interface InstanceSettingsPrimitive {
   libraryName: string;
   /** Shown in the public footer; empty hides the ownership line. */
   ownerName: string;
-  /** Media path of the library logo; shown instead of the name when set. */
+  /** Header logo; shown instead of the name when set. */
   logoPath: string | null;
+  /** Logo for certificates; falls back to the header logo. */
+  certificateLogoPath: string | null;
+  /** Logo for exported documents (EPUB/PDF); falls back to the header logo. */
+  documentLogoPath: string | null;
   /** Custom home headline; empty falls back to the localized default. */
   heroTitle: string;
   /** Custom home subtitle; empty falls back to the localized default. */
@@ -17,6 +21,8 @@ export class InstanceSettings {
     private readonly libraryName: string,
     private readonly ownerName: string,
     private readonly logoPath: string | null,
+    private readonly certificateLogoPath: string | null,
+    private readonly documentLogoPath: string | null,
     private readonly heroTitle: string,
     private readonly heroText: string,
     private readonly registrationOpen: boolean,
@@ -27,6 +33,8 @@ export class InstanceSettings {
     libraryName: string,
     ownerName: string,
     logoPath: string | null,
+    certificateLogoPath: string | null,
+    documentLogoPath: string | null,
     heroTitle: string,
     heroText: string,
     registrationOpen: boolean,
@@ -37,6 +45,8 @@ export class InstanceSettings {
       libraryName.trim(),
       ownerName.trim(),
       logoPath?.trim() || null,
+      certificateLogoPath?.trim() || null,
+      documentLogoPath?.trim() || null,
       heroTitle.trim(),
       heroText.trim(),
       registrationOpen,
@@ -45,7 +55,7 @@ export class InstanceSettings {
   }
 
   static createDefault(): InstanceSettings {
-    return InstanceSettings.create('Open Knowledge', '', null, '', '', true, false);
+    return InstanceSettings.create('Open Knowledge', '', null, null, null, '', '', true, false);
   }
 
   static fromPrimitive(data: InstanceSettingsPrimitive): InstanceSettings {
@@ -54,6 +64,8 @@ export class InstanceSettings {
       data.libraryName ?? 'Open Knowledge',
       data.ownerName ?? '',
       data.logoPath ?? null,
+      data.certificateLogoPath ?? null,
+      data.documentLogoPath ?? null,
       data.heroTitle ?? '',
       data.heroText ?? '',
       Boolean(data.registrationOpen),
@@ -85,6 +97,16 @@ export class InstanceSettings {
     return this.logoPath;
   }
 
+  /** Certificate logo with fallback to the header logo. */
+  getCertificateLogoPath(): string | null {
+    return this.certificateLogoPath ?? this.logoPath;
+  }
+
+  /** Document (EPUB/PDF) logo with fallback to the header logo. */
+  getDocumentLogoPath(): string | null {
+    return this.documentLogoPath ?? this.logoPath;
+  }
+
   getHeroTitle(): string {
     return this.heroTitle;
   }
@@ -110,6 +132,8 @@ export class InstanceSettings {
       libraryName: this.libraryName,
       ownerName: this.ownerName,
       logoPath: this.logoPath,
+      certificateLogoPath: this.certificateLogoPath,
+      documentLogoPath: this.documentLogoPath,
       heroTitle: this.heroTitle,
       heroText: this.heroText,
       registrationOpen: this.registrationOpen,

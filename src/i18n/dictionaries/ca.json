@@ -98,7 +98,11 @@
     "heroTitle": "Títol de la portada",
     "heroText": "Subtítol de la portada",
     "heroHint": "Buit = text per defecte en l’idioma del visitant.",
-    "featuredImage": "Imatge destacada"
+    "featuredImage": "Imatge destacada",
+    "logoHeader": "Logotip de la capçalera",
+    "logoCertificates": "Logotip dels certificats",
+    "logoDocuments": "Logotip dels documents (EPUB/PDF)",
+    "logoFallbackHint": "Si el deixes buit, s'usarà el logotip de la capçalera."
   },
   "material": {
     "type": {
@@ -130,7 +134,9 @@
   "library": {
     "all": "Tots",
     "empty": "Aquesta llibreria encara no té cursos publicats.",
-    "searchPlaceholder": "Cerca cursos…"
+    "searchPlaceholder": "Cerca cursos…",
+    "courseCount": "{count} cursos publicats",
+    "courseCountOne": "1 curs publicat"
   },
   "course": {
     "start": "Comença el curs",

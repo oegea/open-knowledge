@@ -32,10 +32,10 @@ export default async function CertificatePage({ params }: PageProps<'/certificat
       <main className={styles.main}>
         <article className={`ok-glass-strong ${styles.certificate}`}>
           <div className={styles.ornamentTop} aria-hidden="true" />
-          {settings.getLogoPath() ? (
+          {settings.getCertificateLogoPath() ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={settings.getLogoPath()!}
+              src={settings.getCertificateLogoPath()!}
               alt={settings.getLibraryName()}
               className={styles.libraryLogo}
             />

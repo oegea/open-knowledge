@@ -98,7 +98,11 @@
     "heroTitle": "Startseiten-Überschrift",
     "heroText": "Startseiten-Untertitel",
     "heroHint": "Leer = Standardtext in der Sprache der Besucher.",
-    "featuredImage": "Beitragsbild"
+    "featuredImage": "Beitragsbild",
+    "logoHeader": "Logo der Kopfzeile",
+    "logoCertificates": "Logo der Zertifikate",
+    "logoDocuments": "Logo der Dokumente (EPUB/PDF)",
+    "logoFallbackHint": "Wenn leer, wird das Kopfzeilen-Logo verwendet."
   },
   "material": {
     "type": {
@@ -130,7 +134,9 @@
   "library": {
     "all": "Alle",
     "empty": "Diese Bibliothek hat noch keine veröffentlichten Kurse.",
-    "searchPlaceholder": "Kurse suchen…"
+    "searchPlaceholder": "Kurse suchen…",
+    "courseCount": "{count} veröffentlichte Kurse",
+    "courseCountOne": "1 veröffentlichter Kurs"
   },
   "course": {
     "start": "Kurs starten",

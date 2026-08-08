@@ -399,32 +399,48 @@
   transform: scale(0.96);
 }
 
-.completedToggle {
+/* Subtle completion check: reading progress is mostly automatic (moving
+   forward marks the page); this is just the quiet manual override. */
+.checkToggle,
+.checkToggleDone {
+  width: var(--ok-touch-target);
+  height: var(--ok-touch-target);
+  border-radius: var(--ok-radius-full);
   display: inline-flex;
   align-items: center;
-  gap: var(--ok-space-2);
-  min-height: var(--ok-touch-target);
-  padding: 0 var(--ok-space-4);
-  border-radius: var(--ok-radius-full);
+  justify-content: center;
+  font-weight: 800;
+  transition:
+    background var(--ok-duration-fast) var(--ok-ease),
+    color var(--ok-duration-fast) var(--ok-ease),
+    border-color var(--ok-duration-fast) var(--ok-ease),
+    transform var(--ok-duration-fast) var(--ok-ease);
+}
+
+.checkToggle {
+  border: 1.5px solid var(--ok-border-strong);
+  color: var(--ok-fg-subtle);
+  background: transparent;
+}
+
+.checkToggle:hover {
+  border-color: var(--ok-success);
   color: var(--ok-success);
-  background: color-mix(in srgb, var(--ok-success) 12%, transparent);
-  font-weight: 700;
-  font-size: var(--ok-text-sm);
-  transition: background var(--ok-duration-fast) var(--ok-ease);
 }
 
-.completedToggle:hover {
-  background: color-mix(in srgb, var(--ok-success) 20%, transparent);
+.checkToggleDone {
+  border: 1.5px solid var(--ok-success);
+  background: var(--ok-success);
+  color: white;
 }
 
-.completeLabel {
-  display: none;
+.checkToggleDone:hover {
+  background: color-mix(in srgb, var(--ok-success) 82%, black);
 }
 
-@media (min-width: 640px) {
-  .completeLabel {
-    display: inline;
-  }
+.checkToggle:active,
+.checkToggleDone:active {
+  transform: scale(0.92);
 }
 
 .completeButton {
