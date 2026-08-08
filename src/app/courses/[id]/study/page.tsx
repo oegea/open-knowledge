@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import courseFactory from '@/modules/course/application/factory';
 import { getCurrentUser } from '@/app/serverAuth';
 import { ResumeRedirect } from '@/components/study/ResumeRedirect';
@@ -16,6 +16,11 @@ export default async function StudyResumePage({ params }: PageProps<'/courses/[i
   }
   if (!course.isPublished()) notFound();
 
+  const courseRef = course.getSlug() || course.getId()!;
+  if (course.getSlug() && id !== course.getSlug()) {
+    permanentRedirect(`/courses/${course.getSlug()}/study`);
+  }
+
   const orderedMaterialIds = course
     .getSections()
     .getSections()
@@ -26,7 +31,8 @@ export default async function StudyResumePage({ params }: PageProps<'/courses/[i
 
   return (
     <ResumeRedirect
-      courseId={id}
+      courseId={course.getId()!}
+      courseRef={courseRef}
       orderedMaterialIds={orderedMaterialIds}
       authenticated={user !== null}
     />

@@ -41,6 +41,6 @@ export async function createDefaultAboutPage({
 }: createDefaultAboutPageProps): Promise<Page | null> {
   if ((await pageRepository.count()) > 0) return null;
 
-  const page = Page.create(randomUUID(), ABOUT_EN.title, ABOUT_EN.markdown, 'footer', 0);
+  const page = Page.create(randomUUID(), ABOUT_EN.title, ABOUT_EN.markdown, 'footer', 0, 'about');
   return await pageRepository.save(page);
 }

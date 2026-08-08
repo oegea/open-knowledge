@@ -1,4 +1,5 @@
 import { NewsPost } from '../domain/NewsPost';
+import { ensureUniqueSlug, slugify } from '../../shared/domain/slugify';
 import { NewsRepository } from '../domain/NewsRepository';
 
 interface updateNewsPostProps {
@@ -33,7 +34,16 @@ export async function updateNewsPost({
   }
 
   const wasPublished = post.isPublished();
-  const updated = post.setContent(title, markdown, published, imagePath ?? null, author ?? '');
+  let updated = post.setContent(title, markdown, published, imagePath ?? null, author ?? '');
+
+  if (updated.getTitle() !== post.getTitle() || !updated.getSlug()) {
+    const slug = await ensureUniqueSlug(slugify(title, 'post'), async (candidate) => {
+      const existing = await newsRepository.findBySlug(candidate);
+      return existing !== null && existing.getId() !== id;
+    });
+    updated = updated.withSlug(slug);
+  }
+
   const saved = await newsRepository.save(updated);
 
   if (!wasPublished && saved.isPublished() && onNewsPublished) {

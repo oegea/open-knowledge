@@ -7,6 +7,11 @@ import identityFactory from '@/modules/identity/application/factory';
 import { AdminMobileMenu } from '@/components/admin/AdminMobileMenu';
 import styles from './layout.module.css';
 
+export async function generateMetadata() {
+  const dictionary = await getDictionary(await getLocale());
+  return { title: translate(dictionary, 'nav.admin') };
+}
+
 export default async function AdminLayout({ children }: LayoutProps<'/admin'>) {
   const user = await getCurrentUser();
   if (!user?.isAdmin()) {

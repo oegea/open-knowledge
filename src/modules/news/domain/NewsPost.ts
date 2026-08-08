@@ -1,6 +1,8 @@
 export interface NewsPostPrimitive {
   id: string | null;
   title: string;
+  /** URL slug derived from the title; unique among posts. */
+  slug: string;
   markdown: string;
   /** Optional featured image shown in the list and post header. */
   imagePath: string | null;
@@ -15,6 +17,7 @@ export class NewsPost {
   private constructor(
     private readonly id: string | null,
     private readonly title: string,
+    private readonly slug: string,
     private readonly markdown: string,
     private readonly imagePath: string | null,
     private readonly author: string,
@@ -30,6 +33,7 @@ export class NewsPost {
     published: boolean,
     imagePath: string | null = null,
     author: string = '',
+    slug: string = '',
     createdAt?: Date,
     updatedAt?: Date
   ): NewsPost {
@@ -38,6 +42,7 @@ export class NewsPost {
     return new NewsPost(
       id,
       title.trim(),
+      slug,
       markdown,
       imagePath?.trim() || null,
       author.trim(),
@@ -56,6 +61,7 @@ export class NewsPost {
       Boolean(data.published),
       data.imagePath ?? null,
       data.author ?? '',
+      data.slug ?? '',
       data.createdAt ? new Date(data.createdAt) : undefined,
       data.updatedAt ? new Date(data.updatedAt) : undefined
     );
@@ -82,6 +88,24 @@ export class NewsPost {
 
   getTitle(): string {
     return this.title;
+  }
+
+  getSlug(): string {
+    return this.slug;
+  }
+
+  withSlug(slug: string): NewsPost {
+    return NewsPost.create(
+      this.id,
+      this.title,
+      this.markdown,
+      this.published,
+      this.imagePath,
+      this.author,
+      slug,
+      this.createdAt,
+      this.updatedAt
+    );
   }
 
   getMarkdown(): string {
@@ -122,6 +146,7 @@ export class NewsPost {
       published,
       imagePath,
       author,
+      this.slug,
       this.createdAt,
       new Date()
     );
@@ -135,6 +160,7 @@ export class NewsPost {
     return {
       id: this.id,
       title: this.title,
+      slug: this.slug,
       markdown: this.markdown,
       imagePath: this.imagePath,
       author: this.author,

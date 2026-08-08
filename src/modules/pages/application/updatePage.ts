@@ -1,4 +1,5 @@
 import { Page, PagePlacement } from '../domain/Page';
+import { ensureUniqueSlug, slugify } from '../../shared/domain/slugify';
 import { PageRepository } from '../domain/PageRepository';
 
 interface updatePageProps {
@@ -25,5 +26,15 @@ export async function updatePage({
     throw new Error(`[updatePage] Page with id ${id} not found`);
   }
 
-  return await pageRepository.save(page.setContent(title, markdown, placement));
+  let updated = page.setContent(title, markdown, placement);
+
+  if (updated.getTitle() !== page.getTitle() || !updated.getSlug()) {
+    const slug = await ensureUniqueSlug(slugify(title, 'page'), async (candidate) => {
+      const existing = await pageRepository.findBySlug(candidate);
+      return existing !== null && existing.getId() !== id;
+    });
+    updated = updated.withSlug(slug);
+  }
+
+  return await pageRepository.save(updated);
 }

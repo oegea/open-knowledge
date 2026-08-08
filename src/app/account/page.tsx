@@ -12,6 +12,11 @@ import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
 
+export async function generateMetadata() {
+  const dictionary = await getDictionary(await getLocale());
+  return { title: translate(dictionary, 'auth.myAccount') };
+}
+
 export default async function AccountPage() {
   const user = await getCurrentUser();
   if (user === null) redirect('/login');

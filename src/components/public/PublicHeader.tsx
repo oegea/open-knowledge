@@ -43,7 +43,7 @@ export async function PublicHeader() {
           </Link>
         ) : null}
         {menuPages.map((page) => (
-          <Link key={page.getId()} href={`/p/${page.getId()}`} className={styles.navLink}>
+          <Link key={page.getId()} href={`/p/${page.getSlug() || page.getId()}`} className={styles.navLink}>
             {page.getTitle()}
           </Link>
         ))}
@@ -58,7 +58,11 @@ export async function PublicHeader() {
         {user !== null ? <NotificationsBell /> : null}
         <MobileMenu
           newsEnabled={settings.isNewsEnabled()}
-          menuPages={menuPages.map((page) => ({ id: page.getId()!, title: page.getTitle() }))}
+          menuPages={menuPages.map((page) => ({
+            id: page.getId()!,
+            slug: page.getSlug(),
+            title: page.getTitle(),
+          }))}
           user={userInfo}
         />
       </div>

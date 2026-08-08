@@ -14,6 +14,7 @@ export interface CourseRepository {
   save(course: Course): Promise<Course>;
   /** Loads the full aggregate. */
   findById(id: string): Promise<Course | null>;
+  findBySlug(slug: string): Promise<Course | null>;
   /** Loads course summaries (sections not populated) matching the filter. */
   findAll(filter?: CourseFilter): Promise<CourseList>;
   delete(id: string): Promise<boolean>;

@@ -17,7 +17,7 @@ export async function PublicFooter() {
       {footerPages.length > 0 ? (
         <nav className={styles.links}>
           {footerPages.map((page) => (
-            <Link key={page.getId()} href={`/p/${page.getId()}`} className={styles.link}>
+            <Link key={page.getId()} href={`/p/${page.getSlug() || page.getId()}`} className={styles.link}>
               {page.getTitle()}
             </Link>
           ))}

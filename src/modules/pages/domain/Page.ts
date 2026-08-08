@@ -4,6 +4,8 @@ export type PagePlacement = (typeof PAGE_PLACEMENTS)[number];
 export interface PagePrimitive {
   id: string | null;
   title: string;
+  /** URL slug derived from the title; unique among pages. */
+  slug: string;
   markdown: string;
   placement: PagePlacement;
   position: number;
@@ -20,6 +22,7 @@ export class Page {
   private constructor(
     private readonly id: string | null,
     private readonly title: string,
+    private readonly slug: string,
     private readonly markdown: string,
     private readonly placement: PagePlacement,
     private readonly position: number,
@@ -33,12 +36,22 @@ export class Page {
     markdown: string,
     placement: PagePlacement,
     position: number = 0,
+    slug: string = '',
     createdAt?: Date,
     updatedAt?: Date
   ): Page {
     Page.ensurePageIsValid(title, markdown, placement, position);
     const now = new Date();
-    return new Page(id, title.trim(), markdown, placement, position, createdAt ?? now, updatedAt ?? now);
+    return new Page(
+      id,
+      title.trim(),
+      slug,
+      markdown,
+      placement,
+      position,
+      createdAt ?? now,
+      updatedAt ?? now
+    );
   }
 
   static fromPrimitive(data: PagePrimitive): Page {
@@ -49,6 +62,7 @@ export class Page {
       data.markdown,
       data.placement,
       data.position ?? 0,
+      data.slug ?? '',
       data.createdAt ? new Date(data.createdAt) : undefined,
       data.updatedAt ? new Date(data.updatedAt) : undefined
     );
@@ -85,6 +99,23 @@ export class Page {
     return this.title;
   }
 
+  getSlug(): string {
+    return this.slug;
+  }
+
+  withSlug(slug: string): Page {
+    return new Page(
+      this.id,
+      this.title,
+      slug,
+      this.markdown,
+      this.placement,
+      this.position,
+      this.createdAt,
+      this.updatedAt
+    );
+  }
+
   getMarkdown(): string {
     return this.markdown;
   }
@@ -106,7 +137,16 @@ export class Page {
   }
 
   setContent(title: string, markdown: string, placement: PagePlacement): Page {
-    return Page.create(this.id, title, markdown, placement, this.position, this.createdAt, new Date());
+    return Page.create(
+      this.id,
+      title,
+      markdown,
+      placement,
+      this.position,
+      this.slug,
+      this.createdAt,
+      new Date()
+    );
   }
 
   equals(other: Page): boolean {
@@ -117,6 +157,7 @@ export class Page {
     return {
       id: this.id,
       title: this.title,
+      slug: this.slug,
       markdown: this.markdown,
       placement: this.placement,
       position: this.position,

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import courseFactory from '@/modules/course/application/factory';
 import { getLocale } from '@/i18n/getLocale';
 import { getDictionary, translate } from '@/i18n/dictionary';
@@ -11,6 +11,16 @@ import { getCurrentUser } from '@/app/serverAuth';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
+
+export async function generateMetadata({ params }: PageProps<'/courses/[id]'>) {
+  try {
+    const { id } = await params;
+    const course = await courseFactory.getCourse(id);
+    return { title: course.getTitle() };
+  } catch {
+    return {};
+  }
+}
 
 export default async function CourseDetailPage({ params }: PageProps<'/courses/[id]'>) {
   const { id } = await params;
@@ -24,6 +34,12 @@ export default async function CourseDetailPage({ params }: PageProps<'/courses/[
     notFound();
   }
   if (!course.isPublished()) notFound();
+
+  // Canonical URL is the slug; old id links redirect permanently.
+  const courseRef = course.getSlug() || course.getId()!;
+  if (course.getSlug() && id !== course.getSlug()) {
+    permanentRedirect(`/courses/${course.getSlug()}`);
+  }
 
   const sections = course.getSections().getSections();
   const orderedMaterialIds = sections.flatMap((section) =>
@@ -57,6 +73,7 @@ export default async function CourseDetailPage({ params }: PageProps<'/courses/[
               <p className={styles.heroDescription}>{course.getDescription()}</p>
               <StartCourseButton
                 courseId={course.getId()!}
+                courseRef={courseRef}
                 orderedMaterialIds={orderedMaterialIds}
                 authenticated={(await getCurrentUser()) !== null}
               />
@@ -105,7 +122,7 @@ export default async function CourseDetailPage({ params }: PageProps<'/courses/[
                       .map((material) => (
                         <li key={material.getId()}>
                           <Link
-                            href={`/courses/${course.getId()}/study/${material.getId()}`}
+                            href={`/courses/${courseRef}/study/${material.getId()}`}
                             className={styles.materialItem}
                           >
                             <span className={styles.materialType}>
@@ -168,14 +185,14 @@ export default async function CourseDetailPage({ params }: PageProps<'/courses/[
 
               <div className={styles.downloads}>
                 <a
-                  href={`/api/courses/${course.getId()}/export/epub`}
+                  href={`/api/courses/${courseRef}/export/epub`}
                   className={styles.downloadButton}
                   download
                 >
                   ↓ {translate(dictionary, 'course.downloadEpub')}
                 </a>
                 <a
-                  href={`/api/courses/${course.getId()}/export/pdf`}
+                  href={`/api/courses/${courseRef}/export/pdf`}
                   className={styles.downloadButton}
                   download
                 >

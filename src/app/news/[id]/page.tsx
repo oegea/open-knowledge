@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import newsFactory from '@/modules/news/application/factory';
 import settingsFactory from '@/modules/settings/application/factory';
 import { getLocale } from '@/i18n/getLocale';
@@ -10,6 +10,16 @@ import { Prose } from '@/components/shared/Prose';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
+
+export async function generateMetadata({ params }: PageProps<'/news/[id]'>) {
+  try {
+    const { id } = await params;
+    const post = await newsFactory.getNewsPost(id);
+    return post.isPublished() ? { title: post.getTitle() } : {};
+  } catch {
+    return {};
+  }
+}
 
 export default async function NewsPostPage({ params }: PageProps<'/news/[id]'>) {
   const settings = await settingsFactory.getInstanceSettings();
@@ -26,6 +36,10 @@ export default async function NewsPostPage({ params }: PageProps<'/news/[id]'>) 
     notFound();
   }
   if (!post.isPublished()) notFound();
+
+  if (post.getSlug() && id !== post.getSlug()) {
+    permanentRedirect(`/news/${post.getSlug()}`);
+  }
 
   return (
     <>

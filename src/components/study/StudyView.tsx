@@ -32,6 +32,8 @@ interface FlatMaterial {
 }
 
 export function StudyView({ course, currentMaterialId, authenticated }: StudyViewProps) {
+  // URLs use the SEO slug; local/remote progress stays keyed by course id.
+  const courseRef = course.slug || course.id!;
   const { t } = useI18n();
   const router = useRouter();
   const [progress, setProgress] = useState<CourseProgress | null>(null);
@@ -146,7 +148,7 @@ export function StudyView({ course, currentMaterialId, authenticated }: StudyVie
       });
       setProgress(updated);
     }
-    router.push(`/courses/${course.id}/study/${next.material.id}`);
+    router.push(`/courses/${courseRef}/study/${next.material.id}`);
   }, [
     course.id,
     currentIndex,
@@ -217,7 +219,7 @@ export function StudyView({ course, currentMaterialId, authenticated }: StudyVie
       <ReadingProgress key={currentMaterialId} />
       <header className={`ok-glass-strong ${styles.header}`}>
         <Link
-          href={`/courses/${course.id}`}
+          href={`/courses/${courseRef}`}
           className={styles.backButton}
           aria-label={t('common.back')}
         >
@@ -277,7 +279,7 @@ export function StudyView({ course, currentMaterialId, authenticated }: StudyVie
                       return (
                         <li key={material.id}>
                           <Link
-                            href={`/courses/${course.id}/study/${material.id}`}
+                            href={`/courses/${courseRef}/study/${material.id}`}
                             className={styles.contentsMaterial}
                             aria-current={isCurrent ? 'page' : undefined}
                             onClick={() => setContentsOpen(false)}
@@ -371,7 +373,7 @@ export function StudyView({ course, currentMaterialId, authenticated }: StudyVie
       <footer className={`ok-glass-strong ${styles.footer}`}>
         {previous ? (
           <Link
-            href={`/courses/${course.id}/study/${previous.material.id}`}
+            href={`/courses/${courseRef}/study/${previous.material.id}`}
             className={styles.navButton}
             aria-label={t('study.previous')}
           >

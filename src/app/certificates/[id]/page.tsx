@@ -9,6 +9,11 @@ import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
 
+export async function generateMetadata() {
+  const dictionary = await getDictionary(await getLocale());
+  return { title: translate(dictionary, 'certificate.title') };
+}
+
 export default async function CertificatePage({ params }: PageProps<'/certificates/[id]'>) {
   const { id } = await params;
   const locale = await getLocale();

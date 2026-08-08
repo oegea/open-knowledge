@@ -5,6 +5,7 @@ export function createPrimitive(overrides: Partial<CoursePrimitive> = {}): Cours
   return {
     id: 'course-1',
     title: 'Introduction to Astronomy',
+    slug: 'introduction-to-astronomy',
     description: 'A journey through the night sky, from planets to galaxies.',
     language: 'en',
     category: 'Science',

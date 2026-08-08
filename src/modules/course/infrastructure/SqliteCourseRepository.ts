@@ -9,6 +9,7 @@ import { getDatabase } from '../../shared/infrastructure/SqliteDatabase';
 interface CourseRow {
   id: string;
   title: string;
+  slug: string;
   description: string;
   language: string;
   category: string | null;
@@ -58,10 +59,11 @@ export class SqliteCourseRepository implements CourseRepository {
     const saveTransaction = this.db.transaction((primitive: CoursePrimitive) => {
       this.db
         .prepare(
-          `INSERT INTO courses (id, title, description, language, category, cover_image, authors, sources, license, ai_assisted, published, created_at, updated_at)
-           VALUES (@id, @title, @description, @language, @category, @coverImage, @authors, @sources, @license, @aiAssisted, @published, @createdAt, @updatedAt)
+          `INSERT INTO courses (id, title, slug, description, language, category, cover_image, authors, sources, license, ai_assisted, published, created_at, updated_at)
+           VALUES (@id, @title, @slug, @description, @language, @category, @coverImage, @authors, @sources, @license, @aiAssisted, @published, @createdAt, @updatedAt)
            ON CONFLICT(id) DO UPDATE SET
              title = @title,
+             slug = @slug,
              description = @description,
              language = @language,
              category = @category,
@@ -76,6 +78,7 @@ export class SqliteCourseRepository implements CourseRepository {
         .run({
           id: primitive.id,
           title: primitive.title,
+          slug: primitive.slug,
           description: primitive.description,
           language: primitive.language,
           category: primitive.category,
@@ -149,6 +152,13 @@ export class SqliteCourseRepository implements CourseRepository {
     return Course.fromPrimitive(this.mapCourseRow(courseRow, sections));
   }
 
+  async findBySlug(slug: string): Promise<Course | null> {
+    const row = this.db.prepare('SELECT id FROM courses WHERE slug = ?').get(slug) as
+      | { id: string }
+      | undefined;
+    return row ? await this.findById(row.id) : null;
+  }
+
   async findAll(filter?: CourseFilter): Promise<CourseList> {
     const conditions: string[] = [];
     const params: (string | number)[] = [];
@@ -187,6 +197,7 @@ export class SqliteCourseRepository implements CourseRepository {
     return {
       id: row.id,
       title: row.title,
+      slug: row.slug ?? '',
       description: row.description,
       language: row.language,
       category: row.category,

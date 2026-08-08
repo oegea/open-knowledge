@@ -81,7 +81,7 @@ test.describe('Public library', () => {
     await page.goto(`/courses/${courseId}`);
 
     await page.getByRole('link', { name: /¿Qué es el Sistema Solar\?/ }).click();
-    await page.waitForURL(`**/courses/${courseId}/study/**`);
+    await page.waitForURL('**/study/**');
     await expect(
       page.getByRole('heading', { name: 'El Sistema Solar', exact: true })
     ).toBeVisible();

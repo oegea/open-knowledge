@@ -1,5 +1,6 @@
 import { randomUUID } from 'crypto';
 import { Course } from '../domain/Course';
+import { ensureUniqueSlug, slugify } from '../../shared/domain/slugify';
 import { SourcePrimitive } from '../domain/Source';
 import { CourseRepository } from '../domain/CourseRepository';
 
@@ -28,7 +29,12 @@ export async function createCourse({
   aiAssisted,
   courseRepository,
 }: createCourseProps): Promise<Course> {
+  const slug = await ensureUniqueSlug(
+    slugify(title, 'course'),
+    async (candidate) => (await courseRepository.findBySlug(candidate)) !== null
+  );
   const course = Course.create(randomUUID(), title, description, language, {
+    slug,
     category: category ?? null,
     coverImage: coverImage ?? null,
     authors,

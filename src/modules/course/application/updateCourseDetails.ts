@@ -1,4 +1,5 @@
 import { Course } from '../domain/Course';
+import { ensureUniqueSlug, slugify } from '../../shared/domain/slugify';
 import { SourcePrimitive } from '../domain/Source';
 import { CourseRepository } from '../domain/CourseRepository';
 
@@ -38,7 +39,7 @@ export async function updateCourseDetails({
     throw new Error(`[updateCourseDetails] Course with id ${id} not found`);
   }
 
-  const updated = course.setDetails({
+  let updated = course.setDetails({
     title,
     description,
     language,
@@ -49,6 +50,16 @@ export async function updateCourseDetails({
     license,
     aiAssisted,
   });
+
+  // The slug follows the title. Old links by id keep resolving and get
+  // redirected to the canonical slug URL.
+  if (updated.getTitle() !== course.getTitle() || !updated.getSlug()) {
+    const slug = await ensureUniqueSlug(slugify(title, 'course'), async (candidate) => {
+      const existing = await courseRepository.findBySlug(candidate);
+      return existing !== null && existing.getId() !== id;
+    });
+    updated = updated.withSlug(slug);
+  }
 
   return await courseRepository.save(updated);
 }

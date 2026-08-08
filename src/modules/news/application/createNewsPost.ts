@@ -1,5 +1,6 @@
 import { randomUUID } from 'crypto';
 import { NewsPost } from '../domain/NewsPost';
+import { ensureUniqueSlug, slugify } from '../../shared/domain/slugify';
 import { NewsRepository } from '../domain/NewsRepository';
 
 interface createNewsPostProps {
@@ -22,7 +23,19 @@ export async function createNewsPost({
   newsRepository,
   onNewsPublished,
 }: createNewsPostProps): Promise<NewsPost> {
-  const post = NewsPost.create(randomUUID(), title, markdown, published, imagePath ?? null, author ?? '');
+  const slug = await ensureUniqueSlug(
+    slugify(title, 'post'),
+    async (candidate) => (await newsRepository.findBySlug(candidate)) !== null
+  );
+  const post = NewsPost.create(
+    randomUUID(),
+    title,
+    markdown,
+    published,
+    imagePath ?? null,
+    author ?? '',
+    slug
+  );
   const saved = await newsRepository.save(post);
 
   if (saved.isPublished() && onNewsPublished) {

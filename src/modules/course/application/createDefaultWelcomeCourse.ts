@@ -1,5 +1,6 @@
 import { randomUUID } from 'crypto';
 import { Course } from '../domain/Course';
+import { ensureUniqueSlug, slugify } from '../../shared/domain/slugify';
 import { CourseRepository } from '../domain/CourseRepository';
 import { Section } from '../domain/Section';
 import { Material } from '../domain/Material';
@@ -106,5 +107,9 @@ export async function createDefaultWelcomeCourse({
     }
   );
 
-  return await courseRepository.save(course);
+  const slug = await ensureUniqueSlug(
+    slugify(course.getTitle(), 'course'),
+    async (candidate) => (await courseRepository.findBySlug(candidate)) !== null
+  );
+  return await courseRepository.save(course.withSlug(slug));
 }

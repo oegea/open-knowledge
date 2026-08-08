@@ -4,6 +4,7 @@ export function create(overrides: Partial<NewsPostPrimitive> = {}): NewsPost {
   return NewsPost.fromPrimitive({
     id: 'post-1',
     title: 'Three new astronomy courses',
+    slug: 'three-new-astronomy-courses',
     markdown: 'We just published **three** new courses about the night sky.',
     imagePath: null,
     author: '',

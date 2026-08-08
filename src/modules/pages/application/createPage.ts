@@ -1,5 +1,6 @@
 import { randomUUID } from 'crypto';
 import { Page, PagePlacement } from '../domain/Page';
+import { ensureUniqueSlug, slugify } from '../../shared/domain/slugify';
 import { PageRepository } from '../domain/PageRepository';
 
 interface createPageProps {
@@ -16,6 +17,10 @@ export async function createPage({
   pageRepository,
 }: createPageProps): Promise<Page> {
   const position = await pageRepository.count();
-  const page = Page.create(randomUUID(), title, markdown, placement, position);
+  const slug = await ensureUniqueSlug(
+    slugify(title, 'page'),
+    async (candidate) => (await pageRepository.findBySlug(candidate)) !== null
+  );
+  const page = Page.create(randomUUID(), title, markdown, placement, position, slug);
   return await pageRepository.save(page);
 }

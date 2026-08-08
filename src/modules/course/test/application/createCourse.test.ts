@@ -1,4 +1,5 @@
 import { createCourse } from '../../application/createCourse';
+import * as CourseMother from '../helpers/CourseMother';
 import * as CourseRepositoryMother from '../helpers/CourseRepositoryMother';
 
 describe('createCourse (unit)', () => {
@@ -19,9 +20,30 @@ describe('createCourse (unit)', () => {
 
       expect(result.getId()).toBeDefined();
       expect(result.getTitle()).toBe('Introduction to Astronomy');
+      expect(result.getSlug()).toBe('introduction-to-astronomy');
       expect(result.isPublished()).toBe(false);
       expect(result.getSections().isEmpty()).toBe(true);
       expect(courseRepository.save).toHaveBeenCalledWith(result);
+    });
+
+    it('suffixes the slug when the sanitized title is already taken', async () => {
+      const existing = CourseMother.create({ id: 'other' });
+      const courseRepository = CourseRepositoryMother.create({
+        findBySlug: jest
+          .fn()
+          .mockImplementation(async (slug: string) =>
+            slug === 'introduction-to-astronomy' ? existing : null
+          ),
+      });
+
+      const result = await createCourse({
+        title: 'Introduction to Astronomy',
+        description: 'Same title, different course.',
+        language: 'en',
+        courseRepository,
+      });
+
+      expect(result.getSlug()).toBe('introduction-to-astronomy-2');
     });
 
     it('stores optional metadata when provided', async () => {

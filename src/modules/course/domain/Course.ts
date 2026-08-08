@@ -8,6 +8,8 @@ import { SectionPrimitive } from './Section';
 export interface CoursePrimitive {
   id: string | null;
   title: string;
+  /** URL slug derived from the title; unique among courses. */
+  slug: string;
   description: string;
   language: string;
   category: string | null;
@@ -39,6 +41,7 @@ export interface CourseDetailsInput {
 interface CourseProps {
   id: string | null;
   title: CourseTitle;
+  slug: string;
   description: CourseDescription;
   language: CourseLanguage;
   category: string | null;
@@ -70,6 +73,7 @@ export class Course {
       aiAssisted?: boolean;
       published?: boolean;
       sections?: SectionList;
+      slug?: string;
       createdAt?: Date;
       updatedAt?: Date;
     } = {}
@@ -79,6 +83,7 @@ export class Course {
     return new Course({
       id,
       title: CourseTitle.create(title),
+      slug: options.slug ?? '',
       description: CourseDescription.create(description),
       language: CourseLanguage.create(language),
       category: options.category?.trim() || null,
@@ -97,6 +102,7 @@ export class Course {
   static fromPrimitive(data: CoursePrimitive): Course {
     if (!data) throw new Error('[Course] data must be provided');
     return Course.create(data.id, data.title, data.description, data.language, {
+      slug: data.slug ?? '',
       category: data.category,
       coverImage: data.coverImage,
       authors: data.authors ?? [],
@@ -122,6 +128,10 @@ export class Course {
 
   getTitle(): string {
     return this.props.title.toPrimitive();
+  }
+
+  getSlug(): string {
+    return this.props.slug;
   }
 
   getDescription(): string {
@@ -176,6 +186,10 @@ export class Course {
     return new Course({ ...this.props, id });
   }
 
+  withSlug(slug: string): Course {
+    return new Course({ ...this.props, slug });
+  }
+
   setDetails(details: CourseDetailsInput): Course {
     Course.ensureCourseIsValid(details.category);
     return new Course({
@@ -223,6 +237,7 @@ export class Course {
     return {
       id: this.props.id,
       title: this.props.title.toPrimitive(),
+      slug: this.props.slug,
       description: this.props.description.toPrimitive(),
       language: this.props.language.toPrimitive(),
       category: this.props.category,

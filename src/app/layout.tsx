@@ -4,6 +4,7 @@ import { Manrope, Source_Serif_4, Geist_Mono } from 'next/font/google';
 import { getLocale } from '@/i18n/getLocale';
 import { getDictionary } from '@/i18n/dictionary';
 import { I18nProvider } from '@/i18n/I18nProvider';
+import settingsFactory from '@/modules/settings/application/factory';
 import './globals.css';
 
 const manrope = Manrope({
@@ -21,11 +22,22 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
-export const metadata: Metadata = {
-  title: 'Open Knowledge',
-  description:
-    'An open, self-hosted library of knowledge. Browse courses and learn at your own pace.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  // The configured library name leads every tab title; child pages append
+  // what is being viewed through the template ("Library - Course title").
+  let libraryName = 'Open Knowledge';
+  try {
+    const settings = await settingsFactory.getInstanceSettings();
+    libraryName = settings.getLibraryName() || libraryName;
+  } catch {
+    /* fresh instance without a database yet keeps the default */
+  }
+  return {
+    title: { default: libraryName, template: `${libraryName} - %s` },
+    description:
+      'An open, self-hosted library of knowledge. Browse courses and learn at your own pace.',
+  };
+}
 
 export default async function RootLayout({ children }: LayoutProps<'/'>) {
   const locale = await getLocale();

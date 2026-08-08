@@ -6,6 +6,7 @@ import { getDatabase } from '../../shared/infrastructure/SqliteDatabase';
 interface PageRow {
   id: string;
   title: string;
+  slug: string;
   markdown: string;
   placement: string;
   position: number;
@@ -28,10 +29,11 @@ export class SqlitePageRepository implements PageRepository {
 
     this.db
       .prepare(
-        `INSERT INTO pages (id, title, markdown, placement, position, created_at, updated_at)
-         VALUES (@id, @title, @markdown, @placement, @position, @createdAt, @updatedAt)
+        `INSERT INTO pages (id, title, slug, markdown, placement, position, created_at, updated_at)
+         VALUES (@id, @title, @slug, @markdown, @placement, @position, @createdAt, @updatedAt)
          ON CONFLICT(id) DO UPDATE SET
            title = @title,
+           slug = @slug,
            markdown = @markdown,
            placement = @placement,
            position = @position,
@@ -40,6 +42,7 @@ export class SqlitePageRepository implements PageRepository {
       .run({
         id: data.id,
         title: data.title,
+        slug: data.slug,
         markdown: data.markdown,
         placement: data.placement,
         position: data.position,
@@ -52,6 +55,13 @@ export class SqlitePageRepository implements PageRepository {
 
   async findById(id: string): Promise<Page | null> {
     const row = this.db.prepare('SELECT * FROM pages WHERE id = ?').get(id) as PageRow | undefined;
+    return row ? this.mapRow(row) : null;
+  }
+
+  async findBySlug(slug: string): Promise<Page | null> {
+    const row = this.db.prepare('SELECT * FROM pages WHERE slug = ?').get(slug) as
+      | PageRow
+      | undefined;
     return row ? this.mapRow(row) : null;
   }
 
@@ -82,6 +92,7 @@ export class SqlitePageRepository implements PageRepository {
     return Page.fromPrimitive({
       id: row.id,
       title: row.title,
+      slug: row.slug ?? '',
       markdown: row.markdown,
       placement: row.placement as PagePlacement,
       position: row.position,

@@ -8,7 +8,7 @@ test.describe('Anonymous study mode', () => {
     // Start from the course detail.
     await page.goto(`/courses/${courseId}`);
     await page.getByRole('link', { name: /Empezar el curso/ }).click();
-    await page.waitForURL(`**/courses/${courseId}/study/**`);
+    await page.waitForURL('**/study/**');
 
     // Reading experience renders markdown.
     await expect(

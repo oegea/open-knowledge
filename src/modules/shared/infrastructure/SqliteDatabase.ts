@@ -1,5 +1,6 @@
 import Database from 'better-sqlite3';
 import path from 'path';
+import { slugify } from '../domain/slugify';
 import fs from 'fs';
 
 /**
@@ -12,6 +13,7 @@ const SCHEMA = `
 CREATE TABLE IF NOT EXISTS courses (
   id TEXT PRIMARY KEY,
   title TEXT NOT NULL,
+  slug TEXT NOT NULL DEFAULT '',
   description TEXT NOT NULL,
   language TEXT NOT NULL,
   category TEXT,
@@ -97,6 +99,7 @@ CREATE INDEX IF NOT EXISTS idx_exam_results_user_course ON exam_results(user_id,
 CREATE TABLE IF NOT EXISTS news_posts (
   id TEXT PRIMARY KEY,
   title TEXT NOT NULL,
+  slug TEXT NOT NULL DEFAULT '',
   markdown TEXT NOT NULL,
   image_path TEXT,
   author TEXT NOT NULL DEFAULT '',
@@ -108,6 +111,7 @@ CREATE TABLE IF NOT EXISTS news_posts (
 CREATE TABLE IF NOT EXISTS pages (
   id TEXT PRIMARY KEY,
   title TEXT NOT NULL,
+  slug TEXT NOT NULL DEFAULT '',
   markdown TEXT NOT NULL,
   placement TEXT NOT NULL DEFAULT 'hidden',
   position INTEGER NOT NULL DEFAULT 0,
@@ -154,6 +158,39 @@ function migrate(db: Database.Database): void {
   addColumnIfMissing(db, 'users', 'display_name', "TEXT NOT NULL DEFAULT ''");
   addColumnIfMissing(db, 'certificates', 'display_name', "TEXT NOT NULL DEFAULT ''");
   addColumnIfMissing(db, 'news_posts', 'author', "TEXT NOT NULL DEFAULT ''");
+  addColumnIfMissing(db, 'courses', 'slug', "TEXT NOT NULL DEFAULT ''");
+  addColumnIfMissing(db, 'news_posts', 'slug', "TEXT NOT NULL DEFAULT ''");
+  addColumnIfMissing(db, 'pages', 'slug', "TEXT NOT NULL DEFAULT ''");
+  backfillSlugs(db, 'courses');
+  backfillSlugs(db, 'news_posts');
+  backfillSlugs(db, 'pages');
+  db.exec(`CREATE UNIQUE INDEX IF NOT EXISTS idx_courses_slug ON courses(slug);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_news_posts_slug ON news_posts(slug);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_pages_slug ON pages(slug);`);
+}
+
+/** Rows created before slugs existed get one derived from their title. */
+function backfillSlugs(db: Database.Database, table: string): void {
+  const rows = db
+    .prepare(`SELECT id, title FROM ${table} WHERE slug = ''`)
+    .all() as { id: string; title: string }[];
+  if (rows.length === 0) return;
+
+  const taken = new Set(
+    (db.prepare(`SELECT slug FROM ${table} WHERE slug != ''`).all() as { slug: string }[]).map(
+      (row) => row.slug
+    )
+  );
+  const update = db.prepare(`UPDATE ${table} SET slug = ? WHERE id = ?`);
+  for (const row of rows) {
+    const base = slugify(row.title);
+    let candidate = base;
+    for (let suffix = 2; taken.has(candidate); suffix++) {
+      candidate = `${base}-${suffix}`;
+    }
+    taken.add(candidate);
+    update.run(candidate, row.id);
+  }
 }
 
 function addColumnIfMissing(

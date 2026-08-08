@@ -6,6 +6,7 @@ import { getDatabase } from '../../shared/infrastructure/SqliteDatabase';
 interface NewsRow {
   id: string;
   title: string;
+  slug: string;
   markdown: string;
   image_path: string | null;
   author: string;
@@ -29,10 +30,11 @@ export class SqliteNewsRepository implements NewsRepository {
 
     this.db
       .prepare(
-        `INSERT INTO news_posts (id, title, markdown, image_path, author, published, created_at, updated_at)
-         VALUES (@id, @title, @markdown, @imagePath, @author, @published, @createdAt, @updatedAt)
+        `INSERT INTO news_posts (id, title, slug, markdown, image_path, author, published, created_at, updated_at)
+         VALUES (@id, @title, @slug, @markdown, @imagePath, @author, @published, @createdAt, @updatedAt)
          ON CONFLICT(id) DO UPDATE SET
            title = @title,
+           slug = @slug,
            markdown = @markdown,
            image_path = @imagePath,
            author = @author,
@@ -42,6 +44,7 @@ export class SqliteNewsRepository implements NewsRepository {
       .run({
         id: data.id,
         title: data.title,
+        slug: data.slug,
         markdown: data.markdown,
         imagePath: data.imagePath,
         author: data.author,
@@ -55,6 +58,13 @@ export class SqliteNewsRepository implements NewsRepository {
 
   async findById(id: string): Promise<NewsPost | null> {
     const row = this.db.prepare('SELECT * FROM news_posts WHERE id = ?').get(id) as
+      | NewsRow
+      | undefined;
+    return row ? this.mapRow(row) : null;
+  }
+
+  async findBySlug(slug: string): Promise<NewsPost | null> {
+    const row = this.db.prepare('SELECT * FROM news_posts WHERE slug = ?').get(slug) as
       | NewsRow
       | undefined;
     return row ? this.mapRow(row) : null;
@@ -76,6 +86,7 @@ export class SqliteNewsRepository implements NewsRepository {
     return NewsPost.fromPrimitive({
       id: row.id,
       title: row.title,
+      slug: row.slug ?? '',
       markdown: row.markdown,
       imagePath: row.image_path,
       author: row.author ?? '',

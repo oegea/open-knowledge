@@ -103,11 +103,12 @@ describe('SqliteCourseRepository (integration)', () => {
 
   it('filters by published, language and category in findAll', async () => {
     await repository.save(
-      CourseMother.create({ id: 'c1', published: true, language: 'es', sections: [] })
+      CourseMother.create({ id: 'c1', slug: 'c1', published: true, language: 'es', sections: [] })
     );
     await repository.save(
       CourseMother.create({
         id: 'c2',
+        slug: 'c2',
         published: false,
         language: 'es',
         category: 'History',
@@ -115,7 +116,7 @@ describe('SqliteCourseRepository (integration)', () => {
       })
     );
     await repository.save(
-      CourseMother.create({ id: 'c3', published: true, language: 'en', sections: [] })
+      CourseMother.create({ id: 'c3', slug: 'c3', published: true, language: 'en', sections: [] })
     );
 
     const published = await repository.findAll({ publishedOnly: true });

@@ -19,6 +19,7 @@ import styles from './MobileMenu.module.css';
 
 export interface MenuPageLink {
   id: string;
+  slug: string;
   title: string;
 }
 
@@ -98,7 +99,7 @@ export function MobileMenu({ newsEnabled, menuPages, user }: MobileMenuProps) {
               ) : null}
               {menuPages.map((page) => (
                 <li key={page.id}>
-                  <Link href={`/p/${page.id}`} className={styles.item}>
+                  <Link href={`/p/${page.slug || page.id}`} className={styles.item}>
                     <IconPage className={styles.itemIcon} />
                     {page.title}
                   </Link>

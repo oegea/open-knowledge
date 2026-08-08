@@ -130,7 +130,7 @@ export default async function LibraryPage({ searchParams }: PageProps<'/'>) {
           <ul className={styles.grid}>
             {courses.getCourses().map((course) => (
               <li key={course.getId()}>
-                <Link href={`/courses/${course.getId()}`} className={`ok-glass ${styles.card}`}>
+                <Link href={`/courses/${course.getSlug() || course.getId()}`} className={`ok-glass ${styles.card}`}>
                   <span className={styles.cardCoverWrap}>
                     {course.getCoverImage() ? (
                       // eslint-disable-next-line @next/next/no-img-element

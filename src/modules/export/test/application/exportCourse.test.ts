@@ -63,9 +63,9 @@ describe('exportCourse (unit)', () => {
     expect(context.libraryName).toBe('My Library');
     expect(context.ownerName).toBe('Ada');
     expect(context.logoMediaPath).toBe('images/logo.png');
-    expect(context.courseUrl).toBe('https://library.example/courses/course-1');
+    expect(context.courseUrl).toBe('https://library.example/courses/introduction-to-astronomy');
     expect(context.materialUrl('m1')).toBe(
-      'https://library.example/courses/course-1/study/m1'
+      'https://library.example/courses/introduction-to-astronomy/study/m1'
     );
   });
 

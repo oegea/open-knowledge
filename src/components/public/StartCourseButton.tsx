@@ -10,12 +10,15 @@ import styles from './StartCourseButton.module.css';
 
 interface StartCourseButtonProps {
   courseId: string;
+  /** Slug (or id) used to build study URLs; progress stays keyed by id. */
+  courseRef: string;
   orderedMaterialIds: string[];
   authenticated: boolean;
 }
 
 export function StartCourseButton({
   courseId,
+  courseRef,
   orderedMaterialIds,
   authenticated,
 }: StartCourseButtonProps) {
@@ -47,7 +50,7 @@ export function StartCourseButton({
 
   return (
     <div className={styles.container}>
-      <Link href={`/courses/${courseId}/study/${target}`} className={styles.button}>
+      <Link href={`/courses/${courseRef}/study/${target}`} className={styles.button}>
         {started ? t('course.continue') : t('course.start')}
       </Link>
       {started ? (

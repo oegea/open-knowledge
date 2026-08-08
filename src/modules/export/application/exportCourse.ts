@@ -42,10 +42,12 @@ export async function exportCourse({
     throw new Error('[exportCourse] Course id must be provided');
   }
 
-  const course = await courseRepository.findById(courseId);
+  const course =
+    (await courseRepository.findById(courseId)) ?? (await courseRepository.findBySlug(courseId));
   if (course === null || !course.isPublished()) {
     throw new Error(`[exportCourse] Course with id ${courseId} not found`);
   }
+  const courseRef = course.getSlug() || course.getId();
 
   const settings = await settingsRepository.get();
   const strings = await stringsProvider(course.getLanguage());
@@ -55,8 +57,8 @@ export async function exportCourse({
     ownerName: settings.getOwnerName() || settings.getLibraryName(),
     logoMediaPath: mediaPathOf(settings.getDocumentLogoPath()),
     coverMediaPath: mediaPathOf(course.getCoverImage()),
-    courseUrl: `${baseUrl}/courses/${courseId}`,
-    materialUrl: (materialId) => `${baseUrl}/courses/${courseId}/study/${materialId}`,
+    courseUrl: `${baseUrl}/courses/${courseRef}`,
+    materialUrl: (materialId) => `${baseUrl}/courses/${courseRef}/study/${materialId}`,
     generatedAt: new Date(),
     strings,
   });

@@ -10,6 +10,11 @@ import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
 
+export async function generateMetadata() {
+  const dictionary = await getDictionary(await getLocale());
+  return { title: translate(dictionary, 'news.title') };
+}
+
 export default async function NewsPage() {
   const settings = await settingsFactory.getInstanceSettings();
   if (!settings.isNewsEnabled()) notFound();
@@ -30,7 +35,7 @@ export default async function NewsPage() {
           <ul className={styles.list}>
             {posts.map((post) => (
               <li key={post.getId()}>
-                <Link href={`/news/${post.getId()}`} className={`ok-glass ${styles.post}`}>
+                <Link href={`/news/${post.getSlug() || post.getId()}`} className={`ok-glass ${styles.post}`}>
                   {post.getImagePath() ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img

@@ -31,7 +31,25 @@ describe('updateCourseDetails (unit)', () => {
       expect(result.getTitle()).toBe('Updated title');
       expect(result.getLanguage()).toBe('fr');
       expect(result.isAiAssisted()).toBe(true);
+      // The slug follows the renamed title.
+      expect(result.getSlug()).toBe('updated-title');
       expect(courseRepository.save).toHaveBeenCalledWith(result);
+    });
+
+    it('keeps the slug when the title does not change', async () => {
+      const course = CourseMother.create();
+      const courseRepository = CourseRepositoryMother.create({
+        findById: jest.fn().mockResolvedValue(course),
+      });
+
+      const result = await updateCourseDetails({
+        id: 'course-1',
+        ...details,
+        title: course.getTitle(),
+        courseRepository,
+      });
+
+      expect(result.getSlug()).toBe(course.getSlug());
     });
 
     it('preserves sections when updating details', async () => {

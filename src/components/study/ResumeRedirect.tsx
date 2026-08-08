@@ -8,6 +8,8 @@ import { HttpProgressRepository } from '@/modules/study/infrastructure/HttpProgr
 
 interface ResumeRedirectProps {
   courseId: string;
+  /** Slug (or id) used to build study URLs; progress stays keyed by id. */
+  courseRef: string;
   orderedMaterialIds: string[];
   authenticated: boolean;
 }
@@ -16,7 +18,12 @@ interface ResumeRedirectProps {
  * Landing on /study without a material takes the student to the natural
  * continuation point: the first pending material.
  */
-export function ResumeRedirect({ courseId, orderedMaterialIds, authenticated }: ResumeRedirectProps) {
+export function ResumeRedirect({
+  courseId,
+  courseRef,
+  orderedMaterialIds,
+  authenticated,
+}: ResumeRedirectProps) {
   const router = useRouter();
 
   useEffect(() => {
@@ -28,9 +35,9 @@ export function ResumeRedirect({ courseId, orderedMaterialIds, authenticated }: 
           : new LocalStorageProgressRepository(),
       });
       const target = progress.nextPendingMaterialId(orderedMaterialIds) ?? orderedMaterialIds[0];
-      router.replace(`/courses/${courseId}/study/${target}`);
+      router.replace(`/courses/${courseRef}/study/${target}`);
     })();
-  }, [authenticated, courseId, orderedMaterialIds, router]);
+  }, [authenticated, courseId, courseRef, orderedMaterialIds, router]);
 
   return null;
 }
