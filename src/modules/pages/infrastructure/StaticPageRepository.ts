@@ -1,8 +1,17 @@
 import { Page, PagePlacement, PagePrimitive } from '../domain/Page';
 import { PageRepository } from '../domain/PageRepository';
-import { fetchContentJson } from '../../shared/infrastructure/StaticContentClient';
+import {
+  fetchContentJson,
+  fetchContentText,
+} from '../../shared/infrastructure/StaticContentClient';
 
-/** Read-only auxiliary pages from `pages/index.json` in the content repo. */
+type RawPage = PagePrimitive & { markdownFile?: string };
+
+/**
+ * Read-only auxiliary pages from the content repository (ADR 0013).
+ * `pages/index.json` lists entry names; each page lives in `pages/<name>.json`
+ * and may keep its body in a Markdown file via `markdownFile`.
+ */
 export class StaticPageRepository implements PageRepository {
   async save(): Promise<Page> {
     throw new Error('[StaticPageRepository] static content mode is read-only');
@@ -36,9 +45,20 @@ export class StaticPageRepository implements PageRepository {
   }
 
   private async loadAll(): Promise<Page[]> {
-    const data = (await fetchContentJson<PagePrimitive[]>('pages/index.json')) ?? [];
-    return data
-      .map((page) => Page.fromPrimitive(page))
+    const index = (await fetchContentJson<string[]>('pages/index.json')) ?? [];
+    const loaded = await Promise.all(
+      index.map(async (name) => {
+        const raw = await fetchContentJson<RawPage>(`pages/${name}.json`);
+        if (!raw) return null;
+        const { markdownFile, ...primitive } = raw;
+        const markdown = markdownFile
+          ? ((await fetchContentText(`pages/${markdownFile}`)) ?? '')
+          : (primitive.markdown ?? '');
+        return Page.fromPrimitive({ ...primitive, markdown });
+      })
+    );
+    return loaded
+      .filter((page): page is Page => page !== null)
       .sort((a, b) => a.getPosition() - b.getPosition());
   }
 }

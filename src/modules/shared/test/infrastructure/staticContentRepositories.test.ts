@@ -8,15 +8,16 @@ import * as NewsPostMother from '../../../news/test/helpers/NewsPostMother';
 
 const BASE = 'https://raw.example/content/main';
 
+/** Values may be JSON documents (objects/arrays) or plain text (strings). */
 function mockContent(documents: Record<string, unknown>) {
   global.fetch = jest.fn(async (input: RequestInfo | URL) => {
     const url = String(input);
     const relative = url.replace(`${BASE}/`, '');
     if (relative in documents) {
-      return new Response(JSON.stringify(documents[relative]), {
-        status: 200,
-        headers: { etag: `"${relative}"` },
-      });
+      const body = documents[relative];
+      return typeof body === 'string'
+        ? new Response(body, { status: 200 })
+        : new Response(JSON.stringify(body), { status: 200, headers: { etag: `"${relative}"` } });
     }
     return new Response('not found', { status: 404 });
   }) as unknown as typeof fetch;
@@ -33,23 +34,37 @@ describe('static content repositories (unit)', () => {
     delete process.env.OK_CONTENT_REPO;
   });
 
-  it('loads courses from the index, resolving relative media', async () => {
-    const primitive = {
-      ...CourseMother.createPrimitive(),
+  it('loads a course from its directory, inlining markdownFile lessons', async () => {
+    const primitive = CourseMother.createPrimitive({
       coverImage: 'media/cover.svg',
       published: true,
+    });
+    const [section] = primitive.sections;
+    const [material] = section.materials;
+    const raw = {
+      ...primitive,
+      sections: [
+        {
+          ...section,
+          materials: [
+            { ...material, markdown: '', markdownFile: 'materials/lesson.md' },
+            ...section.materials.slice(1),
+          ],
+        },
+      ],
     };
     mockContent({
       'courses/index.json': ['astronomy'],
-      'courses/astronomy.json': primitive,
+      'courses/astronomy/course.json': raw,
+      'courses/astronomy/materials/lesson.md': 'Lesson body from a separate file.',
     });
 
     const repository = new StaticCourseRepository();
-    const list = await repository.findAll({ publishedOnly: true });
+    const course = (await repository.findAll({ publishedOnly: true })).getCourses()[0];
 
-    expect(list.count()).toBe(1);
-    const course = list.getCourses()[0];
     expect(course.getCoverImage()).toBe(`${BASE}/media/cover.svg`);
+    const loaded = course.getSections().getSections()[0].getMaterials().getMaterials()[0];
+    expect(loaded.getMarkdown()).toBe('Lesson body from a separate file.');
     expect(await repository.findBySlug(course.getSlug())).not.toBeNull();
     expect(await repository.findById(primitive.id!)).not.toBeNull();
   });
@@ -59,8 +74,8 @@ describe('static content repositories (unit)', () => {
     const en = { ...CourseMother.createPrimitive(), id: 'c2', slug: 'c2', language: 'en', published: true };
     mockContent({
       'courses/index.json': ['c1', 'c2'],
-      'courses/c1.json': es,
-      'courses/c2.json': en,
+      'courses/c1/course.json': es,
+      'courses/c2/course.json': en,
     });
 
     const repository = new StaticCourseRepository();
@@ -69,28 +84,44 @@ describe('static content repositories (unit)', () => {
     await expect(repository.delete()).rejects.toThrow('read-only');
   });
 
-  it('serves news and pages, hiding drafts from the published feed', async () => {
+  it('loads news per file with external markdown, hiding drafts', async () => {
     mockContent({
-      'news/index.json': [
-        NewsPostMother.create({ id: 'n1', slug: 'n1', published: true }).toPrimitive(),
-        NewsPostMother.create({ id: 'n2', slug: 'n2', published: false }).toPrimitive(),
-      ],
-      'pages/index.json': [
-        {
-          id: 'p1',
-          title: 'About',
-          slug: 'about',
-          markdown: 'Hello',
-          placement: 'footer',
-          position: 0,
-          createdAt: '2026-08-09T00:00:00.000Z',
-          updatedAt: '2026-08-09T00:00:00.000Z',
-        },
-      ],
+      'news/index.json': ['live', 'draft'],
+      'news/live.json': {
+        ...NewsPostMother.create({ id: 'n1', slug: 'live', published: true }).toPrimitive(),
+        markdown: '',
+        markdownFile: 'live.md',
+      },
+      'news/live.md': 'Body from markdown file.',
+      'news/draft.json': NewsPostMother.create({ id: 'n2', slug: 'draft', published: false }).toPrimitive(),
     });
 
-    expect((await new StaticNewsRepository().findAll(true)).length).toBe(1);
-    expect((await new StaticPageRepository().findByPlacement('footer')).length).toBe(1);
+    const published = await new StaticNewsRepository().findAll(true);
+    expect(published.length).toBe(1);
+    expect(published[0].getMarkdown()).toBe('Body from markdown file.');
+  });
+
+  it('loads pages per file, ordered by position', async () => {
+    const base = { markdown: 'x', createdAt: '2026-08-09T00:00:00Z', updatedAt: '2026-08-09T00:00:00Z' };
+    mockContent({
+      'pages/index.json': ['about', 'legal'],
+      'pages/about.json': { id: 'p1', title: 'About', slug: 'about', placement: 'footer', position: 1, ...base },
+      'pages/legal.json': {
+        id: 'p2',
+        title: 'Legal',
+        slug: 'legal',
+        placement: 'footer',
+        position: 0,
+        ...base,
+        markdown: '',
+        markdownFile: 'legal.md',
+      },
+      'pages/legal.md': 'Legal body.',
+    });
+
+    const pages = await new StaticPageRepository().findByPlacement('footer');
+    expect(pages.map((page) => page.getSlug())).toEqual(['legal', 'about']);
+    expect(pages[0].getMarkdown()).toBe('Legal body.');
     expect(await new StaticPageRepository().findBySlug('about')).not.toBeNull();
   });
 

@@ -23,7 +23,7 @@ if [ -e "$TARGET" ] && [ -n "$(ls -A "$TARGET" 2>/dev/null)" ]; then
 fi
 
 NOW="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
-mkdir -p "$TARGET/courses" "$TARGET/news" "$TARGET/pages" "$TARGET/media"
+mkdir -p "$TARGET/courses/getting-started/materials" "$TARGET/news" "$TARGET/pages" "$TARGET/media"
 
 say() { echo "  $1"; }
 echo "Scaffolding static content library in $TARGET:"
@@ -53,7 +53,7 @@ cat <<'EOF' > "$TARGET/courses/index.json"
 EOF
 say courses/index.json
 
-cat <<'EOF' | sed "s/@NOW@/$NOW/g" > "$TARGET/courses/getting-started.json"
+cat <<'EOF' | sed "s/@NOW@/$NOW/g" > "$TARGET/courses/getting-started/course.json"
 {
   "id": "course-getting-started",
   "title": "Getting started with your static library",
@@ -80,7 +80,7 @@ cat <<'EOF' | sed "s/@NOW@/$NOW/g" > "$TARGET/courses/getting-started.json"
           "id": "material-structure",
           "title": "How this repository is structured",
           "type": "markdown",
-          "markdown": "Everything your library serves lives in this repository:\n\n- `settings.json` — the library name and site configuration.\n- `courses/index.json` — which courses exist and their catalog order.\n- `courses/<name>.json` — one file per course, sections and materials inline.\n- `news/index.json` — news posts, newest first.\n- `pages/index.json` — auxiliary pages (about, legal…).\n- `media/` — images referenced with relative paths like `media/cover.svg`.\n\nEdit a file, push, and the library updates within a minute. **No accounts exist in this mode** — visitors study anonymously and their progress stays in their own browser.",
+          "markdownFile": "materials/how-this-repository-is-structured.md",
           "mediaPath": null,
           "exam": null,
           "required": true,
@@ -105,7 +105,7 @@ cat <<'EOF' | sed "s/@NOW@/$NOW/g" > "$TARGET/courses/getting-started.json"
                   { "id": "c", "text": "A commercial CMS" }
                 ],
                 "correctChoiceId": "b",
-                "explanation": "In static mode the container is stateless: it renders JSON and media fetched from the public content repository."
+                "explanation": "In static mode the container is stateless: it renders JSON, Markdown and media fetched from the public content repository."
               },
               {
                 "id": "q-publishing",
@@ -128,42 +128,88 @@ cat <<'EOF' | sed "s/@NOW@/$NOW/g" > "$TARGET/courses/getting-started.json"
   ]
 }
 EOF
-say courses/getting-started.json
+say courses/getting-started/course.json
+
+cat <<'EOF' > "$TARGET/courses/getting-started/materials/how-this-repository-is-structured.md"
+Everything your library serves lives in this repository, one file per thing:
+
+- `settings.json` — the library name and site configuration.
+- `courses/index.json` — which courses exist and their catalog order.
+- `courses/<name>/course.json` — one course: metadata, sections, materials.
+- `courses/<name>/materials/*.md` — each text lesson is its own Markdown file.
+- `news/<name>.json` + `news/<name>.md` — one news post each.
+- `pages/<name>.json` + `pages/<name>.md` — one auxiliary page each.
+- `media/` — images referenced with relative paths like `media/cover.svg`.
+
+Edit a file, push, and the library updates within a minute. **No accounts
+exist in this mode** — visitors study anonymously and their progress stays in
+their own browser.
+EOF
+say courses/getting-started/materials/how-this-repository-is-structured.md
 
 # -------------------------------------------------------------------- news
-cat <<'EOF' | sed "s/@NOW@/$NOW/g" > "$TARGET/news/index.json"
+cat <<'EOF' > "$TARGET/news/index.json"
 [
-  {
-    "id": "news-welcome",
-    "title": "This library is live",
-    "slug": "this-library-is-live",
-    "markdown": "Welcome! This library runs **Open Knowledge in static mode**: its content lives in a public git repository, and this post is just a JSON entry in `news/index.json`.",
-    "imagePath": null,
-    "author": "",
-    "published": true,
-    "createdAt": "@NOW@",
-    "updatedAt": "@NOW@"
-  }
+  "this-library-is-live"
 ]
 EOF
 say news/index.json
 
+cat <<'EOF' | sed "s/@NOW@/$NOW/g" > "$TARGET/news/this-library-is-live.json"
+{
+  "id": "news-welcome",
+  "title": "This library is live",
+  "slug": "this-library-is-live",
+  "markdownFile": "this-library-is-live.md",
+  "imagePath": null,
+  "author": "",
+  "published": true,
+  "createdAt": "@NOW@",
+  "updatedAt": "@NOW@"
+}
+EOF
+say news/this-library-is-live.json
+
+cat <<'EOF' > "$TARGET/news/this-library-is-live.md"
+Welcome! This library runs **Open Knowledge in static mode**: its content
+lives in a public git repository, and this post is a small JSON descriptor
+plus this Markdown file.
+EOF
+say news/this-library-is-live.md
+
 # ------------------------------------------------------------------- pages
-cat <<'EOF' | sed "s/@NOW@/$NOW/g" > "$TARGET/pages/index.json"
+cat <<'EOF' > "$TARGET/pages/index.json"
 [
-  {
-    "id": "page-about",
-    "title": "About this library",
-    "slug": "about",
-    "markdown": "This knowledge library is powered by **Open Knowledge**, an open-source application released under the MIT license that lets anyone publish courses openly — as a gift, not a business.\n\nIt collects no personal data from its visitors.\n\nOpen Knowledge is an open-source project: [github.com/oegea/open-knowledge](https://github.com/oegea/open-knowledge).",
-    "placement": "footer",
-    "position": 0,
-    "createdAt": "@NOW@",
-    "updatedAt": "@NOW@"
-  }
+  "about"
 ]
 EOF
 say pages/index.json
+
+cat <<'EOF' | sed "s/@NOW@/$NOW/g" > "$TARGET/pages/about.json"
+{
+  "id": "page-about",
+  "title": "About this library",
+  "slug": "about",
+  "markdownFile": "about.md",
+  "placement": "footer",
+  "position": 0,
+  "createdAt": "@NOW@",
+  "updatedAt": "@NOW@"
+}
+EOF
+say pages/about.json
+
+cat <<'EOF' > "$TARGET/pages/about.md"
+This knowledge library is powered by **Open Knowledge**, an open-source
+application released under the MIT license that lets anyone publish courses
+openly — as a gift, not a business.
+
+It collects no personal data from its visitors.
+
+Open Knowledge is an open-source project:
+[github.com/oegea/open-knowledge](https://github.com/oegea/open-knowledge).
+EOF
+say pages/about.md
 
 # ------------------------------------------------------------------- media
 cat <<'EOF' > "$TARGET/media/getting-started-cover.svg"
@@ -191,34 +237,54 @@ within about a minute (the instance caches content for 60 seconds).
 When in doubt about any format detail, the application source is open —
 consult it at https://github.com/oegea/open-knowledge. The JSON shapes used
 here are exactly the domain primitives under `src/modules/*/domain/*.ts`
-(look for the `XPrimitive` interfaces and their `fromPrimitive` validation).
+(the `XPrimitive` interfaces and their `fromPrimitive` validation), and the
+loaders live in `src/modules/*/infrastructure/Static*Repository.ts`.
+
+## Layout: one file per thing
+
+```
+settings.json                        site identity and configuration
+courses/index.json                   course directory names, catalog order
+courses/<name>/course.json           one course (metadata + structure)
+courses/<name>/materials/<file>.md   one Markdown file per text lesson
+news/index.json                      news entry names, newest first
+news/<name>.json  +  news/<name>.md  one news post each
+pages/index.json                     page entry names
+pages/<name>.json + pages/<name>.md  one auxiliary page each
+media/                               images and files
+```
+
+Long-form text NEVER lives inside JSON: descriptors reference a Markdown
+file through the `markdownFile` field (a path relative to the descriptor's
+directory). That keeps JSON small and structural, and prose editable as
+plain Markdown.
 
 ## Ground rules
 
-- Every file must stay **valid JSON** (double quotes, no trailing commas, no
-  comments). A malformed file makes that content disappear from the site
-  until fixed.
-- `id` values must be unique within their file and **must never change** once
-  published: visitor progress is keyed by course and material ids, and
-  changing them resets everyone's progress.
+- Every `.json` file must stay **valid JSON** (double quotes, no trailing
+  commas, no comments). A malformed file makes that content disappear from
+  the site until fixed.
+- `id` values must be unique within their content type and **must never
+  change** once published: visitor progress is keyed by course and material
+  ids, and changing them resets everyone's progress.
 - `slug` values are the public URLs (`/courses/<slug>`, `/news/<slug>`,
-  `/p/<slug>`): lowercase, hyphen-separated, unique per content type. Prefer
-  keeping them stable; if you must rename one, old links break (static mode
-  has no redirect memory).
+  `/p/<slug>`): lowercase, hyphen-separated, unique per content type. Keep
+  them stable; renaming one breaks old links (static mode has no redirects).
+- An item not listed in its `index.json` does not exist, no matter what
+  files are on disk. Index order is display order (courses: catalog order;
+  news: newest first).
 - Dates are ISO 8601 UTC strings, e.g. `"2026-08-09T12:00:00Z"`.
-- Markdown fields support standard Markdown: headings, lists, links, images,
-  code blocks, tables.
+- Markdown supports headings, lists, links, images, code blocks and tables.
 - Images live in `media/` and are referenced with repo-relative paths like
   `"media/my-image.jpg"`. Absolute `https://` URLs also work.
 
 ## Adding a course
 
-1. Create `courses/<name>.json` (the `<name>` is just a file name; the public
-   URL comes from the `slug` field inside).
-2. Append `"<name>"` to the array in `courses/index.json` — its position sets
-   the catalog order. A course not listed in the index does not exist.
+1. Create the directory `courses/<name>/` with a `course.json` and a
+   `materials/` folder for its text lessons.
+2. Append `"<name>"` to `courses/index.json`.
 
-Course file shape (every key is required unless noted):
+`course.json` shape:
 
 ```json
 {
@@ -239,7 +305,13 @@ Course file shape (every key is required unless noted):
   "published": true,
   "createdAt": "2026-08-09T12:00:00Z",
   "updatedAt": "2026-08-09T12:00:00Z",
-  "sections": [ ... ]
+  "sections": [
+    {
+      "id": "section-1",
+      "title": "First section",
+      "materials": []
+    }
+  ]
 }
 ```
 
@@ -259,28 +331,18 @@ Field notes:
 - `published`: `false` keeps the course out of the catalog entirely (static
   mode has no admin preview, so unpublished courses are simply invisible).
 
-### Sections and materials
+### Materials
 
-`sections` is an ordered array; each section is a logical chunk of the course
-and contains ordered `materials` — the order is the pedagogical path visitors
-follow:
-
-```json
-{
-  "id": "section-1",
-  "title": "First section",
-  "materials": [ ... ]
-}
-```
-
-Every material shares this envelope:
+`sections` is an ordered array; each section contains ordered `materials` —
+the order is the pedagogical path visitors follow. Every material shares
+this envelope:
 
 ```json
 {
   "id": "material-unique-id",
   "title": "Material title",
   "type": "markdown",
-  "markdown": "...",
+  "markdownFile": "materials/my-lesson.md",
   "mediaPath": null,
   "exam": null,
   "required": true,
@@ -293,15 +355,17 @@ Every material shares this envelope:
 
 The four material types:
 
-1. **`"type": "markdown"`** — a text lesson. Put the content in `markdown`
-   (do not repeat the title as a heading; the app already renders it).
-   `mediaPath` and `exam` stay `null`.
-2. **`"type": "video"`** — set `mediaPath` to a video file (`media/lesson.mp4`
-   or an absolute URL). `markdown` may hold optional notes rendered below the
-   player.
-3. **`"type": "audio"`** — same as video with an audio file (`media/talk.mp3`).
-   The player shows the course artwork.
-4. **`"type": "exam"`** — set `exam` to:
+1. **`"type": "markdown"`** — a text lesson. Write the content in a file
+   under `materials/` and point `markdownFile` at it (path relative to the
+   course directory). Don't repeat the title as a heading — the app renders
+   it. `mediaPath` and `exam` stay `null`.
+2. **`"type": "video"`** — set `mediaPath` to a video file
+   (`media/lesson.mp4` or an absolute URL). `markdownFile` may point to
+   optional notes rendered below the player.
+3. **`"type": "audio"`** — same as video with an audio file
+   (`media/talk.mp3`). The player shows the course artwork.
+4. **`"type": "exam"`** — keep the questions inline in `course.json` (they
+   are structure, not prose). Set `exam` to:
 
 ```json
 {
@@ -325,20 +389,22 @@ The four material types:
 - `passingScore` is a ratio (0.7 = 70%).
 - `questionsPerAttempt`: how many questions each attempt draws randomly from
   the pool — a bank of 50 questions with `questionsPerAttempt: 10` gives
-  every visitor a different exam. Use the pool size to ask everything.
+  every visitor a different exam.
 - Write real `explanation`s: the product's exam philosophy is feedback, not
   scores.
 
 ## Adding a news post
 
-Prepend an object to the array in `news/index.json` (newest first):
+1. Create `news/<name>.json` and `news/<name>.md` (the body).
+2. **Prepend** `"<name>"` to `news/index.json` — the list is newest first,
+   and the first entry renders as the large featured story.
 
 ```json
 {
   "id": "news-unique-id",
   "title": "Post title",
   "slug": "post-title",
-  "markdown": "Body in **Markdown**.",
+  "markdownFile": "post-title.md",
   "imagePath": "media/featured.jpg",
   "author": "Editor Name",
   "published": true,
@@ -348,19 +414,20 @@ Prepend an object to the array in `news/index.json` (newest first):
 ```
 
 `imagePath` (featured image) and `author` (byline next to the date) are
-optional — use `null` / `""`. The newest post renders as a large featured
-story. News can be disabled site-wide via `newsEnabled` in `settings.json`.
+optional — use `null` / `""`. News can be disabled site-wide via
+`newsEnabled` in `settings.json`.
 
 ## Adding an auxiliary page
 
-Add an object to `pages/index.json`:
+1. Create `pages/<name>.json` and `pages/<name>.md`.
+2. Add `"<name>"` to `pages/index.json`.
 
 ```json
 {
   "id": "page-unique-id",
   "title": "Page title",
   "slug": "page-title",
-  "markdown": "Body in **Markdown**.",
+  "markdownFile": "page-title.md",
   "placement": "menu",
   "position": 1,
   "createdAt": "2026-08-09T12:00:00Z",
@@ -410,13 +477,21 @@ cat <<'EOF' > "$TARGET/README.md"
 This repository IS the library: an [Open Knowledge](https://github.com/oegea/open-knowledge)
 instance in **static content mode** reads everything it serves from here.
 Editing these files and pushing is publishing — no build, no deploy, no
-database. `AGENTS.md` documents every format in detail (and makes AI coding
-assistants like Claude Code fluent in this repository: try asking one to
-"add a course about X").
+database. `AGENTS.md` documents every format in detail, and doubles as
+instructions for AI coding assistants (Claude Code, Codex, OpenCode…): open
+one inside this repository and ask it to "add a course about X" — it knows
+what to do.
 
 ## Publish the library in three steps
 
-1. **Push this folder** to a public GitHub repository.
+1. **Push this folder** to a public GitHub repository (the scaffolder
+   already ran `git init` and made the first commit):
+
+   ```sh
+   git remote add origin git@github.com:<user>/<repo>.git
+   git push -u origin main
+   ```
+
 2. **Deploy the Open Knowledge app** (once) with the environment variable
    `OK_CONTENT_REPO` pointing at this repository's raw URL:
    `https://raw.githubusercontent.com/<user>/<repo>/main`
@@ -448,13 +523,16 @@ needed — the container is stateless and disposable.
 
 ## Structure
 
+One file per thing; long-form text lives in Markdown, never inside JSON:
+
 | Path | What it is |
 |------|------------|
 | `settings.json` | Library name, hero texts, logos, news toggle |
-| `courses/index.json` | Course file names, in catalog order |
-| `courses/<name>.json` | A full course: metadata, sections, materials, exams |
-| `news/index.json` | News posts, newest first |
-| `pages/index.json` | Auxiliary pages (menu, footer or hidden) |
+| `courses/index.json` | Course directory names, in catalog order |
+| `courses/<name>/course.json` | One course: metadata, sections, materials, exams |
+| `courses/<name>/materials/*.md` | One Markdown file per text lesson |
+| `news/<name>.json` + `.md` | One news post each, listed in `news/index.json` |
+| `pages/<name>.json` + `.md` | One auxiliary page each, listed in `pages/index.json` |
 | `media/` | Images and files, referenced as `media/<file>` |
 
 In this mode there are no accounts: visitors study anonymously and their
@@ -462,9 +540,32 @@ progress lives in their own browser.
 EOF
 say README.md
 
+# ---------------------------------------------------------------- git init
+if command -v git >/dev/null 2>&1; then
+  (
+    cd "$TARGET"
+    git init -q -b main 2>/dev/null || git init -q
+    git add -A
+    git commit -q -m "My Open Knowledge library" 2>/dev/null || true
+  )
+  say "git repository initialized (branch main, first commit done)"
+else
+  echo "  (git not found — initialize the repository yourself when ready)"
+fi
+
 echo ""
-echo "Done. Next steps:"
-echo "  1. cd $TARGET && git init && git add -A && git commit -m 'My library'"
-echo "  2. Publish it as a PUBLIC repository on GitHub."
-echo "  3. Deploy Open Knowledge with OK_CONTENT_REPO set to the repo's raw URL"
-echo "     (see README.md inside $TARGET for one-click and Docker options)."
+echo "Done. Your library lives in: $TARGET"
+echo ""
+echo "Next steps:"
+echo ""
+echo "  1. Create a PUBLIC repository on GitHub, then connect and push:"
+echo "       cd $TARGET"
+echo "       git remote add origin git@github.com:<user>/<repo>.git"
+echo "       git push -u origin main"
+echo ""
+echo "  2. Deploy the Open Knowledge app pointing at your content"
+echo "     (one-click Vercel button and Docker recipe in $TARGET/README.md)."
+echo ""
+echo "  3. Add content by editing files — or let an AI assistant do it:"
+echo "     open Claude Code (or Codex, OpenCode…) inside $TARGET and ask"
+echo "     for 'a course about X'. AGENTS.md teaches it every format."

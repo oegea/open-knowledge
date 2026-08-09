@@ -74,6 +74,32 @@ export async function fetchContentJson<T>(relativePath: string): Promise<T | nul
   return body;
 }
 
+/** Fetches a plain-text document (e.g. a material's .md). Null when missing. */
+export async function fetchContentText(relativePath: string): Promise<string | null> {
+  const base = getContentRepoUrl();
+  if (!base) throw new Error('[StaticContentClient] OK_CONTENT_REPO is not set');
+
+  const url = `${base}/${relativePath.replace(/^\/+/, '')}`;
+  const cached = cache.get(url);
+  if (cached && cached.expiresAt > Date.now()) {
+    return cached.body as string | null;
+  }
+
+  const response = await fetch(url, { cache: 'no-store' });
+  if (response.status === 404) {
+    cache.set(url, { body: null, etag: null, expiresAt: Date.now() + CACHE_TTL_MS });
+    return null;
+  }
+  if (!response.ok) {
+    if (cached) return cached.body as string | null;
+    throw new Error(`[StaticContentClient] ${url} responded ${response.status}`);
+  }
+
+  const body = await response.text();
+  cache.set(url, { body, etag: null, expiresAt: Date.now() + CACHE_TTL_MS });
+  return body;
+}
+
 /** Test hook. */
 export function clearContentCache(): void {
   cache.clear();

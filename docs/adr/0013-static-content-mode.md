@@ -47,19 +47,32 @@ flags.
 
 The format is deliberately **the existing domain primitives, serialized as
 JSON** — the same shapes `toPrimitive()` produces and `fromPrimitive()`
-consumes. No parallel schema, no mapping layer, no site generator:
+consumes — laid out as **one file per thing** so both humans and AI coding
+assistants can navigate and edit content without scrolling monoliths:
 
 ```
-settings.json              InstanceSettingsPrimitive
-courses/index.json         string[] — course file names, catalog order
-courses/<slug>.json        CoursePrimitive (sections and materials inline)
-news/index.json            NewsPostPrimitive[] (newest first)
-pages/index.json           PagePrimitive[]
-media/...                  images referenced by the JSON via relative paths
+settings.json                        InstanceSettingsPrimitive
+courses/index.json                   string[] — directory names, catalog order
+courses/<name>/course.json           CoursePrimitive (structure; exams inline)
+courses/<name>/materials/<file>.md   one Markdown file per text lesson
+news/index.json                      string[] — entry names, newest first
+news/<name>.json + news/<name>.md    one news post each
+pages/index.json                     string[] — entry names
+pages/<name>.json + pages/<name>.md  one auxiliary page each
+media/...                            images referenced via relative paths
 ```
+
+Long-form prose never lives inside JSON: descriptors point at a Markdown
+file through an infrastructure-only `markdownFile` field (relative to the
+descriptor's directory). The static repositories inline the file's content
+before calling `fromPrimitive`, so the domain never learns about the storage
+layout. Exam questions stay inline in `course.json` — they are structure,
+not prose.
 
 Relative `mediaPath`/`coverImage`/`imagePath` values (`media/...`) are
 resolved against `OK_CONTENT_REPO`. Absolute URLs pass through untouched.
+Loading a library fans out into one request per document, absorbed by the
+60-second cache.
 
 ### Scaffolding CLI
 
@@ -67,7 +80,8 @@ resolved against `OK_CONTENT_REPO`. Absolute URLs pass through untouched.
 runnable via curl straight from the app repository — generates a ready-to-publish
 content repository: valid example course, news post, about page, settings,
 a README with guided deploy options (one-click Vercel, Docker, container
-platforms), and a CLAUDE.md/AGENTS.md pair documenting every content format
+platforms), a git repository already initialized with a first commit and
+push instructions, and a CLAUDE.md/AGENTS.md pair documenting every content format
 in detail so AI coding assistants can author courses in the repository. It is
 a scaffolder, not a build tool — the generated files are the deployable
 format. Since static mode is stateless, serverless platforms (e.g. Vercel)

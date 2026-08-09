@@ -1,16 +1,28 @@
 import { Course, CoursePrimitive } from '../domain/Course';
 import { CourseList } from '../domain/CourseList';
 import { CourseFilter, CourseRepository } from '../domain/CourseRepository';
+import { MaterialPrimitive } from '../domain/Material';
 import {
   fetchContentJson,
+  fetchContentText,
   resolveContentUrl,
 } from '../../shared/infrastructure/StaticContentClient';
 
 /**
  * Read-only courses from the content repository (ADR 0013).
- * `courses/index.json` lists course file names in catalog order; each entry
- * is a full CoursePrimitive at `courses/<name>.json`.
+ *
+ * `courses/index.json` lists directory names in catalog order; each course
+ * lives in `courses/<name>/course.json`. A material may keep its body in a
+ * separate Markdown file via `markdownFile` (relative to the course
+ * directory) — this loader inlines it before handing the primitive to the
+ * domain, so `Course.fromPrimitive` never learns about the storage layout.
  */
+
+type RawMaterial = MaterialPrimitive & { markdownFile?: string };
+type RawCourse = Omit<CoursePrimitive, 'sections'> & {
+  sections: { id: string; title: string; materials: RawMaterial[] }[];
+};
+
 export class StaticCourseRepository implements CourseRepository {
   async save(): Promise<Course> {
     throw new Error('[StaticCourseRepository] static content mode is read-only');
@@ -50,27 +62,43 @@ export class StaticCourseRepository implements CourseRepository {
 
   private async loadAll(): Promise<Course[]> {
     const index = (await fetchContentJson<string[]>('courses/index.json')) ?? [];
-    const loaded = await Promise.all(
-      index.map(async (name) => {
-        const file = name.endsWith('.json') ? name : `${name}.json`;
-        const data = await fetchContentJson<CoursePrimitive>(`courses/${file}`);
-        return data ? Course.fromPrimitive(this.resolveMedia(data)) : null;
-      })
-    );
+    const loaded = await Promise.all(index.map((name) => this.loadCourse(name)));
     return loaded.filter((course): course is Course => course !== null);
   }
 
-  private resolveMedia(data: CoursePrimitive): CoursePrimitive {
-    return {
-      ...data,
-      coverImage: resolveContentUrl(data.coverImage),
-      sections: (data.sections ?? []).map((section) => ({
+  private async loadCourse(directory: string): Promise<Course | null> {
+    const raw = await fetchContentJson<RawCourse>(`courses/${directory}/course.json`);
+    if (!raw) return null;
+
+    const sections = await Promise.all(
+      (raw.sections ?? []).map(async (section) => ({
         ...section,
-        materials: (section.materials ?? []).map((material) => ({
-          ...material,
-          mediaPath: resolveContentUrl(material.mediaPath),
-        })),
-      })),
+        materials: await Promise.all(
+          (section.materials ?? []).map((material) => this.resolveMaterial(directory, material))
+        ),
+      }))
+    );
+
+    return Course.fromPrimitive({
+      ...raw,
+      coverImage: resolveContentUrl(raw.coverImage),
+      sections,
+    });
+  }
+
+  private async resolveMaterial(
+    directory: string,
+    material: RawMaterial
+  ): Promise<MaterialPrimitive> {
+    const { markdownFile, ...primitive } = material;
+    let markdown = primitive.markdown ?? '';
+    if (markdownFile) {
+      markdown = (await fetchContentText(`courses/${directory}/${markdownFile}`)) ?? '';
+    }
+    return {
+      ...primitive,
+      markdown,
+      mediaPath: resolveContentUrl(primitive.mediaPath),
     };
   }
 }
