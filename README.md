@@ -12,6 +12,12 @@ languages, dark mode, and a mobile experience that feels native.
 It is open source (MIT), self-hostable, and conceived as a gift, not a
 business. The learner is never the product.
 
+## Demo
+
+Try it right now: **[open-knowledge-one.vercel.app](https://open-knowledge-one.vercel.app/)** —
+the official Open Knowledge library, itself running in static content mode
+straight from a public git repository.
+
 ## Create your library in minutes
 
 Your content lives in a public git repository; the app renders it. No
