@@ -7,6 +7,7 @@ import { LOCALES } from '@/i18n/config';
 import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
 import { StartCourseButton } from '@/components/public/StartCourseButton';
+import { IconAudio, IconExam, IconPage, IconVideo } from '@/components/ui/icons';
 import { getCurrentUser } from '@/app/serverAuth';
 import styles from './page.module.css';
 
@@ -20,6 +21,40 @@ export async function generateMetadata({ params }: PageProps<'/courses/[id]'>) {
   } catch {
     return {};
   }
+}
+
+const TYPE_ICONS = {
+  markdown: IconPage,
+  audio: IconAudio,
+  video: IconVideo,
+  exam: IconExam,
+} as const;
+
+function MaterialTypeMark({ type, label }: { type: string; label: string }) {
+  const Icon = TYPE_ICONS[type as keyof typeof TYPE_ICONS] ?? IconPage;
+  return (
+    <>
+      {/* Phones get a compact icon; larger screens keep the text badge. */}
+      <span className={styles.materialTypeIcon} title={label} aria-label={label}>
+        <Icon width={17} height={17} />
+      </span>
+      <span className={styles.materialType} aria-hidden="true">
+        {label}
+      </span>
+    </>
+  );
+}
+
+/** Keeps the external-link arrow glued to the title's last word. */
+function sourceTitleWithArrow(title: string) {
+  const words = title.trim().split(' ');
+  const last = words.pop();
+  return (
+    <>
+      {words.length > 0 ? `${words.join(' ')} ` : ''}
+      <span style={{ whiteSpace: 'nowrap' }}>{last} ↗</span>
+    </>
+  );
 }
 
 export default async function CourseDetailPage({ params }: PageProps<'/courses/[id]'>) {
@@ -125,9 +160,10 @@ export default async function CourseDetailPage({ params }: PageProps<'/courses/[
                             href={`/courses/${courseRef}/study/${material.getId()}`}
                             className={styles.materialItem}
                           >
-                            <span className={styles.materialType}>
-                              {translate(dictionary, `material.type.${material.getType()}`)}
-                            </span>
+                            <MaterialTypeMark
+                              type={material.getType()}
+                              label={translate(dictionary, `material.type.${material.getType()}`)}
+                            />
                             <span className={styles.materialItemTitle}>{material.getTitle()}</span>
                             <span className={styles.materialArrow} aria-hidden="true">
                               →
@@ -215,7 +251,7 @@ export default async function CourseDetailPage({ params }: PageProps<'/courses/[
                             rel="noopener noreferrer"
                             className={styles.bibliographyLink}
                           >
-                            {source.getTitle()} ↗
+                            {sourceTitleWithArrow(source.getTitle())}
                           </a>
                         ) : (
                           source.getTitle()

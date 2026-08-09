@@ -210,7 +210,15 @@
   display: flex;
   flex-direction: column;
   gap: var(--ok-space-1);
-  padding-left: calc(2rem + var(--ok-space-3));
+  /* Phones have no width to spare: no decorative indent. */
+  padding-left: 0;
+}
+
+@media (min-width: 640px) {
+  .materialList {
+    /* Wide screens align materials under the section title text. */
+    padding-left: calc(2rem + var(--ok-space-3));
+  }
 }
 
 .materialItem {
@@ -238,7 +246,27 @@
   padding: var(--ok-space-2) 0;
 }
 
+.materialTypeIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  color: var(--ok-fg-muted);
+  background: var(--ok-bg);
+  border: 1px solid var(--ok-border);
+  border-radius: var(--ok-radius-md);
+}
+
+@media (min-width: 640px) {
+  .materialTypeIcon {
+    display: none;
+  }
+}
+
 .materialType {
+  display: none;
   font-size: var(--ok-text-xs);
   font-weight: 700;
   color: var(--ok-fg-muted);
@@ -247,6 +275,12 @@
   border-radius: var(--ok-radius-sm);
   padding: 2px 6px;
   flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .materialType {
+    display: inline-block;
+  }
 }
 
 .materialArrow {

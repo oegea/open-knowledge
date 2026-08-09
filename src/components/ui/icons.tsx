@@ -100,6 +100,35 @@ export function IconSearch(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function IconAudio(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base(props)}>
+      <path d="M4 14v-3a8 8 0 0 1 16 0v3" />
+      <rect x="3" y="14" width="4" height="6" rx="1.5" />
+      <rect x="17" y="14" width="4" height="6" rx="1.5" />
+    </svg>
+  );
+}
+
+export function IconVideo(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base(props)}>
+      <rect x="3" y="5" width="18" height="14" rx="3" />
+      <path d="m10 9.5 5 2.5-5 2.5z" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function IconExam(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base(props)}>
+      <rect x="4" y="3" width="16" height="18" rx="2.5" />
+      <path d="m8 12 2.5 2.5L16 9" />
+      <path d="M8 17h8" />
+    </svg>
+  );
+}
+
 export function IconSun(props: SVGProps<SVGSVGElement>) {
   return (
     <svg {...base(props)}>
