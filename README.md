@@ -32,44 +32,26 @@ All instance state — SQLite database, uploaded media, encryption key — lives
 
 ## How to deploy
 
-One honest note first: Open Knowledge is deliberately stateful — a SQLite database and uploaded media on local disk, zero external services. That is what makes it self-hostable with no configuration, but it also means it cannot run on function-based serverless platforms (Vercel/Netlify functions, AWS Lambda), whose filesystems are wiped between invocations. The closest thing to "serverless" that fits is a **container platform with a persistent volume**: no servers to manage, scale-to-one, a volume for `/data`.
+One honest note first: Open Knowledge is deliberately stateful — a SQLite database and uploaded media on local disk, zero external services. That is what makes it self-hostable with no configuration, but it also means it cannot run on function-based serverless platforms (Vercel/Netlify functions, AWS Lambda), whose filesystems are wiped between invocations. It wants a plain machine with a disk — which is also the deployment with **no variable costs**: a fixed-price VPS cannot surprise you with a bandwidth bill.
 
-### Fastest path: Fly.io (~5 minutes)
+### Recommended: any VPS with Docker (fixed monthly cost)
 
-The repository ships a production `Dockerfile` that stores everything in `/data`. With [flyctl](https://fly.io/docs/flyctl/install/) installed:
-
-```bash
-fly launch --no-deploy        # detects the Dockerfile; pick a region, don't add Postgres/Redis
-fly volumes create ok_data --size 1
-```
-
-Add the volume mount to the generated `fly.toml`:
-
-```toml
-[mounts]
-  source = "ok_data"
-  destination = "/data"
-
-[env]
-  OK_DATA_DIR = "/data"
-```
+The repository ships a production `Dockerfile` that stores everything in `/data`. On any small VPS (1 vCPU / 512 MB is plenty to start), a Raspberry Pi, or a home server:
 
 ```bash
-fly deploy
-```
-
-Open the app URL, register the first account (it becomes the administrator — guard its recovery code), and start publishing. Keep exactly **one machine** (`fly scale count 1`): SQLite wants a single writer.
-
-### Any other container host
-
-The same image runs on Railway, Render, a VPS with Docker, or a Raspberry Pi on your shelf. The only rule is always the same: **mount a persistent volume at `/data`.**
-
-```bash
+git clone https://github.com/oegea/open-knowledge.git && cd open-knowledge
 docker build -t open-knowledge .
-docker run -d -p 3000:3000 -v ok_data:/data open-knowledge
+docker run -d --name open-knowledge --restart unless-stopped \
+  -p 3000:3000 -v ok_data:/data open-knowledge
 ```
 
-Migrations are automatic and additive: redeploying a new version on the same volume upgrades the database in place. Disaster recovery is built in — the admin panel exports a full environment backup as a zip, and restoring it on a fresh instance brings everything back.
+Put your reverse proxy of choice (Caddy makes HTTPS one line: `caddy reverse-proxy --from your-domain.example --to :3000`) in front, open the URL, register the first account (it becomes the administrator — guard its recovery code), and start publishing.
+
+To upgrade: `git pull`, rebuild, recreate the container with the same `-v ok_data:/data`. Migrations are automatic and additive — the database upgrades in place. **Backing up is copying the volume** (or using the admin panel's one-click environment backup zip, which restores onto any fresh instance).
+
+### Container platforms
+
+The same image runs on container hosts with persistent volumes (Fly.io, Railway, Render). They trade the fixed VPS price for usage-based billing — mind that most have no hard spending cap. The only rule is always the same: **mount a persistent volume at `/data`, and keep exactly one instance** (SQLite wants a single writer).
 
 ## Development
 
