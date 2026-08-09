@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
+import { redirect, notFound } from 'next/navigation';
 import certificateFactory from '@/modules/certificate/application/factory';
 import { getCurrentUser } from '@/app/serverAuth';
 import { getLocale } from '@/i18n/getLocale';
@@ -9,6 +9,7 @@ import { PublicFooter } from '@/components/public/PublicFooter';
 import { LogoutButton } from '@/components/auth/LogoutButton';
 import { DisplayNameForm } from '@/components/auth/DisplayNameForm';
 import styles from './page.module.css';
+import { isStaticMode } from '@/modules/shared/infrastructure/StaticContentClient';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,6 +19,8 @@ export async function generateMetadata() {
 }
 
 export default async function AccountPage() {
+  if (isStaticMode()) notFound();
+
   const user = await getCurrentUser();
   if (user === null) redirect('/login');
 

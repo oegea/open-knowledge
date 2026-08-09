@@ -1,6 +1,7 @@
 import { notFound, permanentRedirect } from 'next/navigation';
 import courseFactory from '@/modules/course/application/factory';
 import { getCurrentUser } from '@/app/serverAuth';
+import { isStaticMode } from '@/modules/shared/infrastructure/StaticContentClient';
 import { StudyView } from '@/components/study/StudyView';
 
 export const dynamic = 'force-dynamic';
@@ -50,6 +51,7 @@ export default async function StudyMaterialPage({
       course={course.toPrimitive()}
       currentMaterialId={materialId}
       authenticated={user !== null}
+      identityEnabled={!isStaticMode()}
     />
   );
 }

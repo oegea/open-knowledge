@@ -6,6 +6,7 @@ import { getDictionary, translate } from '@/i18n/dictionary';
 import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
 import styles from './page.module.css';
+import { isStaticMode } from '@/modules/shared/infrastructure/StaticContentClient';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,6 +16,8 @@ export async function generateMetadata() {
 }
 
 export default async function CertificatePage({ params }: PageProps<'/certificates/[id]'>) {
+  if (isStaticMode()) notFound();
+
   const { id } = await params;
   const locale = await getLocale();
   const dictionary = await getDictionary(locale);

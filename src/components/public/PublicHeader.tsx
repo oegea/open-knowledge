@@ -3,6 +3,7 @@ import { getLocale } from '@/i18n/getLocale';
 import { getDictionary, translate } from '@/i18n/dictionary';
 import { getCurrentUser } from '@/app/serverAuth';
 import settingsFactory from '@/modules/settings/application/factory';
+import { isStaticMode } from '@/modules/shared/infrastructure/StaticContentClient';
 import pagesFactory from '@/modules/pages/application/factory';
 import { LanguageSelector } from './LanguageSelector';
 import { ThemeToggle } from './ThemeToggle';
@@ -19,6 +20,8 @@ export async function PublicHeader() {
   const menuPages = await pagesFactory.listPages('menu');
 
   const userInfo = user ? { identifier: user.getIdentifier(), isAdmin: user.isAdmin() } : null;
+  // Static content mode has no accounts: no sign-in, no notifications.
+  const identityEnabled = !isStaticMode();
 
   return (
     <header className={`ok-glass-strong ${styles.header}`}>
@@ -56,7 +59,7 @@ export async function PublicHeader() {
         <ThemeToggle />
         <LanguageSelector />
         {user !== null ? <NotificationsBell /> : null}
-        <UserMenu user={userInfo} />
+        {identityEnabled ? <UserMenu user={userInfo} /> : null}
       </div>
 
       {/* Mobile: bell + app-like menu sheet */}
@@ -70,6 +73,7 @@ export async function PublicHeader() {
             title: page.getTitle(),
           }))}
           user={userInfo}
+          identityEnabled={identityEnabled}
         />
       </div>
     </header>

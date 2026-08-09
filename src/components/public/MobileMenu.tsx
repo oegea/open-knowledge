@@ -27,10 +27,12 @@ interface MobileMenuProps {
   newsEnabled: boolean;
   menuPages: MenuPageLink[];
   user: { identifier: string; isAdmin: boolean } | null;
+  /** False in static content mode: no sign-in entry at all. */
+  identityEnabled?: boolean;
 }
 
 /** App-like navigation sheet for small screens. */
-export function MobileMenu({ newsEnabled, menuPages, user }: MobileMenuProps) {
+export function MobileMenu({ newsEnabled, menuPages, user, identityEnabled = true }: MobileMenuProps) {
   const { t } = useI18n();
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -128,14 +130,14 @@ export function MobileMenu({ newsEnabled, menuPages, user }: MobileMenuProps) {
                     </li>
                   ) : null}
                 </>
-              ) : (
+              ) : identityEnabled ? (
                 <li>
                   <Link href="/login" className={styles.item}>
                     <IconUser className={styles.itemIcon} />
                     {t('nav.signIn')}
                   </Link>
                 </li>
-              )}
+              ) : null}
             </ul>
 
             <div className={styles.preferences}>

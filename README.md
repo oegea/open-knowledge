@@ -53,6 +53,20 @@ To upgrade: `git pull`, rebuild, recreate the container with the same `-v ok_dat
 
 The same image runs on container hosts with persistent volumes (Fly.io, Railway, Render). They trade the fixed VPS price for usage-based billing — mind that most have no hard spending cap. The only rule is always the same: **mount a persistent volume at `/data`, and keep exactly one instance** (SQLite wants a single writer).
 
+### Static content mode: no database at all
+
+For libraries that don't need accounts, there is a second way to run Open Knowledge ([ADR 0013](./docs/adr/0013-static-content-mode.md)): the content lives in a **public git repository** and the container is completely stateless — no volume, no database, disposable, so it runs on anything that can host a container, including free tiers.
+
+```bash
+node scripts/init-content-repo.mjs my-library   # scaffold an example content repo
+# push my-library/ to a public GitHub repository, then:
+docker run -d -p 3000:3000 \
+  -e OK_CONTENT_REPO=https://raw.githubusercontent.com/<user>/my-library/main \
+  open-knowledge
+```
+
+In this mode **git is the admin panel**: edit a JSON file, push, and the library updates within a minute. Visitors browse, study and take exams anonymously (progress stays in their browser); registration, notifications, certificates and the admin panel simply don't exist. The scaffolded repository documents the folder structure.
+
 ## Development
 
 ```bash
@@ -68,7 +82,7 @@ Next.js (App Router) full-stack monolith. Business logic lives in framework-agno
 
 ## License & contributing
 
-Open Knowledge is released under the [MIT license](./LICENSE.md), conceived by [Oriol Egea](https://github.com/oegea). Code contributions are not accepted, but **ideas, suggestions and bug reports are very welcome as [issues](https://github.com/oegea/open-knowledge/issues)** — see [CONTRIBUTING.md](./CONTRIBUTING.md).
+Open Knowledge is released under the [MIT license](./LICENSE.md). Code contributions are not accepted, but **ideas, suggestions and bug reports are very welcome as [issues](https://github.com/oegea/open-knowledge/issues)** — see [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## Philosophy
 

@@ -3,7 +3,10 @@ import { ExportStrings } from '../domain/CourseExportRepository';
 import { EpubCourseExportRepository } from '../infrastructure/EpubCourseExportRepository';
 import { PdfCourseExportRepository } from '../infrastructure/PdfCourseExportRepository';
 import { SqliteCourseRepository } from '../../course/infrastructure/SqliteCourseRepository';
+import { StaticCourseRepository } from '../../course/infrastructure/StaticCourseRepository';
 import { SqliteSettingsRepository } from '../../settings/infrastructure/SqliteSettingsRepository';
+import { StaticSettingsRepository } from '../../settings/infrastructure/StaticSettingsRepository';
+import { isStaticMode } from '../../shared/infrastructure/StaticContentClient';
 import { getDictionary, translate } from '@/i18n/dictionary';
 import { DEFAULT_LOCALE, isLocale } from '@/i18n/config';
 
@@ -28,8 +31,8 @@ export default {
     await exportCourse({
       courseId,
       baseUrl,
-      courseRepository: new SqliteCourseRepository(),
-      settingsRepository: new SqliteSettingsRepository(),
+      courseRepository: (isStaticMode() ? new StaticCourseRepository() : new SqliteCourseRepository()),
+      settingsRepository: (isStaticMode() ? new StaticSettingsRepository() : new SqliteSettingsRepository()),
       exportRepository:
         format === 'epub' ? new EpubCourseExportRepository() : new PdfCourseExportRepository(),
       stringsProvider,

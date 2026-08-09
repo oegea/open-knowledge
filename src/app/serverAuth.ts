@@ -1,11 +1,15 @@
 import { cookies } from 'next/headers';
 import identityFactory from '@/modules/identity/application/factory';
 import { User } from '@/modules/identity/domain/User';
+import { isStaticMode } from '@/modules/shared/infrastructure/StaticContentClient';
 
 export const SESSION_COOKIE = 'ok_session';
 
 /** Resolves the authenticated user from the session cookie, or null. */
 export async function getCurrentUser(): Promise<User | null> {
+  // Static content mode has no identity at all (ADR 0013).
+  if (isStaticMode()) return null;
+
   const cookieStore = await cookies();
   const token = cookieStore.get(SESSION_COOKIE)?.value;
   return await identityFactory.getSessionUser(token);

@@ -24,7 +24,7 @@ Someone deploys Open Knowledge. Publishes knowledge. Someone else walks in. And 
 
 ---
 
-Open Knowledge is envisioned by [Oriol Egea](https://github.com/oegea).`,
+Open Knowledge is an open-source project: [github.com/oegea/open-knowledge](https://github.com/oegea/open-knowledge).`,
 };
 
 interface createDefaultAboutPageProps {

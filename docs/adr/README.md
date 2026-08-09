@@ -14,3 +14,4 @@
 | [0010](./0010-simplicity-and-non-goals.md) | Simplicity principle and explicit non-goals |
 | [0011](./0011-first-user-is-admin.md) | First registered user becomes the administrator |
 | [0012](./0012-empirical-validation.md) | Empirical validation of every deliverable |
+| [0013](./0013-static-content-mode.md) | Static content mode: read-only library from a public repository |

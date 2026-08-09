@@ -15,34 +15,39 @@ import { updateMaterial } from './updateMaterial';
 import { removeMaterial } from './removeMaterial';
 import { moveMaterial } from './moveMaterial';
 import { SqliteCourseRepository } from '../infrastructure/SqliteCourseRepository';
+import { StaticCourseRepository } from '../infrastructure/StaticCourseRepository';
+import { isStaticMode } from '../../shared/infrastructure/StaticContentClient';
+
+const courseRepository = (): CourseRepository =>
+  isStaticMode() ? new StaticCourseRepository() : new SqliteCourseRepository();
 import notificationFactory from '../../notification/application/factory';
-import { CourseFilter } from '../domain/CourseRepository';
+import { CourseFilter, CourseRepository } from '../domain/CourseRepository';
 import { CourseDetailsInput } from '../domain/Course';
 import { MaterialInput } from '../domain/Material';
 
 export default {
   createDefaultWelcomeCourse: async () =>
-    await createDefaultWelcomeCourse({ courseRepository: new SqliteCourseRepository() }),
+    await createDefaultWelcomeCourse({ courseRepository: courseRepository() }),
 
   createCourse: async (details: CourseDetailsInput) =>
-    await createCourse({ ...details, courseRepository: new SqliteCourseRepository() }),
+    await createCourse({ ...details, courseRepository: courseRepository() }),
 
   getCourse: async (id: string) =>
-    await getCourse({ id, courseRepository: new SqliteCourseRepository() }),
+    await getCourse({ id, courseRepository: courseRepository() }),
 
   listCourses: async (filter?: CourseFilter) =>
-    await listCourses({ filter, courseRepository: new SqliteCourseRepository() }),
+    await listCourses({ filter, courseRepository: courseRepository() }),
 
   updateCourseDetails: async (id: string, details: CourseDetailsInput) =>
-    await updateCourseDetails({ id, ...details, courseRepository: new SqliteCourseRepository() }),
+    await updateCourseDetails({ id, ...details, courseRepository: courseRepository() }),
 
   deleteCourse: async (id: string) =>
-    await deleteCourse({ id, courseRepository: new SqliteCourseRepository() }),
+    await deleteCourse({ id, courseRepository: courseRepository() }),
 
   publishCourse: async (id: string) =>
     await publishCourse({
       id,
-      courseRepository: new SqliteCourseRepository(),
+      courseRepository: courseRepository(),
       onCoursePublished: async (course) => {
         await notificationFactory.publishNotification(
           'course_published',
@@ -53,28 +58,28 @@ export default {
     }),
 
   unpublishCourse: async (id: string) =>
-    await unpublishCourse({ id, courseRepository: new SqliteCourseRepository() }),
+    await unpublishCourse({ id, courseRepository: courseRepository() }),
 
   addSection: async (courseId: string, title: string) =>
-    await addSection({ courseId, title, courseRepository: new SqliteCourseRepository() }),
+    await addSection({ courseId, title, courseRepository: courseRepository() }),
 
   updateSectionTitle: async (courseId: string, sectionId: string, title: string) =>
     await updateSectionTitle({
       courseId,
       sectionId,
       title,
-      courseRepository: new SqliteCourseRepository(),
+      courseRepository: courseRepository(),
     }),
 
   removeSection: async (courseId: string, sectionId: string) =>
-    await removeSection({ courseId, sectionId, courseRepository: new SqliteCourseRepository() }),
+    await removeSection({ courseId, sectionId, courseRepository: courseRepository() }),
 
   moveSection: async (courseId: string, sectionId: string, newIndex: number) =>
     await moveSection({
       courseId,
       sectionId,
       newIndex,
-      courseRepository: new SqliteCourseRepository(),
+      courseRepository: courseRepository(),
     }),
 
   addMaterial: async (courseId: string, sectionId: string, material: MaterialInput) =>
@@ -82,7 +87,7 @@ export default {
       courseId,
       sectionId,
       ...material,
-      courseRepository: new SqliteCourseRepository(),
+      courseRepository: courseRepository(),
     }),
 
   updateMaterial: async (
@@ -96,7 +101,7 @@ export default {
       sectionId,
       materialId,
       ...material,
-      courseRepository: new SqliteCourseRepository(),
+      courseRepository: courseRepository(),
     }),
 
   removeMaterial: async (courseId: string, sectionId: string, materialId: string) =>
@@ -104,7 +109,7 @@ export default {
       courseId,
       sectionId,
       materialId,
-      courseRepository: new SqliteCourseRepository(),
+      courseRepository: courseRepository(),
     }),
 
   moveMaterial: async (courseId: string, sectionId: string, materialId: string, newIndex: number) =>
@@ -113,6 +118,6 @@ export default {
       sectionId,
       materialId,
       newIndex,
-      courseRepository: new SqliteCourseRepository(),
+      courseRepository: courseRepository(),
     }),
 };

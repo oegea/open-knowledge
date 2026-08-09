@@ -22,6 +22,8 @@ interface StudyViewProps {
   course: CoursePrimitive;
   currentMaterialId: string;
   authenticated: boolean;
+  /** False in static content mode: no register hint, no certificates. */
+  identityEnabled?: boolean;
 }
 
 interface FlatMaterial {
@@ -31,7 +33,12 @@ interface FlatMaterial {
   sectionIndex: number;
 }
 
-export function StudyView({ course, currentMaterialId, authenticated }: StudyViewProps) {
+export function StudyView({
+  course,
+  currentMaterialId,
+  authenticated,
+  identityEnabled = true,
+}: StudyViewProps) {
   // URLs use the SEO slug; local/remote progress stays keyed by course id.
   const courseRef = course.slug || course.id!;
   const { t } = useI18n();
@@ -316,14 +323,14 @@ export function StudyView({ course, currentMaterialId, authenticated }: StudyVie
                 >
                   {t('certificate.get')}
                 </button>
-              ) : (
+              ) : identityEnabled ? (
                 <p className={styles.completedHint}>
                   {t('study.registerToKeep')}{' '}
                   <Link href="/register" className={styles.completedLink}>
                     {t('auth.register')}
                   </Link>
                 </p>
-              )}
+              ) : null}
             </aside>
           ) : null}
 

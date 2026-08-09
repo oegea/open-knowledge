@@ -5,6 +5,13 @@ import { listNewsPosts } from './listNewsPosts';
 import { deleteNewsPost } from './deleteNewsPost';
 import { NewsPost } from '../domain/NewsPost';
 import { SqliteNewsRepository } from '../infrastructure/SqliteNewsRepository';
+import { StaticNewsRepository } from '../infrastructure/StaticNewsRepository';
+import { isStaticMode } from '../../shared/infrastructure/StaticContentClient';
+
+import type { NewsRepository } from '../domain/NewsRepository';
+
+const newsRepository = (): NewsRepository =>
+  isStaticMode() ? new StaticNewsRepository() : new SqliteNewsRepository();
 import notificationFactory from '../../notification/application/factory';
 
 const notifyNewsPublished = async (post: NewsPost) => {
@@ -25,7 +32,7 @@ export default {
       published,
       imagePath,
       author,
-      newsRepository: new SqliteNewsRepository(),
+      newsRepository: newsRepository(),
       onNewsPublished: notifyNewsPublished,
     }),
 
@@ -44,16 +51,16 @@ export default {
       published,
       imagePath,
       author,
-      newsRepository: new SqliteNewsRepository(),
+      newsRepository: newsRepository(),
       onNewsPublished: notifyNewsPublished,
     }),
 
   getNewsPost: async (id: string) =>
-    await getNewsPost({ id, newsRepository: new SqliteNewsRepository() }),
+    await getNewsPost({ id, newsRepository: newsRepository() }),
 
   listNewsPosts: async (publishedOnly: boolean) =>
-    await listNewsPosts({ publishedOnly, newsRepository: new SqliteNewsRepository() }),
+    await listNewsPosts({ publishedOnly, newsRepository: newsRepository() }),
 
   deleteNewsPost: async (id: string) =>
-    await deleteNewsPost({ id, newsRepository: new SqliteNewsRepository() }),
+    await deleteNewsPost({ id, newsRepository: newsRepository() }),
 };

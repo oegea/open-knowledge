@@ -96,10 +96,9 @@ test.describe('Public library', () => {
 
     await expect(page.getByRole('heading', { name: 'About this library' })).toBeVisible();
     await expect(page.getByText(/MIT license/)).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Oriol Egea' })).toHaveAttribute(
-      'href',
-      'https://github.com/oegea'
-    );
+    await expect(
+      page.getByRole('link', { name: 'github.com/oegea/open-knowledge' })
+    ).toHaveAttribute('href', 'https://github.com/oegea/open-knowledge');
   });
 
   test('the default welcome course is seeded as an admin-only draft', async ({ request }) => {
