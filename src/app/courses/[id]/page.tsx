@@ -6,10 +6,10 @@ import { getLocale } from '@/i18n/getLocale';
 import { getDictionary, translate } from '@/i18n/dictionary';
 import { LOCALES, isLocale, DEFAULT_LOCALE } from '@/i18n/config';
 import { ActionMenu } from '@/components/public/ActionMenu';
+import { CourseContents } from '@/components/public/CourseContents';
 import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
 import { StartCourseButton } from '@/components/public/StartCourseButton';
-import { IconAudio, IconExam, IconPage, IconVideo } from '@/components/ui/icons';
 import { getCurrentUser } from '@/app/serverAuth';
 import styles from './page.module.css';
 
@@ -23,28 +23,6 @@ export async function generateMetadata({ params }: PageProps<'/courses/[id]'>) {
   } catch {
     return {};
   }
-}
-
-const TYPE_ICONS = {
-  markdown: IconPage,
-  audio: IconAudio,
-  video: IconVideo,
-  exam: IconExam,
-} as const;
-
-function MaterialTypeMark({ type, label }: { type: string; label: string }) {
-  const Icon = TYPE_ICONS[type as keyof typeof TYPE_ICONS] ?? IconPage;
-  return (
-    <>
-      {/* Phones get a compact icon; larger screens keep the text badge. */}
-      <span className={styles.materialTypeIcon} title={label} aria-label={label}>
-        <Icon width={17} height={17} />
-      </span>
-      <span className={styles.materialType} aria-hidden="true">
-        {label}
-      </span>
-    </>
-  );
 }
 
 /** Keeps the external-link arrow glued to the title's last word. */
@@ -93,6 +71,7 @@ export default async function CourseDetailPage({ params }: PageProps<'/courses/[
   });
   const tutorQuery = encodeURIComponent(tutorPrompt);
 
+  const user = await getCurrentUser();
   const sections = course.getSections().getSections();
   const orderedMaterialIds = sections.flatMap((section) =>
     section.getMaterials().getMaterials().map((material) => material.getId())
@@ -127,7 +106,7 @@ export default async function CourseDetailPage({ params }: PageProps<'/courses/[
                 courseId={course.getId()!}
                 courseRef={courseRef}
                 orderedMaterialIds={orderedMaterialIds}
-                authenticated={(await getCurrentUser()) !== null}
+                authenticated={user !== null}
               />
             </div>
             {cover ? (
@@ -160,38 +139,25 @@ export default async function CourseDetailPage({ params }: PageProps<'/courses/[
               </span>
             </h2>
 
-            <ol className={styles.sectionList}>
-              {sections.map((section, index) => (
-                <li key={section.getId()} className={`ok-glass ${styles.section}`}>
-                  <p className={styles.sectionTitle}>
-                    <span className={styles.sectionNumber}>{index + 1}</span>
-                    {section.getTitle()}
-                  </p>
-                  <ol className={styles.materialList}>
-                    {section
-                      .getMaterials()
-                      .getMaterials()
-                      .map((material) => (
-                        <li key={material.getId()}>
-                          <Link
-                            href={`/courses/${courseRef}/study/${material.getId()}`}
-                            className={styles.materialItem}
-                          >
-                            <MaterialTypeMark
-                              type={material.getType()}
-                              label={translate(dictionary, `material.type.${material.getType()}`)}
-                            />
-                            <span className={styles.materialItemTitle}>{material.getTitle()}</span>
-                            <span className={styles.materialArrow} aria-hidden="true">
-                              →
-                            </span>
-                          </Link>
-                        </li>
-                      ))}
-                  </ol>
-                </li>
-              ))}
-            </ol>
+            <CourseContents
+              courseId={course.getId()!}
+              courseRef={courseRef}
+              authenticated={user !== null}
+              completedLabel={translate(dictionary, 'study.completed')}
+              sections={sections.map((section) => ({
+                id: section.getId()!,
+                title: section.getTitle(),
+                materials: section
+                  .getMaterials()
+                  .getMaterials()
+                  .map((material) => ({
+                    id: material.getId()!,
+                    title: material.getTitle(),
+                    type: material.getType(),
+                    typeLabel: translate(dictionary, `material.type.${material.getType()}`),
+                  })),
+              }))}
+            />
           </section>
 
           <aside className={styles.aside}>

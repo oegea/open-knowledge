@@ -292,6 +292,22 @@
     transform var(--ok-duration-fast) var(--ok-ease);
 }
 
+.materialItemDone .materialItemTitle {
+  color: var(--ok-fg-muted);
+}
+
+.materialDoneCheck {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  flex-shrink: 0;
+  border-radius: var(--ok-radius-full);
+  background: var(--ok-success);
+  color: white;
+}
+
 .materialItem:hover .materialArrow {
   opacity: 1;
   transform: translateX(0);
