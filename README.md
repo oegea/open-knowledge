@@ -32,7 +32,7 @@ All instance state — SQLite database, uploaded media, encryption key — lives
 
 ## How to deploy
 
-One honest note first: Open Knowledge is deliberately stateful — a SQLite database and uploaded media on local disk, zero external services. That is what makes it self-hostable with no configuration, but it also means it cannot run on function-based serverless platforms (Vercel/Netlify functions, AWS Lambda), whose filesystems are wiped between invocations. It wants a plain machine with a disk — which is also the deployment with **no variable costs**: a fixed-price VPS cannot surprise you with a bandwidth bill.
+One honest note first: in its default mode Open Knowledge is deliberately stateful — a SQLite database and uploaded media on local disk, zero external services. That mode wants a plain machine with a disk, which is also the deployment with **no variable costs**: a fixed-price VPS cannot surprise you with a bandwidth bill. (If your library doesn't need accounts, the [static content mode](#static-content-mode-no-database-at-all) below is fully stateless and runs anywhere, serverless included.)
 
 ### Recommended: any VPS with Docker (fixed monthly cost)
 
@@ -57,15 +57,21 @@ The same image runs on container hosts with persistent volumes (Fly.io, Railway,
 
 For libraries that don't need accounts, there is a second way to run Open Knowledge ([ADR 0013](./docs/adr/0013-static-content-mode.md)): the content lives in a **public git repository** and the container is completely stateless — no volume, no database, disposable, so it runs on anything that can host a container, including free tiers.
 
-```bash
-node scripts/init-content-repo.mjs my-library   # scaffold an example content repo
-# push my-library/ to a public GitHub repository, then:
+Scaffold a content repository with one command (plain `sh`, no dependencies):
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/oegea/open-knowledge/main/scripts/init-content-repo.sh | sh -s my-library
+```
+
+Push `my-library/` to a public GitHub repository, then deploy the app pointing at it. **Because this mode is stateless, even serverless platforms work** — the scaffolded README walks you through both paths, including a one-click Vercel deploy:
+
+```sh
 docker run -d -p 3000:3000 \
   -e OK_CONTENT_REPO=https://raw.githubusercontent.com/<user>/my-library/main \
   open-knowledge
 ```
 
-In this mode **git is the admin panel**: edit a JSON file, push, and the library updates within a minute. Visitors browse, study and take exams anonymously (progress stays in their browser); registration, notifications, certificates and the admin panel simply don't exist. The scaffolded repository documents the folder structure.
+In this mode **git is the admin panel**: edit a JSON file, push, and the library updates within a minute. Visitors browse, study and take exams anonymously (progress stays in their browser); registration, notifications, certificates and the admin panel simply don't exist. The scaffolded repository ships a README with guided deploy options and an `AGENTS.md`/`CLAUDE.md` pair that teaches AI coding assistants every content format — ask Claude Code to "add a course about X" inside your content repo and it knows exactly what to do.
 
 ## Development
 

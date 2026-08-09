@@ -63,11 +63,15 @@ resolved against `OK_CONTENT_REPO`. Absolute URLs pass through untouched.
 
 ### Scaffolding CLI
 
-`node scripts/init-content-repo.mjs <directory>` generates a ready-to-publish
+`scripts/init-content-repo.sh <directory>` — plain POSIX sh, zero dependencies,
+runnable via curl straight from the app repository — generates a ready-to-publish
 content repository: valid example course, news post, about page, settings,
-and a README explaining how to publish it (GitHub) and how to run the Docker
-image pointing at it. It is a scaffolder, not a build tool — the generated
-files are the deployable format.
+a README with guided deploy options (one-click Vercel, Docker, container
+platforms), and a CLAUDE.md/AGENTS.md pair documenting every content format
+in detail so AI coding assistants can author courses in the repository. It is
+a scaffolder, not a build tool — the generated files are the deployable
+format. Since static mode is stateless, serverless platforms (e.g. Vercel)
+can host it: the SQLite limitation belongs to database mode only.
 
 ## Consequences
 
