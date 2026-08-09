@@ -281,8 +281,12 @@ export function StudyView({
         <aside
           className={`${styles.contents} ${contentsOpen ? styles.contentsOpen : ''}`}
           aria-label={t('course.contents')}
+          onClick={() => setContentsOpen(false)}
         >
-          <nav className={`ok-glass-strong ${styles.contentsPanel}`}>
+          <nav
+            className={`ok-glass-strong ${styles.contentsPanel}`}
+            onClick={(event) => event.stopPropagation()}
+          >
             {course.sections.map((section) => {
               const sectionCompleted = section.materials.every(
                 (material) => progress?.isMaterialCompleted(material.id) ?? false
@@ -425,7 +429,9 @@ export function StudyView({
           >
             <IconCheck width={20} height={20} />
           </button>
-        ) : null}
+        ) : (
+          <span />
+        )}
 
         {next ? (
           <button

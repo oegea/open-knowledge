@@ -362,11 +362,21 @@
 
 .footerInner {
   padding: var(--ok-space-2) var(--ok-space-3);
-  display: flex;
+  /* Three fixed slots: the check stays dead-center even when the
+     previous/next neighbor is a placeholder. */
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   gap: var(--ok-space-2);
   border-radius: var(--ok-radius-lg);
+}
+
+.footerInner > :first-child {
+  justify-self: start;
+}
+
+.footerInner > :last-child {
+  justify-self: end;
 }
 
 .navButton {
