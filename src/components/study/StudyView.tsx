@@ -46,6 +46,7 @@ export function StudyView({
   const router = useRouter();
   const [progress, setProgress] = useState<CourseProgress | null>(null);
   const [contentsOpen, setContentsOpen] = useState(false);
+  const [footerHidden, setFooterHidden] = useState(false);
   const [certificateId, setCertificateId] = useState<string | null>(null);
   const progressRepository = useMemo(
     () => (authenticated ? new HttpProgressRepository() : new LocalStorageProgressRepository()),
@@ -179,6 +180,26 @@ export function StudyView({
   }, [refreshProgress]);
 
   // Registered users get their attempt graded and recorded server-side.
+  // Reader-style chrome on phones: the nav bar hides while scrolling down,
+  // returns on the first upward gesture, and stays put near the end of the
+  // material (where the continue action lives). Desktop keeps it always on.
+  useEffect(() => {
+    let lastY = window.scrollY;
+    const handleScroll = () => {
+      const y = window.scrollY;
+      const nearBottom =
+        window.innerHeight + y >= document.documentElement.scrollHeight - 120;
+      if (nearBottom || y < 80 || y < lastY - 4) {
+        setFooterHidden(false);
+      } else if (y > lastY + 4) {
+        setFooterHidden(true);
+      }
+      lastY = y;
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [currentMaterialId]);
+
   const handleExamFinished = useCallback(
     async (answers: Record<string, string>) => {
       if (!authenticated) return;
@@ -380,7 +401,7 @@ export function StudyView({
 
       {/* Positioning and backdrop blur live on separate elements: iOS Safari
           mis-anchors position:fixed elements that carry backdrop-filter. */}
-      <footer className={styles.footer}>
+      <footer className={`${styles.footer} ${footerHidden ? styles.footerHidden : ''}`}>
         <div className={`ok-glass-strong ${styles.footerInner}`}>
         {previous ? (
           <Link

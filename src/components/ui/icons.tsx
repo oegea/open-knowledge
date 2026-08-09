@@ -132,7 +132,7 @@ export function IconExam(props: SVGProps<SVGSVGElement>) {
 export function IconCheck(props: SVGProps<SVGSVGElement>) {
   return (
     <svg {...base(props)}>
-      <path d="m5 12.5 4.5 4.5L19 7" />
+      <path d="M20 6 9 17l-5-5" />
     </svg>
   );
 }
