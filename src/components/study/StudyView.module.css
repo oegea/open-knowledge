@@ -334,20 +334,25 @@
 }
 
 .footer {
-  /* Always visible: the reader never scrolls to find their way forward. */
+  /* Always visible: the reader never scrolls to find their way forward.
+     This element only positions; the glass surface is its child (fixed +
+     backdrop-filter on one element mis-anchors on iOS Safari). */
   position: fixed;
-  bottom: var(--ok-space-2);
+  bottom: calc(var(--ok-space-2) + env(safe-area-inset-bottom, 0px));
   left: var(--ok-space-3);
   right: var(--ok-space-3);
   z-index: var(--ok-z-header);
+  max-width: 46rem;
+  margin: 0 auto;
+}
+
+.footerInner {
   padding: var(--ok-space-2) var(--ok-space-3);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--ok-space-2);
   border-radius: var(--ok-radius-lg);
-  max-width: 46rem;
-  margin: 0 auto;
 }
 
 .navButton {

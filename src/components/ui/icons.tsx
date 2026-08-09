@@ -129,6 +129,14 @@ export function IconExam(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function IconCheck(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base(props)}>
+      <path d="m5 12.5 4.5 4.5L19 7" />
+    </svg>
+  );
+}
+
 export function IconSun(props: SVGProps<SVGSVGElement>) {
   return (
     <svg {...base(props)}>

@@ -14,6 +14,7 @@ import { mergeProgress } from '@/modules/study/application/mergeProgress';
 import { LocalStorageProgressRepository } from '@/modules/study/infrastructure/LocalStorageProgressRepository';
 import { HttpProgressRepository } from '@/modules/study/infrastructure/HttpProgressRepository';
 import { useI18n } from '@/i18n/I18nProvider';
+import { IconCheck } from '../ui/icons';
 import { MaterialRenderer } from './MaterialRenderer';
 import { ReadingProgress } from './ReadingProgress';
 import styles from './StudyView.module.css';
@@ -377,7 +378,10 @@ export function StudyView({
         </main>
       </div>
 
-      <footer className={`ok-glass-strong ${styles.footer}`}>
+      {/* Positioning and backdrop blur live on separate elements: iOS Safari
+          mis-anchors position:fixed elements that carry backdrop-filter. */}
+      <footer className={styles.footer}>
+        <div className={`ok-glass-strong ${styles.footerInner}`}>
         {previous ? (
           <Link
             href={`/courses/${courseRef}/study/${previous.material.id}`}
@@ -398,7 +402,7 @@ export function StudyView({
             aria-pressed={isCompleted}
             title={t(isCompleted ? 'study.unmarkComplete' : 'study.markComplete')}
           >
-            ✓
+            <IconCheck width={20} height={20} />
           </button>
         ) : null}
 
@@ -413,6 +417,7 @@ export function StudyView({
         ) : (
           <span />
         )}
+      </div>
       </footer>
     </div>
   );
