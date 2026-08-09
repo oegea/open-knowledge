@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useI18n } from '@/i18n/I18nProvider';
@@ -49,8 +50,9 @@ export function AdminMobileMenu() {
         <IconMenu />
       </button>
 
-      {open ? (
-        <div className={styles.overlay} onClick={() => setOpen(false)}>
+      {open
+        ? createPortal(
+            <div className={styles.overlay} onClick={() => setOpen(false)}>
           <nav
             className={`ok-glass-strong ${styles.sheet}`}
             aria-label={t('nav.menu')}
@@ -109,8 +111,10 @@ export function AdminMobileMenu() {
               </li>
             </ul>
           </nav>
-        </div>
-      ) : null}
+            </div>,
+            document.body
+          )
+        : null}
     </>
   );
 }

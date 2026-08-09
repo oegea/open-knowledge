@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useI18n } from '@/i18n/I18nProvider';
@@ -66,8 +67,11 @@ export function MobileMenu({ newsEnabled, menuPages, user, identityEnabled = tru
         <IconMenu />
       </button>
 
-      {open ? (
-        <div className={styles.overlay} onClick={() => setOpen(false)}>
+      {/* Portaled to <body>: the glass header's backdrop-filter turns it
+          into a containing block, which would clip this fixed overlay. */}
+      {open
+        ? createPortal(
+            <div className={styles.overlay} onClick={() => setOpen(false)}>
           <nav
             className={`ok-glass-strong ${styles.sheet}`}
             aria-label={t('nav.menu')}
@@ -145,8 +149,10 @@ export function MobileMenu({ newsEnabled, menuPages, user, identityEnabled = tru
               <LanguageSelector />
             </div>
           </nav>
-        </div>
-      ) : null}
+            </div>,
+            document.body
+          )
+        : null}
     </>
   );
 }

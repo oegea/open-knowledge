@@ -28,18 +28,15 @@
 }
 
 .menu {
-  position: absolute;
-  top: calc(100% + var(--ok-space-2));
-  right: 0;
+  /* Position, direction and max height come inline from the component,
+     measured against the trigger and the viewport. */
   list-style: none;
-  padding: var(--ok-space-2);
+  padding: 4px var(--ok-space-2);
   min-width: 13rem;
-  max-height: 60dvh;
   overflow-y: auto;
-  z-index: var(--ok-z-overlay);
+  z-index: calc(var(--ok-z-overlay) + 1);
   display: flex;
   flex-direction: column;
-  gap: 2px;
   animation: menuIn var(--ok-duration-med) var(--ok-ease);
 }
 
