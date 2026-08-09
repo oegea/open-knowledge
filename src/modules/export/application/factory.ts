@@ -1,4 +1,5 @@
 import { exportCourse } from './exportCourse';
+import { exportCourseMarkdown } from './exportCourseMarkdown';
 import { ExportStrings } from '../domain/CourseExportRepository';
 import { EpubCourseExportRepository } from '../infrastructure/EpubCourseExportRepository';
 import { PdfCourseExportRepository } from '../infrastructure/PdfCourseExportRepository';
@@ -27,6 +28,12 @@ async function stringsProvider(language: string): Promise<ExportStrings> {
 }
 
 export default {
+  exportCourseMarkdown: async (courseId: string) =>
+    await exportCourseMarkdown({
+      courseId,
+      courseRepository: isStaticMode() ? new StaticCourseRepository() : new SqliteCourseRepository(),
+    }),
+
   exportCourse: async (courseId: string, format: 'epub' | 'pdf', baseUrl: string) =>
     await exportCourse({
       courseId,

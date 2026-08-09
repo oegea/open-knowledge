@@ -164,7 +164,10 @@
     "license": "ライセンス",
     "aboutCourse": "このコースについて",
     "downloadEpub": "EPUB をダウンロード",
-    "downloadPdf": "PDF をダウンロード"
+    "downloadPdf": "PDF をダウンロード",
+    "download": "ダウンロード",
+    "studyWithAi": "AIと一緒に学ぶ",
+    "tutorPrompt": "あなたはコース「{title}」の私のチューターです。まず、こちらからコースの全文を取得して読んでください：{url} — その後、学習を手伝ってください：質問に答え、レッスンを別の言葉で説明し、理解度を確認する質問を出してください。回答はコースの内容に基づき、範囲を超える場合は教えてください。"
   },
   "study": {
     "progress": "進捗",

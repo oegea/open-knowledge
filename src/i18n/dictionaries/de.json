@@ -164,7 +164,10 @@
     "license": "Lizenz",
     "aboutCourse": "Über diesen Kurs",
     "downloadEpub": "EPUB herunterladen",
-    "downloadPdf": "PDF herunterladen"
+    "downloadPdf": "PDF herunterladen",
+    "download": "Herunterladen",
+    "studyWithAi": "Mit KI lernen",
+    "tutorPrompt": "Du bist mein Tutor für den Kurs „{title}\". Rufe zuerst den vollständigen Kurstext hier ab und lies ihn: {url} — und hilf mir dann beim Lernen: beantworte meine Fragen, erkläre die Lektionen mit anderen Worten und stelle mir Prüfungsfragen. Stütze dich auf den Kursinhalt und sag mir, wenn du darüber hinausgehst."
   },
   "study": {
     "progress": "Fortschritt",

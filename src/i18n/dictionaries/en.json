@@ -164,7 +164,10 @@
     "license": "License",
     "aboutCourse": "About this course",
     "downloadEpub": "Download EPUB",
-    "downloadPdf": "Download PDF"
+    "downloadPdf": "Download PDF",
+    "download": "Download",
+    "studyWithAi": "Study with AI",
+    "tutorPrompt": "You are my tutor for the course \"{title}\". First, fetch and read the full course text here: {url} — then help me study it: answer my questions, explain the lessons in other words, and quiz me to check my understanding. Base your answers on the course content, and tell me whenever you go beyond it."
   },
   "study": {
     "progress": "Progress",

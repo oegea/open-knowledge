@@ -164,7 +164,10 @@
     "license": "Licenza",
     "aboutCourse": "Sobre este curso",
     "downloadEpub": "Descargar EPUB",
-    "downloadPdf": "Descargar PDF"
+    "downloadPdf": "Descargar PDF",
+    "download": "Descargar",
+    "studyWithAi": "Estudar con IA",
+    "tutorPrompt": "Es o meu titor para o curso «{title}». Primeiro, descarga e le o texto completo do curso aquí: {url} — e despois axúdame a estudalo: responde as miñas dúbidas, explícame as leccións con outras palabras e faime preguntas para comprobar que o entendo. Baséate no contido do curso e indícame cando saias del."
   },
   "study": {
     "progress": "Progreso",

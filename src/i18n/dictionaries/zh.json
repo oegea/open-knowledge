@@ -164,7 +164,10 @@
     "license": "许可证",
     "aboutCourse": "关于本课程",
     "downloadEpub": "下载 EPUB",
-    "downloadPdf": "下载 PDF"
+    "downloadPdf": "下载 PDF",
+    "download": "下载",
+    "studyWithAi": "与 AI 一起学习",
+    "tutorPrompt": "你是我课程《{title}》的导师。请先获取并阅读课程全文：{url} ——然后帮助我学习：回答我的问题，用不同的方式解释课程内容，并向我提问以检验我的理解。请以课程内容为依据，超出课程范围时请告知我。"
   },
   "study": {
     "progress": "进度",

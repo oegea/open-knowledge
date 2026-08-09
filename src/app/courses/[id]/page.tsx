@@ -1,9 +1,11 @@
 import Link from 'next/link';
+import { headers } from 'next/headers';
 import { notFound, permanentRedirect } from 'next/navigation';
 import courseFactory from '@/modules/course/application/factory';
 import { getLocale } from '@/i18n/getLocale';
 import { getDictionary, translate } from '@/i18n/dictionary';
-import { LOCALES } from '@/i18n/config';
+import { LOCALES, isLocale, DEFAULT_LOCALE } from '@/i18n/config';
+import { ActionMenu } from '@/components/public/ActionMenu';
 import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
 import { StartCourseButton } from '@/components/public/StartCourseButton';
@@ -75,6 +77,21 @@ export default async function CourseDetailPage({ params }: PageProps<'/courses/[
   if (course.getSlug() && id !== course.getSlug()) {
     permanentRedirect(`/courses/${course.getSlug()}`);
   }
+
+  // The tutor links hand an AI assistant the plain-text edition of the
+  // course; the prompt speaks the course's language, not the visitor's.
+  const headerList = await headers();
+  const host = headerList.get('host') ?? 'localhost:3000';
+  const protocol = headerList.get('x-forwarded-proto') ?? 'http';
+  const llmsUrl = `${protocol}://${host}/courses/${courseRef}/llms.txt`;
+  const courseLanguage = course.getLanguage();
+  const courseLocale = isLocale(courseLanguage) ? courseLanguage : DEFAULT_LOCALE;
+  const courseDictionary = await getDictionary(courseLocale);
+  const tutorPrompt = translate(courseDictionary, 'course.tutorPrompt', {
+    title: course.getTitle(),
+    url: llmsUrl,
+  });
+  const tutorQuery = encodeURIComponent(tutorPrompt);
 
   const sections = course.getSections().getSections();
   const orderedMaterialIds = sections.flatMap((section) =>
@@ -220,20 +237,20 @@ export default async function CourseDetailPage({ params }: PageProps<'/courses/[
               ) : null}
 
               <div className={styles.downloads}>
-                <a
-                  href={`/api/courses/${courseRef}/export/epub`}
-                  className={styles.downloadButton}
-                  download
-                >
-                  ↓ {translate(dictionary, 'course.downloadEpub')}
-                </a>
-                <a
-                  href={`/api/courses/${courseRef}/export/pdf`}
-                  className={styles.downloadButton}
-                  download
-                >
-                  ↓ {translate(dictionary, 'course.downloadPdf')}
-                </a>
+                <ActionMenu
+                  label={`↓ ${translate(dictionary, 'course.download')}`}
+                  items={[
+                    { label: 'EPUB', href: `/api/courses/${courseRef}/export/epub`, download: true },
+                    { label: 'PDF', href: `/api/courses/${courseRef}/export/pdf`, download: true },
+                  ]}
+                />
+                <ActionMenu
+                  label={`✦ ${translate(dictionary, 'course.studyWithAi')}`}
+                  items={[
+                    { label: 'ChatGPT', href: `https://chatgpt.com/?q=${tutorQuery}`, external: true },
+                    { label: 'Claude', href: `https://claude.ai/new?q=${tutorQuery}`, external: true },
+                  ]}
+                />
               </div>
 
               {course.getSources().length > 0 ? (
