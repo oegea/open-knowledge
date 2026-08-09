@@ -478,9 +478,9 @@ This repository IS the library: an [Open Knowledge](https://github.com/oegea/ope
 instance in **static content mode** reads everything it serves from here.
 Editing these files and pushing is publishing — no build, no deploy, no
 database. `AGENTS.md` documents every format in detail, and doubles as
-instructions for AI coding assistants (Claude Code, Codex, OpenCode…): open
-one inside this repository and ask it to "add a course about X" — it knows
-what to do.
+instructions for AI coding assistants (Claude Code, Codex, OpenCode…), so
+one can assist you in drafting, structuring and publishing your material
+directly in this repository.
 
 ## Publish the library in three steps
 
@@ -566,6 +566,7 @@ echo ""
 echo "  2. Deploy the Open Knowledge app pointing at your content"
 echo "     (one-click Vercel button and Docker recipe in $TARGET/README.md)."
 echo ""
-echo "  3. Add content by editing files — or let an AI assistant do it:"
-echo "     open Claude Code (or Codex, OpenCode…) inside $TARGET and ask"
-echo "     for 'a course about X'. AGENTS.md teaches it every format."
+echo "  3. Add content by editing the files directly — or open an AI coding"
+echo "     assistant (Claude Code, Codex, OpenCode…) inside $TARGET to help"
+echo "     you draft, structure and publish your material. AGENTS.md teaches"
+echo "     it every format."
