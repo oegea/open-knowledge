@@ -13,7 +13,12 @@ import { MobileMenu } from './MobileMenu';
 import { PublicNavLinks } from './PublicNavLinks';
 import styles from './PublicHeader.module.css';
 
-export async function PublicHeader() {
+interface PublicHeaderProps {
+  /** When set, an app-style circular back button precedes the brand. */
+  backHref?: string;
+}
+
+export async function PublicHeader({ backHref }: PublicHeaderProps = {}) {
   const locale = await getLocale();
   const dictionary = await getDictionary(locale);
   const settings = await settingsFactory.getInstanceSettings();
@@ -26,18 +31,29 @@ export async function PublicHeader() {
 
   return (
     <header className={`ok-glass-strong ${styles.header}`}>
-      <Link href="/" className={styles.brand} aria-label={settings.getLibraryName()}>
-        {settings.getLogoPath() ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={settings.getLogoPath()!}
-            alt={settings.getLibraryName()}
-            className={styles.brandLogo}
-          />
-        ) : (
-          settings.getLibraryName()
-        )}
-      </Link>
+      <div className={styles.leading}>
+        {backHref ? (
+          <Link
+            href={backHref}
+            className={styles.backButton}
+            aria-label={translate(dictionary, 'common.back')}
+          >
+            ←
+          </Link>
+        ) : null}
+        <Link href="/" className={styles.brand} aria-label={settings.getLibraryName()}>
+          {settings.getLogoPath() ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={settings.getLogoPath()!}
+              alt={settings.getLibraryName()}
+              className={styles.brandLogo}
+            />
+          ) : (
+            settings.getLibraryName()
+          )}
+        </Link>
+      </div>
 
       {/* Desktop: content links sit next to the brand; actions go right. */}
       <PublicNavLinks

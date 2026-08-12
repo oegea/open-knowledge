@@ -32,21 +32,21 @@ test.describe('Public library', () => {
     // The manually written byline sits next to the publication date.
     await expect(page.getByText('Por Equipo de la librería')).toBeVisible();
 
-    // Contextual back link returns to the news list.
-    await page.getByRole('link', { name: '← Noticias' }).click();
+    // The header back button returns to the news list.
+    await page.getByRole('link', { name: 'Volver' }).click();
     await expect(page).toHaveURL(/\/news$/);
   });
 
-  test('the catalog back link returns to the landing', async ({ page }) => {
+  test('the catalog header back button returns to the landing', async ({ page }) => {
     await page.goto('/courses');
-    await page.getByRole('link', { name: '← Librería' }).click();
+    await page.getByRole('link', { name: 'Volver' }).click();
     await expect(page).toHaveURL(/\/$/);
   });
 
   test('course detail links back to the catalog and to its category', async ({ page }) => {
     const { courseId } = loadState();
     await page.goto(`/courses/${courseId}`);
-    await page.getByRole('link', { name: '← Todos los cursos' }).click();
+    await page.getByRole('link', { name: 'Volver' }).click();
     await expect(page).toHaveURL(/\/courses$/);
 
     await page.goto(`/courses/${courseId}`);

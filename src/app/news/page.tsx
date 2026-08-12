@@ -6,7 +6,6 @@ import { getLocale } from '@/i18n/getLocale';
 import { getDictionary, translate } from '@/i18n/dictionary';
 import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
-import { BackLink } from '@/components/shared/BackLink';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -41,9 +40,8 @@ export default async function NewsPage() {
 
   return (
     <>
-      <PublicHeader />
+      <PublicHeader backHref="/" />
       <main className={styles.main}>
-        <BackLink href="/" label={translate(dictionary, 'nav.library')} />
         <h1 className={styles.title}>{translate(dictionary, 'news.title')}</h1>
 
         {posts.length === 0 ? (

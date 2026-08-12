@@ -13,6 +13,35 @@
   flex-wrap: wrap;
 }
 
+.leading {
+  display: flex;
+  align-items: center;
+  gap: var(--ok-space-1);
+  min-width: 0;
+}
+
+/* App-style circular back button, same shape as the study header's. */
+.backButton {
+  min-width: var(--ok-touch-target);
+  min-height: var(--ok-touch-target);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--ok-radius-full);
+  font-size: var(--ok-text-lg);
+  color: var(--ok-fg-muted);
+  flex-shrink: 0;
+  margin-left: calc(-1 * var(--ok-space-2));
+  transition:
+    background var(--ok-duration-fast) var(--ok-ease),
+    color var(--ok-duration-fast) var(--ok-ease);
+}
+
+.backButton:hover {
+  background: var(--ok-primary-soft);
+  color: var(--ok-primary);
+}
+
 .brand {
   font-weight: 800;
   font-size: var(--ok-text-md);

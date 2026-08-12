@@ -5,7 +5,6 @@ import { getDictionary, translate } from '@/i18n/dictionary';
 import { LOCALES } from '@/i18n/config';
 import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
-import { BackLink } from '@/components/shared/BackLink';
 import { IconSearch } from '@/components/ui/icons';
 import styles from './page.module.css';
 
@@ -50,9 +49,8 @@ export default async function CoursesPage({ searchParams }: PageProps<'/courses'
 
   return (
     <>
-      <PublicHeader />
+      <PublicHeader backHref="/" />
       <main className={styles.main}>
-        <BackLink href="/" label={translate(dictionary, 'nav.library')} />
         <h1 className={styles.pageTitle}>
           {categoryFilter ?? translate(dictionary, 'library.title')}
         </h1>

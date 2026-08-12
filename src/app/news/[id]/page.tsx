@@ -6,7 +6,6 @@ import { getDictionary, translate } from '@/i18n/dictionary';
 import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
 import { Prose } from '@/components/shared/Prose';
-import { BackLink } from '@/components/shared/BackLink';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -43,14 +42,13 @@ export default async function NewsPostPage({ params }: PageProps<'/news/[id]'>) 
 
   return (
     <>
-      <PublicHeader />
+      <PublicHeader backHref="/news" />
       <main className={styles.main}>
         <article className={`ok-glass ${styles.article}`}>
           {post.getImagePath() ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={post.getImagePath()!} alt="" className={styles.featuredImage} />
           ) : null}
-          <BackLink href="/news" label={translate(dictionary, 'news.title')} />
           <p className={styles.meta}>
             <time className={styles.date}>
               {new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(post.getCreatedAt())}

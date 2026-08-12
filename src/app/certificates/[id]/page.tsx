@@ -5,7 +5,6 @@ import { getLocale } from '@/i18n/getLocale';
 import { getDictionary, translate } from '@/i18n/dictionary';
 import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
-import { BackLink } from '@/components/shared/BackLink';
 import styles from './page.module.css';
 import { isStaticMode } from '@/modules/shared/infrastructure/StaticContentClient';
 
@@ -37,9 +36,8 @@ export default async function CertificatePage({ params }: PageProps<'/certificat
 
   return (
     <>
-      <PublicHeader />
+      <PublicHeader backHref="/account" />
       <main className={styles.main}>
-        <BackLink href="/account" label={translate(dictionary, 'auth.myAccount')} />
         <article className={`ok-glass-strong ${styles.certificate}`}>
           <div className={styles.ornamentTop} aria-hidden="true" />
           {settings.getCertificateLogoPath() ? (
