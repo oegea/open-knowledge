@@ -23,7 +23,8 @@
     "admin": "Administrazioa",
     "signIn": "Hasi saioa",
     "signOut": "Amaitu saioa",
-    "menu": "Menua"
+    "menu": "Menua",
+    "courses": "Ikastaroak"
   },
   "language": {
     "label": "Hizkuntza"
@@ -117,7 +118,14 @@
     "role": "Rola",
     "revoke": "Baliogabetu",
     "revokeWarning": "Honek ziurtagiria betiko ezabatzen du; egiaztapen-estekak funtzionatzeari utziko dio.",
-    "userDisplayNameHint": "Erabiltzaile honen ziurtagirietan agertzen da. Hutsik utzita identifikatzailea erabiltzen da."
+    "userDisplayNameHint": "Erabiltzaile honen ziurtagirietan agertzen da. Hutsik utzita identifikatzailea erabiltzen da.",
+    "categories": "Kategoriak",
+    "newCategory": "Kategoria berria",
+    "noCategories": "Oraindik ez dago kategoriarik. Ikastaroek testu libreko kategoriak erabil ditzakete.",
+    "categoryName": "Izena",
+    "categoryImage": "Txartelaren irudia",
+    "categoryImageHint": "Hasierako orriko txartelean agertzen da. Izena aldatzeak dauden ikastaroak eguneratzen ditu; ezabatzeak testu gisa mantentzen du haien kategoria.",
+    "categoryPickHint": "Aukeratu lehendik dagoen kategoria bat edo idatzi berri bat."
   },
   "material": {
     "type": {
@@ -151,7 +159,8 @@
     "empty": "Liburutegi honek ez du oraindik argitaratutako ikastarorik.",
     "searchPlaceholder": "Bilatu ikastaroak…",
     "courseCount": "{count} ikastaro argitaratuta",
-    "courseCountOne": "Ikastaro 1 argitaratuta"
+    "courseCountOne": "Ikastaro 1 argitaratuta",
+    "title": "Ikastaro guztiak"
   },
   "course": {
     "start": "Hasi ikastaroa",
@@ -250,5 +259,11 @@
     "responsible": "Edukiaren ardura argitaratu den liburutegiaren titularrarena da: {owner}.",
     "consultOnline": "Material hau sarean kontsultatzen da helbide honetan:",
     "toc": "Aurkibidea"
+  },
+  "landing": {
+    "categories": "Arakatu kategoriaka",
+    "viewAll": "Ikusi ikastaro guztiak",
+    "courseCount": "{count} ikastaro",
+    "courseCountOne": "Ikastaro 1"
   }
 }

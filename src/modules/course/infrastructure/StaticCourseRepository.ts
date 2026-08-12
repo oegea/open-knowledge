@@ -32,6 +32,10 @@ export class StaticCourseRepository implements CourseRepository {
     throw new Error('[StaticCourseRepository] static content mode is read-only');
   }
 
+  async reassignCategory(): Promise<number> {
+    throw new Error('[StaticCourseRepository] static content mode is read-only');
+  }
+
   async findById(id: string): Promise<Course | null> {
     const courses = await this.loadAll();
     return courses.find((course) => course.getId() === id) ?? null;

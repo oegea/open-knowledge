@@ -23,7 +23,8 @@
     "admin": "Administración",
     "signIn": "Iniciar sesión",
     "signOut": "Cerrar sesión",
-    "menu": "Menú"
+    "menu": "Menú",
+    "courses": "Cursos"
   },
   "language": {
     "label": "Idioma"
@@ -117,7 +118,14 @@
     "role": "Rol",
     "revoke": "Revocar",
     "revokeWarning": "Esto elimina permanentemente el certificado; su enlace de verificación dejará de funcionar.",
-    "userDisplayNameHint": "Se muestra en los certificados de esta persona. Vacío usa el identificador."
+    "userDisplayNameHint": "Se muestra en los certificados de esta persona. Vacío usa el identificador.",
+    "categories": "Categorías",
+    "newCategory": "Nueva categoría",
+    "noCategories": "Aún no hay categorías. Los cursos pueden seguir usando categorías de texto libre.",
+    "categoryName": "Nombre",
+    "categoryImage": "Imagen de la tarjeta",
+    "categoryImageHint": "Se muestra en la tarjeta de la página de inicio. Renombrar actualiza los cursos existentes; eliminar mantiene su categoría como texto.",
+    "categoryPickHint": "Elige una categoría existente o escribe una nueva."
   },
   "material": {
     "type": {
@@ -151,7 +159,8 @@
     "empty": "Esta librería aún no tiene cursos publicados.",
     "searchPlaceholder": "Buscar cursos…",
     "courseCount": "{count} cursos publicados",
-    "courseCountOne": "1 curso publicado"
+    "courseCountOne": "1 curso publicado",
+    "title": "Todos los cursos"
   },
   "course": {
     "start": "Empezar el curso",
@@ -250,5 +259,11 @@
     "responsible": "El responsable del contenido es el titular de la librería donde se ha publicado: {owner}.",
     "consultOnline": "Este material se consulta en línea en la siguiente dirección:",
     "toc": "Índice"
+  },
+  "landing": {
+    "categories": "Explora por categoría",
+    "viewAll": "Ver todos los cursos",
+    "courseCount": "{count} cursos",
+    "courseCountOne": "1 curso"
   }
 }

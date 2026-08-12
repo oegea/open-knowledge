@@ -14,6 +14,7 @@ import { addMaterial } from './addMaterial';
 import { updateMaterial } from './updateMaterial';
 import { removeMaterial } from './removeMaterial';
 import { moveMaterial } from './moveMaterial';
+import { recategorizeCourses } from './recategorizeCourses';
 import { SqliteCourseRepository } from '../infrastructure/SqliteCourseRepository';
 import { StaticCourseRepository } from '../infrastructure/StaticCourseRepository';
 import { isStaticMode } from '../../shared/infrastructure/StaticContentClient';
@@ -43,6 +44,9 @@ export default {
 
   deleteCourse: async (id: string) =>
     await deleteCourse({ id, courseRepository: courseRepository() }),
+
+  recategorizeCourses: async (from: string, to: string) =>
+    await recategorizeCourses({ from, to, courseRepository: courseRepository() }),
 
   publishCourse: async (id: string) =>
     await publishCourse({

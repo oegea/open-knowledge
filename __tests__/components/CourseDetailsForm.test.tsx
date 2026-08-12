@@ -73,6 +73,41 @@ describe('CourseDetailsForm', () => {
       );
     });
 
+    it('suggests managed categories through the datalist', async () => {
+      global.fetch = jest.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          categories: [{ name: 'Science' }, { name: 'History' }],
+        }),
+      }) as never;
+
+      renderForm(jest.fn());
+
+      await waitFor(() => expect(global.fetch).toHaveBeenCalledWith('/api/categories'));
+      const categoryInput = screen.getByRole('combobox', { name: /category/i });
+      expect(categoryInput).toHaveAttribute('list', 'ok-category-suggestions');
+      await waitFor(() => {
+        const options = document.querySelectorAll('#ok-category-suggestions option');
+        expect([...options].map((option) => option.getAttribute('value'))).toEqual([
+          'Science',
+          'History',
+        ]);
+      });
+
+      delete (global as { fetch?: unknown }).fetch;
+    });
+
+    it('still renders when the category fetch fails', async () => {
+      global.fetch = jest.fn().mockRejectedValue(new Error('offline')) as never;
+
+      renderForm(jest.fn());
+
+      expect(await screen.findByRole('textbox', { name: /title/i })).toBeInTheDocument();
+      expect(document.querySelectorAll('#ok-category-suggestions option')).toHaveLength(0);
+
+      delete (global as { fetch?: unknown }).fetch;
+    });
+
     it('parses authors as one per line', async () => {
       const onSubmit = jest.fn().mockResolvedValue(undefined);
       renderForm(onSubmit);

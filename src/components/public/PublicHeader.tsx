@@ -40,6 +40,9 @@ export async function PublicHeader() {
 
       {/* Desktop: content links sit next to the brand; actions go right. */}
       <nav className={styles.desktopNav} aria-label={translate(dictionary, 'nav.menu')}>
+        <Link href="/courses" className={styles.navLink}>
+          {translate(dictionary, 'nav.courses')}
+        </Link>
         {settings.isNewsEnabled() ? (
           <Link href="/news" className={styles.navLink}>
             {translate(dictionary, 'nav.news')}

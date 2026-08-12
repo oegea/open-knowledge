@@ -23,7 +23,8 @@
     "admin": "Amministrazione",
     "signIn": "Accedi",
     "signOut": "Esci",
-    "menu": "Menu"
+    "menu": "Menu",
+    "courses": "Corsi"
   },
   "language": {
     "label": "Lingua"
@@ -117,7 +118,14 @@
     "role": "Ruolo",
     "revoke": "Revoca",
     "revokeWarning": "Questo elimina definitivamente il certificato; il suo link di verifica smetterà di funzionare.",
-    "userDisplayNameHint": "Mostrato sui certificati di questa persona. Vuoto: si usa l'identificativo."
+    "userDisplayNameHint": "Mostrato sui certificati di questa persona. Vuoto: si usa l'identificativo.",
+    "categories": "Categorie",
+    "newCategory": "Nuova categoria",
+    "noCategories": "Ancora nessuna categoria. I corsi possono continuare a usare categorie a testo libero.",
+    "categoryName": "Nome",
+    "categoryImage": "Immagine della scheda",
+    "categoryImageHint": "Mostrata sulla scheda della pagina iniziale. Rinominare aggiorna i corsi esistenti; eliminare mantiene la loro categoria come testo.",
+    "categoryPickHint": "Scegli una categoria esistente o scrivine una nuova."
   },
   "material": {
     "type": {
@@ -151,7 +159,8 @@
     "empty": "Questa libreria non ha ancora corsi pubblicati.",
     "searchPlaceholder": "Cerca corsi…",
     "courseCount": "{count} corsi pubblicati",
-    "courseCountOne": "1 corso pubblicato"
+    "courseCountOne": "1 corso pubblicato",
+    "title": "Tutti i corsi"
   },
   "course": {
     "start": "Inizia il corso",
@@ -250,5 +259,11 @@
     "responsible": "Il contenuto è responsabilità del titolare della libreria in cui è stato pubblicato: {owner}.",
     "consultOnline": "Questo materiale si consulta online al seguente indirizzo:",
     "toc": "Indice"
+  },
+  "landing": {
+    "categories": "Esplora per categoria",
+    "viewAll": "Vedi tutti i corsi",
+    "courseCount": "{count} corsi",
+    "courseCountOne": "1 corso"
   }
 }

@@ -23,7 +23,8 @@
     "admin": "Verwaltung",
     "signIn": "Anmelden",
     "signOut": "Abmelden",
-    "menu": "Menü"
+    "menu": "Menü",
+    "courses": "Kurse"
   },
   "language": {
     "label": "Sprache"
@@ -117,7 +118,14 @@
     "role": "Rolle",
     "revoke": "Widerrufen",
     "revokeWarning": "Das Zertifikat wird dauerhaft gelöscht; sein Prüflink funktioniert nicht mehr.",
-    "userDisplayNameHint": "Erscheint auf den Zertifikaten dieser Person. Leer = Kennung wird verwendet."
+    "userDisplayNameHint": "Erscheint auf den Zertifikaten dieser Person. Leer = Kennung wird verwendet.",
+    "categories": "Kategorien",
+    "newCategory": "Neue Kategorie",
+    "noCategories": "Noch keine Kategorien. Kurse können weiterhin Freitext-Kategorien verwenden.",
+    "categoryName": "Name",
+    "categoryImage": "Kartenbild",
+    "categoryImageHint": "Wird auf der Karte der Startseite angezeigt. Umbenennen aktualisiert bestehende Kurse; Löschen behält ihre Kategorie als Text bei.",
+    "categoryPickHint": "Wähle eine bestehende Kategorie oder gib eine neue ein."
   },
   "material": {
     "type": {
@@ -151,7 +159,8 @@
     "empty": "Diese Bibliothek hat noch keine veröffentlichten Kurse.",
     "searchPlaceholder": "Kurse suchen…",
     "courseCount": "{count} veröffentlichte Kurse",
-    "courseCountOne": "1 veröffentlichter Kurs"
+    "courseCountOne": "1 veröffentlichter Kurs",
+    "title": "Alle Kurse"
   },
   "course": {
     "start": "Kurs starten",
@@ -250,5 +259,11 @@
     "responsible": "Für den Inhalt verantwortlich ist der Inhaber der Bibliothek, in der er veröffentlicht wurde: {owner}.",
     "consultOnline": "Dieses Material wird online unter folgender Adresse genutzt:",
     "toc": "Inhaltsverzeichnis"
+  },
+  "landing": {
+    "categories": "Nach Kategorie stöbern",
+    "viewAll": "Alle Kurse ansehen",
+    "courseCount": "{count} Kurse",
+    "courseCountOne": "1 Kurs"
   }
 }

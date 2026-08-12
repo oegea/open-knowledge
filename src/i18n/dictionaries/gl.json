@@ -23,7 +23,8 @@
     "admin": "Administración",
     "signIn": "Iniciar sesión",
     "signOut": "Pechar sesión",
-    "menu": "Menú"
+    "menu": "Menú",
+    "courses": "Cursos"
   },
   "language": {
     "label": "Idioma"
@@ -117,7 +118,14 @@
     "role": "Rol",
     "revoke": "Revogar",
     "revokeWarning": "Isto elimina permanentemente o certificado; a súa ligazón de verificación deixará de funcionar.",
-    "userDisplayNameHint": "Móstrase nos certificados desta persoa. Baleiro usa o identificador."
+    "userDisplayNameHint": "Móstrase nos certificados desta persoa. Baleiro usa o identificador.",
+    "categories": "Categorías",
+    "newCategory": "Nova categoría",
+    "noCategories": "Aínda non hai categorías. Os cursos poden seguir usando categorías de texto libre.",
+    "categoryName": "Nome",
+    "categoryImage": "Imaxe da tarxeta",
+    "categoryImageHint": "Móstrase na tarxeta da páxina de inicio. Renomear actualiza os cursos existentes; eliminar mantén a súa categoría como texto.",
+    "categoryPickHint": "Escolle unha categoría existente ou escribe unha nova."
   },
   "material": {
     "type": {
@@ -151,7 +159,8 @@
     "empty": "Esta libraría aínda non ten cursos publicados.",
     "searchPlaceholder": "Buscar cursos…",
     "courseCount": "{count} cursos publicados",
-    "courseCountOne": "1 curso publicado"
+    "courseCountOne": "1 curso publicado",
+    "title": "Todos os cursos"
   },
   "course": {
     "start": "Comezar o curso",
@@ -250,5 +259,11 @@
     "responsible": "O contido é responsabilidade do titular da libraría onde se publicou: {owner}.",
     "consultOnline": "Este material consúltase en liña no seguinte enderezo:",
     "toc": "Índice"
+  },
+  "landing": {
+    "categories": "Explora por categoría",
+    "viewAll": "Ver todos os cursos",
+    "courseCount": "{count} cursos",
+    "courseCountOne": "1 curso"
   }
 }

@@ -23,7 +23,7 @@ if [ -e "$TARGET" ] && [ -n "$(ls -A "$TARGET" 2>/dev/null)" ]; then
 fi
 
 NOW="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
-mkdir -p "$TARGET/courses/getting-started/materials" "$TARGET/news" "$TARGET/pages" "$TARGET/media"
+mkdir -p "$TARGET/courses/getting-started/materials" "$TARGET/categories" "$TARGET/news" "$TARGET/pages" "$TARGET/media"
 
 say() { echo "  $1"; }
 echo "Scaffolding static content library in $TARGET:"
@@ -137,6 +137,7 @@ Everything your library serves lives in this repository, one file per thing:
 - `courses/index.json` — which courses exist and their catalog order.
 - `courses/<name>/course.json` — one course: metadata, sections, materials.
 - `courses/<name>/materials/*.md` — each text lesson is its own Markdown file.
+- `categories/<name>.json` — an optional card image for a course category.
 - `news/<name>.json` + `news/<name>.md` — one news post each.
 - `pages/<name>.json` + `pages/<name>.md` — one auxiliary page each.
 - `media/` — images referenced with relative paths like `media/cover.svg`.
@@ -146,6 +147,25 @@ exist in this mode** — visitors study anonymously and their progress stays in
 their own browser.
 EOF
 say courses/getting-started/materials/how-this-repository-is-structured.md
+
+# -------------------------------------------------------------- categories
+cat <<'EOF' > "$TARGET/categories/index.json"
+[
+  "meta"
+]
+EOF
+say categories/index.json
+
+cat <<'EOF' | sed "s/@NOW@/$NOW/g" > "$TARGET/categories/meta.json"
+{
+  "id": "category-meta",
+  "name": "Meta",
+  "imagePath": "media/category-meta.svg",
+  "createdAt": "@NOW@",
+  "updatedAt": "@NOW@"
+}
+EOF
+say categories/meta.json
 
 # -------------------------------------------------------------------- news
 cat <<'EOF' > "$TARGET/news/index.json"
@@ -217,6 +237,11 @@ cat <<'EOF' > "$TARGET/media/getting-started-cover.svg"
 EOF
 say media/getting-started-cover.svg
 
+cat <<'EOF' > "$TARGET/media/category-meta.svg"
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#12424a"/><stop offset="1" stop-color="#0e7c86"/></linearGradient></defs><rect width="1280" height="720" fill="url(#g)"/><circle cx="230" cy="560" r="90" fill="#f0a92e" opacity="0.85"/><path d="M760 220h240a40 40 0 0 1 40 40v200a40 40 0 0 1-40 40H760l-120-140z" fill="none" stroke="#fff" stroke-width="18" stroke-linejoin="round"/><circle cx="800" cy="360" r="16" fill="#fff"/></svg>
+EOF
+say media/category-meta.svg
+
 # ---------------------------------------------------------------- CLAUDE.md
 cat <<'EOF' > "$TARGET/CLAUDE.md"
 @AGENTS.md
@@ -247,6 +272,8 @@ settings.json                        site identity and configuration
 courses/index.json                   course directory names, catalog order
 courses/<name>/course.json           one course (metadata + structure)
 courses/<name>/materials/<file>.md   one Markdown file per text lesson
+categories/index.json                category entry names
+categories/<name>.json               one category card (name + image)
 news/index.json                      news entry names, newest first
 news/<name>.json  +  news/<name>.md  one news post each
 pages/index.json                     page entry names
@@ -319,7 +346,11 @@ Field notes:
 
 - `language`: one of `es en fr de it zh ru uk ca gl eu pt ja`. The catalog
   filters by it.
-- `category`: free text or `null`. Courses sharing a category get a filter chip.
+- `category`: free text or `null`. Courses sharing a category get a filter
+  chip, and every category with at least one published course gets a card on
+  the home page. To give that card an image, add a category entry (see
+  "Adding a category" below) — without one the card shows an auto-generated
+  gradient.
 - `coverImage`: required in practice — the catalog is visual. 16:9 works best.
 - `sources`: the bibliography shown on the course page. `url` may be `null`
   for offline references (books).
@@ -392,6 +423,33 @@ The four material types:
   every visitor a different exam.
 - Write real `explanation`s: the product's exam philosophy is feedback, not
   scores.
+
+## Adding a category
+
+Categories are derived from the courses themselves: any `category` string
+used by a published course appears on the home page as a card and in the
+catalog as a filter chip. A category *entry* is optional decoration — it
+attaches a card image to one of those names:
+
+1. Create `categories/<name>.json`.
+2. Add `"<name>"` to `categories/index.json`.
+
+```json
+{
+  "id": "category-unique-id",
+  "name": "Science",
+  "imagePath": "media/category-science.jpg",
+  "createdAt": "2026-08-09T12:00:00Z",
+  "updatedAt": "2026-08-09T12:00:00Z"
+}
+```
+
+- `name` must match the courses' `category` string **exactly**
+  (case-sensitive) — the association is by name.
+- `imagePath`: the home page card image, 16:9 works best. `null` falls back
+  to the auto-generated gradient card.
+- An entry whose name no published course uses shows nothing — cards only
+  exist for categories with at least one published course.
 
 ## Adding a news post
 
@@ -531,6 +589,7 @@ One file per thing; long-form text lives in Markdown, never inside JSON:
 | `courses/index.json` | Course directory names, in catalog order |
 | `courses/<name>/course.json` | One course: metadata, sections, materials, exams |
 | `courses/<name>/materials/*.md` | One Markdown file per text lesson |
+| `categories/<name>.json` | Optional card image per category, listed in `categories/index.json` |
 | `news/<name>.json` + `.md` | One news post each, listed in `news/index.json` |
 | `pages/<name>.json` + `.md` | One auxiliary page each, listed in `pages/index.json` |
 | `media/` | Images and files, referenced as `media/<file>` |

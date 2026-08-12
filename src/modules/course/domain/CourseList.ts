@@ -31,6 +31,16 @@ export class CourseList {
     return [...new Set(categories)];
   }
 
+  getCategoryCounts(): Record<string, number> {
+    const counts: Record<string, number> = {};
+    for (const course of this.courses) {
+      const category = course.getCategory();
+      if (category === null) continue;
+      counts[category] = (counts[category] ?? 0) + 1;
+    }
+    return counts;
+  }
+
   isEmpty(): boolean {
     return this.courses.length === 0;
   }

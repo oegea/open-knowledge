@@ -23,7 +23,8 @@
     "admin": "管理",
     "signIn": "登录",
     "signOut": "退出登录",
-    "menu": "菜单"
+    "menu": "菜单",
+    "courses": "课程"
   },
   "language": {
     "label": "语言"
@@ -117,7 +118,14 @@
     "role": "角色",
     "revoke": "吊销",
     "revokeWarning": "这将永久删除该证书，其验证链接将失效。",
-    "userDisplayNameHint": "显示在该用户的证书上。留空则使用标识符。"
+    "userDisplayNameHint": "显示在该用户的证书上。留空则使用标识符。",
+    "categories": "分类",
+    "newCategory": "新建分类",
+    "noCategories": "还没有分类。课程仍可使用自由文本分类。",
+    "categoryName": "名称",
+    "categoryImage": "卡片图片",
+    "categoryImageHint": "显示在首页卡片上。重命名会更新现有课程；删除后课程仍保留文本分类。",
+    "categoryPickHint": "选择现有分类或输入新分类。"
   },
   "material": {
     "type": {
@@ -151,7 +159,8 @@
     "empty": "该课程库还没有发布的课程。",
     "searchPlaceholder": "搜索课程…",
     "courseCount": "已发布 {count} 门课程",
-    "courseCountOne": "已发布 1 门课程"
+    "courseCountOne": "已发布 1 门课程",
+    "title": "全部课程"
   },
   "course": {
     "start": "开始课程",
@@ -250,5 +259,11 @@
     "responsible": "内容责任由发布该内容的课程库所有者承担：{owner}。",
     "consultOnline": "该材料需在线查看，地址如下：",
     "toc": "目录"
+  },
+  "landing": {
+    "categories": "按分类浏览",
+    "viewAll": "查看全部课程",
+    "courseCount": "{count} 门课程",
+    "courseCountOne": "1 门课程"
   }
 }

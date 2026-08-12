@@ -3,7 +3,7 @@ import { loadState } from './helpers/state';
 
 test.describe('Public library', () => {
   test('shows the catalog with the published course', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/courses');
 
     await expect(page.getByRole('link', { name: /Introducción a la Astronomía/ })).toBeVisible();
     await expect(page.getByText('Ciencia').first()).toBeVisible();
@@ -41,10 +41,10 @@ test.describe('Public library', () => {
   });
 
   test('free-text search filters the catalog', async ({ page }) => {
-    await page.goto('/?q=Astronomía');
+    await page.goto('/courses?q=Astronomía');
     await expect(page.getByRole('link', { name: /Introducción a la Astronomía/ })).toBeVisible();
 
-    await page.goto('/?q=jardinería');
+    await page.goto('/courses?q=jardinería');
     await expect(page.getByText(/no tiene cursos publicados/)).toBeVisible();
   });
 

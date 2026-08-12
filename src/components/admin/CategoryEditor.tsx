@@ -1,0 +1,122 @@
+'use client';
+
+import { FormEvent, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { CategoryPrimitive } from '@/modules/category/domain/Category';
+import { HttpCourseAdminRepository } from '@/modules/course/infrastructure/HttpCourseAdminRepository';
+import { useI18n } from '@/i18n/I18nProvider';
+import { Button } from '../ui/Button';
+import { TextField } from '../ui/Field';
+import styles from './NewsEditor.module.css';
+
+interface CategoryEditorProps {
+  initial?: CategoryPrimitive;
+}
+
+export function CategoryEditor({ initial }: CategoryEditorProps) {
+  const { t } = useI18n();
+  const router = useRouter();
+  const [name, setName] = useState(initial?.name ?? '');
+  const [imagePath, setImagePath] = useState<string | null>(initial?.imagePath ?? null);
+  const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageChange = async (file: File | undefined) => {
+    if (!file) return;
+    setUploading(true);
+    setErrorMessage(null);
+    try {
+      const repository = new HttpCourseAdminRepository();
+      setImagePath(await repository.uploadMedia('images', file));
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : t('common.error'));
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+    setSaving(true);
+    setErrorMessage(null);
+    try {
+      const response = await fetch(
+        initial?.id ? `/api/categories/${initial.id}` : '/api/categories',
+        {
+          method: initial?.id ? 'PUT' : 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, imagePath }),
+        }
+      );
+      const body = await response.json();
+      if (!response.ok) throw new Error(body.error ?? t('common.error'));
+      router.push('/admin/categories');
+      router.refresh();
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : t('common.error'));
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <form className={styles.form} onSubmit={handleSubmit}>
+      <TextField
+        label={t('admin.categoryName')}
+        value={name}
+        onChange={(event) => setName(event.target.value)}
+        required
+        maxLength={100}
+      />
+
+      <div className={styles.imageBlock}>
+        <span className={styles.imageLabel}>{t('admin.categoryImage')}</span>
+        {imagePath ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={imagePath} alt="" className={styles.imagePreview} />
+        ) : null}
+        <input
+          ref={imageInputRef}
+          type="file"
+          accept="image/*"
+          className={styles.fileInput}
+          onChange={(event) => handleImageChange(event.target.files?.[0])}
+        />
+        <div className={styles.imageActions}>
+          <Button
+            type="button"
+            variant="soft"
+            size="sm"
+            disabled={uploading}
+            onClick={() => imageInputRef.current?.click()}
+          >
+            {uploading ? t('admin.uploading') : t('admin.upload')}
+          </Button>
+          {imagePath ? (
+            <Button type="button" variant="danger" size="sm" onClick={() => setImagePath(null)}>
+              {t('common.delete')}
+            </Button>
+          ) : null}
+        </div>
+        <p className={styles.imageHint}>{t('admin.categoryImageHint')}</p>
+      </div>
+
+      {errorMessage ? (
+        <p role="alert" className={styles.error}>
+          {errorMessage}
+        </p>
+      ) : null}
+
+      <div className={styles.actions}>
+        <Button type="submit" disabled={saving}>
+          {saving ? t('common.saving') : t('common.save')}
+        </Button>
+        <Button type="button" variant="ghost" onClick={() => router.push('/admin/categories')}>
+          {t('common.cancel')}
+        </Button>
+      </div>
+    </form>
+  );
+}

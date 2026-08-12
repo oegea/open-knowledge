@@ -6,6 +6,7 @@ export interface SeededState {
   adminSecret: string;
   courseId: string;
   newsPostId: string;
+  categoryId: string;
 }
 
 const STATE_PATH = path.join(__dirname, '..', '.state.json');

@@ -193,6 +193,13 @@ export class SqliteCourseRepository implements CourseRepository {
     return result.changes > 0;
   }
 
+  async reassignCategory(from: string, to: string): Promise<number> {
+    const result = this.db
+      .prepare('UPDATE courses SET category = @to, updated_at = @now WHERE category = @from')
+      .run({ from, to, now: new Date().toISOString() });
+    return result.changes;
+  }
+
   private mapCourseRow(row: CourseRow, sections: SectionPrimitive[]): CoursePrimitive {
     return {
       id: row.id,

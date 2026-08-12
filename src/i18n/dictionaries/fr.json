@@ -23,7 +23,8 @@
     "admin": "Administration",
     "signIn": "Se connecter",
     "signOut": "Se déconnecter",
-    "menu": "Menu"
+    "menu": "Menu",
+    "courses": "Cours"
   },
   "language": {
     "label": "Langue"
@@ -117,7 +118,14 @@
     "role": "Rôle",
     "revoke": "Révoquer",
     "revokeWarning": "Cela supprime définitivement le certificat ; son lien de vérification cessera de fonctionner.",
-    "userDisplayNameHint": "Affiché sur les certificats de cette personne. Vide : l'identifiant est utilisé."
+    "userDisplayNameHint": "Affiché sur les certificats de cette personne. Vide : l'identifiant est utilisé.",
+    "categories": "Catégories",
+    "newCategory": "Nouvelle catégorie",
+    "noCategories": "Pas encore de catégories. Les cours peuvent continuer à utiliser des catégories en texte libre.",
+    "categoryName": "Nom",
+    "categoryImage": "Image de la carte",
+    "categoryImageHint": "Affichée sur la carte de la page d'accueil. Renommer met à jour les cours existants ; supprimer conserve leur catégorie sous forme de texte.",
+    "categoryPickHint": "Choisissez une catégorie existante ou saisissez-en une nouvelle."
   },
   "material": {
     "type": {
@@ -151,7 +159,8 @@
     "empty": "Cette bibliothèque n'a pas encore de cours publiés.",
     "searchPlaceholder": "Rechercher des cours…",
     "courseCount": "{count} cours publiés",
-    "courseCountOne": "1 cours publié"
+    "courseCountOne": "1 cours publié",
+    "title": "Tous les cours"
   },
   "course": {
     "start": "Commencer le cours",
@@ -250,5 +259,11 @@
     "responsible": "Le contenu relève de la responsabilité du titulaire de la bibliothèque où il a été publié : {owner}.",
     "consultOnline": "Ce contenu se consulte en ligne à l'adresse suivante :",
     "toc": "Table des matières"
+  },
+  "landing": {
+    "categories": "Parcourir par catégorie",
+    "viewAll": "Voir tous les cours",
+    "courseCount": "{count} cours",
+    "courseCountOne": "1 cours"
   }
 }

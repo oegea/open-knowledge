@@ -8,6 +8,7 @@ export function create(overrides?: Partial<CourseRepository>): CourseRepository 
     findBySlug: jest.fn().mockResolvedValue(null),
     findAll: jest.fn().mockResolvedValue(CourseList.create(null)),
     delete: jest.fn().mockResolvedValue(true),
+    reassignCategory: jest.fn().mockResolvedValue(0),
     ...overrides,
   };
 }

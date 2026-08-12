@@ -107,10 +107,32 @@ setup('seed a fresh instance', async ({ request }) => {
   expect(newsResponse.status()).toBe(201);
   const newsPostId = (await newsResponse.json()).post.id as string;
 
+  // Managed category matching the course's free-text category, with an image
+  // for the landing card.
+  const categoryImageResponse = await request.post('/api/media', {
+    multipart: {
+      kind: 'images',
+      file: {
+        name: 'category.svg',
+        mimeType: 'image/svg+xml',
+        buffer: Buffer.from(COVER_SVG),
+      },
+    },
+  });
+  expect(categoryImageResponse.status()).toBe(201);
+  const { path: categoryImagePath } = await categoryImageResponse.json();
+
+  const categoryResponse = await request.post('/api/categories', {
+    data: { name: 'Ciencia', imagePath: categoryImagePath },
+  });
+  expect(categoryResponse.status()).toBe(201);
+  const categoryId = (await categoryResponse.json()).category.id as string;
+
   saveState({
     adminIdentifier: challenge.identifier,
     adminSecret: challenge.secret,
     courseId,
     newsPostId,
+    categoryId,
   });
 });

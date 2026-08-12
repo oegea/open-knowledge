@@ -55,6 +55,8 @@ settings.json                        InstanceSettingsPrimitive
 courses/index.json                   string[] — directory names, catalog order
 courses/<name>/course.json           CoursePrimitive (structure; exams inline)
 courses/<name>/materials/<file>.md   one Markdown file per text lesson
+categories/index.json                string[] — entry names (optional; ADR 0015)
+categories/<name>.json               CategoryPrimitive (card image for a category name)
 news/index.json                      string[] — entry names, newest first
 news/<name>.json + news/<name>.md    one news post each
 pages/index.json                     string[] — entry names

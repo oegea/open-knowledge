@@ -30,6 +30,15 @@ export function IconLibrary(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function IconTag(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base(props)}>
+      <path d="M20.59 13.41 12 22l-8.59-8.59A2 2 0 0 1 3 12V4a1 1 0 0 1 1-1h8a2 2 0 0 1 1.41.59L22 12z" />
+      <circle cx="7.5" cy="7.5" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
 export function IconNews(props: SVGProps<SVGSVGElement>) {
   return (
     <svg {...base(props)}>

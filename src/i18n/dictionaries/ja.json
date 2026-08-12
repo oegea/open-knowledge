@@ -23,7 +23,8 @@
     "admin": "管理",
     "signIn": "ログイン",
     "signOut": "ログアウト",
-    "menu": "メニュー"
+    "menu": "メニュー",
+    "courses": "コース"
   },
   "language": {
     "label": "言語"
@@ -117,7 +118,14 @@
     "role": "役割",
     "revoke": "取り消す",
     "revokeWarning": "証明書は完全に削除され、検証リンクは無効になります。",
-    "userDisplayNameHint": "このユーザーの証明書に表示されます。空欄の場合は識別子を使用します。"
+    "userDisplayNameHint": "このユーザーの証明書に表示されます。空欄の場合は識別子を使用します。",
+    "categories": "カテゴリ",
+    "newCategory": "新しいカテゴリ",
+    "noCategories": "カテゴリはまだありません。コースは引き続き自由入力のカテゴリを使用できます。",
+    "categoryName": "名前",
+    "categoryImage": "カード画像",
+    "categoryImageHint": "ホームページのカードに表示されます。名前を変更すると既存のコースも更新されます。削除してもコースのカテゴリはテキストとして残ります。",
+    "categoryPickHint": "既存のカテゴリを選ぶか、新しく入力してください。"
   },
   "material": {
     "type": {
@@ -151,7 +159,8 @@
     "empty": "このライブラリにはまだ公開されたコースがありません。",
     "searchPlaceholder": "コースを検索…",
     "courseCount": "公開コース {count} 件",
-    "courseCountOne": "公開コース 1 件"
+    "courseCountOne": "公開コース 1 件",
+    "title": "すべてのコース"
   },
   "course": {
     "start": "コースを始める",
@@ -250,5 +259,11 @@
     "responsible": "コンテンツの責任は、公開元ライブラリの所有者にあります：{owner}。",
     "consultOnline": "この教材は次の URL でオンライン視聴してください：",
     "toc": "目次"
+  },
+  "landing": {
+    "categories": "カテゴリから探す",
+    "viewAll": "すべてのコースを見る",
+    "courseCount": "{count} 件のコース",
+    "courseCountOne": "1 件のコース"
   }
 }

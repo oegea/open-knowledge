@@ -23,7 +23,8 @@
     "admin": "Administração",
     "signIn": "Iniciar sessão",
     "signOut": "Terminar sessão",
-    "menu": "Menu"
+    "menu": "Menu",
+    "courses": "Cursos"
   },
   "language": {
     "label": "Idioma"
@@ -117,7 +118,14 @@
     "role": "Papel",
     "revoke": "Revogar",
     "revokeWarning": "Isto elimina permanentemente o certificado; a sua ligação de verificação deixará de funcionar.",
-    "userDisplayNameHint": "Mostrado nos certificados desta pessoa. Vazio usa o identificador."
+    "userDisplayNameHint": "Mostrado nos certificados desta pessoa. Vazio usa o identificador.",
+    "categories": "Categorias",
+    "newCategory": "Nova categoria",
+    "noCategories": "Ainda não há categorias. Os cursos podem continuar a usar categorias de texto livre.",
+    "categoryName": "Nome",
+    "categoryImage": "Imagem do cartão",
+    "categoryImageHint": "Mostrada no cartão da página inicial. Renomear atualiza os cursos existentes; eliminar mantém a sua categoria como texto.",
+    "categoryPickHint": "Escolha uma categoria existente ou escreva uma nova."
   },
   "material": {
     "type": {
@@ -151,7 +159,8 @@
     "empty": "Esta biblioteca ainda não tem cursos publicados.",
     "searchPlaceholder": "Pesquisar cursos…",
     "courseCount": "{count} cursos publicados",
-    "courseCountOne": "1 curso publicado"
+    "courseCountOne": "1 curso publicado",
+    "title": "Todos os cursos"
   },
   "course": {
     "start": "Começar o curso",
@@ -250,5 +259,11 @@
     "responsible": "O conteúdo é da responsabilidade do titular da biblioteca onde foi publicado: {owner}.",
     "consultOnline": "Este material é consultado online no seguinte endereço:",
     "toc": "Índice"
+  },
+  "landing": {
+    "categories": "Explorar por categoria",
+    "viewAll": "Ver todos os cursos",
+    "courseCount": "{count} cursos",
+    "courseCountOne": "1 curso"
   }
 }

@@ -12,6 +12,7 @@ import {
   IconMenu,
   IconNews,
   IconPage,
+  IconTag,
   IconUser,
 } from '../ui/icons';
 import styles from '../public/MobileMenu.module.css';
@@ -74,6 +75,12 @@ export function AdminMobileMenu() {
                 <Link href="/admin" className={styles.item}>
                   <IconLibrary className={styles.itemIcon} />
                   {t('admin.courses')}
+                </Link>
+              </li>
+              <li>
+                <Link href="/admin/categories" className={styles.item}>
+                  <IconTag className={styles.itemIcon} />
+                  {t('admin.categories')}
                 </Link>
               </li>
               <li>

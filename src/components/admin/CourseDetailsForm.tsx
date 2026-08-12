@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useRef, useState } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import { CourseDetailsInput } from '@/modules/course/domain/Course';
 import { HttpCourseAdminRepository } from '@/modules/course/infrastructure/HttpCourseAdminRepository';
 import { LOCALES } from '@/i18n/config';
@@ -34,7 +34,32 @@ export function CourseDetailsForm({ initial, submitLabel, onSubmit }: CourseDeta
   const [status, setStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [categoryOptions, setCategoryOptions] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Managed category names feed the datalist as suggestions only; the field
+  // stays free text, so a failed fetch simply means no suggestions.
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const response = await fetch('/api/categories');
+        if (!response.ok) return;
+        const body = await response.json();
+        if (cancelled || !Array.isArray(body.categories)) return;
+        setCategoryOptions(
+          body.categories
+            .map((category: { name?: string }) => category.name)
+            .filter((name: unknown): name is string => typeof name === 'string')
+        );
+      } catch {
+        // Suggestions are progressive enhancement — ignore failures.
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -98,14 +123,23 @@ export function CourseDetailsForm({ initial, submitLabel, onSubmit }: CourseDeta
           ))}
         </SelectField>
 
-        <TextField
-          label={t('admin.category')}
-          value={details.category ?? ''}
-          onChange={(event) =>
-            setDetails({ ...details, category: event.target.value || null })
-          }
-          maxLength={100}
-        />
+        <div>
+          <TextField
+            label={t('admin.category')}
+            hint={t('admin.categoryPickHint')}
+            list="ok-category-suggestions"
+            value={details.category ?? ''}
+            onChange={(event) =>
+              setDetails({ ...details, category: event.target.value || null })
+            }
+            maxLength={100}
+          />
+          <datalist id="ok-category-suggestions">
+            {categoryOptions.map((name) => (
+              <option key={name} value={name} />
+            ))}
+          </datalist>
+        </div>
       </div>
 
       <div className={styles.coverBlock}>

@@ -16,3 +16,4 @@
 | [0012](./0012-empirical-validation.md) | Empirical validation of every deliverable |
 | [0013](./0013-static-content-mode.md) | Static content mode: read-only library from a public repository |
 | [0014](./0014-ai-tooling-without-being-a-provider.md) | AI tooling without becoming an AI provider |
+| [0015](./0015-course-categories-by-name.md) | Course categories associate by name |

@@ -152,4 +152,29 @@ describe('SqliteCourseRepository (integration)', () => {
   it('returns false when deleting a missing course', async () => {
     expect(await repository.delete('missing')).toBe(false);
   });
+
+  it('reassignCategory relabels only exact matches and returns the count', async () => {
+    await repository.save(
+      CourseMother.create({ id: 'c1', slug: 'c1', category: 'Science', sections: [] })
+    );
+    await repository.save(
+      CourseMother.create({ id: 'c2', slug: 'c2', category: 'Science', sections: [] })
+    );
+    await repository.save(
+      CourseMother.create({ id: 'c3', slug: 'c3', category: 'science', sections: [] })
+    );
+    await repository.save(
+      CourseMother.create({ id: 'c4', slug: 'c4', category: null, sections: [] })
+    );
+
+    const count = await repository.reassignCategory('Science', 'Nature');
+
+    expect(count).toBe(2);
+    const all = await repository.findAll();
+    const byId = (id: string) => all.getCourseById(id)?.getCategory();
+    expect(byId('c1')).toBe('Nature');
+    expect(byId('c2')).toBe('Nature');
+    expect(byId('c3')).toBe('science');
+    expect(byId('c4')).toBeNull();
+  });
 });

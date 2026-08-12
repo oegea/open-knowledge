@@ -23,7 +23,8 @@
     "admin": "Admin",
     "signIn": "Sign in",
     "signOut": "Sign out",
-    "menu": "Menu"
+    "menu": "Menu",
+    "courses": "Courses"
   },
   "language": {
     "label": "Language"
@@ -117,7 +118,14 @@
     "role": "Role",
     "revoke": "Revoke",
     "revokeWarning": "This permanently deletes the certificate; its verification link will stop working.",
-    "userDisplayNameHint": "Shown on this user's certificates. Leave empty to use the identifier."
+    "userDisplayNameHint": "Shown on this user's certificates. Leave empty to use the identifier.",
+    "categories": "Categories",
+    "newCategory": "New category",
+    "noCategories": "No categories yet. Courses can still use free-text categories.",
+    "categoryName": "Name",
+    "categoryImage": "Card image",
+    "categoryImageHint": "Shown on the home page card. Renaming relabels existing courses; deleting keeps their text category.",
+    "categoryPickHint": "Pick an existing category or type a new one."
   },
   "material": {
     "type": {
@@ -151,7 +159,8 @@
     "empty": "This library has no published courses yet.",
     "searchPlaceholder": "Search courses…",
     "courseCount": "{count} published courses",
-    "courseCountOne": "1 published course"
+    "courseCountOne": "1 published course",
+    "title": "All courses"
   },
   "course": {
     "start": "Start course",
@@ -250,5 +259,11 @@
     "responsible": "The content is the responsibility of the owner of the library where it was published: {owner}.",
     "consultOnline": "This material is consumed online at the following address:",
     "toc": "Table of contents"
+  },
+  "landing": {
+    "categories": "Browse by category",
+    "viewAll": "View all courses",
+    "courseCount": "{count} courses",
+    "courseCountOne": "1 course"
   }
 }

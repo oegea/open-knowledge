@@ -39,6 +39,11 @@
   gap: var(--ok-space-2);
 }
 
+.imageHint {
+  font-size: var(--ok-text-xs);
+  color: var(--ok-fg-muted);
+}
+
 .error {
   color: var(--ok-danger);
   font-size: var(--ok-text-sm);

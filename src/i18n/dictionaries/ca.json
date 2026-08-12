@@ -23,7 +23,8 @@
     "admin": "Administració",
     "signIn": "Inicia la sessió",
     "signOut": "Tanca la sessió",
-    "menu": "Menú"
+    "menu": "Menú",
+    "courses": "Cursos"
   },
   "language": {
     "label": "Idioma"
@@ -117,7 +118,14 @@
     "role": "Rol",
     "revoke": "Revocar",
     "revokeWarning": "Això elimina permanentment el certificat; el seu enllaç de verificació deixarà de funcionar.",
-    "userDisplayNameHint": "Es mostra als certificats d'aquesta persona. Buit fa servir l'identificador."
+    "userDisplayNameHint": "Es mostra als certificats d'aquesta persona. Buit fa servir l'identificador.",
+    "categories": "Categories",
+    "newCategory": "Nova categoria",
+    "noCategories": "Encara no hi ha categories. Els cursos poden continuar usant categories de text lliure.",
+    "categoryName": "Nom",
+    "categoryImage": "Imatge de la targeta",
+    "categoryImageHint": "Es mostra a la targeta de la pàgina d'inici. Canviar el nom actualitza els cursos existents; eliminar-la manté la seva categoria com a text.",
+    "categoryPickHint": "Tria una categoria existent o escriu-ne una de nova."
   },
   "material": {
     "type": {
@@ -151,7 +159,8 @@
     "empty": "Aquesta llibreria encara no té cursos publicats.",
     "searchPlaceholder": "Cerca cursos…",
     "courseCount": "{count} cursos publicats",
-    "courseCountOne": "1 curs publicat"
+    "courseCountOne": "1 curs publicat",
+    "title": "Tots els cursos"
   },
   "course": {
     "start": "Comença el curs",
@@ -250,5 +259,11 @@
     "responsible": "El contingut és responsabilitat del titular de la llibreria on s'ha publicat: {owner}.",
     "consultOnline": "Aquest material es consulta en línia a l'adreça següent:",
     "toc": "Índex"
+  },
+  "landing": {
+    "categories": "Explora per categoria",
+    "viewAll": "Veure tots els cursos",
+    "courseCount": "{count} cursos",
+    "courseCountOne": "1 curs"
   }
 }

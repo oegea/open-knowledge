@@ -1,4 +1,5 @@
 import { Course } from '../../domain/Course';
+import { CourseList } from '../../domain/CourseList';
 import { CourseTitle } from '../../domain/CourseTitle';
 import { CourseDescription } from '../../domain/CourseDescription';
 import { CourseLanguage } from '../../domain/CourseLanguage';
@@ -75,6 +76,23 @@ describe('course domain validation', () => {
       const course = CourseMother.create();
       const roundTripped = Course.fromPrimitive(course.toPrimitive());
       expect(roundTripped.equals(course)).toBe(true);
+    });
+  });
+
+  describe('CourseList category counts', () => {
+    it('counts courses per category ignoring uncategorized ones', () => {
+      const list = CourseList.create([
+        CourseMother.create({ id: 'c1', slug: 'c1', category: 'Science' }),
+        CourseMother.create({ id: 'c2', slug: 'c2', category: 'Science' }),
+        CourseMother.create({ id: 'c3', slug: 'c3', category: 'History' }),
+        CourseMother.create({ id: 'c4', slug: 'c4', category: null }),
+      ]);
+
+      expect(list.getCategoryCounts()).toEqual({ Science: 2, History: 1 });
+    });
+
+    it('returns an empty object for an empty list', () => {
+      expect(CourseList.create(null).getCategoryCounts()).toEqual({});
     });
   });
 

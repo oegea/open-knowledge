@@ -95,6 +95,12 @@ export function MobileMenu({ newsEnabled, menuPages, user, identityEnabled = tru
                   {t('nav.library')}
                 </Link>
               </li>
+              <li>
+                <Link href="/courses" className={styles.item}>
+                  <IconLibrary className={styles.itemIcon} />
+                  {t('nav.courses')}
+                </Link>
+              </li>
               {newsEnabled ? (
                 <li>
                   <Link href="/news" className={styles.item}>

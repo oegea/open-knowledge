@@ -18,4 +18,6 @@ export interface CourseRepository {
   /** Loads course summaries (sections not populated) matching the filter. */
   findAll(filter?: CourseFilter): Promise<CourseList>;
   delete(id: string): Promise<boolean>;
+  /** Relabels every course carrying `from` as its category; returns the count. */
+  reassignCategory(from: string, to: string): Promise<number>;
 }
