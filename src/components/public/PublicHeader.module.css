@@ -104,6 +104,11 @@
     margin: var(--ok-space-3) var(--ok-space-5) 0;
   }
 
+  /* Desktop orients through the nav links — the back button is mobile-only. */
+  .backButton {
+    display: none;
+  }
+
   .brand {
     font-size: var(--ok-text-lg);
   }

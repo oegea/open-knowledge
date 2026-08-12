@@ -32,22 +32,37 @@ test.describe('Public library', () => {
     // The manually written byline sits next to the publication date.
     await expect(page.getByText('Por Equipo de la librería')).toBeVisible();
 
-    // The header back button returns to the news list.
-    await page.getByRole('link', { name: 'Volver' }).click();
-    await expect(page).toHaveURL(/\/news$/);
+    // The header back button (mobile-only) returns to the news list.
+    const newsBack = page.getByRole('link', { name: 'Volver' });
+    if (await newsBack.isVisible()) {
+      await newsBack.click();
+      await expect(page).toHaveURL(/\/news$/);
+    }
   });
 
-  test('the catalog header back button returns to the landing', async ({ page }) => {
+  test('the catalog header back button returns to the landing on small screens', async ({
+    page,
+  }) => {
     await page.goto('/courses');
-    await page.getByRole('link', { name: 'Volver' }).click();
-    await expect(page).toHaveURL(/\/$/);
+    const back = page.getByRole('link', { name: 'Volver' });
+    if (await back.isVisible()) {
+      await back.click();
+      await expect(page).toHaveURL(/\/$/);
+    } else {
+      // Desktop hides the back button; the nav links orient instead.
+      await expect(back).toBeHidden();
+      await expect(page.getByRole('link', { name: 'Cursos' })).toBeVisible();
+    }
   });
 
   test('course detail links back to the catalog and to its category', async ({ page }) => {
     const { courseId } = loadState();
     await page.goto(`/courses/${courseId}`);
-    await page.getByRole('link', { name: 'Volver' }).click();
-    await expect(page).toHaveURL(/\/courses$/);
+    const back = page.getByRole('link', { name: 'Volver' });
+    if (await back.isVisible()) {
+      await back.click();
+      await expect(page).toHaveURL(/\/courses$/);
+    }
 
     await page.goto(`/courses/${courseId}`);
     await page.getByRole('link', { name: 'Ciencia', exact: true }).click();
