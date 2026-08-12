@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { notFound, permanentRedirect } from 'next/navigation';
 import newsFactory from '@/modules/news/application/factory';
 import settingsFactory from '@/modules/settings/application/factory';
@@ -7,6 +6,7 @@ import { getDictionary, translate } from '@/i18n/dictionary';
 import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
 import { Prose } from '@/components/shared/Prose';
+import { BackLink } from '@/components/shared/BackLink';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -50,9 +50,7 @@ export default async function NewsPostPage({ params }: PageProps<'/news/[id]'>) 
             // eslint-disable-next-line @next/next/no-img-element
             <img src={post.getImagePath()!} alt="" className={styles.featuredImage} />
           ) : null}
-          <Link href="/news" className={styles.back}>
-            ← {translate(dictionary, 'news.title')}
-          </Link>
+          <BackLink href="/news" label={translate(dictionary, 'news.title')} />
           <p className={styles.meta}>
             <time className={styles.date}>
               {new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(post.getCreatedAt())}

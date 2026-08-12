@@ -8,6 +8,7 @@ import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
 import { LogoutButton } from '@/components/auth/LogoutButton';
 import { DisplayNameForm } from '@/components/auth/DisplayNameForm';
+import { BackLink } from '@/components/shared/BackLink';
 import styles from './page.module.css';
 import { isStaticMode } from '@/modules/shared/infrastructure/StaticContentClient';
 
@@ -32,6 +33,7 @@ export default async function AccountPage() {
     <>
       <PublicHeader />
       <main className={styles.main}>
+        <BackLink href="/" label={translate(dictionary, 'nav.library')} />
         <section className={`ok-glass ${styles.identityCard}`}>
           <h1 className={styles.title}>{translate(dictionary, 'auth.myAccount')}</h1>
           <p className={styles.identifier}>{user.getIdentifier()}</p>

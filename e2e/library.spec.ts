@@ -31,6 +31,42 @@ test.describe('Public library', () => {
     await expect(page.getByText('primer curso')).toBeVisible();
     // The manually written byline sits next to the publication date.
     await expect(page.getByText('Por Equipo de la librería')).toBeVisible();
+
+    // Contextual back link returns to the news list.
+    await page.getByRole('link', { name: '← Noticias' }).click();
+    await expect(page).toHaveURL(/\/news$/);
+  });
+
+  test('the catalog back link returns to the landing', async ({ page }) => {
+    await page.goto('/courses');
+    await page.getByRole('link', { name: '← Librería' }).click();
+    await expect(page).toHaveURL(/\/$/);
+  });
+
+  test('course detail links back to the catalog and to its category', async ({ page }) => {
+    const { courseId } = loadState();
+    await page.goto(`/courses/${courseId}`);
+    await page.getByRole('link', { name: '← Todos los cursos' }).click();
+    await expect(page).toHaveURL(/\/courses$/);
+
+    await page.goto(`/courses/${courseId}`);
+    await page.getByRole('link', { name: 'Ciencia', exact: true }).click();
+    await expect(page).toHaveURL(/\/courses\?category=Ciencia/);
+    // The filtered catalog titles itself after the category.
+    await expect(page.getByRole('heading', { level: 1, name: 'Ciencia' })).toBeVisible();
+  });
+
+  test('navigation marks the current section', async ({ page }) => {
+    await page.goto('/courses');
+
+    const menuTrigger = page.getByRole('button', { name: 'Menú' });
+    if (await menuTrigger.isVisible()) {
+      await menuTrigger.click();
+    }
+    await expect(page.getByRole('link', { name: 'Cursos' })).toHaveAttribute(
+      'aria-current',
+      'page'
+    );
   });
 
   test('footer states the library ownership and engine', async ({ page }) => {

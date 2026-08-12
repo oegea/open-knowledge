@@ -10,6 +10,7 @@ import { CourseContents } from '@/components/public/CourseContents';
 import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
 import { StartCourseButton } from '@/components/public/StartCourseButton';
+import { BackLink } from '@/components/shared/BackLink';
 import { getCurrentUser } from '@/app/serverAuth';
 import styles from './page.module.css';
 
@@ -83,6 +84,7 @@ export default async function CourseDetailPage({ params }: PageProps<'/courses/[
     <>
       <PublicHeader />
       <main className={styles.main}>
+        <BackLink href="/courses" label={translate(dictionary, 'library.title')} />
         {/* Immersive hero: the cover becomes the atmosphere of the page. */}
         <section className={styles.hero}>
           {cover ? (
@@ -97,7 +99,12 @@ export default async function CourseDetailPage({ params }: PageProps<'/courses/[
                   {languageInfo?.iso ?? course.getLanguage()}
                 </span>
                 {course.getCategory() ? (
-                  <span className={styles.heroCategory}>{course.getCategory()}</span>
+                  <Link
+                    href={`/courses?category=${encodeURIComponent(course.getCategory()!)}`}
+                    className={styles.heroCategory}
+                  >
+                    {course.getCategory()}
+                  </Link>
                 ) : null}
               </div>
               <h1 className={styles.heroTitle}>{course.getTitle()}</h1>

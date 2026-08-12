@@ -93,6 +93,11 @@
   letter-spacing: 0.08em;
 }
 
+.heroCategory:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .heroTitle {
   font-size: var(--ok-text-3xl);
   line-height: var(--ok-leading-tight);

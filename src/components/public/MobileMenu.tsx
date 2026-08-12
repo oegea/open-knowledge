@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useI18n } from '@/i18n/I18nProvider';
+import { isActivePath } from './PublicNavLinks';
 import {
   IconClose,
   IconGear,
@@ -90,20 +91,32 @@ export function MobileMenu({ newsEnabled, menuPages, user, identityEnabled = tru
 
             <ul className={styles.items}>
               <li>
-                <Link href="/" className={styles.item}>
+                <Link
+                  href="/"
+                  className={styles.item}
+                  aria-current={isActivePath(pathname, '/') ? 'page' : undefined}
+                >
                   <IconLibrary className={styles.itemIcon} />
                   {t('nav.library')}
                 </Link>
               </li>
               <li>
-                <Link href="/courses" className={styles.item}>
+                <Link
+                  href="/courses"
+                  className={styles.item}
+                  aria-current={isActivePath(pathname, '/courses') ? 'page' : undefined}
+                >
                   <IconLibrary className={styles.itemIcon} />
                   {t('nav.courses')}
                 </Link>
               </li>
               {newsEnabled ? (
                 <li>
-                  <Link href="/news" className={styles.item}>
+                  <Link
+                    href="/news"
+                    className={styles.item}
+                    aria-current={isActivePath(pathname, '/news') ? 'page' : undefined}
+                  >
                     <IconNews className={styles.itemIcon} />
                     {t('nav.news')}
                   </Link>
@@ -111,7 +124,13 @@ export function MobileMenu({ newsEnabled, menuPages, user, identityEnabled = tru
               ) : null}
               {menuPages.map((page) => (
                 <li key={page.id}>
-                  <Link href={`/p/${page.slug || page.id}`} className={styles.item}>
+                  <Link
+                    href={`/p/${page.slug || page.id}`}
+                    className={styles.item}
+                    aria-current={
+                      isActivePath(pathname, `/p/${page.slug || page.id}`) ? 'page' : undefined
+                    }
+                  >
                     <IconPage className={styles.itemIcon} />
                     {page.title}
                   </Link>
@@ -123,7 +142,11 @@ export function MobileMenu({ newsEnabled, menuPages, user, identityEnabled = tru
               {user ? (
                 <>
                   <li>
-                    <Link href="/account" className={styles.item}>
+                    <Link
+                      href="/account"
+                      className={styles.item}
+                      aria-current={isActivePath(pathname, '/account') ? 'page' : undefined}
+                    >
                       <IconUser className={styles.itemIcon} />
                       <span className={styles.itemStack}>
                         {t('auth.myAccount')}
@@ -133,7 +156,11 @@ export function MobileMenu({ newsEnabled, menuPages, user, identityEnabled = tru
                   </li>
                   {user.isAdmin ? (
                     <li>
-                      <Link href="/admin" className={styles.item}>
+                      <Link
+                        href="/admin"
+                        className={styles.item}
+                        aria-current={isActivePath(pathname, '/admin') ? 'page' : undefined}
+                      >
                         <IconGear className={styles.itemIcon} />
                         {t('nav.admin')}
                       </Link>
@@ -142,7 +169,11 @@ export function MobileMenu({ newsEnabled, menuPages, user, identityEnabled = tru
                 </>
               ) : identityEnabled ? (
                 <li>
-                  <Link href="/login" className={styles.item}>
+                  <Link
+                    href="/login"
+                    className={styles.item}
+                    aria-current={isActivePath(pathname, '/login') ? 'page' : undefined}
+                  >
                     <IconUser className={styles.itemIcon} />
                     {t('nav.signIn')}
                   </Link>

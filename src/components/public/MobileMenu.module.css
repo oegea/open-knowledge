@@ -113,6 +113,11 @@
   color: var(--ok-primary);
 }
 
+.item[aria-current='page'] {
+  background: var(--ok-primary-soft);
+  color: var(--ok-primary);
+}
+
 .itemIcon {
   color: var(--ok-primary);
   flex-shrink: 0;

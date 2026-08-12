@@ -21,16 +21,6 @@
   object-fit: cover;
 }
 
-.back {
-  font-size: var(--ok-text-sm);
-  font-weight: 600;
-  color: var(--ok-primary);
-  min-height: var(--ok-touch-target);
-  display: inline-flex;
-  align-items: center;
-  align-self: flex-start;
-}
-
 .meta {
   display: flex;
   flex-wrap: wrap;

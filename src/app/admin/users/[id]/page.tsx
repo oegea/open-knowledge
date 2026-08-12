@@ -1,10 +1,10 @@
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import identityFactory from '@/modules/identity/application/factory';
 import certificateFactory from '@/modules/certificate/application/factory';
 import { getLocale } from '@/i18n/getLocale';
 import { getDictionary, translate } from '@/i18n/dictionary';
 import { UserDetailPanel } from '@/components/admin/UserDetailPanel';
+import { BackLink } from '@/components/shared/BackLink';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -21,9 +21,7 @@ export default async function AdminUserDetailPage({ params }: PageProps<'/admin/
 
   return (
     <div className={styles.page}>
-      <Link href="/admin/users" className={styles.back}>
-        ← {translate(dictionary, 'admin.users')}
-      </Link>
+      <BackLink href="/admin/users" label={translate(dictionary, 'admin.users')} />
       <h1 className={styles.title}>{user.getIdentifier()}</h1>
       <UserDetailPanel
         user={{

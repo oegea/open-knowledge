@@ -65,6 +65,11 @@
   color: var(--ok-primary);
 }
 
+.navLink[aria-current='page'] {
+  background: var(--ok-primary-soft);
+  color: var(--ok-primary);
+}
+
 @media (min-width: 900px) {
   .header {
     margin: var(--ok-space-3) var(--ok-space-5) 0;

@@ -10,6 +10,7 @@ import { ThemeToggle } from './ThemeToggle';
 import { UserMenu } from './UserMenu';
 import { NotificationsBell } from './NotificationsBell';
 import { MobileMenu } from './MobileMenu';
+import { PublicNavLinks } from './PublicNavLinks';
 import styles from './PublicHeader.module.css';
 
 export async function PublicHeader() {
@@ -39,25 +40,19 @@ export async function PublicHeader() {
       </Link>
 
       {/* Desktop: content links sit next to the brand; actions go right. */}
-      <nav className={styles.desktopNav} aria-label={translate(dictionary, 'nav.menu')}>
-        <Link href="/courses" className={styles.navLink}>
-          {translate(dictionary, 'nav.courses')}
-        </Link>
-        {settings.isNewsEnabled() ? (
-          <Link href="/news" className={styles.navLink}>
-            {translate(dictionary, 'nav.news')}
-          </Link>
-        ) : null}
-        {menuPages.map((page) => (
-          <Link
-            key={page.getId()}
-            href={`/p/${page.getSlug() || page.getId()}`}
-            className={styles.navLink}
-          >
-            {page.getTitle()}
-          </Link>
-        ))}
-      </nav>
+      <PublicNavLinks
+        label={translate(dictionary, 'nav.menu')}
+        links={[
+          { href: '/courses', label: translate(dictionary, 'nav.courses') },
+          ...(settings.isNewsEnabled()
+            ? [{ href: '/news', label: translate(dictionary, 'nav.news') }]
+            : []),
+          ...menuPages.map((page) => ({
+            href: `/p/${page.getSlug() || page.getId()}`,
+            label: page.getTitle(),
+          })),
+        ]}
+      />
       <div className={styles.desktopActions}>
         <ThemeToggle />
         <LanguageSelector />

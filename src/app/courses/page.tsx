@@ -5,14 +5,17 @@ import { getDictionary, translate } from '@/i18n/dictionary';
 import { LOCALES } from '@/i18n/config';
 import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
+import { BackLink } from '@/components/shared/BackLink';
 import { IconSearch } from '@/components/ui/icons';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
 
-export async function generateMetadata() {
+export async function generateMetadata({ searchParams }: PageProps<'/courses'>) {
   const dictionary = await getDictionary(await getLocale());
-  return { title: translate(dictionary, 'library.title') };
+  const params = await searchParams;
+  const category = typeof params.category === 'string' ? params.category : undefined;
+  return { title: category ?? translate(dictionary, 'library.title') };
 }
 
 export default async function CoursesPage({ searchParams }: PageProps<'/courses'>) {
@@ -49,7 +52,10 @@ export default async function CoursesPage({ searchParams }: PageProps<'/courses'
     <>
       <PublicHeader />
       <main className={styles.main}>
-        <h1 className={styles.pageTitle}>{translate(dictionary, 'library.title')}</h1>
+        <BackLink href="/" label={translate(dictionary, 'nav.library')} />
+        <h1 className={styles.pageTitle}>
+          {categoryFilter ?? translate(dictionary, 'library.title')}
+        </h1>
 
         <form className={styles.search} action="/courses" method="get" role="search">
           {languageFilter ? <input type="hidden" name="language" value={languageFilter} /> : null}
