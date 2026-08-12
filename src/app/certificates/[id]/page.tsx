@@ -5,6 +5,7 @@ import { getLocale } from '@/i18n/getLocale';
 import { getDictionary, translate } from '@/i18n/dictionary';
 import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
+import { Breadcrumbs } from '@/components/public/Breadcrumbs';
 import styles from './page.module.css';
 import { isStaticMode } from '@/modules/shared/infrastructure/StaticContentClient';
 
@@ -38,6 +39,14 @@ export default async function CertificatePage({ params }: PageProps<'/certificat
     <>
       <PublicHeader backHref="/account" />
       <main className={styles.main}>
+        <Breadcrumbs
+          label={translate(dictionary, 'nav.breadcrumb')}
+          items={[
+            { href: '/', label: translate(dictionary, 'nav.library') },
+            { href: '/account', label: translate(dictionary, 'auth.myAccount') },
+            { label: certificate.getCourseTitle() },
+          ]}
+        />
         <article className={`ok-glass-strong ${styles.certificate}`}>
           <div className={styles.ornamentTop} aria-hidden="true" />
           {settings.getCertificateLogoPath() ? (

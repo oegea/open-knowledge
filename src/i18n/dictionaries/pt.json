@@ -24,7 +24,8 @@
     "signIn": "Iniciar sessão",
     "signOut": "Terminar sessão",
     "menu": "Menu",
-    "courses": "Cursos"
+    "courses": "Cursos",
+    "breadcrumb": "Caminho de navegação"
   },
   "language": {
     "label": "Idioma"

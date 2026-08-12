@@ -5,6 +5,7 @@ import { getDictionary, translate } from '@/i18n/dictionary';
 import { LOCALES } from '@/i18n/config';
 import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
+import { Breadcrumbs } from '@/components/public/Breadcrumbs';
 import { IconSearch } from '@/components/ui/icons';
 import styles from './page.module.css';
 
@@ -51,6 +52,21 @@ export default async function CoursesPage({ searchParams }: PageProps<'/courses'
     <>
       <PublicHeader backHref="/" />
       <main className={styles.main}>
+        <Breadcrumbs
+          label={translate(dictionary, 'nav.breadcrumb')}
+          items={
+            categoryFilter
+              ? [
+                  { href: '/', label: translate(dictionary, 'nav.library') },
+                  { href: '/courses', label: translate(dictionary, 'library.title') },
+                  { label: categoryFilter },
+                ]
+              : [
+                  { href: '/', label: translate(dictionary, 'nav.library') },
+                  { label: translate(dictionary, 'library.title') },
+                ]
+          }
+        />
         <h1 className={styles.pageTitle}>
           {categoryFilter ?? translate(dictionary, 'library.title')}
         </h1>

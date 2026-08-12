@@ -8,6 +8,7 @@ import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
 import { LogoutButton } from '@/components/auth/LogoutButton';
 import { DisplayNameForm } from '@/components/auth/DisplayNameForm';
+import { Breadcrumbs } from '@/components/public/Breadcrumbs';
 import styles from './page.module.css';
 import { isStaticMode } from '@/modules/shared/infrastructure/StaticContentClient';
 
@@ -32,6 +33,13 @@ export default async function AccountPage() {
     <>
       <PublicHeader backHref="/" />
       <main className={styles.main}>
+        <Breadcrumbs
+          label={translate(dictionary, 'nav.breadcrumb')}
+          items={[
+            { href: '/', label: translate(dictionary, 'nav.library') },
+            { label: translate(dictionary, 'auth.myAccount') },
+          ]}
+        />
         <section className={`ok-glass ${styles.identityCard}`}>
           <h1 className={styles.title}>{translate(dictionary, 'auth.myAccount')}</h1>
           <p className={styles.identifier}>{user.getIdentifier()}</p>

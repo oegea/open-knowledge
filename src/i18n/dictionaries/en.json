@@ -24,7 +24,8 @@
     "signIn": "Sign in",
     "signOut": "Sign out",
     "menu": "Menu",
-    "courses": "Courses"
+    "courses": "Courses",
+    "breadcrumb": "Breadcrumb"
   },
   "language": {
     "label": "Language"

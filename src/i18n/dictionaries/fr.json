@@ -24,7 +24,8 @@
     "signIn": "Se connecter",
     "signOut": "Se déconnecter",
     "menu": "Menu",
-    "courses": "Cours"
+    "courses": "Cours",
+    "breadcrumb": "Fil d'Ariane"
   },
   "language": {
     "label": "Langue"

@@ -24,7 +24,8 @@
     "signIn": "ログイン",
     "signOut": "ログアウト",
     "menu": "メニュー",
-    "courses": "コース"
+    "courses": "コース",
+    "breadcrumb": "パンくずリスト"
   },
   "language": {
     "label": "言語"

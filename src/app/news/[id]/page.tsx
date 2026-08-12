@@ -6,6 +6,7 @@ import { getDictionary, translate } from '@/i18n/dictionary';
 import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
 import { Prose } from '@/components/shared/Prose';
+import { Breadcrumbs } from '@/components/public/Breadcrumbs';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -44,6 +45,14 @@ export default async function NewsPostPage({ params }: PageProps<'/news/[id]'>) 
     <>
       <PublicHeader backHref="/news" />
       <main className={styles.main}>
+        <Breadcrumbs
+          label={translate(dictionary, 'nav.breadcrumb')}
+          items={[
+            { href: '/', label: translate(dictionary, 'nav.library') },
+            { href: '/news', label: translate(dictionary, 'news.title') },
+            { label: post.getTitle() },
+          ]}
+        />
         <article className={`ok-glass ${styles.article}`}>
           {post.getImagePath() ? (
             // eslint-disable-next-line @next/next/no-img-element

@@ -24,7 +24,8 @@
     "signIn": "Anmelden",
     "signOut": "Abmelden",
     "menu": "Menü",
-    "courses": "Kurse"
+    "courses": "Kurse",
+    "breadcrumb": "Brotkrumen-Navigation"
   },
   "language": {
     "label": "Sprache"

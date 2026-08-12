@@ -24,7 +24,8 @@
     "signIn": "登录",
     "signOut": "退出登录",
     "menu": "菜单",
-    "courses": "课程"
+    "courses": "课程",
+    "breadcrumb": "面包屑导航"
   },
   "language": {
     "label": "语言"

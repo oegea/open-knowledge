@@ -24,7 +24,8 @@
     "signIn": "Hasi saioa",
     "signOut": "Amaitu saioa",
     "menu": "Menua",
-    "courses": "Ikastaroak"
+    "courses": "Ikastaroak",
+    "breadcrumb": "Nabigazio-bidea"
   },
   "language": {
     "label": "Hizkuntza"

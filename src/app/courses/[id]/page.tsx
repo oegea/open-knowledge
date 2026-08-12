@@ -10,6 +10,7 @@ import { CourseContents } from '@/components/public/CourseContents';
 import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
 import { StartCourseButton } from '@/components/public/StartCourseButton';
+import { Breadcrumbs } from '@/components/public/Breadcrumbs';
 import { getCurrentUser } from '@/app/serverAuth';
 import styles from './page.module.css';
 
@@ -83,6 +84,14 @@ export default async function CourseDetailPage({ params }: PageProps<'/courses/[
     <>
       <PublicHeader backHref="/courses" />
       <main className={styles.main}>
+        <Breadcrumbs
+          label={translate(dictionary, 'nav.breadcrumb')}
+          items={[
+            { href: '/', label: translate(dictionary, 'nav.library') },
+            { href: '/courses', label: translate(dictionary, 'library.title') },
+            { label: course.getTitle() },
+          ]}
+        />
         {/* Immersive hero: the cover becomes the atmosphere of the page. */}
         <section className={styles.hero}>
           {cover ? (

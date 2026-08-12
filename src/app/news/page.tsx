@@ -6,6 +6,7 @@ import { getLocale } from '@/i18n/getLocale';
 import { getDictionary, translate } from '@/i18n/dictionary';
 import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
+import { Breadcrumbs } from '@/components/public/Breadcrumbs';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -42,6 +43,13 @@ export default async function NewsPage() {
     <>
       <PublicHeader backHref="/" />
       <main className={styles.main}>
+        <Breadcrumbs
+          label={translate(dictionary, 'nav.breadcrumb')}
+          items={[
+            { href: '/', label: translate(dictionary, 'nav.library') },
+            { label: translate(dictionary, 'news.title') },
+          ]}
+        />
         <h1 className={styles.title}>{translate(dictionary, 'news.title')}</h1>
 
         {posts.length === 0 ? (

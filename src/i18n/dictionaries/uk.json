@@ -24,7 +24,8 @@
     "signIn": "Увійти",
     "signOut": "Вийти",
     "menu": "Меню",
-    "courses": "Курси"
+    "courses": "Курси",
+    "breadcrumb": "Навігаційний ланцюжок"
   },
   "language": {
     "label": "Мова"

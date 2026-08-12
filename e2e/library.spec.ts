@@ -40,19 +40,18 @@ test.describe('Public library', () => {
     }
   });
 
-  test('the catalog header back button returns to the landing on small screens', async ({
+  test('the catalog navigates up: back button on small screens, breadcrumb on desktop', async ({
     page,
   }) => {
     await page.goto('/courses');
     const back = page.getByRole('link', { name: 'Volver' });
     if (await back.isVisible()) {
       await back.click();
-      await expect(page).toHaveURL(/\/$/);
     } else {
-      // Desktop hides the back button; the nav links orient instead.
-      await expect(back).toBeHidden();
-      await expect(page.getByRole('link', { name: 'Cursos' })).toBeVisible();
+      // Desktop hides the back button and shows the breadcrumb trail.
+      await page.getByRole('link', { name: 'Librería' }).click();
     }
+    await expect(page).toHaveURL(/\/$/);
   });
 
   test('course detail links back to the catalog and to its category', async ({ page }) => {
@@ -61,8 +60,10 @@ test.describe('Public library', () => {
     const back = page.getByRole('link', { name: 'Volver' });
     if (await back.isVisible()) {
       await back.click();
-      await expect(page).toHaveURL(/\/courses$/);
+    } else {
+      await page.getByRole('link', { name: 'Todos los cursos' }).click();
     }
+    await expect(page).toHaveURL(/\/courses$/);
 
     await page.goto(`/courses/${courseId}`);
     await page.getByRole('link', { name: 'Ciencia', exact: true }).click();

@@ -24,7 +24,8 @@
     "signIn": "Accedi",
     "signOut": "Esci",
     "menu": "Menu",
-    "courses": "Corsi"
+    "courses": "Corsi",
+    "breadcrumb": "Percorso di navigazione"
   },
   "language": {
     "label": "Lingua"

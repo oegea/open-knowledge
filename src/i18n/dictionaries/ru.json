@@ -24,7 +24,8 @@
     "signIn": "Войти",
     "signOut": "Выйти",
     "menu": "Меню",
-    "courses": "Курсы"
+    "courses": "Курсы",
+    "breadcrumb": "Навигационная цепочка"
   },
   "language": {
     "label": "Язык"
