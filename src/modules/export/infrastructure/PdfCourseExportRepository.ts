@@ -9,6 +9,7 @@ import {
   ExportContext,
   ExportedDocument,
 } from '../domain/CourseExportRepository';
+import { collectBibliography } from '../domain/bibliography';
 import { MediaRepository } from '../../media/domain/MediaRepository';
 import { FilesystemMediaRepository } from '../../media/infrastructure/FilesystemMediaRepository';
 
@@ -51,6 +52,9 @@ export class PdfCourseExportRepository implements CourseExportRepository {
     const { strings } = context;
     const doc = new PDFDocument({
       size: 'A4',
+      // Pages stay in memory until the end so the TOC and footers can be
+      // backfilled with real page numbers once the layout is known.
+      bufferPages: true,
       margins: { top: 64, bottom: 64, left: 64, right: 64 },
       info: {
         Title: course.getTitle(),
@@ -102,6 +106,15 @@ export class PdfCourseExportRepository implements CourseExportRepository {
       doc.fontSize(10).text(`${strings.license}: ${course.getLicense()}`, { align: 'center' });
     }
 
+    if (course.isAiAssisted()) {
+      doc.moveDown(1);
+      doc.font('Helvetica-Bold').fontSize(10).fillColor(TEAL);
+      doc.text(strings.aiNoticeTitle, { align: 'center' });
+      doc.moveDown(0.2);
+      doc.font('Helvetica').fontSize(9).fillColor(MUTED);
+      doc.text(strings.aiNotice, { align: 'center' });
+    }
+
     doc.moveDown(2);
     const dateText = context.generatedAt.toISOString().slice(0, 10);
     doc.fontSize(9).fillColor(MUTED);
@@ -122,6 +135,28 @@ export class PdfCourseExportRepository implements CourseExportRepository {
       .getSections()
       .flatMap((section) => section.getMaterials().getMaterials());
 
+    const bibliography = collectBibliography(course);
+    const left = doc.page.margins.left;
+    const contentWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;
+    const numberWidth = 36;
+    const rowHeight = 14;
+    // Entries are laid out now and get their page number backfilled once
+    // the chapters have been rendered and real page numbers exist.
+    const tocEntries: { pageIndex: number; y: number; destination: string }[] = [];
+    const destinationPages = new Map<string, number>();
+    const addTocRow = (label: string, destination: string, indent: number) => {
+      if (doc.y + rowHeight > doc.page.height - doc.page.margins.bottom) doc.addPage();
+      const rowY = doc.y;
+      tocEntries.push({ pageIndex: doc.bufferedPageRange().count - 1, y: rowY, destination });
+      doc.text(label, left + indent, rowY, {
+        width: contentWidth - indent - numberWidth,
+        height: rowHeight,
+        ellipsis: true,
+      });
+      doc.x = left;
+      doc.moveDown(0.15);
+    };
+
     doc.addPage();
     doc.font('Helvetica-Bold').fontSize(18).fillColor(INK).text(strings.toc);
     doc.moveDown(0.5);
@@ -135,9 +170,13 @@ export class PdfCourseExportRepository implements CourseExportRepository {
       doc.font('Helvetica').fontSize(11).fillColor(INK);
       for (const material of section.getMaterials().getMaterials()) {
         chapterNumber += 1;
-        doc.text(`${chapterNumber}. ${material.getTitle()}`, { indent: 14 });
-        doc.moveDown(0.15);
+        addTocRow(`${chapterNumber}. ${material.getTitle()}`, `chapter-${chapterNumber}`, 14);
       }
+    }
+    if (bibliography.length > 0) {
+      doc.moveDown(0.4);
+      doc.font('Helvetica-Bold').fontSize(12).fillColor(TEAL);
+      addTocRow(strings.bibliography, 'bibliography', 0);
     }
 
     // ---------------------------------------------------------------- //
@@ -145,10 +184,66 @@ export class PdfCourseExportRepository implements CourseExportRepository {
     // ---------------------------------------------------------------- //
     for (const [index, material] of materials.entries()) {
       doc.addPage();
+      doc.addNamedDestination(`chapter-${index + 1}`);
+      destinationPages.set(`chapter-${index + 1}`, doc.bufferedPageRange().count);
+      doc.outline.addItem(material.getTitle());
       doc.font('Helvetica-Bold').fontSize(18).fillColor(INK);
       doc.text(`${index + 1}. ${material.getTitle()}`);
       doc.moveDown(0.8);
       this.renderMaterial(doc, material, context);
+    }
+
+    // ---------------------------------------------------------------- //
+    // Bibliography & sources                                            //
+    // ---------------------------------------------------------------- //
+    if (bibliography.length > 0) {
+      doc.addPage();
+      doc.addNamedDestination('bibliography');
+      destinationPages.set('bibliography', doc.bufferedPageRange().count);
+      doc.outline.addItem(strings.bibliography);
+      doc.font('Helvetica-Bold').fontSize(18).fillColor(INK);
+      doc.text(strings.bibliography);
+      doc.moveDown(0.8);
+      for (const source of bibliography) {
+        doc.font('Helvetica').fontSize(11).fillColor(INK);
+        doc.text(`• ${source.title}`, { indent: 12, lineGap: 2 });
+        if (source.url) {
+          doc.font('Helvetica').fontSize(9.5).fillColor(TEAL);
+          doc.text(source.url, { indent: 24, link: source.url, underline: true });
+        }
+        doc.moveDown(0.35);
+      }
+    }
+
+    // ---------------------------------------------------------------- //
+    // Backfill: TOC page numbers + links, page-number footers           //
+    // ---------------------------------------------------------------- //
+    doc.font('Helvetica').fontSize(10).fillColor(MUTED);
+    for (const entry of tocEntries) {
+      const pageNumber = destinationPages.get(entry.destination);
+      if (!pageNumber) continue;
+      doc.switchToPage(entry.pageIndex);
+      doc.text(String(pageNumber), left + contentWidth - numberWidth, entry.y, {
+        width: numberWidth,
+        align: 'right',
+        lineBreak: false,
+      });
+      doc.goTo(left, entry.y - 2, contentWidth, rowHeight + 2, entry.destination);
+    }
+
+    const range = doc.bufferedPageRange();
+    doc.font('Helvetica').fontSize(9).fillColor(MUTED);
+    // The cover is page 1 but stays unnumbered, as in print.
+    for (let index = 1; index < range.count; index += 1) {
+      doc.switchToPage(index);
+      const bottomMargin = doc.page.margins.bottom;
+      doc.page.margins.bottom = 0;
+      doc.text(`${index + 1} / ${range.count}`, 0, doc.page.height - 40, {
+        width: doc.page.width,
+        align: 'center',
+        lineBreak: false,
+      });
+      doc.page.margins.bottom = bottomMargin;
     }
 
     doc.end();

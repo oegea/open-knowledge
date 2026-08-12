@@ -11,6 +11,8 @@ export interface ExportStrings {
   license: string;
   authors: string;
   bibliography: string;
+  aiNoticeTitle: string;
+  aiNotice: string;
 }
 
 export interface ExportContext {

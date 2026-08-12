@@ -8,6 +8,7 @@ import {
   ExportContext,
   ExportedDocument,
 } from '../domain/CourseExportRepository';
+import { collectBibliography } from '../domain/bibliography';
 import { MediaRepository } from '../../media/domain/MediaRepository';
 import { FilesystemMediaRepository } from '../../media/infrastructure/FilesystemMediaRepository';
 
@@ -107,6 +108,10 @@ ${coverHref ? `<p><img class="cover" src="${coverHref}" alt=""/></p>` : ''}
 <p>${escapeXml(course.getDescription())}</p>
 ${course.getAuthors().length > 0 ? `<p class="meta">${escapeXml(strings.authors)}: ${escapeXml(course.getAuthors().join(', '))}</p>` : ''}
 ${course.getLicense() ? `<p class="meta">${escapeXml(strings.license)}: ${escapeXml(course.getLicense()!)}</p>` : ''}
+${course.isAiAssisted() ? `<div class="notice">
+<p><strong>${escapeXml(strings.aiNoticeTitle)}</strong></p>
+<p class="meta">${escapeXml(strings.aiNotice)}</p>
+</div>` : ''}
 <div class="notice">
 <p class="meta">${escapeXml(
       strings.generatedNote
@@ -134,9 +139,27 @@ ${course.getLicense() ? `<p class="meta">${escapeXml(strings.license)}: ${escape
       chapters.push({ id, href, title: material.getTitle() });
     }
 
+    // Bibliography & sources, aggregated from the course and its materials.
+    const bibliography = collectBibliography(course);
+    if (bibliography.length > 0) {
+      const items = bibliography
+        .map((source) => {
+          const title = escapeXml(source.title);
+          return `<li>${source.url ? `<a href="${escapeXml(source.url)}">${title}</a>` : title}</li>`;
+        })
+        .join('\n');
+      const body = `<h1>${escapeXml(strings.bibliography)}</h1>\n<ul>\n${items}\n</ul>`;
+      zip.addFile('OEBPS/bibliography.xhtml', Buffer.from(xhtml(strings.bibliography, body)));
+    }
+
     // Navigation document.
     const navItems = chapters
       .map((chapter) => `<li><a href="${chapter.href}">${escapeXml(chapter.title)}</a></li>`)
+      .concat(
+        bibliography.length > 0
+          ? [`<li><a href="bibliography.xhtml">${escapeXml(strings.bibliography)}</a></li>`]
+          : []
+      )
       .join('\n');
     zip.addFile(
       'OEBPS/nav.xhtml',
@@ -158,6 +181,9 @@ ${course.getLicense() ? `<p class="meta">${escapeXml(strings.license)}: ${escape
         (chapter) =>
           `<item id="${chapter.id}" href="${chapter.href}" media-type="application/xhtml+xml"/>`
       ),
+      ...(bibliography.length > 0
+        ? [`<item id="bibliography" href="bibliography.xhtml" media-type="application/xhtml+xml"/>`]
+        : []),
       ...manifestImages.map(
         (image) =>
           `<item id="${image.id}" href="${image.href}" media-type="${image.mime}"${image.isCover ? ' properties="cover-image"' : ''}/>`
@@ -166,6 +192,7 @@ ${course.getLicense() ? `<p class="meta">${escapeXml(strings.license)}: ${escape
     const spineEntries = [
       `<itemref idref="front"/>`,
       ...chapters.map((chapter) => `<itemref idref="${chapter.id}"/>`),
+      ...(bibliography.length > 0 ? [`<itemref idref="bibliography"/>`] : []),
     ].join('\n    ');
 
     zip.addFile(

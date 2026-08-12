@@ -24,6 +24,8 @@ async function stringsProvider(language: string): Promise<ExportStrings> {
     license: translate(dictionary, 'course.license'),
     authors: translate(dictionary, 'admin.authors'),
     bibliography: translate(dictionary, 'course.bibliography'),
+    aiNoticeTitle: translate(dictionary, 'course.aiNoticeTitle'),
+    aiNotice: translate(dictionary, 'course.aiNotice'),
   };
 }
 

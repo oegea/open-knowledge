@@ -15,6 +15,8 @@ const STRINGS: ExportStrings = {
   license: 'License',
   authors: 'Authors',
   bibliography: 'Bibliography',
+  aiNoticeTitle: 'AI-assisted content',
+  aiNotice: 'This course includes AI-assisted content.',
 };
 
 function exportRepositoryMother() {
