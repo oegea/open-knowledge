@@ -57,7 +57,9 @@ export class EpubCourseExportRepository implements CourseExportRepository {
   constructor(private readonly mediaRepository: MediaRepository = new FilesystemMediaRepository()) {}
 
   async export(course: Course, context: ExportContext): Promise<ExportedDocument> {
-    const zip = new AdmZip();
+    // noSort: adm-zip alphabetizes entries on write by default, which would
+    // demote the mimetype entry from the first slot the OCF spec requires.
+    const zip = new AdmZip(undefined, { noSort: true });
     const { strings } = context;
 
     // The mimetype entry must exist, come first and be uncompressed.
