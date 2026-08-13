@@ -1,4 +1,4 @@
-import { clearContentCache } from '../../infrastructure/StaticContentClient';
+import { clearContentCache, getContentSourceUrl } from '../../infrastructure/StaticContentClient';
 import { StaticCourseRepository } from '../../../course/infrastructure/StaticCourseRepository';
 import { StaticNewsRepository } from '../../../news/infrastructure/StaticNewsRepository';
 import { StaticPageRepository } from '../../../pages/infrastructure/StaticPageRepository';
@@ -151,6 +151,19 @@ describe('static content repositories (unit)', () => {
     expect(defaults.getLibraryName()).toBe('Open Knowledge');
     expect(defaults.getLogoDarkPath()).toBeNull();
     expect(defaults.shouldInvertLogoInDarkMode()).toBe(false);
+  });
+
+  it('maps the raw content URL to a browsable source URL', () => {
+    process.env.OK_CONTENT_REPO = 'https://raw.githubusercontent.com/oegea/open-library/main';
+    expect(getContentSourceUrl()).toBe('https://github.com/oegea/open-library/tree/main');
+
+    process.env.OK_CONTENT_REPO =
+      'https://raw.githubusercontent.com/oegea/open-library/refs/heads/main';
+    expect(getContentSourceUrl()).toBe('https://github.com/oegea/open-library/tree/main');
+
+    // Non-GitHub origins pass through untouched.
+    process.env.OK_CONTENT_REPO = 'https://content.example.org/library';
+    expect(getContentSourceUrl()).toBe('https://content.example.org/library');
   });
 
   it('caches documents between calls', async () => {

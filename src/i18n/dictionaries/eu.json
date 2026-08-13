@@ -247,7 +247,8 @@
   },
   "footer": {
     "tagline": "Liburutegi honek Open Knowledge darabil.",
-    "taglineOwned": "Liburutegi hau {owner}(r)ena da eta Open Knowledge-k bultzatzen du."
+    "taglineOwned": "Liburutegi hau {owner}(r)ena da eta Open Knowledge-k bultzatzen du.",
+    "contentSource": "Ikusi edukiaren iturburua"
   },
   "theme": {
     "label": "Gaia aldatu"

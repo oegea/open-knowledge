@@ -247,7 +247,8 @@
   },
   "footer": {
     "tagline": "Questa libreria è alimentata da Open Knowledge.",
-    "taglineOwned": "Questa libreria appartiene a {owner} ed è alimentata da Open Knowledge."
+    "taglineOwned": "Questa libreria appartiene a {owner} ed è alimentata da Open Knowledge.",
+    "contentSource": "Vedi la fonte dei contenuti"
   },
   "theme": {
     "label": "Cambia tema"

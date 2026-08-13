@@ -247,7 +247,8 @@
   },
   "footer": {
     "tagline": "Esta librería está impulsada por Open Knowledge.",
-    "taglineOwned": "Esta librería pertenece a {owner} y está impulsada por Open Knowledge."
+    "taglineOwned": "Esta librería pertenece a {owner} y está impulsada por Open Knowledge.",
+    "contentSource": "Ver la fuente del contenido"
   },
   "theme": {
     "label": "Cambiar tema"

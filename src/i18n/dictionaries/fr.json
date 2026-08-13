@@ -247,7 +247,8 @@
   },
   "footer": {
     "tagline": "Cette bibliothèque est propulsée par Open Knowledge.",
-    "taglineOwned": "Cette bibliothèque appartient à {owner} et est propulsée par Open Knowledge."
+    "taglineOwned": "Cette bibliothèque appartient à {owner} et est propulsée par Open Knowledge.",
+    "contentSource": "Voir la source du contenu"
   },
   "theme": {
     "label": "Changer de thème"

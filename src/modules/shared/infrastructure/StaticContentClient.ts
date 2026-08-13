@@ -35,6 +35,21 @@ export function resolveContentUrl(path: string | null): string | null {
   return `${getContentRepoUrl()}/${path.replace(/^\/+/, '')}`;
 }
 
+/**
+ * Human-browsable URL of the content source, for crediting it in the UI:
+ * raw GitHub URLs map to the repository page; anything else passes through.
+ */
+export function getContentSourceUrl(): string | null {
+  const base = getContentRepoUrl();
+  if (!base) return null;
+  const match = base.match(
+    /^https?:\/\/raw\.githubusercontent\.com\/([^/]+)\/([^/]+)\/(?:refs\/heads\/)?([^/]+)(?:\/(.*))?$/i
+  );
+  if (!match) return base;
+  const [, owner, repo, branch, subPath] = match;
+  return `https://github.com/${owner}/${repo}/tree/${branch}${subPath ? `/${subPath}` : ''}`;
+}
+
 /** Fetches a JSON document from the content repository. Null when missing. */
 export async function fetchContentJson<T>(relativePath: string): Promise<T | null> {
   const base = getContentRepoUrl();

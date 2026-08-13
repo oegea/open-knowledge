@@ -247,7 +247,8 @@
   },
   "footer": {
     "tagline": "Diese Bibliothek wird von Open Knowledge betrieben.",
-    "taglineOwned": "Diese Bibliothek gehört {owner} und wird von Open Knowledge betrieben."
+    "taglineOwned": "Diese Bibliothek gehört {owner} und wird von Open Knowledge betrieben.",
+    "contentSource": "Inhaltsquelle ansehen"
   },
   "theme": {
     "label": "Design wechseln"

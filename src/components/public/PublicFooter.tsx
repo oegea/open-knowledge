@@ -3,6 +3,10 @@ import { getLocale } from '@/i18n/getLocale';
 import { getDictionary, translate } from '@/i18n/dictionary';
 import settingsFactory from '@/modules/settings/application/factory';
 import pagesFactory from '@/modules/pages/application/factory';
+import {
+  isStaticMode,
+  getContentSourceUrl,
+} from '@/modules/shared/infrastructure/StaticContentClient';
 import styles from './PublicFooter.module.css';
 
 const PROJECT_URL = 'https://github.com/oegea/open-knowledge';
@@ -27,6 +31,8 @@ export async function PublicFooter() {
   const settings = await settingsFactory.getInstanceSettings();
   const footerPages = await pagesFactory.listPages('footer');
   const owner = settings.getOwnerName();
+  // Static mode serves everything from a public repository — credit the source.
+  const sourceUrl = isStaticMode() ? getContentSourceUrl() : null;
 
   return (
     <footer className={styles.footer}>
@@ -49,6 +55,19 @@ export async function PublicFooter() {
             : translate(dictionary, 'footer.tagline'),
           styles.projectLink
         )}
+        {sourceUrl ? (
+          <>
+            {' · '}
+            <a
+              href={sourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.projectLink}
+            >
+              {translate(dictionary, 'footer.contentSource')}
+            </a>
+          </>
+        ) : null}
       </p>
     </footer>
   );

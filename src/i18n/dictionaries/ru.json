@@ -247,7 +247,8 @@
   },
   "footer": {
     "tagline": "Эта библиотека работает на Open Knowledge.",
-    "taglineOwned": "Эта библиотека принадлежит {owner} и работает на Open Knowledge."
+    "taglineOwned": "Эта библиотека принадлежит {owner} и работает на Open Knowledge.",
+    "contentSource": "Посмотреть источник контента"
   },
   "theme": {
     "label": "Переключить тему"

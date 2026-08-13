@@ -247,7 +247,8 @@
   },
   "footer": {
     "tagline": "Aquesta llibreria funciona amb Open Knowledge.",
-    "taglineOwned": "Aquesta llibreria pertany a {owner} i funciona amb Open Knowledge."
+    "taglineOwned": "Aquesta llibreria pertany a {owner} i funciona amb Open Knowledge.",
+    "contentSource": "Mostra la font del contingut"
   },
   "theme": {
     "label": "Canviar el tema"

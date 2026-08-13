@@ -247,7 +247,8 @@
   },
   "footer": {
     "tagline": "This library is powered by Open Knowledge.",
-    "taglineOwned": "This library belongs to {owner} and is powered by Open Knowledge."
+    "taglineOwned": "This library belongs to {owner} and is powered by Open Knowledge.",
+    "contentSource": "View content source"
   },
   "theme": {
     "label": "Toggle theme"

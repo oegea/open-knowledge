@@ -247,7 +247,8 @@
   },
   "footer": {
     "tagline": "このライブラリは Open Knowledge で動いています。",
-    "taglineOwned": "このライブラリは {owner} が所有し、Open Knowledge が支えています。"
+    "taglineOwned": "このライブラリは {owner} が所有し、Open Knowledge が支えています。",
+    "contentSource": "コンテンツのソースを見る"
   },
   "theme": {
     "label": "テーマを切り替える"
