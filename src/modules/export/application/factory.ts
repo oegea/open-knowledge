@@ -7,6 +7,8 @@ import { SqliteCourseRepository } from '../../course/infrastructure/SqliteCourse
 import { StaticCourseRepository } from '../../course/infrastructure/StaticCourseRepository';
 import { SqliteSettingsRepository } from '../../settings/infrastructure/SqliteSettingsRepository';
 import { StaticSettingsRepository } from '../../settings/infrastructure/StaticSettingsRepository';
+import { FilesystemMediaRepository } from '../../media/infrastructure/FilesystemMediaRepository';
+import { StaticHttpMediaRepository } from '../../media/infrastructure/StaticHttpMediaRepository';
 import { isStaticMode } from '../../shared/infrastructure/StaticContentClient';
 import { getDictionary, translate } from '@/i18n/dictionary';
 import { DEFAULT_LOCALE, isLocale } from '@/i18n/config';
@@ -36,14 +38,21 @@ export default {
       courseRepository: isStaticMode() ? new StaticCourseRepository() : new SqliteCourseRepository(),
     }),
 
-  exportCourse: async (courseId: string, format: 'epub' | 'pdf', baseUrl: string) =>
-    await exportCourse({
+  exportCourse: async (courseId: string, format: 'epub' | 'pdf', baseUrl: string) => {
+    // In static mode media lives in the content repository, not on local disk.
+    const mediaRepository = isStaticMode()
+      ? new StaticHttpMediaRepository()
+      : new FilesystemMediaRepository();
+    return await exportCourse({
       courseId,
       baseUrl,
       courseRepository: (isStaticMode() ? new StaticCourseRepository() : new SqliteCourseRepository()),
       settingsRepository: (isStaticMode() ? new StaticSettingsRepository() : new SqliteSettingsRepository()),
       exportRepository:
-        format === 'epub' ? new EpubCourseExportRepository() : new PdfCourseExportRepository(),
+        format === 'epub'
+          ? new EpubCourseExportRepository(mediaRepository)
+          : new PdfCourseExportRepository(mediaRepository),
       stringsProvider,
-    }),
+    });
+  },
 };
