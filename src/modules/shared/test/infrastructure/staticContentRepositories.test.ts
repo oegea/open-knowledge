@@ -132,6 +132,8 @@ describe('static content repositories (unit)', () => {
         registrationOpen: true,
         newsEnabled: true,
         logoPath: 'media/logo.svg',
+        logoDarkPath: 'media/logo-dark.svg',
+        invertLogoInDarkMode: true,
       },
     });
 
@@ -139,11 +141,16 @@ describe('static content repositories (unit)', () => {
     expect(settings.getLibraryName()).toBe('Static Library');
     expect(settings.isRegistrationOpen()).toBe(false);
     expect(settings.getLogoPath()).toBe(`${BASE}/media/logo.svg`);
+    expect(settings.getLogoDarkPath()).toBe(`${BASE}/media/logo-dark.svg`);
+    expect(settings.hasDedicatedDarkLogo()).toBe(true);
+    expect(settings.shouldInvertLogoInDarkMode()).toBe(true);
 
     mockContent({});
     clearContentCache();
     const defaults = await new StaticSettingsRepository().get();
     expect(defaults.getLibraryName()).toBe('Open Knowledge');
+    expect(defaults.getLogoDarkPath()).toBeNull();
+    expect(defaults.shouldInvertLogoInDarkMode()).toBe(false);
   });
 
   it('caches documents between calls', async () => {

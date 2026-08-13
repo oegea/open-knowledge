@@ -22,7 +22,7 @@ export function SettingsForm({ initial }: SettingsFormProps) {
 
   const uploadLogo = async (
     file: File | undefined,
-    field: 'logoPath' | 'certificateLogoPath' | 'documentLogoPath' | 'heroImagePath'
+    field: 'logoPath' | 'logoDarkPath' | 'certificateLogoPath' | 'documentLogoPath' | 'heroImagePath'
   ) => {
     if (!file) return;
     setUploading(true);
@@ -77,6 +77,27 @@ export function SettingsForm({ initial }: SettingsFormProps) {
         deleteLabel={t('common.delete')}
         onUpload={(file) => uploadLogo(file, 'logoPath')}
         onClear={() => setSettings({ ...settings, logoPath: null })}
+      />
+
+      <LogoField
+        label={t('admin.logoDark')}
+        hint={t('admin.logoDarkHint')}
+        value={settings.logoDarkPath}
+        uploading={uploading}
+        uploadLabel={t('admin.upload')}
+        uploadingLabel={t('admin.uploading')}
+        deleteLabel={t('common.delete')}
+        onUpload={(file) => uploadLogo(file, 'logoDarkPath')}
+        onClear={() => setSettings({ ...settings, logoDarkPath: null })}
+      />
+
+      <CheckboxField
+        label={t('admin.invertLogo')}
+        hint={t('admin.invertLogoHint')}
+        checked={settings.invertLogoInDarkMode}
+        onChange={(event) =>
+          setSettings({ ...settings, invertLogoInDarkMode: event.target.checked })
+        }
       />
 
       <LogoField

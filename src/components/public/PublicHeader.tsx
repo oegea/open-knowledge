@@ -29,6 +29,14 @@ export async function PublicHeader({ backHref }: PublicHeaderProps = {}) {
   // Static content mode has no accounts: no sign-in, no notifications.
   const identityEnabled = !isStaticMode();
 
+  // Which logo file serves each theme. The dark slot falls back to the light
+  // logo (optionally color-inverted); theme switching is pure CSS so the
+  // server render never mismatches the client.
+  const lightLogo = settings.getLogoPath() ?? settings.getLogoDarkPath();
+  const darkLogo = settings.getLogoDarkPath();
+  const invertInDark = settings.shouldInvertLogoInDarkMode() && !settings.hasDedicatedDarkLogo();
+  const needsDarkSlot = darkLogo !== lightLogo || invertInDark;
+
   return (
     <header className={`ok-glass-strong ${styles.header}`}>
       <div className={styles.leading}>
@@ -42,13 +50,27 @@ export async function PublicHeader({ backHref }: PublicHeaderProps = {}) {
           </Link>
         ) : null}
         <Link href="/" className={styles.brand} aria-label={settings.getLibraryName()}>
-          {settings.getLogoPath() ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={settings.getLogoPath()!}
-              alt={settings.getLibraryName()}
-              className={styles.brandLogo}
-            />
+          {lightLogo ? (
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={lightLogo}
+                alt={settings.getLibraryName()}
+                className={
+                  needsDarkSlot ? `${styles.brandLogo} ${styles.brandLogoLight}` : styles.brandLogo
+                }
+              />
+              {needsDarkSlot ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={darkLogo!}
+                  alt={settings.getLibraryName()}
+                  className={`${styles.brandLogo} ${styles.brandLogoDark} ${
+                    invertInDark ? styles.brandLogoInverted : ''
+                  }`}
+                />
+              ) : null}
+            </>
           ) : (
             settings.getLibraryName()
           )}

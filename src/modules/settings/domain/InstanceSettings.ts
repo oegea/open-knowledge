@@ -4,6 +4,13 @@ export interface InstanceSettingsPrimitive {
   ownerName: string;
   /** Header logo; shown instead of the name when set. */
   logoPath: string | null;
+  /** Optional header logo for the dark theme; falls back to the regular logo. */
+  logoDarkPath: string | null;
+  /**
+   * When the dark theme is active and no dark logo is set, render the header
+   * logo with inverted colors so a light-background logo stays visible.
+   */
+  invertLogoInDarkMode: boolean;
   /** Logo for certificates; falls back to the header logo. */
   certificateLogoPath: string | null;
   /** Logo for exported documents (EPUB/PDF); falls back to the header logo. */
@@ -23,6 +30,8 @@ export class InstanceSettings {
     private readonly libraryName: string,
     private readonly ownerName: string,
     private readonly logoPath: string | null,
+    private readonly logoDarkPath: string | null,
+    private readonly invertLogoInDarkMode: boolean,
     private readonly certificateLogoPath: string | null,
     private readonly documentLogoPath: string | null,
     private readonly heroTitle: string,
@@ -36,6 +45,8 @@ export class InstanceSettings {
     libraryName: string,
     ownerName: string,
     logoPath: string | null,
+    logoDarkPath: string | null,
+    invertLogoInDarkMode: boolean,
     certificateLogoPath: string | null,
     documentLogoPath: string | null,
     heroTitle: string,
@@ -49,6 +60,8 @@ export class InstanceSettings {
       libraryName.trim(),
       ownerName.trim(),
       logoPath?.trim() || null,
+      logoDarkPath?.trim() || null,
+      invertLogoInDarkMode,
       certificateLogoPath?.trim() || null,
       documentLogoPath?.trim() || null,
       heroTitle.trim(),
@@ -60,7 +73,20 @@ export class InstanceSettings {
   }
 
   static createDefault(): InstanceSettings {
-    return InstanceSettings.create('Open Knowledge', '', null, null, null, '', '', null, true, false);
+    return InstanceSettings.create(
+      'Open Knowledge',
+      '',
+      null,
+      null,
+      false,
+      null,
+      null,
+      '',
+      '',
+      null,
+      true,
+      false
+    );
   }
 
   static fromPrimitive(data: InstanceSettingsPrimitive): InstanceSettings {
@@ -69,6 +95,8 @@ export class InstanceSettings {
       data.libraryName ?? 'Open Knowledge',
       data.ownerName ?? '',
       data.logoPath ?? null,
+      data.logoDarkPath ?? null,
+      Boolean(data.invertLogoInDarkMode),
       data.certificateLogoPath ?? null,
       data.documentLogoPath ?? null,
       data.heroTitle ?? '',
@@ -101,6 +129,20 @@ export class InstanceSettings {
 
   getLogoPath(): string | null {
     return this.logoPath;
+  }
+
+  /** Dark-theme header logo with fallback to the regular header logo. */
+  getLogoDarkPath(): string | null {
+    return this.logoDarkPath ?? this.logoPath;
+  }
+
+  /** True when the dark logo is its own image rather than a fallback. */
+  hasDedicatedDarkLogo(): boolean {
+    return this.logoDarkPath !== null;
+  }
+
+  shouldInvertLogoInDarkMode(): boolean {
+    return this.invertLogoInDarkMode;
   }
 
   /** Certificate logo with fallback to the header logo. */
@@ -142,6 +184,8 @@ export class InstanceSettings {
       libraryName: this.libraryName,
       ownerName: this.ownerName,
       logoPath: this.logoPath,
+      logoDarkPath: this.logoDarkPath,
+      invertLogoInDarkMode: this.invertLogoInDarkMode,
       certificateLogoPath: this.certificateLogoPath,
       documentLogoPath: this.documentLogoPath,
       heroTitle: this.heroTitle,

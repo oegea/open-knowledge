@@ -52,7 +52,7 @@ describe('registerUser (unit)', () => {
 
     it('allows the first user to register even with registration closed', async () => {
       const settingsRepository = SettingsRepositoryMother.create({
-        get: jest.fn().mockResolvedValue(InstanceSettings.create('Lib', '', null, null, null, '', '', null, false, false)),
+        get: jest.fn().mockResolvedValue(InstanceSettings.create('Lib', '', null, null, false, null, null, '', '', null, false, false)),
       });
 
       const { user } = await registerUser({
@@ -71,7 +71,7 @@ describe('registerUser (unit)', () => {
   describe('Error Scenarios', () => {
     it('rejects registration when closed and users exist', async () => {
       const settingsRepository = SettingsRepositoryMother.create({
-        get: jest.fn().mockResolvedValue(InstanceSettings.create('Lib', '', null, null, null, '', '', null, false, false)),
+        get: jest.fn().mockResolvedValue(InstanceSettings.create('Lib', '', null, null, false, null, null, '', '', null, false, false)),
       });
       const userRepository = UserRepositoryMother.create({
         countUsers: jest.fn().mockResolvedValue(1),

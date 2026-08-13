@@ -34,6 +34,8 @@ cat <<'EOF' > "$TARGET/settings.json"
   "libraryName": "My Open Knowledge Library",
   "ownerName": "",
   "logoPath": null,
+  "logoDarkPath": null,
+  "invertLogoInDarkMode": false,
   "certificateLogoPath": null,
   "documentLogoPath": null,
   "heroTitle": "",
@@ -509,6 +511,11 @@ Everything lives in `settings.json`:
 - `heroImagePath` — optional home hero background image (e.g.
   `"media/hero.jpg"`); `null` shows an animated brand gradient instead.
 - `logoPath` — header logo image; `null` shows the library name as text.
+- `logoDarkPath` — optional header logo for the dark theme; `null` falls
+  back to `logoPath`.
+- `invertLogoInDarkMode` — `true` shows `logoPath` with inverted colors
+  while the dark theme is active and no `logoDarkPath` is set — handy when a
+  single logo was designed for light backgrounds. Default `false`.
 - `documentLogoPath` — logo used inside exported EPUB/PDF documents; falls
   back to `logoPath`.
 - `certificateLogoPath` — irrelevant in static mode (no certificates).

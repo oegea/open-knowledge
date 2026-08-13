@@ -14,6 +14,7 @@ export class StaticSettingsRepository implements SettingsRepository {
     return InstanceSettings.fromPrimitive({
       ...data,
       logoPath: resolveContentUrl(data.logoPath ?? null),
+      logoDarkPath: resolveContentUrl(data.logoDarkPath ?? null),
       certificateLogoPath: resolveContentUrl(data.certificateLogoPath ?? null),
       documentLogoPath: resolveContentUrl(data.documentLogoPath ?? null),
       heroImagePath: resolveContentUrl(data.heroImagePath ?? null),

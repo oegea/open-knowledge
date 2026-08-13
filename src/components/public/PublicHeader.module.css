@@ -62,6 +62,44 @@
   object-fit: contain;
 }
 
+/* Theme-aware logo slots: the light slot shows by default, the dark slot in
+   dark theme. Mirrors the globals.css theme resolution — an explicit
+   data-theme choice wins over the system preference. */
+.brandLogoDark {
+  display: none;
+}
+
+/* Only ever displayed in dark theme, so the filter needs no theme guard. */
+.brandLogoInverted {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(:root:not([data-theme='light'])) .brandLogoLight {
+    display: none;
+  }
+
+  :global(:root:not([data-theme='light'])) .brandLogoDark {
+    display: block;
+  }
+}
+
+:global(:root[data-theme='dark']) .brandLogoLight {
+  display: none;
+}
+
+:global(:root[data-theme='dark']) .brandLogoDark {
+  display: block;
+}
+
+:global(:root[data-theme='light']) .brandLogoLight {
+  display: block;
+}
+
+:global(:root[data-theme='light']) .brandLogoDark {
+  display: none;
+}
+
 .desktopNav,
 .desktopActions {
   display: none;
