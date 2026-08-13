@@ -44,6 +44,9 @@ export async function generateMetadata(): Promise<Metadata> {
     title: { default: libraryName, template: `${libraryName} - %s` },
     description:
       'An open, self-hosted library of knowledge. Browse courses and learn at your own pace.',
+    applicationName: libraryName,
+    // Installed-app niceties (iOS home screen, Android WebAPK).
+    appleWebApp: { capable: true, title: libraryName, statusBarStyle: 'default' },
   };
 }
 
