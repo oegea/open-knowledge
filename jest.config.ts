@@ -8,7 +8,11 @@ export default async (): Promise<Config> => {
     displayName: 'backend',
     testEnvironment: 'node',
     testMatch: ['<rootDir>/src/modules/**/test/**/*.test.ts'],
-    moduleNameMapper: { '^@/(.*)$': '<rootDir>/src/$1' },
+    moduleNameMapper: {
+      '^@/(.*)$': '<rootDir>/src/$1',
+      // marked publishes ESM only, which jest cannot parse without transforms.
+      '^marked$': '<rootDir>/node_modules/marked/lib/marked.umd.js',
+    },
   })();
 
   const frontend = await createJestConfig({

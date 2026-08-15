@@ -21,11 +21,25 @@ code { font-family: monospace; background: #eef2f5; padding: 0.1em 0.3em; border
 pre { background: #131a21; color: #eef2f5; padding: 1em; border-radius: 6px; overflow-x: auto; }
 pre code { background: none; color: inherit; }
 .meta { color: #66757f; font-size: 0.9em; }
-.frontpage { text-align: center; }
-.frontpage img.logo { max-height: 3em; }
-.frontpage img.cover { max-width: 100%; border-radius: 8px; }
+.cover { text-align: center; }
+.cover img.cover-image { max-width: 100%; border-radius: 8px; }
+.cover h1 { font-size: 1.9em; margin: 1.2em 0 0.4em; }
+.cover .authors { color: #66757f; font-size: 1.05em; margin-top: 0; }
+.cover .brand { margin-top: 4em; border-top: 1px solid #dfe6eb; padding-top: 1.5em; }
+.cover .brand img.logo { max-height: 3em; }
+.cover .brand .library { font-family: Helvetica, Arial, sans-serif; font-weight: bold; margin: 0.4em 0 0.1em; }
+.cover .brand .url { color: #66757f; font-size: 0.85em; margin: 0; }
+.credits { font-size: 0.95em; }
 .notice { border: 1px solid #dfe6eb; border-radius: 8px; padding: 1em; margin: 1.5em 0; }
 `;
+
+/**
+ * marked emits HTML5, where void elements are left unclosed; EPUB documents
+ * are XML and reject them, so those tags become self-closing.
+ */
+function toXhtml(html: string): string {
+  return html.replace(/<(img|br|hr|input)((?:[^>"']|"[^"]*"|'[^']*')*?)\s*\/?>/g, '<$1$2/>');
+}
 
 function escapeXml(value: string): string {
   return value
@@ -96,15 +110,28 @@ export class EpubCourseExportRepository implements CourseExportRepository {
     const logoHref = await addImage(context.logoMediaPath, 'logo-image', false);
 
     const dateText = context.generatedAt.toISOString().slice(0, 10);
-    const brand = logoHref
-      ? `<img class="logo" src="${logoHref}" alt="${escapeXml(context.libraryName)}"/>`
-      : `<p><strong>${escapeXml(context.libraryName)}</strong></p>`;
 
-    // Front page: provenance, Open Knowledge notice, responsibility, license.
-    const frontBody = `<div class="frontpage">
-${brand}
-${coverHref ? `<p><img class="cover" src="${coverHref}" alt=""/></p>` : ''}
+    // Cover page, book style: image, title, authors and publisher brand.
+    let libraryUrl: string;
+    try {
+      libraryUrl = new URL(context.courseUrl).origin;
+    } catch {
+      libraryUrl = context.courseUrl;
+    }
+    const coverBody = `<section epub:type="cover titlepage" class="cover">
+${coverHref ? `<p><img class="cover-image" src="${coverHref}" alt=""/></p>` : ''}
 <h1>${escapeXml(course.getTitle())}</h1>
+${course.getAuthors().length > 0 ? `<p class="authors">${escapeXml(course.getAuthors().join(', '))}</p>` : ''}
+<div class="brand">
+${logoHref ? `<img class="logo" src="${logoHref}" alt="${escapeXml(context.libraryName)}"/>` : ''}
+<p class="library">${escapeXml(context.libraryName)}</p>
+<p class="url">${escapeXml(libraryUrl)}</p>
+</div>
+</section>`;
+    zip.addFile('OEBPS/cover.xhtml', Buffer.from(xhtml(course.getTitle(), coverBody)));
+
+    // Credits page: description, provenance, AI and Open Knowledge notices.
+    const creditsBody = `<section epub:type="copyright-page" class="credits">
 <p>${escapeXml(course.getDescription())}</p>
 ${course.getAuthors().length > 0 ? `<p class="meta">${escapeXml(strings.authors)}: ${escapeXml(course.getAuthors().join(', '))}</p>` : ''}
 ${course.getLicense() ? `<p class="meta">${escapeXml(strings.license)}: ${escapeXml(course.getLicense()!)}</p>` : ''}
@@ -121,8 +148,8 @@ ${course.isAiAssisted() ? `<div class="notice">
 <p class="meta">${escapeXml(strings.generatedWith)} ${escapeXml(strings.aboutOpenKnowledge)}</p>
 <p class="meta">${escapeXml(strings.responsible.replace('{owner}', context.ownerName))}</p>
 </div>
-</div>`;
-    zip.addFile('OEBPS/front.xhtml', Buffer.from(xhtml(course.getTitle(), frontBody)));
+</section>`;
+    zip.addFile('OEBPS/credits.xhtml', Buffer.from(xhtml(strings.credits, creditsBody)));
 
     // One chapter per material, in pedagogical order.
     const materials = course
@@ -168,7 +195,8 @@ ${course.isAiAssisted() ? `<div class="notice">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
 <head><title>${escapeXml(strings.toc)}</title></head>
 <body><nav epub:type="toc"><h1>${escapeXml(strings.toc)}</h1>
-<ol><li><a href="front.xhtml">${escapeXml(course.getTitle())}</a></li>${navItems}</ol>
+<ol><li><a href="cover.xhtml">${escapeXml(course.getTitle())}</a></li>
+<li><a href="credits.xhtml">${escapeXml(strings.credits)}</a></li>${navItems}</ol>
 </nav></body></html>`)
     );
 
@@ -176,7 +204,8 @@ ${course.isAiAssisted() ? `<div class="notice">
     const manifestEntries = [
       `<item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>`,
       `<item id="style" href="style.css" media-type="text/css"/>`,
-      `<item id="front" href="front.xhtml" media-type="application/xhtml+xml"/>`,
+      `<item id="cover" href="cover.xhtml" media-type="application/xhtml+xml"/>`,
+      `<item id="credits" href="credits.xhtml" media-type="application/xhtml+xml"/>`,
       ...chapters.map(
         (chapter) =>
           `<item id="${chapter.id}" href="${chapter.href}" media-type="application/xhtml+xml"/>`
@@ -190,7 +219,8 @@ ${course.isAiAssisted() ? `<div class="notice">
       ),
     ].join('\n    ');
     const spineEntries = [
-      `<itemref idref="front"/>`,
+      `<itemref idref="cover"/>`,
+      `<itemref idref="credits"/>`,
       ...chapters.map((chapter) => `<itemref idref="${chapter.id}"/>`),
       ...(bibliography.length > 0 ? [`<itemref idref="bibliography"/>`] : []),
     ].join('\n    ');
@@ -207,6 +237,7 @@ ${course.isAiAssisted() ? `<div class="notice">
     <dc:publisher>${escapeXml(context.libraryName)}</dc:publisher>
     ${course.getLicense() ? `<dc:rights>${escapeXml(course.getLicense()!)}</dc:rights>` : ''}
     <meta property="dcterms:modified">${context.generatedAt.toISOString().replace(/\.\d+Z$/, 'Z')}</meta>
+    ${coverHref ? '<meta name="cover" content="cover-image"/>' : ''}
   </metadata>
   <manifest>
     ${manifestEntries}
@@ -222,13 +253,13 @@ ${course.isAiAssisted() ? `<div class="notice">
 
   private async materialBody(material: Material, context: ExportContext): Promise<string> {
     if (material.getType() === 'markdown') {
-      return String(await marked.parse(material.getMarkdown()));
+      return toXhtml(String(await marked.parse(material.getMarkdown())));
     }
 
     // Audio, video and exams live online: point the reader to the material URL.
     const url = context.materialUrl(material.getId());
     const notes = material.getMarkdown()
-      ? String(await marked.parse(material.getMarkdown()))
+      ? toXhtml(String(await marked.parse(material.getMarkdown())))
       : '';
     return `<div class="notice">
 <p>${escapeXml(context.strings.consultOnline)}</p>

@@ -264,7 +264,8 @@
     "aboutOpenKnowledge": "Open Knowledge est une application open source (licence MIT) pour créer des bibliothèques de savoir organisé et les partager ouvertement avec Internet, comme un cadeau.",
     "responsible": "Le contenu relève de la responsabilité du titulaire de la bibliothèque où il a été publié : {owner}.",
     "consultOnline": "Ce contenu se consulte en ligne à l'adresse suivante :",
-    "toc": "Table des matières"
+    "toc": "Table des matières",
+    "credits": "Crédits"
   },
   "landing": {
     "categories": "Parcourir par catégorie",

@@ -264,7 +264,8 @@
     "aboutOpenKnowledge": "Open Knowledge は、精選された知識のライブラリを作成しインターネットに贈り物として公開共有するためのオープンソースアプリ（MIT ライセンス）です。",
     "responsible": "コンテンツの責任は、公開元ライブラリの所有者にあります：{owner}。",
     "consultOnline": "この教材は次の URL でオンライン視聴してください：",
-    "toc": "目次"
+    "toc": "目次",
+    "credits": "奥付"
   },
   "landing": {
     "categories": "カテゴリから探す",

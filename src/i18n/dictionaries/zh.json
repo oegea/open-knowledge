@@ -264,7 +264,8 @@
     "aboutOpenKnowledge": "Open Knowledge 是一款开源应用（MIT 许可证），用于创建精选知识库并作为礼物向互联网开放分享。",
     "responsible": "内容责任由发布该内容的课程库所有者承担：{owner}。",
     "consultOnline": "该材料需在线查看，地址如下：",
-    "toc": "目录"
+    "toc": "目录",
+    "credits": "版权页"
   },
   "landing": {
     "categories": "按分类浏览",

@@ -23,6 +23,7 @@ async function stringsProvider(language: string): Promise<ExportStrings> {
     responsible: translate(dictionary, 'export.responsible'),
     consultOnline: translate(dictionary, 'export.consultOnline'),
     toc: translate(dictionary, 'export.toc'),
+    credits: translate(dictionary, 'export.credits'),
     license: translate(dictionary, 'course.license'),
     authors: translate(dictionary, 'admin.authors'),
     bibliography: translate(dictionary, 'course.bibliography'),

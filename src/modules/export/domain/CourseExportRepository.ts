@@ -8,6 +8,7 @@ export interface ExportStrings {
   responsible: string;
   consultOnline: string;
   toc: string;
+  credits: string;
   license: string;
   authors: string;
   bibliography: string;

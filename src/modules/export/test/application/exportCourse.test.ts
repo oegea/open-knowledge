@@ -12,6 +12,7 @@ const STRINGS: ExportStrings = {
   responsible: 'Responsible: {owner}.',
   consultOnline: 'Consume online:',
   toc: 'Table of contents',
+  credits: 'Credits',
   license: 'License',
   authors: 'Authors',
   bibliography: 'Bibliography',

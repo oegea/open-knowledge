@@ -264,7 +264,8 @@
     "aboutOpenKnowledge": "Open Knowledge es una aplicación de código abierto (licencia MIT) para crear librerías de conocimiento curado y compartirlas abiertamente con Internet, como un regalo.",
     "responsible": "El responsable del contenido es el titular de la librería donde se ha publicado: {owner}.",
     "consultOnline": "Este material se consulta en línea en la siguiente dirección:",
-    "toc": "Índice"
+    "toc": "Índice",
+    "credits": "Créditos"
   },
   "landing": {
     "categories": "Explora por categoría",

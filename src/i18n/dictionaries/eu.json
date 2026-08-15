@@ -264,7 +264,8 @@
     "aboutOpenKnowledge": "Open Knowledge kode irekiko aplikazio bat da (MIT lizentzia), jakintza landuko liburutegiak sortu eta Internetekin modu irekian partekatzeko, opari gisa.",
     "responsible": "Edukiaren ardura argitaratu den liburutegiaren titularrarena da: {owner}.",
     "consultOnline": "Material hau sarean kontsultatzen da helbide honetan:",
-    "toc": "Aurkibidea"
+    "toc": "Aurkibidea",
+    "credits": "Kredituak"
   },
   "landing": {
     "categories": "Arakatu kategoriaka",
