@@ -119,6 +119,53 @@ describe('material use cases (unit)', () => {
       expect(material?.getMarkdown()).toBe('Updated content');
     });
 
+    it('keeps the existing transcript path when the update omits it', async () => {
+      const course = CourseMother.create({
+        sections: [
+          SectionMother.createPrimitive({
+            id: 'section-1',
+            materials: [
+              MaterialMother.createPrimitive({
+                id: 'material-1',
+                type: 'audio',
+                markdown: 'Notes',
+                mediaPath: 'audio/a.mp3',
+                transcriptPath: 'transcripts/a.json',
+              }),
+            ],
+          }),
+        ],
+      });
+      const courseRepository = CourseRepositoryMother.create({
+        findById: jest.fn().mockResolvedValue(course),
+      });
+
+      const kept = await updateMaterial({
+        courseId: 'course-1',
+        sectionId: 'section-1',
+        materialId: 'material-1',
+        title: 'Renamed',
+        type: 'audio',
+        mediaPath: 'audio/a.mp3',
+        courseRepository,
+      });
+      const cleared = await updateMaterial({
+        courseId: 'course-1',
+        sectionId: 'section-1',
+        materialId: 'material-1',
+        title: 'Renamed',
+        type: 'audio',
+        mediaPath: 'audio/a.mp3',
+        transcriptPath: null,
+        courseRepository,
+      });
+
+      const materialOf = (result: typeof kept) =>
+        result.getSections().getSectionById('section-1')!.getMaterials().getMaterialById('material-1')!;
+      expect(materialOf(kept).getTranscriptPath()).toBe('transcripts/a.json');
+      expect(materialOf(cleared).getTranscriptPath()).toBeNull();
+    });
+
     it('throws when the material does not exist', async () => {
       const course = CourseMother.create();
       const courseRepository = CourseRepositoryMother.create({

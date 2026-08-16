@@ -138,6 +138,42 @@ export function IconExam(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function IconPlay(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base(props)}>
+      <path d="M8 5.5v13l10-6.5z" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function IconPause(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base(props)}>
+      <rect x="6.5" y="5" width="3.5" height="14" rx="1.2" fill="currentColor" stroke="none" />
+      <rect x="14" y="5" width="3.5" height="14" rx="1.2" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function IconArrowUp(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base(props)}>
+      <path d="M12 19V5" />
+      <path d="m5 12 7-7 7 7" />
+    </svg>
+  );
+}
+
+export function IconFollow(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base(props)}>
+      <path d="M12 4v11" />
+      <path d="m6 10 6 6 6-6" />
+      <path d="M5 20h14" />
+    </svg>
+  );
+}
+
 export function IconCheck(props: SVGProps<SVGSVGElement>) {
   return (
     <svg {...base(props)}>

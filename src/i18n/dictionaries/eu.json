@@ -130,7 +130,11 @@
     "categoryName": "Izena",
     "categoryImage": "Txartelaren irudia",
     "categoryImageHint": "Hasierako orriko txartelean agertzen da. Izena aldatzeak dauden ikastaroak eguneratzen ditu; ezabatzeak testu gisa mantentzen du haien kategoria.",
-    "categoryPickHint": "Aukeratu lehendik dagoen kategoria bat edo idatzi berri bat."
+    "categoryPickHint": "Aukeratu lehendik dagoen kategoria bat edo idatzi berri bat.",
+    "transcriptFile": "Transkripzio sinkronizatua (aukerakoa)",
+    "transcriptHint": "Narratutako hitz bakoitzaren denbora duen JSONa: testua audioaren erritmoan nabarmentzen da. Ikus dokumentazioa formatua ezagutzeko.",
+    "transcriptAttached": "Transkripzioa erantsita — ireki",
+    "transcriptRemove": "Kendu transkripzioa"
   },
   "material": {
     "type": {
@@ -192,7 +196,13 @@
     "courseCompleted": "Ikastaroa osatuta!",
     "registerToKeep": "Erregistratu zure aurrerapena eta ziurtagiriak gailu guztietan gordetzeko.",
     "unmarkComplete": "Kendu osatutako marka",
-    "readingTime": "{min} min irakurketa"
+    "readingTime": "{min} min irakurketa",
+    "play": "Erreproduzitu",
+    "pause": "Pausatu",
+    "nowPlaying": "Erreproduzitzen",
+    "backToPlayer": "Itzuli erreproduzitzailera",
+    "seek": "Erreprodukzio-posizioa",
+    "followNarration": "Jarraitu narrazioa"
   },
   "auth": {
     "register": "Sortu nortasuna",

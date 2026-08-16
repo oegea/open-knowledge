@@ -116,3 +116,36 @@
   border-top: 1px solid var(--ok-border);
   margin: var(--ok-space-4) 0;
 }
+
+/* ------------------------------------------------------------------ */
+/* Narration sync: word anchors (see rehypeWordSpans / NarratedProse)   */
+/* ------------------------------------------------------------------ */
+.prose [data-word] {
+  border-radius: var(--ok-radius-sm);
+  transition:
+    background var(--ok-duration-fast) var(--ok-ease),
+    color var(--ok-duration-fast) var(--ok-ease);
+}
+
+/* Words the narration actually reaches are seekable by tapping them. */
+.prose [data-word][data-narrated] {
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .prose [data-word][data-narrated]:hover {
+    background: var(--ok-primary-soft);
+  }
+}
+
+.prose [data-word][aria-current='true'] {
+  background: var(--ok-primary-soft);
+  color: var(--ok-primary);
+  box-shadow: 0 0 0 3px var(--ok-primary-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prose [data-word] {
+    transition: none;
+  }
+}

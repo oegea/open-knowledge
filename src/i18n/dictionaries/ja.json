@@ -130,7 +130,11 @@
     "categoryName": "名前",
     "categoryImage": "カード画像",
     "categoryImageHint": "ホームページのカードに表示されます。名前を変更すると既存のコースも更新されます。削除してもコースのカテゴリはテキストとして残ります。",
-    "categoryPickHint": "既存のカテゴリを選ぶか、新しく入力してください。"
+    "categoryPickHint": "既存のカテゴリを選ぶか、新しく入力してください。",
+    "transcriptFile": "同期トランスクリプト（任意）",
+    "transcriptHint": "朗読された各単語のタイミングを含む JSON。音声に合わせてテキストがハイライトされます。形式はドキュメントを参照してください。",
+    "transcriptAttached": "トランスクリプト添付済み — 開く",
+    "transcriptRemove": "トランスクリプトを削除"
   },
   "material": {
     "type": {
@@ -192,7 +196,13 @@
     "courseCompleted": "コース修了！",
     "registerToKeep": "登録すると、進捗と証明書をデバイス間で保持できます。",
     "unmarkComplete": "完了を取り消す",
-    "readingTime": "読了目安 {min} 分"
+    "readingTime": "読了目安 {min} 分",
+    "play": "再生",
+    "pause": "一時停止",
+    "nowPlaying": "再生中",
+    "backToPlayer": "プレーヤーに戻る",
+    "seek": "再生位置",
+    "followNarration": "ナレーションに追従"
   },
   "auth": {
     "register": "アカウントを作成",

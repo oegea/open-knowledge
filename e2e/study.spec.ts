@@ -52,4 +52,40 @@ test.describe('Anonymous study mode', () => {
     await page.waitForURL(`**/study/**`);
     await expect(page.getByText('¿Qué planeta está más cerca del Sol?')).toBeVisible();
   });
+
+  test('narrated material: docked mini player and word highlighting in sync', async ({ page }) => {
+    const { courseId, audioMaterialId } = loadState();
+
+    await page.goto(`/courses/${courseId}/study/${audioMaterialId}`);
+    await expect(page.getByRole('heading', { name: 'Narración: el cielo nocturno' })).toBeVisible();
+    // The transcript aligned: narrated words become seekable anchors.
+    await expect(page.locator('[data-word][data-narrated]').first()).toBeAttached();
+
+    // Never played: scrolling away is plain reading — no player chrome at all.
+    await page.mouse.move(200, 300);
+    await page.mouse.wheel(0, 2400);
+    await expect(page.getByRole('region', { name: 'Reproduciendo' })).toHaveCount(0);
+
+    // Playing highlights the narrated word and, with the player scrolled
+    // away, docks compact controls above the footer.
+    await page.evaluate(() => (document.querySelector('audio') as HTMLAudioElement).play());
+    const dock = page.getByRole('region', { name: 'Reproduciendo' });
+    await expect(dock).toBeVisible();
+    await expect(dock.getByText('Narración: el cielo nocturno')).toBeVisible();
+    await expect(dock.getByRole('button', { name: 'Pausar' })).toBeVisible();
+    await expect(page.locator('[data-word][aria-current="true"]')).toHaveCount(1);
+
+    // Pause and resume from the dock.
+    await dock.getByRole('button', { name: 'Pausar' }).click();
+    await expect(dock.getByRole('button', { name: 'Reproducir' })).toBeVisible();
+    await dock.getByRole('button', { name: 'Reproducir' }).click();
+    await expect(dock.getByRole('button', { name: 'Pausar' })).toBeVisible();
+
+    // The manual scroll above switched following off: the dock offers to
+    // catch up. Doing so brings the narrated word (and here the player, right
+    // above it) back into view, so the dock folds away.
+    await dock.getByRole('button', { name: 'Seguir la narración' }).click();
+    await expect(page.locator('[data-word][aria-current="true"]')).toBeInViewport();
+    await expect(page.getByRole('region', { name: 'Reproduciendo' })).toHaveCount(0);
+  });
 });

@@ -18,6 +18,7 @@ const MIME_BY_EXTENSION: Record<string, string> = {
   '.mp4': 'video/mp4',
   '.webm': 'video/webm',
   '.mov': 'video/quicktime',
+  '.json': 'application/json',
 };
 
 const EXTENSION_BY_MIME: Record<string, string> = Object.fromEntries(

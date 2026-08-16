@@ -26,13 +26,18 @@ export function MaterialForm({ initial, onSubmit, onCancel }: MaterialFormProps)
   const [type, setType] = useState<MaterialType>(initial?.type ?? 'markdown');
   const [markdown, setMarkdown] = useState(initial?.markdown ?? '');
   const [mediaPath, setMediaPath] = useState<string | null>(initial?.mediaPath ?? null);
+  const [transcriptPath, setTranscriptPath] = useState<string | null>(
+    initial?.transcriptPath ?? null
+  );
   const [exam, setExam] = useState<ExamPrimitive>(initial?.exam ?? EMPTY_EXAM);
   const [required, setRequired] = useState(initial?.required ?? true);
   const [sources, setSources] = useState<SourcePrimitive[]>(initial?.sources ?? []);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [uploadingTranscript, setUploadingTranscript] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const transcriptInputRef = useRef<HTMLInputElement>(null);
 
   const handleUpload = async (file: File | undefined) => {
     if (!file) return;
@@ -49,6 +54,20 @@ export function MaterialForm({ initial, onSubmit, onCancel }: MaterialFormProps)
     }
   };
 
+  const handleTranscriptUpload = async (file: File | undefined) => {
+    if (!file) return;
+    setUploadingTranscript(true);
+    setErrorMessage(null);
+    try {
+      const repository = new HttpCourseAdminRepository();
+      setTranscriptPath(await repository.uploadMedia('transcripts', file));
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : t('common.error'));
+    } finally {
+      setUploadingTranscript(false);
+    }
+  };
+
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     setSaving(true);
@@ -62,6 +81,7 @@ export function MaterialForm({ initial, onSubmit, onCancel }: MaterialFormProps)
         exam: type === 'exam' ? exam : null,
         required,
         sources: sources.filter((source) => source.title.trim() !== ''),
+        transcriptPath: type === 'audio' || type === 'video' ? transcriptPath : null,
       });
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : t('common.error'));
@@ -123,6 +143,44 @@ export function MaterialForm({ initial, onSubmit, onCancel }: MaterialFormProps)
         </div>
       ) : null}
 
+      {type === 'audio' || type === 'video' ? (
+        <div className={styles.mediaBlock}>
+          <span className={styles.mediaLabel}>{t('admin.transcriptFile')}</span>
+          <p className={styles.hint}>{t('admin.transcriptHint')}</p>
+          {transcriptPath ? (
+            <p className={styles.attached}>
+              <a href={transcriptPath} target="_blank" rel="noopener noreferrer">
+                {t('admin.transcriptAttached')}
+              </a>
+            </p>
+          ) : null}
+          <input
+            ref={transcriptInputRef}
+            type="file"
+            accept="application/json,.json"
+            className={styles.fileInput}
+            aria-label={t('admin.transcriptFile')}
+            onChange={(event) => handleTranscriptUpload(event.target.files?.[0])}
+          />
+          <div className={styles.inlineActions}>
+            <Button
+              type="button"
+              variant="soft"
+              size="sm"
+              disabled={uploadingTranscript}
+              onClick={() => transcriptInputRef.current?.click()}
+            >
+              {uploadingTranscript ? t('admin.uploading') : t('admin.upload')}
+            </Button>
+            {transcriptPath ? (
+              <Button type="button" variant="ghost" size="sm" onClick={() => setTranscriptPath(null)}>
+                {t('admin.transcriptRemove')}
+              </Button>
+            ) : null}
+          </div>
+        </div>
+      ) : null}
+
       {type === 'exam' ? (
         <ExamEditor exam={exam} onChange={setExam} />
       ) : (
@@ -150,7 +208,7 @@ export function MaterialForm({ initial, onSubmit, onCancel }: MaterialFormProps)
       ) : null}
 
       <div className={styles.actions}>
-        <Button type="submit" disabled={saving || uploading}>
+        <Button type="submit" disabled={saving || uploading || uploadingTranscript}>
           {saving ? t('common.saving') : t('common.save')}
         </Button>
         <Button type="button" variant="ghost" onClick={onCancel}>

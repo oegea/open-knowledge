@@ -130,7 +130,11 @@
     "categoryName": "Name",
     "categoryImage": "Card image",
     "categoryImageHint": "Shown on the home page card. Renaming relabels existing courses; deleting keeps their text category.",
-    "categoryPickHint": "Pick an existing category or type a new one."
+    "categoryPickHint": "Pick an existing category or type a new one.",
+    "transcriptFile": "Timed transcript (optional)",
+    "transcriptHint": "JSON with the timing of every narrated word: the text is highlighted as it is spoken. See the documentation for the format.",
+    "transcriptAttached": "Transcript attached — open",
+    "transcriptRemove": "Remove transcript"
   },
   "material": {
     "type": {
@@ -192,7 +196,13 @@
     "courseCompleted": "Course completed!",
     "registerToKeep": "Register to keep your progress and certificates across devices.",
     "unmarkComplete": "Unmark as completed",
-    "readingTime": "{min} min read"
+    "readingTime": "{min} min read",
+    "play": "Play",
+    "pause": "Pause",
+    "nowPlaying": "Now playing",
+    "backToPlayer": "Back to the player",
+    "seek": "Playback position",
+    "followNarration": "Follow the narration"
   },
   "auth": {
     "register": "Create identity",

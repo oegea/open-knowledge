@@ -28,6 +28,14 @@ describe('SqliteCourseRepository (integration)', () => {
           materials: [
             MaterialMother.createPrimitive({ id: 'm1' }),
             MaterialMother.createPrimitive({
+              id: 'm3',
+              title: 'Narrated chapter',
+              type: 'audio',
+              markdown: 'Notes',
+              mediaPath: 'audio/m3.mp3',
+              transcriptPath: 'transcripts/m3.json',
+            }),
+            MaterialMother.createPrimitive({
               id: 'm2',
               title: 'Checkpoint exam',
               type: 'exam',
@@ -46,7 +54,10 @@ describe('SqliteCourseRepository (integration)', () => {
 
     expect(found).not.toBeNull();
     expect(found!.equals(course)).toBe(true);
-    expect(found!.getSections().getSectionById('s1')!.getMaterials().count()).toBe(2);
+    expect(found!.getSections().getSectionById('s1')!.getMaterials().count()).toBe(3);
+    expect(
+      found!.getSections().getSectionById('s1')!.getMaterials().getMaterialById('m3')!.getTranscriptPath()
+    ).toBe('transcripts/m3.json');
     const exam = found!
       .getSections()
       .getSectionById('s1')!

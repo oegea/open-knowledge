@@ -35,6 +35,29 @@
   display: none;
 }
 
+.hint {
+  margin: calc(-1 * var(--ok-space-2)) 0 0;
+  font-size: var(--ok-text-sm);
+  color: var(--ok-fg-muted);
+  max-width: var(--ok-measure-reading);
+}
+
+.attached {
+  font-size: var(--ok-text-sm);
+}
+
+.attached a {
+  color: var(--ok-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.inlineActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ok-space-2);
+}
+
 .markdownArea textarea {
   font-family: var(--ok-font-mono);
   font-size: var(--ok-text-sm);

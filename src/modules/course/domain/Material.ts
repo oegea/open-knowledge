@@ -13,6 +13,7 @@ export interface MaterialInput {
   exam?: ExamPrimitive | null;
   required?: boolean;
   sources?: SourcePrimitive[];
+  transcriptPath?: string | null;
 }
 
 export interface MaterialPrimitive {
@@ -29,6 +30,12 @@ export interface MaterialPrimitive {
   required: boolean;
   /** Optional attribution sources for this specific material. */
   sources: SourcePrimitive[];
+  /**
+   * Optional timed transcript (JSON, see `TimedTranscript`) for `audio` /
+   * `video` materials: lets the study view highlight the narrated words in
+   * sync with playback. `null` means plain playback.
+   */
+  transcriptPath: string | null;
 }
 
 export class Material {
@@ -40,7 +47,8 @@ export class Material {
     private readonly mediaPath: string | null,
     private readonly exam: Exam | null,
     private readonly required: boolean,
-    private readonly sources: Source[]
+    private readonly sources: Source[],
+    private readonly transcriptPath: string | null
   ) {}
 
   static create(
@@ -51,9 +59,10 @@ export class Material {
     mediaPath: string | null,
     exam: Exam | null,
     required: boolean,
-    sources: (SourcePrimitive | string)[] = []
+    sources: (SourcePrimitive | string)[] = [],
+    transcriptPath: string | null = null
   ): Material {
-    Material.ensureMaterialIsValid(id, title, type, markdown, mediaPath, exam);
+    Material.ensureMaterialIsValid(id, title, type, markdown, mediaPath, exam, transcriptPath);
     return new Material(
       id,
       title.trim(),
@@ -62,7 +71,8 @@ export class Material {
       mediaPath,
       exam,
       required,
-      sources.map((source) => Source.fromPrimitive(source))
+      sources.map((source) => Source.fromPrimitive(source)),
+      transcriptPath?.trim() || null
     );
   }
 
@@ -76,7 +86,8 @@ export class Material {
       data.mediaPath ?? null,
       data.exam ? Exam.fromPrimitive(data.exam) : null,
       Boolean(data.required),
-      data.sources ?? []
+      data.sources ?? [],
+      data.transcriptPath ?? null
     );
   }
 
@@ -86,7 +97,8 @@ export class Material {
     type: MaterialType,
     markdown: string,
     mediaPath: string | null,
-    exam: Exam | null
+    exam: Exam | null,
+    transcriptPath: string | null = null
   ): void {
     if (!id || typeof id !== 'string') {
       throw new Error('[Material] id must be a non-empty string');
@@ -108,6 +120,12 @@ export class Material {
     }
     if (type === 'exam' && exam === null) {
       throw new Error('[Material] exam materials need an exam definition');
+    }
+    if (transcriptPath !== null && transcriptPath !== undefined && typeof transcriptPath !== 'string') {
+      throw new Error('[Material] transcriptPath must be a string or null');
+    }
+    if (transcriptPath && transcriptPath.trim() !== '' && type !== 'audio' && type !== 'video') {
+      throw new Error('[Material] only audio and video materials can have a transcript');
     }
   }
 
@@ -143,6 +161,10 @@ export class Material {
     return [...this.sources];
   }
 
+  getTranscriptPath(): string | null {
+    return this.transcriptPath;
+  }
+
   isExam(): boolean {
     return this.type === 'exam';
   }
@@ -157,6 +179,7 @@ export class Material {
       exam: this.exam ? this.exam.toPrimitive() : null,
       required: this.required,
       sources: this.sources.map((source) => source.toPrimitive()),
+      transcriptPath: this.transcriptPath,
     };
   }
 

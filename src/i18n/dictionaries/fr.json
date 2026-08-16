@@ -130,7 +130,11 @@
     "categoryName": "Nom",
     "categoryImage": "Image de la carte",
     "categoryImageHint": "Affichée sur la carte de la page d'accueil. Renommer met à jour les cours existants ; supprimer conserve leur catégorie sous forme de texte.",
-    "categoryPickHint": "Choisissez une catégorie existante ou saisissez-en une nouvelle."
+    "categoryPickHint": "Choisissez une catégorie existante ou saisissez-en une nouvelle.",
+    "transcriptFile": "Transcription synchronisée (facultatif)",
+    "transcriptHint": "JSON avec le minutage de chaque mot narré : le texte est surligné au rythme de l’audio. Voir la documentation pour le format.",
+    "transcriptAttached": "Transcription jointe — ouvrir",
+    "transcriptRemove": "Retirer la transcription"
   },
   "material": {
     "type": {
@@ -192,7 +196,13 @@
     "courseCompleted": "Cours terminé !",
     "registerToKeep": "Inscrivez-vous pour conserver votre progression et vos certificats sur tous vos appareils.",
     "unmarkComplete": "Ne plus marquer comme terminé",
-    "readingTime": "{min} min de lecture"
+    "readingTime": "{min} min de lecture",
+    "play": "Lecture",
+    "pause": "Pause",
+    "nowPlaying": "En cours de lecture",
+    "backToPlayer": "Revenir au lecteur",
+    "seek": "Position de lecture",
+    "followNarration": "Suivre la narration"
   },
   "auth": {
     "register": "Créer une identité",

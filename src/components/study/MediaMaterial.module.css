@@ -61,3 +61,12 @@
   box-shadow: var(--ok-shadow-2);
   background: black;
 }
+
+.videoCard {
+  /* Scroll target and visibility sentinel for the mini player. */
+  scroll-margin-top: calc(var(--ok-space-8) + var(--ok-space-4));
+}
+
+.audioCard {
+  scroll-margin-top: calc(var(--ok-space-8) + var(--ok-space-4));
+}

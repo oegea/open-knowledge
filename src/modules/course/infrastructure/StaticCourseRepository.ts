@@ -103,6 +103,7 @@ export class StaticCourseRepository implements CourseRepository {
       ...primitive,
       markdown,
       mediaPath: resolveContentUrl(primitive.mediaPath),
+      transcriptPath: resolveContentUrl(primitive.transcriptPath ?? null),
     };
   }
 }

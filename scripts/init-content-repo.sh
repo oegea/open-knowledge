@@ -397,6 +397,10 @@ The four material types:
    optional notes rendered below the player.
 3. **`"type": "audio"`** — same as video with an audio file
    (`media/talk.mp3`). The player shows the course artwork.
+   Audio and video materials may also set `"transcriptPath"` to a
+   **timed transcript** JSON (`media/talk.transcript.json`): the study view
+   then highlights each word as it is narrated and keeps it in view (see
+   "Timed transcripts" below). Omit it or set `null` for plain playback.
 4. **`"type": "exam"`** — keep the questions inline in `course.json` (they
    are structure, not prose). Set `exam` to:
 
@@ -425,6 +429,34 @@ The four material types:
   every visitor a different exam.
 - Write real `explanation`s: the product's exam philosophy is feedback, not
   scores.
+
+### Timed transcripts (narrated audio/video)
+
+A timed transcript pairs a narrated `audio`/`video` material with the timing
+of every spoken word, so the text below the player is highlighted karaoke-
+style while it plays. It is a plain JSON file referenced by the material's
+`transcriptPath`:
+
+```json
+{
+  "words": [
+    { "text": "El", "start": 0.06, "end": 0.16 },
+    { "text": "agua", "start": 0.2, "end": 0.38 },
+    { "text": "empezó", "start": 0.39, "end": 0.7 }
+  ]
+}
+```
+
+- `text`: the word as spoken, punctuation included; `start`/`end` in seconds,
+  in order. Any speech tool that produces word timestamps (forced alignment,
+  TTS with timestamps) can generate it.
+- The transcript is aligned in the browser against the words of the
+  material's Markdown, so both must come from the same text; small
+  differences (Markdown syntax, images, a sentence not narrated) are
+  tolerated. If they diverge too much, the material simply plays without
+  highlighting — a transcript never breaks a course.
+- Exports (PDF/EPUB/Markdown) ignore it. The content host must allow
+  cross-origin reads of the JSON (GitHub raw URLs do).
 
 ## Adding a category
 

@@ -41,6 +41,7 @@ interface MaterialRow {
   required: number;
   sources: string;
   position: number;
+  transcript_path: string | null;
 }
 
 export class SqliteCourseRepository implements CourseRepository {
@@ -100,8 +101,8 @@ export class SqliteCourseRepository implements CourseRepository {
         'INSERT INTO sections (id, course_id, title, position) VALUES (?, ?, ?, ?)'
       );
       const insertMaterial = this.db.prepare(
-        `INSERT INTO materials (id, section_id, title, type, markdown, media_path, exam, required, sources, position)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+        `INSERT INTO materials (id, section_id, title, type, markdown, media_path, exam, required, sources, position, transcript_path)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
       );
 
       primitive.sections.forEach((section, sectionIndex) => {
@@ -117,7 +118,8 @@ export class SqliteCourseRepository implements CourseRepository {
             material.exam ? JSON.stringify(material.exam) : null,
             material.required ? 1 : 0,
             JSON.stringify(material.sources),
-            materialIndex
+            materialIndex,
+            material.transcriptPath
           );
         });
       });
@@ -230,6 +232,7 @@ export class SqliteCourseRepository implements CourseRepository {
       exam: row.exam ? JSON.parse(row.exam) : null,
       required: row.required === 1,
       sources: JSON.parse(row.sources),
+      transcriptPath: row.transcript_path ?? null,
     };
   }
 }

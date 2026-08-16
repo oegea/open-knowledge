@@ -10,6 +10,7 @@ export function createPrimitive(overrides: Partial<MaterialPrimitive> = {}): Mat
     exam: null,
     required: true,
     sources: [],
+    transcriptPath: null,
     ...overrides,
   };
 }

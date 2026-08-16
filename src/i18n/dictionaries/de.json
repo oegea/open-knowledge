@@ -130,7 +130,11 @@
     "categoryName": "Name",
     "categoryImage": "Kartenbild",
     "categoryImageHint": "Wird auf der Karte der Startseite angezeigt. Umbenennen aktualisiert bestehende Kurse; Löschen behält ihre Kategorie als Text bei.",
-    "categoryPickHint": "Wähle eine bestehende Kategorie oder gib eine neue ein."
+    "categoryPickHint": "Wähle eine bestehende Kategorie oder gib eine neue ein.",
+    "transcriptFile": "Synchronisiertes Transkript (optional)",
+    "transcriptHint": "JSON mit dem Zeitpunkt jedes gesprochenen Wortes: der Text wird im Takt der Aufnahme hervorgehoben. Format siehe Dokumentation.",
+    "transcriptAttached": "Transkript angehängt — öffnen",
+    "transcriptRemove": "Transkript entfernen"
   },
   "material": {
     "type": {
@@ -192,7 +196,13 @@
     "courseCompleted": "Kurs abgeschlossen!",
     "registerToKeep": "Registriere dich, um Fortschritt und Zertifikate geräteübergreifend zu behalten.",
     "unmarkComplete": "Als nicht abgeschlossen markieren",
-    "readingTime": "{min} Min. Lesezeit"
+    "readingTime": "{min} Min. Lesezeit",
+    "play": "Abspielen",
+    "pause": "Pause",
+    "nowPlaying": "Wird abgespielt",
+    "backToPlayer": "Zurück zum Player",
+    "seek": "Wiedergabeposition",
+    "followNarration": "Der Erzählung folgen"
   },
   "auth": {
     "register": "Identität erstellen",

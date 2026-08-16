@@ -5,6 +5,7 @@ export interface SeededState {
   adminIdentifier: string;
   adminSecret: string;
   courseId: string;
+  audioMaterialId: string;
   newsPostId: string;
   categoryId: string;
 }

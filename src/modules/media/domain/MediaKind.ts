@@ -1,4 +1,4 @@
-export const MEDIA_KINDS = ['covers', 'audio', 'video', 'images'] as const;
+export const MEDIA_KINDS = ['covers', 'audio', 'video', 'images', 'transcripts'] as const;
 export type MediaKind = (typeof MEDIA_KINDS)[number];
 
 const ALLOWED_MIME: Record<MediaKind, RegExp> = {
@@ -6,6 +6,8 @@ const ALLOWED_MIME: Record<MediaKind, RegExp> = {
   images: /^image\//,
   audio: /^audio\//,
   video: /^video\//,
+  /** Timed transcripts are small JSON documents (see TimedTranscript). */
+  transcripts: /^(application|text)\/json$/,
 };
 
 /** 512 MiB — generous enough for self-hosted course video material. */
