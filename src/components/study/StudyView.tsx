@@ -48,6 +48,9 @@ export function StudyView({
   const [contentsOpen, setContentsOpen] = useState(false);
   const [footerHidden, setFooterHidden] = useState(false);
   const [certificateId, setCertificateId] = useState<string | null>(null);
+  // Hosts the mini player of audio/video materials while their player is
+  // scrolled away; sits above the navigation footer, where players belong.
+  const [playerDock, setPlayerDock] = useState<HTMLElement | null>(null);
   const progressRepository = useMemo(
     () => (authenticated ? new HttpProgressRepository() : new LocalStorageProgressRepository()),
     [authenticated]
@@ -371,8 +374,10 @@ export function StudyView({
           <h1 className={styles.materialTitle}>{current.material.title}</h1>
 
           <MaterialRenderer
+            key={current.material.id}
             material={current.material}
             coverImage={course.coverImage}
+            playerDock={playerDock}
             onExamPassed={handleComplete}
             onExamFinished={handleExamFinished}
           />
@@ -405,6 +410,10 @@ export function StudyView({
 
       {/* Positioning and backdrop blur live on separate elements: iOS Safari
           mis-anchors position:fixed elements that carry backdrop-filter. */}
+      <div
+        ref={setPlayerDock}
+        className={`${styles.playerDock} ${footerHidden ? styles.playerDockLowered : ''}`}
+      />
       <footer className={`${styles.footer} ${footerHidden ? styles.footerHidden : ''}`}>
         <div className={`ok-glass-strong ${styles.footerInner}`}>
         {previous ? (

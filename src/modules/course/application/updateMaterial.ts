@@ -15,6 +15,7 @@ interface updateMaterialProps {
   exam?: ExamPrimitive | null;
   required?: boolean;
   sources?: SourcePrimitive[];
+  transcriptPath?: string | null;
   courseRepository: CourseRepository;
 }
 
@@ -29,6 +30,7 @@ export async function updateMaterial({
   exam,
   required,
   sources,
+  transcriptPath,
   courseRepository,
 }: updateMaterialProps): Promise<Course> {
   if (!courseId) {
@@ -58,7 +60,8 @@ export async function updateMaterial({
     mediaPath ?? null,
     exam ? Exam.fromPrimitive(exam) : null,
     required ?? existing.isRequired(),
-    sources ?? existing.getSources().map((source) => source.toPrimitive())
+    sources ?? existing.getSources().map((source) => source.toPrimitive()),
+    transcriptPath === undefined ? existing.getTranscriptPath() : transcriptPath
   );
 
   const updatedSection = section.setMaterials(section.getMaterials().updateMaterial(material));

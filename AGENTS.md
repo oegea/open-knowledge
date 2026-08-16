@@ -48,6 +48,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Styles consume `--ok-*` design tokens from `src/app/globals.css`; mobile-first CSS with `min-width` overrides; both light and dark themes (`prefers-color-scheme` + `data-theme` cookie). Glass surfaces use the `ok-glass`/`ok-glass-strong` utilities.
 - Mobile is the top priority: below 900px navigation uses the app-like sheet menus (`MobileMenu`, `AdminMobileMenu`). Never let the header overflow horizontally — no global `body > * { width }` rules.
 - Icons come from `src/components/ui/icons.tsx` (brand SVG set), never emojis.
+- `html, body` use `overflow-x: clip`, never `hidden`: `hidden` makes `<body>` a scroll container and silently kills every `position: sticky` (study header, mini player dock, contents rail).
 
 ## Build & tooling gotchas
 

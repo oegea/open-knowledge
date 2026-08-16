@@ -1,0 +1,250 @@
+/* Playback strip docked above the study footer (see StudyView.playerDock).
+   Two rows on phones — controls, then a slim seek bar — one row from
+   tablets up. Rises from the bottom edge on enter, sinks back on exit. */
+.mini {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    'toggle info follow'
+    'seek seek seek';
+  align-items: center;
+  column-gap: var(--ok-space-3);
+  row-gap: var(--ok-space-1);
+  padding: var(--ok-space-2) var(--ok-space-3);
+  border-radius: var(--ok-radius-lg);
+  font-family: var(--ok-font-ui);
+  animation: miniIn var(--ok-duration-med) var(--ok-ease) both;
+}
+
+.leaving {
+  animation: miniOut var(--ok-duration-med) var(--ok-ease) both;
+  pointer-events: none;
+}
+
+@keyframes miniIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes miniOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+}
+
+.toggle {
+  grid-area: toggle;
+  width: var(--ok-touch-target);
+  height: var(--ok-touch-target);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--ok-radius-full);
+  background: var(--ok-primary);
+  color: var(--ok-primary-fg);
+  box-shadow: var(--ok-shadow-1);
+  transition:
+    background var(--ok-duration-fast) var(--ok-ease),
+    transform var(--ok-duration-fast) var(--ok-ease);
+}
+
+.toggle:hover {
+  background: var(--ok-primary-hover);
+}
+
+.toggle:active {
+  transform: scale(0.94);
+}
+
+.info {
+  grid-area: info;
+  min-width: 0;
+  min-height: var(--ok-touch-target);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  text-align: left;
+  border-radius: var(--ok-radius-md);
+  padding: 0 var(--ok-space-2);
+  margin-left: calc(-1 * var(--ok-space-2));
+  transition: background var(--ok-duration-fast) var(--ok-ease);
+}
+
+.info:hover {
+  background: var(--ok-primary-soft);
+}
+
+.title {
+  font-size: var(--ok-text-sm);
+  font-weight: 700;
+  color: var(--ok-fg);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: var(--ok-space-3);
+  font-size: var(--ok-text-xs);
+  color: var(--ok-fg-muted);
+}
+
+.time {
+  font-variant-numeric: tabular-nums;
+}
+
+.backHint {
+  display: none;
+  align-items: center;
+  gap: 2px;
+  color: var(--ok-primary);
+  font-weight: 600;
+}
+
+.info:hover .backHint,
+.info:focus-visible .backHint {
+  display: inline-flex;
+}
+
+/* "Follow the narration" — only while the reader has scrolled away from
+   the narrated word; a soft pill so it reads as an offer, not an alarm. */
+.follow {
+  grid-area: follow;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ok-space-2);
+  min-height: var(--ok-touch-target);
+  min-width: var(--ok-touch-target);
+  padding: 0 var(--ok-space-3);
+  border-radius: var(--ok-radius-full);
+  background: var(--ok-primary-soft);
+  color: var(--ok-primary);
+  font-size: var(--ok-text-sm);
+  font-weight: 700;
+  white-space: nowrap;
+  animation: followIn var(--ok-duration-med) var(--ok-ease) both;
+  transition: background var(--ok-duration-fast) var(--ok-ease);
+}
+
+.follow:hover {
+  background: color-mix(in srgb, var(--ok-primary-soft) 70%, var(--ok-primary) 30%);
+}
+
+.followLabel {
+  display: none;
+}
+
+@keyframes followIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Seek bar: a native range for accessibility, restyled to a slim track
+   whose played part is painted with the brand color. */
+.seek {
+  grid-area: seek;
+  display: flex;
+  align-items: center;
+  height: var(--ok-space-4);
+}
+
+.range {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  margin: 0;
+  border-radius: var(--ok-radius-full);
+  background: linear-gradient(
+    to right,
+    var(--ok-primary) 0 var(--ok-mini-progress, 0%),
+    var(--ok-border-strong) var(--ok-mini-progress, 0%) 100%
+  );
+  cursor: pointer;
+}
+
+.range:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.range::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: var(--ok-radius-full);
+  background: var(--ok-primary);
+  border: 2px solid var(--ok-bg-raised);
+  box-shadow: var(--ok-shadow-1);
+  transition: transform var(--ok-duration-fast) var(--ok-ease);
+}
+
+.range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--ok-radius-full);
+  background: var(--ok-primary);
+  border: 2px solid var(--ok-bg-raised);
+  box-shadow: var(--ok-shadow-1);
+}
+
+.range:hover::-webkit-slider-thumb,
+.range:focus-visible::-webkit-slider-thumb {
+  transform: scale(1.2);
+}
+
+.range:focus-visible {
+  outline: 2px solid var(--ok-primary);
+  outline-offset: 4px;
+}
+
+@media (min-width: 768px) {
+  .mini {
+    grid-template-columns: auto minmax(10rem, 16rem) minmax(0, 1fr) auto;
+    grid-template-areas: 'toggle info seek follow';
+    column-gap: var(--ok-space-4);
+  }
+
+  .seek {
+    height: auto;
+  }
+
+  .followLabel {
+    display: inline;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mini,
+  .leaving,
+  .follow {
+    animation: none;
+  }
+
+  .toggle,
+  .info,
+  .range::-webkit-slider-thumb {
+    transition: none;
+  }
+}

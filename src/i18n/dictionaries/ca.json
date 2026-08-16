@@ -130,7 +130,11 @@
     "categoryName": "Nom",
     "categoryImage": "Imatge de la targeta",
     "categoryImageHint": "Es mostra a la targeta de la pàgina d'inici. Canviar el nom actualitza els cursos existents; eliminar-la manté la seva categoria com a text.",
-    "categoryPickHint": "Tria una categoria existent o escriu-ne una de nova."
+    "categoryPickHint": "Tria una categoria existent o escriu-ne una de nova.",
+    "transcriptFile": "Transcripció sincronitzada (opcional)",
+    "transcriptHint": "JSON amb el temps de cada paraula narrada: el text es ressalta al ritme de l’àudio. Consulta la documentació per al format.",
+    "transcriptAttached": "Transcripció adjunta — obre",
+    "transcriptRemove": "Treu la transcripció"
   },
   "material": {
     "type": {
@@ -192,7 +196,13 @@
     "courseCompleted": "Curs completat!",
     "registerToKeep": "Registra't per conservar el teu progrés i certificats entre dispositius.",
     "unmarkComplete": "Desmarca com a completat",
-    "readingTime": "{min} min de lectura"
+    "readingTime": "{min} min de lectura",
+    "play": "Reprodueix",
+    "pause": "Pausa",
+    "nowPlaying": "Reproduint",
+    "backToPlayer": "Torna al reproductor",
+    "seek": "Posició de reproducció",
+    "followNarration": "Segueix la narració"
   },
   "auth": {
     "register": "Crea una identitat",

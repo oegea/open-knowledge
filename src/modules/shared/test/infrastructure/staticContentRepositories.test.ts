@@ -48,6 +48,15 @@ describe('static content repositories (unit)', () => {
           ...section,
           materials: [
             { ...material, markdown: '', markdownFile: 'materials/lesson.md' },
+            {
+              ...material,
+              id: 'narrated',
+              type: 'audio',
+              markdown: '',
+              markdownFile: 'materials/lesson.md',
+              mediaPath: 'media/audio/lesson.mp3',
+              transcriptPath: 'media/audio/lesson.transcript.json',
+            },
             ...section.materials.slice(1),
           ],
         },
@@ -65,6 +74,9 @@ describe('static content repositories (unit)', () => {
     expect(course.getCoverImage()).toBe(`${BASE}/media/cover.svg`);
     const loaded = course.getSections().getSections()[0].getMaterials().getMaterials()[0];
     expect(loaded.getMarkdown()).toBe('Lesson body from a separate file.');
+    const narrated = course.getSections().getSections()[0].getMaterials().getMaterialById('narrated')!;
+    expect(narrated.getMediaPath()).toBe(`${BASE}/media/audio/lesson.mp3`);
+    expect(narrated.getTranscriptPath()).toBe(`${BASE}/media/audio/lesson.transcript.json`);
     expect(await repository.findBySlug(course.getSlug())).not.toBeNull();
     expect(await repository.findById(primitive.id!)).not.toBeNull();
   });

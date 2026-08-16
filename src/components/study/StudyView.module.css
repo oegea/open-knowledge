@@ -347,15 +347,45 @@
   transition: transform var(--ok-duration-med) var(--ok-ease);
 }
 
-/* Phones reclaim the reading space while scrolling down. */
+/* Mini player dock (see MediaMaterial): stacked right above the footer,
+   same width, so playback controls live where every player lives — at the
+   bottom, out of the reading zone. Positioning only; the strip inside
+   carries the glass surface and its own enter/exit animation. */
+.playerDock {
+  position: fixed;
+  /* footer offset + footer height (touch target + padding) + gap */
+  bottom: calc(
+    var(--ok-space-2) + env(safe-area-inset-bottom, 0px) + var(--ok-touch-target) +
+      var(--ok-space-4) + var(--ok-space-2)
+  );
+  left: var(--ok-space-3);
+  right: var(--ok-space-3);
+  z-index: var(--ok-z-header);
+  max-width: 46rem;
+  margin: 0 auto;
+  transition: bottom var(--ok-duration-med) var(--ok-ease);
+}
+
+/* Phones reclaim the reading space while scrolling down: the navigation
+   slides away and the mini player, still needed, takes its place. */
 @media (max-width: 899px) {
   .footerHidden {
     transform: translateY(calc(100% + var(--ok-space-3) + env(safe-area-inset-bottom, 0px)));
   }
+
+  .playerDockLowered {
+    bottom: calc(var(--ok-space-2) + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* Keep the last lines readable above the docked strip. */
+.study:has(.playerDock > *) .body {
+  padding-bottom: calc(var(--ok-space-8) + 72px + 5rem);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .footer {
+  .footer,
+  .playerDock {
     transition: none;
   }
 }
@@ -530,5 +560,9 @@
 
   .body {
     padding: var(--ok-space-6) var(--ok-space-5) var(--ok-space-8);
+  }
+
+  .study:has(.playerDock > *) .body {
+    padding-bottom: calc(var(--ok-space-8) + 5rem);
   }
 }

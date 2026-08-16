@@ -22,8 +22,8 @@ Minimum: title, description, cover image. Additionally: language (from the suppo
 | Type | Content |
 |---|---|
 | `markdown` | CommonMark + GFM text |
-| `audio` | Audio file + optional markdown notes |
-| `video` | Video file + optional markdown notes |
+| `audio` | Audio file + optional markdown notes (+ optional timed transcript, ADR 0016) |
+| `video` | Video file + optional markdown notes (+ optional timed transcript, ADR 0016) |
 | `exam` | Open JSON question format (below) |
 
 ### Exam format

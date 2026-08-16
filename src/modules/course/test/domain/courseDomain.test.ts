@@ -8,6 +8,7 @@ import { ExamQuestion } from '../../domain/ExamQuestion';
 import { Exam } from '../../domain/Exam';
 import * as CourseMother from '../helpers/CourseMother';
 import * as ExamMother from '../helpers/ExamMother';
+import * as MaterialMother from '../helpers/MaterialMother';
 
 describe('course domain validation', () => {
   describe('CourseTitle', () => {
@@ -119,6 +120,27 @@ describe('course domain validation', () => {
       expect(() =>
         Material.create('id', 'Title', 'podcast' as never, '', null, null, true)
       ).toThrow('[Material] "podcast" is not a valid material type');
+    });
+
+    it('keeps a transcript path on audio and video materials', () => {
+      const audio = Material.create(
+        'id', 'Title', 'audio', '', 'media/a.mp3', null, true, [], ' media/a.transcript.json '
+      );
+      expect(audio.getTranscriptPath()).toBe('media/a.transcript.json');
+      expect(audio.toPrimitive().transcriptPath).toBe('media/a.transcript.json');
+      expect(Material.fromPrimitive(audio.toPrimitive()).equals(audio)).toBe(true);
+    });
+
+    it('defaults the transcript path to null when absent from a primitive', () => {
+      const primitive = MaterialMother.createPrimitive();
+      delete (primitive as Partial<typeof primitive>).transcriptPath;
+      expect(Material.fromPrimitive(primitive).getTranscriptPath()).toBeNull();
+    });
+
+    it('rejects a transcript on materials that are not audio or video', () => {
+      expect(() =>
+        Material.create('id', 'Title', 'markdown', 'Body', null, null, true, [], 'media/t.json')
+      ).toThrow('[Material] only audio and video materials can have a transcript');
     });
   });
 

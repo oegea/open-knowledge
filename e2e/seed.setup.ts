@@ -4,6 +4,27 @@ import { saveState } from './helpers/state';
 
 const COVER_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720"><rect width="1280" height="720" fill="#12424a"/><circle cx="1000" cy="200" r="90" fill="#f7c46d"/><circle cx="300" cy="500" r="55" fill="#38bdc2"/></svg>`;
 
+/** PCM WAV of `seconds` of silence (8 kHz, 8-bit, mono): tiny and playable everywhere. */
+function silentWav(seconds: number): Buffer {
+  const sampleRate = 8000;
+  const dataLength = sampleRate * seconds;
+  const header = Buffer.alloc(44);
+  header.write('RIFF', 0);
+  header.writeUInt32LE(36 + dataLength, 4);
+  header.write('WAVE', 8);
+  header.write('fmt ', 12);
+  header.writeUInt32LE(16, 16);
+  header.writeUInt16LE(1, 20); // PCM
+  header.writeUInt16LE(1, 22); // mono
+  header.writeUInt32LE(sampleRate, 24);
+  header.writeUInt32LE(sampleRate, 28); // byte rate (8-bit mono)
+  header.writeUInt16LE(1, 32); // block align
+  header.writeUInt16LE(8, 34); // bits per sample
+  header.write('data', 36);
+  header.writeUInt32LE(dataLength, 40);
+  return Buffer.concat([header, Buffer.alloc(dataLength, 128)]);
+}
+
 setup('seed a fresh instance', async ({ request }) => {
   // 1. First registered identity becomes the administrator.
   const challengeResponse = await request.post('/api/identity/challenge');
@@ -81,6 +102,53 @@ setup('seed a fresh instance', async ({ request }) => {
     },
   });
 
+  // Narrated chapter: a short silent WAV plus its timed transcript, so the
+  // study view can be exercised with the mini player and word highlighting.
+  const audioUpload = await request.post('/api/media', {
+    multipart: {
+      kind: 'audio',
+      file: { name: 'narration.wav', mimeType: 'audio/wav', buffer: silentWav(20) },
+    },
+  });
+  expect(audioUpload.status()).toBe(201);
+  const { path: audioPath } = await audioUpload.json();
+  const NARRATED = 'El cielo nocturno tiene ocho planetas visibles.';
+  const transcript = {
+    words: NARRATED.split(' ').map((text, index) => ({
+      text,
+      start: index * 0.5,
+      end: index * 0.5 + 0.4,
+    })),
+  };
+  const transcriptUpload = await request.post('/api/media', {
+    multipart: {
+      kind: 'transcripts',
+      file: {
+        name: 'narration.transcript.json',
+        mimeType: 'application/json',
+        buffer: Buffer.from(JSON.stringify(transcript)),
+      },
+    },
+  });
+  expect(transcriptUpload.status()).toBe(201);
+  const { path: transcriptPath } = await transcriptUpload.json();
+  const audioMaterialResponse = await request.post(
+    `/api/courses/${courseId}/sections/${sectionId}/materials`,
+    {
+      data: {
+        title: 'Narración: el cielo nocturno',
+        type: 'audio',
+        markdown: `${NARRATED}\n\nSegundo párrafo, no narrado, para poder hacer scroll.\n\n${'Relleno de lectura. '.repeat(120)}`,
+        mediaPath: audioPath,
+        transcriptPath,
+        required: false,
+      },
+    }
+  );
+  expect(audioMaterialResponse.status()).toBe(201);
+  const audioMaterialId = (await audioMaterialResponse.json()).course.sections[0].materials[2]
+    .id as string;
+
   const publishResponse = await request.post(`/api/courses/${courseId}/publish`);
   expect(publishResponse.ok()).toBeTruthy();
 
@@ -132,6 +200,7 @@ setup('seed a fresh instance', async ({ request }) => {
     adminIdentifier: challenge.identifier,
     adminSecret: challenge.secret,
     courseId,
+    audioMaterialId,
     newsPostId,
     categoryId,
   });

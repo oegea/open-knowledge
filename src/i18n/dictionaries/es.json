@@ -130,7 +130,11 @@
     "categoryName": "Nombre",
     "categoryImage": "Imagen de la tarjeta",
     "categoryImageHint": "Se muestra en la tarjeta de la página de inicio. Renombrar actualiza los cursos existentes; eliminar mantiene su categoría como texto.",
-    "categoryPickHint": "Elige una categoría existente o escribe una nueva."
+    "categoryPickHint": "Elige una categoría existente o escribe una nueva.",
+    "transcriptFile": "Transcripción sincronizada (opcional)",
+    "transcriptHint": "JSON con el tiempo de cada palabra narrada: el texto se resalta al ritmo del audio. Consulta la documentación para el formato.",
+    "transcriptAttached": "Transcripción adjunta — abrir",
+    "transcriptRemove": "Quitar transcripción"
   },
   "material": {
     "type": {
@@ -192,7 +196,13 @@
     "courseCompleted": "¡Curso completado!",
     "registerToKeep": "Regístrate para conservar tu progreso y certificados entre dispositivos.",
     "unmarkComplete": "Desmarcar completado",
-    "readingTime": "{min} min de lectura"
+    "readingTime": "{min} min de lectura",
+    "play": "Reproducir",
+    "pause": "Pausar",
+    "nowPlaying": "Reproduciendo",
+    "backToPlayer": "Volver al reproductor",
+    "seek": "Posición de reproducción",
+    "followNarration": "Seguir la narración"
   },
   "auth": {
     "register": "Crear identidad",

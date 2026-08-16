@@ -15,6 +15,7 @@ interface addMaterialProps {
   exam?: ExamPrimitive | null;
   required?: boolean;
   sources?: SourcePrimitive[];
+  transcriptPath?: string | null;
   courseRepository: CourseRepository;
 }
 
@@ -28,6 +29,7 @@ export async function addMaterial({
   exam,
   required,
   sources,
+  transcriptPath,
   courseRepository,
 }: addMaterialProps): Promise<Course> {
   if (!courseId) {
@@ -52,7 +54,8 @@ export async function addMaterial({
     mediaPath ?? null,
     exam ? Exam.fromPrimitive(exam) : null,
     required ?? true,
-    sources ?? []
+    sources ?? [],
+    transcriptPath ?? null
   );
 
   const updatedSection = section.setMaterials(section.getMaterials().addMaterial(material));

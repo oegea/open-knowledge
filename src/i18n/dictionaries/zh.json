@@ -130,7 +130,11 @@
     "categoryName": "名称",
     "categoryImage": "卡片图片",
     "categoryImageHint": "显示在首页卡片上。重命名会更新现有课程；删除后课程仍保留文本分类。",
-    "categoryPickHint": "选择现有分类或输入新分类。"
+    "categoryPickHint": "选择现有分类或输入新分类。",
+    "transcriptFile": "同步字幕文件（可选）",
+    "transcriptHint": "包含每个朗读单词时间点的 JSON：文本会随音频节奏高亮显示。格式请参阅文档。",
+    "transcriptAttached": "已附加字幕文件 — 打开",
+    "transcriptRemove": "移除字幕文件"
   },
   "material": {
     "type": {
@@ -192,7 +196,13 @@
     "courseCompleted": "课程已完成！",
     "registerToKeep": "注册以在设备间保存学习进度和证书。",
     "unmarkComplete": "取消完成标记",
-    "readingTime": "阅读约 {min} 分钟"
+    "readingTime": "阅读约 {min} 分钟",
+    "play": "播放",
+    "pause": "暂停",
+    "nowPlaying": "正在播放",
+    "backToPlayer": "返回播放器",
+    "seek": "播放位置",
+    "followNarration": "跟随朗读"
   },
   "auth": {
     "register": "创建身份",

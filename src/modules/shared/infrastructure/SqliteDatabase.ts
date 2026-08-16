@@ -169,6 +169,7 @@ function migrate(db: Database.Database): void {
   addColumnIfMissing(db, 'courses', 'slug', "TEXT NOT NULL DEFAULT ''");
   addColumnIfMissing(db, 'news_posts', 'slug', "TEXT NOT NULL DEFAULT ''");
   addColumnIfMissing(db, 'pages', 'slug', "TEXT NOT NULL DEFAULT ''");
+  addColumnIfMissing(db, 'materials', 'transcript_path', 'TEXT');
   backfillSlugs(db, 'courses');
   backfillSlugs(db, 'news_posts');
   backfillSlugs(db, 'pages');
