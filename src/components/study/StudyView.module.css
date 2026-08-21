@@ -603,20 +603,51 @@
     justify-self: end;
     width: 18rem;
     position: sticky;
-    top: calc(var(--ok-space-8) + var(--ok-space-2));
+    /* A subtle breather below the sticky header (which ends ~4.5rem down). */
+    top: calc(var(--ok-space-8) + var(--ok-space-2) + var(--ok-space-3));
     align-self: start;
     /* Long courses exceed the viewport: cap the rail so the panel inside
-       (min-height: 0 + overflow-y: auto) becomes scrollable. */
-    max-height: calc(100dvh - var(--ok-space-8) * 2);
+       (min-height: 0 + overflow-y: auto) becomes scrollable. The extra
+       space-3 offsets the lower sticky top, keeping the bottom edge put. */
+    max-height: calc(100dvh - var(--ok-space-8) * 2 - var(--ok-space-3));
   }
 
   /* The navigation footer (and the mini player docked above it) narrows to
-     the reading measure: aligned with the text column, it leaves a clear
-     channel between the contents rail and itself instead of brushing the
-     rail's edge. */
+     the reading measure and FOLLOWS the reading column: plain centering
+     drifts away from the text on narrow desktops, where the grid pins the
+     column right of the rail instead of at the viewport center. The left
+     offset mirrors the grid math (page padding + rail + gap vs. perfect
+     centering, whichever is further right), and the width shrinks with the
+     column when the viewport cannot fit the full reading measure. */
   .footer,
   .playerDock {
-    max-width: var(--ok-measure-reading);
+    left: max(
+      calc((100vw - var(--ok-measure-reading)) / 2),
+      calc(var(--ok-space-5) + 18rem + var(--ok-space-5))
+    );
+    right: auto;
+    width: min(
+      var(--ok-measure-reading),
+      calc(
+        100vw -
+          max(
+            calc((100vw - var(--ok-measure-reading)) / 2),
+            calc(var(--ok-space-5) + 18rem + var(--ok-space-5))
+          ) - var(--ok-space-5)
+      )
+    );
+    max-width: none;
+    margin: 0;
+  }
+
+  /* Breathing room at the end of the material: the last lines should not
+     sit flush against the fixed footer when scrolled to the bottom. */
+  .body {
+    padding-bottom: calc(var(--ok-space-8) * 2);
+  }
+
+  .study:has(.playerDock > *) .body {
+    padding-bottom: calc(var(--ok-space-8) * 2 + 5rem);
   }
 
   .contentsPanel {
@@ -637,9 +668,5 @@
 
   .content {
     grid-column: 2;
-  }
-
-  .study:has(.playerDock > *) .body {
-    padding-bottom: calc(var(--ok-space-8) + 5rem);
   }
 }
