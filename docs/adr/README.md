@@ -18,3 +18,4 @@
 | [0014](./0014-ai-tooling-without-being-a-provider.md) | AI tooling without becoming an AI provider |
 | [0015](./0015-course-categories-by-name.md) | Course categories associate by name |
 | [0016](./0016-timed-transcripts-for-narrated-materials.md) | Timed transcripts for narrated audio/video materials |
+| [0017](./0017-commit-conventions.md) | Commit conventions |

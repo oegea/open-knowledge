@@ -18,7 +18,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Every class talking to an external system is a `*Repository`. Use cases are functions taking a single props object.
 - Domain objects are immutable, with `create`/`fromPrimitive`/`toPrimitive` and an `XPrimitive` type. Mutation methods return new instances.
 - Modules never import each other's internals. Cross-module orchestration happens through optional callback ports injected by factories (e.g. `onFirstAdminRegistered`, `onCoursePublished`, `onDisplayNameChanged`).
-- Architectural decisions are ADRs in `docs/adr` — read them before changing structure. ADRs must stay self-contained (no links to external private repos).
+- The ADRs in `docs/adr` are the project's working agreements — architecture AND process (testing, validation, commits…). Read the index (`docs/adr/README.md`) before working, and the relevant ADRs before changing anything they cover. ADRs must stay self-contained (no links to external private repos).
 
 ## Persistence & security
 
@@ -28,6 +28,11 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `otplib` v13 has a functional API only (`generateSecret`/`generateURI`/`verify`); `verify` is async and returns `{ valid }` — there is no `authenticator` export.
 - Privacy by design: no personal data is collected. The ONLY optional personal field is the user's certificate display name (see ADR 0005) — do not add profile fields.
 - `data/`, uploaded images, and `.e2e-data/` are local instance state and MUST never be committed.
+
+## Git & commits
+
+- Conventional Commits (`type(scope): summary`, imperative), one logical change per commit, body when the why is not obvious from the diff (ADR 0017).
+- NEVER add `Co-Authored-By` trailers or any reference to the AI tool used to write the code. Commit messages describe the change, not the tooling.
 
 ## Testing & validation
 
