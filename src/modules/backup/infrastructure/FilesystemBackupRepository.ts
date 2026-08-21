@@ -57,9 +57,11 @@ export class FilesystemBackupRepository implements BackupRepository {
     closeDatabase();
     resetSecretBox();
 
-    // Wipe current state...
+    // Wipe current state... (the data dir is runtime-configurable via
+    // OK_DATA_DIR, so Turbopack cannot scope it statically: opt out of
+    // build-time filesystem tracing for this call.)
     for (const name of [DB_FILE, `${DB_FILE}-wal`, `${DB_FILE}-shm`, KEY_FILE]) {
-      fs.rmSync(path.join(this.dataDir, name), { force: true });
+      fs.rmSync(path.join(/*turbopackIgnore: true*/ this.dataDir, name), { force: true });
     }
     fs.rmSync(path.join(this.dataDir, MEDIA_DIR), { recursive: true, force: true });
 

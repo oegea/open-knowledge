@@ -39,7 +39,9 @@ export class FilesystemMediaRepository implements MediaRepository {
     const fileName = `${randomUUID()}${extension}`;
     const dir = path.join(this.baseDir, kind);
     await fs.mkdir(dir, { recursive: true });
-    await fs.writeFile(path.join(dir, fileName), data);
+    // The media dir is runtime-configurable via OK_DATA_DIR, so Turbopack
+    // cannot scope it statically: opt out of build-time fs tracing here.
+    await fs.writeFile(path.join(/*turbopackIgnore: true*/ dir, fileName), data);
     return `${kind}/${fileName}`;
   }
 
