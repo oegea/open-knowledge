@@ -185,7 +185,11 @@
     "downloadPdf": "Descarregar PDF",
     "download": "Descarregar",
     "studyWithAi": "Estudar com IA",
-    "tutorPrompt": "És o meu tutor para o curso «{title}». Primeiro, descarrega e lê o texto completo do curso aqui: {url} — e depois ajuda-me a estudá-lo: responde às minhas dúvidas, explica-me as lições com outras palavras e faz-me perguntas para verificar a minha compreensão. Baseia-te no conteúdo do curso e avisa-me quando saíres dele."
+    "tutorPrompt": "És o meu tutor para o curso «{title}». Primeiro, descarrega e lê o texto completo do curso aqui: {url} — e depois ajuda-me a estudá-lo: responde às minhas dúvidas, explica-me as lições com outras palavras e faz-me perguntas para verificar a minha compreensão. Baseia-te no conteúdo do curso e avisa-me quando saíres dele.",
+    "pdfNotesTitle": "Descarregar em PDF",
+    "pdfNotesQuestion": "Queres incluir uma página para notas depois de cada material?",
+    "pdfNotesAccept": "Sim, com páginas de notas",
+    "pdfNotesDecline": "Não, apenas o conteúdo"
   },
   "study": {
     "progress": "Progresso",
@@ -275,7 +279,8 @@
     "responsible": "O conteúdo é da responsabilidade do titular da biblioteca onde foi publicado: {owner}.",
     "consultOnline": "Este material é consultado online no seguinte endereço:",
     "toc": "Índice",
-    "credits": "Créditos"
+    "credits": "Créditos",
+    "notesPageTitle": "Notas"
   },
   "landing": {
     "categories": "Explorar por categoria",

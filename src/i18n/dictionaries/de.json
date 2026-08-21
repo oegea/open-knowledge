@@ -185,7 +185,11 @@
     "downloadPdf": "PDF herunterladen",
     "download": "Herunterladen",
     "studyWithAi": "Mit KI lernen",
-    "tutorPrompt": "Du bist mein Tutor für den Kurs „{title}\". Rufe zuerst den vollständigen Kurstext hier ab und lies ihn: {url} — und hilf mir dann beim Lernen: beantworte meine Fragen, erkläre die Lektionen mit anderen Worten und stelle mir Prüfungsfragen. Stütze dich auf den Kursinhalt und sag mir, wenn du darüber hinausgehst."
+    "tutorPrompt": "Du bist mein Tutor für den Kurs „{title}\". Rufe zuerst den vollständigen Kurstext hier ab und lies ihn: {url} — und hilf mir dann beim Lernen: beantworte meine Fragen, erkläre die Lektionen mit anderen Worten und stelle mir Prüfungsfragen. Stütze dich auf den Kursinhalt und sag mir, wenn du darüber hinausgehst.",
+    "pdfNotesTitle": "Als PDF herunterladen",
+    "pdfNotesQuestion": "Möchtest du nach jedem Material eine Notizseite einfügen?",
+    "pdfNotesAccept": "Ja, mit Notizseiten",
+    "pdfNotesDecline": "Nein, nur der Inhalt"
   },
   "study": {
     "progress": "Fortschritt",
@@ -275,7 +279,8 @@
     "responsible": "Für den Inhalt verantwortlich ist der Inhaber der Bibliothek, in der er veröffentlicht wurde: {owner}.",
     "consultOnline": "Dieses Material wird online unter folgender Adresse genutzt:",
     "toc": "Inhaltsverzeichnis",
-    "credits": "Impressum"
+    "credits": "Impressum",
+    "notesPageTitle": "Notizen"
   },
   "landing": {
     "categories": "Nach Kategorie stöbern",

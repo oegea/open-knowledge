@@ -6,6 +6,7 @@ import { getLocale } from '@/i18n/getLocale';
 import { getDictionary, translate } from '@/i18n/dictionary';
 import { LOCALES, isLocale, DEFAULT_LOCALE } from '@/i18n/config';
 import { ActionMenu } from '@/components/public/ActionMenu';
+import { CourseDownloads } from '@/components/public/CourseDownloads';
 import { CourseContents } from '@/components/public/CourseContents';
 import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
@@ -217,12 +218,19 @@ export default async function CourseDetailPage({ params }: PageProps<'/courses/[
               ) : null}
 
               <div className={styles.downloads}>
-                <ActionMenu
+                <CourseDownloads
                   label={`↓ ${translate(dictionary, 'course.download')}`}
-                  items={[
-                    { label: 'EPUB', href: `/api/courses/${courseRef}/export/epub`, download: true },
-                    { label: 'PDF', href: `/api/courses/${courseRef}/export/pdf`, download: true },
-                  ]}
+                  epubHref={`/api/courses/${courseRef}/export/epub`}
+                  pdfHref={`/api/courses/${courseRef}/export/pdf`}
+                  labels={{
+                    epub: 'EPUB',
+                    pdf: 'PDF',
+                    pdfNotesTitle: translate(dictionary, 'course.pdfNotesTitle'),
+                    pdfNotesQuestion: translate(dictionary, 'course.pdfNotesQuestion'),
+                    pdfNotesAccept: translate(dictionary, 'course.pdfNotesAccept'),
+                    pdfNotesDecline: translate(dictionary, 'course.pdfNotesDecline'),
+                    close: translate(dictionary, 'common.cancel'),
+                  }}
                 />
                 <ActionMenu
                   label={`✦ ${translate(dictionary, 'course.studyWithAi')}`}

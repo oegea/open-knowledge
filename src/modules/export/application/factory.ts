@@ -29,6 +29,7 @@ async function stringsProvider(language: string): Promise<ExportStrings> {
     bibliography: translate(dictionary, 'course.bibliography'),
     aiNoticeTitle: translate(dictionary, 'course.aiNoticeTitle'),
     aiNotice: translate(dictionary, 'course.aiNotice'),
+    notesPageTitle: translate(dictionary, 'export.notesPageTitle'),
   };
 }
 
@@ -39,7 +40,12 @@ export default {
       courseRepository: isStaticMode() ? new StaticCourseRepository() : new SqliteCourseRepository(),
     }),
 
-  exportCourse: async (courseId: string, format: 'epub' | 'pdf', baseUrl: string) => {
+  exportCourse: async (
+    courseId: string,
+    format: 'epub' | 'pdf',
+    baseUrl: string,
+    options: { notesPages?: boolean } = {}
+  ) => {
     // In static mode media lives in the content repository, not on local disk.
     const mediaRepository = isStaticMode()
       ? new StaticHttpMediaRepository()
@@ -53,6 +59,8 @@ export default {
         format === 'epub'
           ? new EpubCourseExportRepository(mediaRepository)
           : new PdfCourseExportRepository(mediaRepository),
+      // Note pages are a print-oriented aid; only the PDF layout has them.
+      notesPages: format === 'pdf' && options.notesPages === true,
       stringsProvider,
     });
   },

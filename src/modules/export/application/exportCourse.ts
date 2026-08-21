@@ -16,6 +16,8 @@ interface exportCourseProps {
   courseRepository: CourseRepository;
   settingsRepository: SettingsRepository;
   exportRepository: CourseExportRepository;
+  /** Interleave note-taking pages after text-bearing materials (PDF only). */
+  notesPages?: boolean;
   /** Port: resolves the document copy in the course's own language. */
   stringsProvider: (language: string) => Promise<ExportStrings>;
 }
@@ -36,6 +38,7 @@ export async function exportCourse({
   courseRepository,
   settingsRepository,
   exportRepository,
+  notesPages = false,
   stringsProvider,
 }: exportCourseProps): Promise<CourseExportResult> {
   if (!courseId) {
@@ -59,6 +62,7 @@ export async function exportCourse({
     coverMediaPath: mediaPathOf(course.getCoverImage()),
     courseUrl: `${baseUrl}/courses/${courseRef}`,
     materialUrl: (materialId) => `${baseUrl}/courses/${courseRef}/study/${materialId}`,
+    notesPages,
     generatedAt: new Date(),
     strings,
   });

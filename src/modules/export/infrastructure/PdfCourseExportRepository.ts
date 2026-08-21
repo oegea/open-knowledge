@@ -172,6 +172,16 @@ export class PdfCourseExportRepository implements CourseExportRepository {
     // ---------------------------------------------------------------- //
     // Chapters                                                          //
     // ---------------------------------------------------------------- //
+    // The note pages reuse the library logo. It must be opened ONCE through
+    // pdfkit's registry: passing the raw Buffer to doc.image() re-embeds a
+    // full copy of the image on every page (a ~500 KB logo × 39 note pages
+    // once ballooned the export from 2 MB to 22 MB).
+    const notesLogoBuffer = context.notesPages
+      ? await this.loadRasterImage(context.logoMediaPath)
+      : null;
+    const notesLogo = notesLogoBuffer
+      ? (doc as unknown as { openImage(src: Buffer): object }).openImage(notesLogoBuffer)
+      : null;
     for (const [index, material] of materials.entries()) {
       doc.addPage();
       doc.addNamedDestination(`chapter-${index + 1}`);
@@ -181,6 +191,9 @@ export class PdfCourseExportRepository implements CourseExportRepository {
       doc.text(this.clean(`${index + 1}. ${material.getTitle()}`));
       doc.moveDown(0.8);
       this.renderMaterial(doc, material, context);
+      if (context.notesPages && this.materialTakesNotesPage(material)) {
+        this.renderNotesPage(doc, material, context, notesLogo);
+      }
     }
 
     // ---------------------------------------------------------------- //
@@ -501,6 +514,77 @@ export class PdfCourseExportRepository implements CourseExportRepository {
     } catch {
       return null;
     }
+  }
+
+  /**
+   * Whether the material earns an interleaved note-taking page: text lessons
+   * always; audio/video only when they carry written notes. Exams and bare
+   * media links never — their chapter is short enough to annotate directly.
+   */
+  private materialTakesNotesPage(material: Material): boolean {
+    const type = material.getType();
+    if (type === 'markdown') return true;
+    if (type === 'audio' || type === 'video') return material.getMarkdown().trim().length > 0;
+    return false;
+  }
+
+  /**
+   * A ruled page for handwritten notes, branded with the library identity:
+   * writing is part of studying, so the printed course leaves room for it.
+   */
+  private renderNotesPage(
+    doc: PDFKit.PDFDocument,
+    material: Material,
+    context: ExportContext,
+    /** Pre-opened pdfkit image (see export()): embedded once, drawn many times. */
+    logo: object | null
+  ) {
+    doc.addPage();
+    const left = doc.page.margins.left;
+    const top = doc.page.margins.top;
+    const contentWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;
+
+    // Brand row: logo (when available) with the library name on the right.
+    if (logo) {
+      doc.image(logo as unknown as Buffer, left, top - 6, { fit: [96, 26] });
+    }
+    doc.font(this.fonts.body).fontSize(9).fillColor(MUTED);
+    doc.text(this.clean(context.libraryName), left, top, {
+      width: contentWidth,
+      align: logo ? 'right' : 'left',
+      lineBreak: false,
+    });
+
+    // Heading: the notes title with the material it belongs to.
+    const headingY = top + 34;
+    doc.font(this.fonts.bold).fontSize(16).fillColor(INK);
+    doc.text(this.clean(context.strings.notesPageTitle), left, headingY, { width: contentWidth });
+    doc.font(this.fonts.body).fontSize(10).fillColor(MUTED);
+    doc.text(this.clean(material.getTitle()), left, doc.y + 4, { width: contentWidth });
+    const ruleY = doc.y + 10;
+    doc
+      .moveTo(left, ruleY)
+      .lineTo(left + 64, ruleY)
+      .strokeColor(TEAL)
+      .lineWidth(2)
+      .stroke()
+      .lineWidth(1);
+
+    // Ruled lines down to the footer, spaced for handwriting.
+    const lineSpacing = 26;
+    const bottom = doc.page.height - doc.page.margins.bottom;
+    for (let lineY = ruleY + 34; lineY <= bottom; lineY += lineSpacing) {
+      doc
+        .moveTo(left, lineY)
+        .lineTo(left + contentWidth, lineY)
+        .strokeColor(RULE)
+        .lineWidth(0.75)
+        .stroke();
+    }
+    doc.lineWidth(1);
+    // Explicit-x text calls shift pdfkit's cursor; leave it where the next
+    // chapter expects it.
+    doc.x = left;
   }
 
   private renderMaterial(doc: PDFKit.PDFDocument, material: Material, context: ExportContext) {

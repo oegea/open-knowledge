@@ -78,6 +78,8 @@
 
 .item {
   display: flex;
+  width: 100%;
+  text-align: left;
   align-items: center;
   gap: var(--ok-space-2);
   min-height: var(--ok-touch-target);

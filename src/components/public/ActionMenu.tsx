@@ -9,6 +9,11 @@ export interface ActionMenuItem {
   /** Opens in a new tab (external tutors) instead of downloading. */
   external?: boolean;
   download?: boolean;
+  /**
+   * When set, the entry acts as a button (the caller decides what happens —
+   * e.g. opening a dialog) instead of navigating to `href`.
+   */
+  onSelect?: () => void;
 }
 
 interface ActionMenuProps {
@@ -58,17 +63,31 @@ export function ActionMenu({ label, items, variant = 'outline' }: ActionMenuProp
         <ul role="menu" className={`ok-glass-strong ${styles.menu}`}>
           {items.map((item) => (
             <li key={item.href} role="none">
-              <a
-                role="menuitem"
-                href={item.href}
-                className={styles.item}
-                {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                {...(item.download ? { download: true } : {})}
-                onClick={() => setOpen(false)}
-              >
-                {item.label}
-                {item.external ? <span aria-hidden="true"> ↗</span> : null}
-              </a>
+              {item.onSelect ? (
+                <button
+                  role="menuitem"
+                  type="button"
+                  className={styles.item}
+                  onClick={() => {
+                    setOpen(false);
+                    item.onSelect!();
+                  }}
+                >
+                  {item.label}
+                </button>
+              ) : (
+                <a
+                  role="menuitem"
+                  href={item.href}
+                  className={styles.item}
+                  {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  {...(item.download ? { download: true } : {})}
+                  onClick={() => setOpen(false)}
+                >
+                  {item.label}
+                  {item.external ? <span aria-hidden="true"> ↗</span> : null}
+                </a>
+              )}
             </li>
           ))}
         </ul>

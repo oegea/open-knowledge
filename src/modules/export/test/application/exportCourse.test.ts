@@ -18,6 +18,7 @@ const STRINGS: ExportStrings = {
   bibliography: 'Bibliography',
   aiNoticeTitle: 'AI-assisted content',
   aiNotice: 'This course includes AI-assisted content.',
+  notesPageTitle: 'Notes',
 };
 
 function exportRepositoryMother() {
@@ -70,6 +71,26 @@ describe('exportCourse (unit)', () => {
     expect(context.materialUrl('m1')).toBe(
       'https://library.example/courses/introduction-to-astronomy/study/m1'
     );
+    // Note pages are opt-in: absent from the request, absent from the context.
+    expect(context.notesPages).toBe(false);
+  });
+
+  it('passes the note-pages option through to the export context', async () => {
+    const exportRepository = exportRepositoryMother();
+
+    await exportCourse({
+      courseId: 'course-1',
+      baseUrl: 'https://x',
+      courseRepository: CourseRepositoryMother.create({
+        findById: jest.fn().mockResolvedValue(CourseMother.create({ published: true })),
+      }),
+      settingsRepository: SettingsRepositoryMother.create(),
+      exportRepository,
+      notesPages: true,
+      stringsProvider: jest.fn().mockResolvedValue(STRINGS),
+    });
+
+    expect(exportRepository.export.mock.calls[0][1].notesPages).toBe(true);
   });
 
   it('falls back to the library name as responsible owner', async () => {

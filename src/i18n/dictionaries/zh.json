@@ -185,7 +185,11 @@
     "downloadPdf": "下载 PDF",
     "download": "下载",
     "studyWithAi": "与 AI 一起学习",
-    "tutorPrompt": "你是我课程《{title}》的导师。请先获取并阅读课程全文：{url} ——然后帮助我学习：回答我的问题，用不同的方式解释课程内容，并向我提问以检验我的理解。请以课程内容为依据，超出课程范围时请告知我。"
+    "tutorPrompt": "你是我课程《{title}》的导师。请先获取并阅读课程全文：{url} ——然后帮助我学习：回答我的问题，用不同的方式解释课程内容，并向我提问以检验我的理解。请以课程内容为依据，超出课程范围时请告知我。",
+    "pdfNotesTitle": "下载 PDF",
+    "pdfNotesQuestion": "要在每个学习材料之后加入一页笔记页吗？",
+    "pdfNotesAccept": "要，加入笔记页",
+    "pdfNotesDecline": "不用，仅导出内容"
   },
   "study": {
     "progress": "进度",
@@ -275,7 +279,8 @@
     "responsible": "内容责任由发布该内容的课程库所有者承担：{owner}。",
     "consultOnline": "该材料需在线查看，地址如下：",
     "toc": "目录",
-    "credits": "版权页"
+    "credits": "版权页",
+    "notesPageTitle": "笔记"
   },
   "landing": {
     "categories": "按分类浏览",

@@ -185,7 +185,11 @@
     "downloadPdf": "Descarrega el PDF",
     "download": "Descarregar",
     "studyWithAi": "Estudiar amb IA",
-    "tutorPrompt": "Ets el meu tutor per al curs «{title}». Primer, descarrega i llegeix el text complet del curs aquí: {url} — i després ajuda’m a estudiar-lo: respon els meus dubtes, explica’m les lliçons amb altres paraules i fes-me preguntes per comprovar que ho entenc. Basa’t en el contingut del curs i indica’m quan te n’allunyis."
+    "tutorPrompt": "Ets el meu tutor per al curs «{title}». Primer, descarrega i llegeix el text complet del curs aquí: {url} — i després ajuda’m a estudiar-lo: respon els meus dubtes, explica’m les lliçons amb altres paraules i fes-me preguntes per comprovar que ho entenc. Basa’t en el contingut del curs i indica’m quan te n’allunyis.",
+    "pdfNotesTitle": "Descarrega en PDF",
+    "pdfNotesQuestion": "Vols incloure un full per prendre notes després de cada material?",
+    "pdfNotesAccept": "Sí, amb fulls de notes",
+    "pdfNotesDecline": "No, només el contingut"
   },
   "study": {
     "progress": "Progrés",
@@ -275,7 +279,8 @@
     "responsible": "El contingut és responsabilitat del titular de la llibreria on s'ha publicat: {owner}.",
     "consultOnline": "Aquest material es consulta en línia a l'adreça següent:",
     "toc": "Índex",
-    "credits": "Crèdits"
+    "credits": "Crèdits",
+    "notesPageTitle": "Notes"
   },
   "landing": {
     "categories": "Explora per categoria",

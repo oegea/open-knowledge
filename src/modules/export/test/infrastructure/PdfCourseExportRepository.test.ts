@@ -89,4 +89,86 @@ describe('PdfCourseExportRepository (integration)', () => {
     const result = await repository.export(course, ExportContextMother.create());
     expect(result.data.subarray(0, 5).toString()).toBe('%PDF-');
   });
+
+  describe('interleaved note-taking pages', () => {
+    // Pages are counted through the PDF page-tree objects: content is
+    // encoded with subset glyph ids, so raw text assertions cannot see it.
+    const pageCount = (data: Buffer) =>
+      (data.toString('latin1').match(/\/Type\s*\/Page[^s]/g) ?? []).length;
+
+    const mixedCourse = () =>
+      CourseMother.create({
+        published: true,
+        sections: [
+          SectionMother.createPrimitive({
+            materials: [
+              // Text lesson → notes page.
+              MaterialMother.createPrimitive({ id: 'm1', markdown: 'Una lección de texto.' }),
+              // Audio WITH written notes → notes page.
+              MaterialMother.createPrimitive({
+                id: 'm2',
+                type: 'audio',
+                mediaPath: 'media/a.mp3',
+                markdown: 'Notas del audio.',
+              }),
+              // Audio WITHOUT notes → no notes page.
+              MaterialMother.createPrimitive({
+                id: 'm3',
+                type: 'audio',
+                mediaPath: 'media/b.mp3',
+                markdown: '',
+              }),
+              // Exam → never a notes page.
+              MaterialMother.createPrimitive({
+                id: 'm4',
+                type: 'exam',
+                markdown: '',
+                exam: {
+                  passingScore: 0.5,
+                  questionsPerAttempt: 1,
+                  questions: [
+                    {
+                      id: 'q1',
+                      text: '2+2?',
+                      choices: [
+                        { id: 'a', text: '4' },
+                        { id: 'b', text: '5' },
+                      ],
+                      correctChoiceId: 'a',
+                      explanation: 'Because arithmetic.',
+                    },
+                  ],
+                },
+              }),
+            ],
+          }),
+        ],
+      });
+
+    it('adds one page after each text-bearing material, and none after exams or bare media', async () => {
+      const plain = await new PdfCourseExportRepository(MediaRepositoryMother.create()).export(
+        mixedCourse(),
+        ExportContextMother.create()
+      );
+      const withNotes = await new PdfCourseExportRepository(MediaRepositoryMother.create()).export(
+        mixedCourse(),
+        ExportContextMother.create({ notesPages: true })
+      );
+
+      // Eligible: m1 (markdown) and m2 (audio with notes) → exactly 2 extra pages.
+      expect(pageCount(withNotes.data)).toBe(pageCount(plain.data) + 2);
+    });
+
+    it('adds no pages when the option is off', async () => {
+      const first = await new PdfCourseExportRepository(MediaRepositoryMother.create()).export(
+        mixedCourse(),
+        ExportContextMother.create()
+      );
+      const second = await new PdfCourseExportRepository(MediaRepositoryMother.create()).export(
+        mixedCourse(),
+        ExportContextMother.create({ notesPages: false })
+      );
+      expect(pageCount(second.data)).toBe(pageCount(first.data));
+    });
+  });
 });

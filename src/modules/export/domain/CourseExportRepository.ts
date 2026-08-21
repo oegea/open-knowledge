@@ -14,6 +14,8 @@ export interface ExportStrings {
   bibliography: string;
   aiNoticeTitle: string;
   aiNotice: string;
+  /** Heading of the interleaved note-taking pages (PDF only). */
+  notesPageTitle: string;
 }
 
 export interface ExportContext {
@@ -27,6 +29,13 @@ export interface ExportContext {
   courseUrl: string;
   /** Builds an absolute URL for a given material. */
   materialUrl: (materialId: string) => string;
+  /**
+   * Interleave a ruled note-taking page after each material that carries
+   * text (markdown lessons, and audio/video WITH notes). Exams and bare
+   * media materials never get one — their own page is short enough to
+   * annotate. Only the PDF renderer honors this.
+   */
+  notesPages: boolean;
   generatedAt: Date;
   strings: ExportStrings;
 }

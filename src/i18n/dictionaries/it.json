@@ -185,7 +185,11 @@
     "downloadPdf": "Scarica PDF",
     "download": "Scarica",
     "studyWithAi": "Studia con l’IA",
-    "tutorPrompt": "Sei il mio tutor per il corso «{title}». Per prima cosa scarica e leggi il testo completo del corso qui: {url} — poi aiutami a studiarlo: rispondi alle mie domande, spiegami le lezioni con altre parole e interrogami per verificare la mia comprensione. Basati sul contenuto del corso e dimmi quando te ne allontani."
+    "tutorPrompt": "Sei il mio tutor per il corso «{title}». Per prima cosa scarica e leggi il testo completo del corso qui: {url} — poi aiutami a studiarlo: rispondi alle mie domande, spiegami le lezioni con altre parole e interrogami per verificare la mia comprensione. Basati sul contenuto del corso e dimmi quando te ne allontani.",
+    "pdfNotesTitle": "Scarica in PDF",
+    "pdfNotesQuestion": "Vuoi includere una pagina per gli appunti dopo ogni materiale?",
+    "pdfNotesAccept": "Sì, con pagine per appunti",
+    "pdfNotesDecline": "No, solo il contenuto"
   },
   "study": {
     "progress": "Progresso",
@@ -275,7 +279,8 @@
     "responsible": "Il contenuto è responsabilità del titolare della libreria in cui è stato pubblicato: {owner}.",
     "consultOnline": "Questo materiale si consulta online al seguente indirizzo:",
     "toc": "Indice",
-    "credits": "Colophon"
+    "credits": "Colophon",
+    "notesPageTitle": "Note"
   },
   "landing": {
     "categories": "Esplora per categoria",

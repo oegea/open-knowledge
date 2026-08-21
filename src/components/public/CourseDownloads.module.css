@@ -1,0 +1,117 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--ok-z-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ok-space-4);
+  background: color-mix(in srgb, var(--ok-mist-950) 40%, transparent);
+  animation: overlayIn var(--ok-duration-fast) var(--ok-ease);
+}
+
+@keyframes overlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.dialog {
+  position: relative;
+  width: 100%;
+  max-width: 26rem;
+  padding: var(--ok-space-5);
+  border-radius: var(--ok-radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-3);
+  animation: dialogIn var(--ok-duration-med) var(--ok-ease);
+}
+
+@keyframes dialogIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.title {
+  font-size: var(--ok-text-lg);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  padding-right: var(--ok-space-6);
+}
+
+.question {
+  font-size: var(--ok-text-sm);
+  color: var(--ok-fg-muted);
+  line-height: var(--ok-leading-relaxed, 1.6);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-2);
+  margin-top: var(--ok-space-1);
+}
+
+.accept,
+.decline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--ok-touch-target);
+  padding: 0 var(--ok-space-4);
+  border-radius: var(--ok-radius-full);
+  font-weight: 700;
+  font-size: var(--ok-text-sm);
+  transition:
+    background var(--ok-duration-fast) var(--ok-ease),
+    color var(--ok-duration-fast) var(--ok-ease);
+}
+
+.accept {
+  background: var(--ok-primary);
+  color: var(--ok-primary-fg);
+}
+
+.accept:hover {
+  background: var(--ok-primary-hover);
+}
+
+.decline {
+  border: 1.5px solid var(--ok-border-strong);
+  color: var(--ok-fg-muted);
+}
+
+.decline:hover {
+  border-color: var(--ok-primary);
+  color: var(--ok-primary);
+  background: var(--ok-primary-soft);
+}
+
+.close {
+  position: absolute;
+  top: var(--ok-space-2);
+  right: var(--ok-space-2);
+  width: var(--ok-touch-target);
+  height: var(--ok-touch-target);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--ok-radius-full);
+  color: var(--ok-fg-subtle);
+  transition: background var(--ok-duration-fast) var(--ok-ease);
+}
+
+.close:hover {
+  background: var(--ok-primary-soft);
+  color: var(--ok-primary);
+}

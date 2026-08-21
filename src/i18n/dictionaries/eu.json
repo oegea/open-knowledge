@@ -185,7 +185,11 @@
     "downloadPdf": "Deskargatu PDF",
     "download": "Deskargatu",
     "studyWithAi": "IArekin ikasi",
-    "tutorPrompt": "Nire tutorea zara «{title}» ikastaroan. Lehenik, deskargatu eta irakurri ikastaroaren testu osoa hemen: {url} — eta gero lagundu ikasten: erantzun nire galderei, azaldu ikasgaiak beste hitz batzuekin eta egin galderak ulertzen dudala egiaztatzeko. Oinarritu ikastaroaren edukian eta esadazu noiz zoazen haratago."
+    "tutorPrompt": "Nire tutorea zara «{title}» ikastaroan. Lehenik, deskargatu eta irakurri ikastaroaren testu osoa hemen: {url} — eta gero lagundu ikasten: erantzun nire galderei, azaldu ikasgaiak beste hitz batzuekin eta egin galderak ulertzen dudala egiaztatzeko. Oinarritu ikastaroaren edukian eta esadazu noiz zoazen haratago.",
+    "pdfNotesTitle": "PDF gisa deskargatu",
+    "pdfNotesQuestion": "Material bakoitzaren ondoren oharrak hartzeko orri bat gehitu nahi duzu?",
+    "pdfNotesAccept": "Bai, ohar-orriekin",
+    "pdfNotesDecline": "Ez, edukia bakarrik"
   },
   "study": {
     "progress": "Aurrerapena",
@@ -275,7 +279,8 @@
     "responsible": "Edukiaren ardura argitaratu den liburutegiaren titularrarena da: {owner}.",
     "consultOnline": "Material hau sarean kontsultatzen da helbide honetan:",
     "toc": "Aurkibidea",
-    "credits": "Kredituak"
+    "credits": "Kredituak",
+    "notesPageTitle": "Oharrak"
   },
   "landing": {
     "categories": "Arakatu kategoriaka",

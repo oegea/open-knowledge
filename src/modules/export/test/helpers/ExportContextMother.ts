@@ -13,6 +13,7 @@ export const STRINGS: ExportStrings = {
   bibliography: 'Bibliography',
   aiNoticeTitle: 'AI-assisted content',
   aiNotice: 'This course includes AI-assisted content.',
+  notesPageTitle: 'Notes',
 };
 
 export function create(overrides: Partial<ExportContext> = {}): ExportContext {
@@ -24,6 +25,7 @@ export function create(overrides: Partial<ExportContext> = {}): ExportContext {
     courseUrl: 'https://library.example/courses/introduction-to-astronomy',
     materialUrl: (materialId: string) =>
       `https://library.example/courses/introduction-to-astronomy/study/${materialId}`,
+    notesPages: false,
     generatedAt: new Date('2026-08-15T10:00:00.000Z'),
     strings: STRINGS,
     ...overrides,

@@ -185,7 +185,11 @@
     "downloadPdf": "Download PDF",
     "download": "Download",
     "studyWithAi": "Study with AI",
-    "tutorPrompt": "You are my tutor for the course \"{title}\". First, fetch and read the full course text here: {url} — then help me study it: answer my questions, explain the lessons in other words, and quiz me to check my understanding. Base your answers on the course content, and tell me whenever you go beyond it."
+    "tutorPrompt": "You are my tutor for the course \"{title}\". First, fetch and read the full course text here: {url} — then help me study it: answer my questions, explain the lessons in other words, and quiz me to check my understanding. Base your answers on the course content, and tell me whenever you go beyond it.",
+    "pdfNotesTitle": "Download as PDF",
+    "pdfNotesQuestion": "Would you like a note-taking page after each material?",
+    "pdfNotesAccept": "Yes, with note pages",
+    "pdfNotesDecline": "No, content only"
   },
   "study": {
     "progress": "Progress",
@@ -275,7 +279,8 @@
     "responsible": "The content is the responsibility of the owner of the library where it was published: {owner}.",
     "consultOnline": "This material is consumed online at the following address:",
     "toc": "Table of contents",
-    "credits": "Credits"
+    "credits": "Credits",
+    "notesPageTitle": "Notes"
   },
   "landing": {
     "categories": "Browse by category",

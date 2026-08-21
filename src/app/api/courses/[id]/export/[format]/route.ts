@@ -14,7 +14,10 @@ export async function GET(
   try {
     const host = request.headers.get('host') ?? 'localhost:3000';
     const proto = request.headers.get('x-forwarded-proto') ?? 'http';
-    const result = await exportFactory.exportCourse(id, format, `${proto}://${host}`);
+    const notesPages = request.nextUrl.searchParams.get('notes') === '1';
+    const result = await exportFactory.exportCourse(id, format, `${proto}://${host}`, {
+      notesPages,
+    });
 
     return new Response(new Uint8Array(result.data), {
       headers: {
