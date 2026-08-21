@@ -125,7 +125,7 @@ describe('PdfCourseExportRepository (integration)', () => {
                 markdown: '',
                 exam: {
                   passingScore: 0.5,
-                  questionsPerAttempt: 1,
+                  questionCount: 1,
                   questions: [
                     {
                       id: 'q1',
