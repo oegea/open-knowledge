@@ -124,6 +124,28 @@
   flex-direction: column;
   gap: var(--ok-space-2);
   animation: sheetIn var(--ok-duration-med) var(--ok-ease);
+  /* Slim, token-colored scrollbar: the OS default is too heavy inside a
+     glass panel. `scrollbar-*` covers Firefox and Chromium 121+; the
+     -webkit- rules below cover older WebKit. */
+  scrollbar-width: thin;
+  scrollbar-color: var(--ok-border-strong) transparent;
+}
+
+.contentsPanel::-webkit-scrollbar {
+  width: 5px;
+}
+
+.contentsPanel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.contentsPanel::-webkit-scrollbar-thumb {
+  background: var(--ok-border-strong);
+  border-radius: var(--ok-radius-full);
+}
+
+.contentsPanel::-webkit-scrollbar-thumb:hover {
+  background: var(--ok-fg-subtle);
 }
 
 @keyframes sheetIn {
@@ -556,11 +578,13 @@
     display: inline;
   }
 
-  /* Docs-style layout: the contents rail hugs the left side while the
-     reading column centers on the VIEWPORT (not on rail + column as a
-     block). The phantom right column mirrors the rail's minimum, so the
-     centering is exact on wide screens and degrades gracefully when the
-     viewport cannot fit rail + centered column at once. */
+  /* Docs-style layout: the reading column centers on the VIEWPORT (not on
+     rail + column as a block), and the contents rail sits at the right
+     edge of the left grid column — adjacent to the text, one gap away —
+     instead of drifting to the viewport edge on wide screens. The phantom
+     right column mirrors the rail's minimum, so the centering is exact on
+     wide screens and degrades gracefully when the viewport cannot fit
+     rail + centered column at once. */
   .body {
     display: grid;
     grid-template-columns:
@@ -576,7 +600,7 @@
     display: flex;
     flex-direction: column;
     grid-column: 1;
-    justify-self: start;
+    justify-self: end;
     width: 18rem;
     position: sticky;
     top: calc(var(--ok-space-8) + var(--ok-space-2));
@@ -584,6 +608,15 @@
     /* Long courses exceed the viewport: cap the rail so the panel inside
        (min-height: 0 + overflow-y: auto) becomes scrollable. */
     max-height: calc(100dvh - var(--ok-space-8) * 2);
+  }
+
+  /* The navigation footer (and the mini player docked above it) narrows to
+     the reading measure: aligned with the text column, it leaves a clear
+     channel between the contents rail and itself instead of brushing the
+     rail's edge. */
+  .footer,
+  .playerDock {
+    max-width: var(--ok-measure-reading);
   }
 
   .contentsPanel {
