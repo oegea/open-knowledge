@@ -174,6 +174,14 @@ export function IconFollow(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function IconChevronDown(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base(props)}>
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  );
+}
+
 export function IconCheck(props: SVGProps<SVGSVGElement>) {
   return (
     <svg {...base(props)}>

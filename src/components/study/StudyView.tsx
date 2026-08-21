@@ -14,7 +14,7 @@ import { mergeProgress } from '@/modules/study/application/mergeProgress';
 import { LocalStorageProgressRepository } from '@/modules/study/infrastructure/LocalStorageProgressRepository';
 import { HttpProgressRepository } from '@/modules/study/infrastructure/HttpProgressRepository';
 import { useI18n } from '@/i18n/I18nProvider';
-import { IconCheck } from '../ui/icons';
+import { IconCheck, IconChevronDown } from '../ui/icons';
 import { MaterialRenderer } from './MaterialRenderer';
 import { ReadingProgress } from './ReadingProgress';
 import styles from './StudyView.module.css';
@@ -306,7 +306,12 @@ export function StudyView({
                         ✓
                       </span>
                     ) : null}
-                    {section.title}
+                    <span className={styles.contentsSectionLabel}>{section.title}</span>
+                    {/* Collapse affordance: the chevron rotates with the
+                        details' open state (see .sectionChevron). */}
+                    <span className={styles.sectionChevron} aria-hidden="true">
+                      <IconChevronDown width={16} height={16} />
+                    </span>
                   </summary>
                   <ul className={styles.contentsMaterials}>
                     {section.materials.map((material) => {

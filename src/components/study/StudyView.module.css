@@ -167,6 +167,25 @@
   font-weight: 800;
 }
 
+.contentsSectionLabel {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Collapse affordance: chevron down when open (content below), rotated up
+   when the section is folded — the standard web-app collapsible cue. */
+.sectionChevron {
+  display: inline-flex;
+  align-items: center;
+  color: var(--ok-fg-subtle);
+  transition: transform var(--ok-duration-fast) var(--ok-ease);
+  flex-shrink: 0;
+}
+
+.contentsSection:not([open]) .sectionChevron {
+  transform: rotate(-90deg);
+}
+
 .contentsMaterials {
   list-style: none;
   display: flex;
@@ -537,17 +556,42 @@
     display: inline;
   }
 
+  /* Docs-style layout: the contents rail hugs the left side while the
+     reading column centers on the VIEWPORT (not on rail + column as a
+     block). The phantom right column mirrors the rail's minimum, so the
+     centering is exact on wide screens and degrades gracefully when the
+     viewport cannot fit rail + centered column at once. */
+  .body {
+    display: grid;
+    grid-template-columns:
+      minmax(18rem, 1fr)
+      minmax(0, var(--ok-measure-reading))
+      minmax(0, 1fr);
+    column-gap: var(--ok-space-5);
+    max-width: none;
+    padding: var(--ok-space-6) var(--ok-space-5) var(--ok-space-8);
+  }
+
   .contents {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    grid-column: 1;
+    justify-self: start;
     width: 18rem;
-    flex-shrink: 0;
     position: sticky;
     top: calc(var(--ok-space-8) + var(--ok-space-2));
-    align-self: flex-start;
+    align-self: start;
+    /* Long courses exceed the viewport: cap the rail so the panel inside
+       (min-height: 0 + overflow-y: auto) becomes scrollable. */
     max-height: calc(100dvh - var(--ok-space-8) * 2);
   }
 
+  .contentsPanel {
+    min-height: 0;
+  }
+
   .contentsOpen {
+    display: flex;
     position: sticky;
     inset: auto;
     background: none;
@@ -558,8 +602,8 @@
     display: none;
   }
 
-  .body {
-    padding: var(--ok-space-6) var(--ok-space-5) var(--ok-space-8);
+  .content {
+    grid-column: 2;
   }
 
   .study:has(.playerDock > *) .body {
