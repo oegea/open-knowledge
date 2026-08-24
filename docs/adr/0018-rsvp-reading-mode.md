@@ -46,6 +46,16 @@ over the text.
 - While reading, the bottom bar shows elapsed and remaining time (derived
   from the frame durations, recomputed when speed changes) and a seekable
   position slider.
+- **Narrated materials** (timed transcript, ADR 0016) offer a second pace
+  source behind a read/listen switch: *one transport* — the same play
+  button, tap gesture, slider and clocks — where "read" runs the wpm
+  timer and "listen" plays the material's **own media element** (never a
+  second player), the word following the narration clock through the same
+  tolerant alignment the page highlight uses. Switching sources carries
+  the position both ways (word ↔ timecode), seeking by words drags the
+  narration along, and on the listen source the reading finishes when the
+  audio ends. Without a transcript — or when it fails to align — the
+  switch simply does not exist.
 - Reaching the end **marks the material as completed** (same semantics as
   finishing it by scrolling) and shows a full-screen completion state
   inviting the reader to the next material — or back to the text.
