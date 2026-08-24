@@ -226,7 +226,11 @@
     "rsvpGoNext": "Go to the next material",
     "rsvpBackToText": "Back to the text",
     "speedReading": "Speed reading",
-    "bionicToggle": "Bionic reading"
+    "bionicToggle": "Bionic reading",
+    "rsvpSourceTitle": "Read or listen",
+    "rsvpSourceRead": "Read",
+    "rsvpSourceListen": "Listen",
+    "rsvpListening": "Narration"
   },
   "auth": {
     "register": "Create identity",

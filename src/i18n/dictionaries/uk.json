@@ -226,7 +226,11 @@
     "rsvpGoNext": "Перейти до наступного матеріалу",
     "rsvpBackToText": "Повернутися до тексту",
     "speedReading": "Швидке читання",
-    "bionicToggle": "Біонічне читання"
+    "bionicToggle": "Біонічне читання",
+    "rsvpSourceTitle": "Читати чи слухати",
+    "rsvpSourceRead": "Читати",
+    "rsvpSourceListen": "Слухати",
+    "rsvpListening": "Озвучення"
   },
   "auth": {
     "register": "Створити особу",

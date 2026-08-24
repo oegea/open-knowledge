@@ -3,6 +3,7 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import { ReactNode } from 'react';
 import { I18nProvider } from '../../src/i18n/I18nProvider';
 import en from '../../src/i18n/dictionaries/en.json';
+import { TimedTranscript } from '../../src/modules/course/domain/TimedTranscript';
 import { RsvpReader } from '../../src/components/study/RsvpReader';
 
 jest.mock('next/navigation', () => ({
@@ -48,6 +49,30 @@ function playToTheEnd() {
 function visibleWord(): string {
   const dialog = screen.getByRole('dialog', { name: 'Speed reading (RSVP)' });
   return dialog.textContent ?? '';
+}
+
+/** A narration whose words match WORDS one to one, half a second apart. */
+function createNarration() {
+  const media = document.createElement('audio');
+  media.play = jest.fn().mockResolvedValue(undefined);
+  media.pause = jest.fn();
+  const transcript = TimedTranscript.fromPrimitive({
+    words: WORDS.map((text, index) => ({
+      text,
+      start: index * 0.5,
+      end: index * 0.5 + 0.4,
+    })),
+  });
+  return { media, transcript };
+}
+
+function setMediaTime(media: HTMLMediaElement, seconds: number) {
+  Object.defineProperty(media, 'currentTime', {
+    value: seconds,
+    writable: true,
+    configurable: true,
+  });
+  fireEvent(media, new Event('seeked'));
 }
 
 describe('RsvpReader', () => {
@@ -185,6 +210,87 @@ describe('RsvpReader', () => {
       renderReader();
 
       expect(screen.getByRole('button', { name: '300 wpm' })).toBeInTheDocument();
+    });
+  });
+
+  describe('Narration (listen source)', () => {
+    it('offers no source switch without a narration', () => {
+      renderReader();
+
+      expect(screen.queryByRole('group', { name: 'Read or listen' })).toBeNull();
+    });
+
+    it('defaults to reading: play runs the timer, never the audio', () => {
+      const narration = createNarration();
+      renderReader({ narration });
+
+      expect(screen.getByRole('group', { name: 'Read or listen' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Read', pressed: true })).toBeInTheDocument();
+
+      fireEvent.click(screen.getByRole('button', { name: 'Play' }));
+      act(() => jest.advanceTimersByTime(250));
+
+      expect(narration.media.play).not.toHaveBeenCalled();
+      expect(visibleWord()).toContain('sistema');
+    });
+
+    it('on listen, the single play button drives the audio', () => {
+      const narration = createNarration();
+      renderReader({ narration });
+
+      fireEvent.click(screen.getByRole('button', { name: 'Listen' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Play' }));
+
+      expect(narration.media.play).toHaveBeenCalled();
+    });
+
+    it('the narration clock moves the word', () => {
+      const narration = createNarration();
+      renderReader({ narration });
+
+      fireEvent.click(screen.getByRole('button', { name: 'Listen' }));
+      act(() => setMediaTime(narration.media, 1.6));
+
+      // 1.6s: "Tiene" (starts at 1.5) is the narrated word.
+      expect(visibleWord()).toContain('Tiene');
+    });
+
+    it('switching back to reading pauses the audio and keeps the position', () => {
+      const narration = createNarration();
+      renderReader({ narration });
+
+      fireEvent.click(screen.getByRole('button', { name: 'Listen' }));
+      act(() => setMediaTime(narration.media, 1.1));
+      fireEvent.click(screen.getByRole('button', { name: 'Read', exact: true }));
+
+      expect(narration.media.pause).toHaveBeenCalled();
+      expect(visibleWord()).toContain('solar.');
+    });
+
+    it('switching to listen carries the reading position into the audio', () => {
+      const narration = createNarration();
+      renderReader({ narration });
+
+      // Read two words with the arrows, then hand over to the narration.
+      fireEvent.keyDown(window, { key: 'ArrowRight' });
+      fireEvent.keyDown(window, { key: 'ArrowRight' });
+      fireEvent.click(screen.getByRole('button', { name: 'Listen' }));
+
+      // "solar." is narrated at 1.0s.
+      expect(narration.media.currentTime).toBe(1);
+    });
+
+    it('finishes the material when the audio ends', () => {
+      const narration = createNarration();
+      const { props } = renderReader({ narration });
+
+      fireEvent.click(screen.getByRole('button', { name: 'Listen' }));
+      act(() => {
+        fireEvent(narration.media, new Event('ended'));
+      });
+
+      expect(props.onFinished).toHaveBeenCalledTimes(1);
+      expect(screen.getByText('Material completed!')).toBeInTheDocument();
     });
   });
 

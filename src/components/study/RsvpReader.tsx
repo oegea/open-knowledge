@@ -1,9 +1,11 @@
 'use client';
 
 import { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { TimedTranscript } from '@/modules/course/domain/TimedTranscript';
 import { useI18n } from '@/i18n/I18nProvider';
-import { IconCheck, IconClose, IconGear, IconPause, IconPlay } from '../ui/icons';
+import { IconAudio, IconCheck, IconClose, IconGear, IconPause, IconPlay, IconRsvp } from '../ui/icons';
 import { formatClock } from './formatClock';
+import { useMediaState } from './useMediaState';
 import {
   RSVP_DEFAULT_PAUSE,
   RSVP_DEFAULT_WPM,
@@ -52,6 +54,18 @@ function savePreferences(preferences: RsvpPreferences): void {
   }
 }
 
+/**
+ * Below what share of narrated words found their displayed twin the reader
+ * stops offering the listen source (same tolerance as NarratedProse).
+ */
+const MIN_COVERAGE = 0.6;
+
+/** The narrated material's own player and word timings, when it has both. */
+export interface RsvpNarration {
+  media: HTMLMediaElement;
+  transcript: TimedTranscript;
+}
+
 interface RsvpReaderProps {
   /** Material title, shown quietly in the top bar. */
   title: string;
@@ -59,6 +73,12 @@ interface RsvpReaderProps {
   words: string[];
   /** Whether a next material exists (the completion screen offers it). */
   hasNext: boolean;
+  /**
+   * Narrated materials only: the page's media element plus its timed
+   * transcript. The reader then offers a second pace source — the audio
+   * itself — behind a read/listen switch; one transport, no second player.
+   */
+  narration?: RsvpNarration | null;
   /** Closes the reader; receives the word index to scroll the page to. */
   onClose: (wordIndex: number) => void;
   /** Fired once when the last word has been read. */
@@ -73,7 +93,15 @@ interface RsvpReaderProps {
  * eyes never move. Tapping anywhere toggles play/pause; speed and the
  * end-of-sentence pause are configurable and remembered on the device.
  */
-export function RsvpReader({ title, words, hasNext, onClose, onFinished, onNext }: RsvpReaderProps) {
+export function RsvpReader({
+  title,
+  words,
+  hasNext,
+  narration = null,
+  onClose,
+  onFinished,
+  onNext,
+}: RsvpReaderProps) {
   const { t } = useI18n();
   const frames = useMemo(() => buildRsvpFrames(words), [words]);
   const [{ wpm, pause }, setPreferences] = useState<RsvpPreferences>(loadPreferences);
@@ -82,6 +110,38 @@ export function RsvpReader({ title, words, hasNext, onClose, onFinished, onNext 
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [finished, setFinished] = useState(false);
   const finishedNotified = useRef(false);
+
+  // Narration alignment: displayed word index ↔ narrated word index, the
+  // same tolerant mapping NarratedProse uses. Null when the transcript does
+  // not belong to this text — the listen source is then not offered.
+  const alignment = useMemo(() => {
+    if (!narration) return null;
+    const wordOfSpan = narration.transcript.alignTo(words);
+    const narratedWords = narration.transcript.getWords();
+    const spanOfWord = new Array<number>(narratedWords.length).fill(-1);
+    wordOfSpan.forEach((wordIndex, spanIndex) => {
+      if (wordIndex >= 0) spanOfWord[wordIndex] = spanIndex;
+    });
+    const coverage = spanOfWord.filter((spanIndex) => spanIndex >= 0).length / spanOfWord.length;
+    return coverage >= MIN_COVERAGE ? { wordOfSpan, spanOfWord, narratedWords } : null;
+  }, [narration, words]);
+  const media = alignment && narration ? narration.media : null;
+  const narrated = media !== null;
+  const mediaState = useMediaState(media);
+  // Seeking mutates the element; routed through a ref, as MediaMaterial does.
+  const mediaRef = useRef<HTMLMediaElement | null>(null);
+  useEffect(() => {
+    mediaRef.current = media;
+  }, [media]);
+
+  // One transport, two pace sources: the reader's own timer ("read") or the
+  // narration clock ("listen"). Opening the reader while the audio is
+  // already playing lands directly on listen.
+  const [source, setSource] = useState<'read' | 'listen'>(() =>
+    narration && !narration.media.paused ? 'listen' : 'read'
+  );
+  const activeSource = narrated ? source : 'read';
+  const listening = activeSource === 'listen';
 
   // Elapsed/remaining read-outs: cumulative time before each frame, so a
   // per-word tick costs a lookup, not a sum over the whole text.
@@ -115,6 +175,91 @@ export function RsvpReader({ title, words, hasNext, onClose, onFinished, onNext 
     return () => window.clearTimeout(timer);
   }, [playing, index, frames, wpm, pause, onFinished]);
 
+  // Listen source: the narration clock drives the word — a frame loop while
+  // the media plays, plain events otherwise. The reading finishes when the
+  // audio does.
+  useEffect(() => {
+    if (!listening || !media || !alignment) return;
+    const syncIndex = () => {
+      let narratedIndex = narration!.transcript.wordIndexAt(media.currentTime);
+      // The narrated word may not be displayed: fall back to the nearest
+      // displayed one before it (same rule as the page highlight).
+      while (narratedIndex >= 0 && alignment.spanOfWord[narratedIndex] < 0) narratedIndex -= 1;
+      if (narratedIndex >= 0) {
+        const spanIndex = alignment.spanOfWord[narratedIndex];
+        setIndex((current) => (current === spanIndex ? current : spanIndex));
+      }
+    };
+    let frameHandle = 0;
+    const tick = () => {
+      syncIndex();
+      if (!media.paused && !media.ended) frameHandle = requestAnimationFrame(tick);
+    };
+    const onPlay = () => {
+      cancelAnimationFrame(frameHandle);
+      frameHandle = requestAnimationFrame(tick);
+    };
+    const onStop = () => {
+      cancelAnimationFrame(frameHandle);
+      syncIndex();
+    };
+    const onEnded = () => {
+      cancelAnimationFrame(frameHandle);
+      setFinished(true);
+      if (!finishedNotified.current) {
+        finishedNotified.current = true;
+        onFinished();
+      }
+    };
+    media.addEventListener('play', onPlay);
+    media.addEventListener('pause', onStop);
+    media.addEventListener('seeked', onStop);
+    media.addEventListener('ended', onEnded);
+    syncIndex();
+    if (!media.paused) frameHandle = requestAnimationFrame(tick);
+    return () => {
+      cancelAnimationFrame(frameHandle);
+      media.removeEventListener('play', onPlay);
+      media.removeEventListener('pause', onStop);
+      media.removeEventListener('seeked', onStop);
+      media.removeEventListener('ended', onEnded);
+    };
+  }, [listening, media, alignment, narration, onFinished]);
+
+  // Moves the narration to a displayed word: the nearest narrated word at
+  // or before it.
+  const seekMediaToWord = useCallback(
+    (spanIndex: number) => {
+      const element = mediaRef.current;
+      if (!element || !alignment) return;
+      for (let candidate = Math.min(spanIndex, words.length - 1); candidate >= 0; candidate -= 1) {
+        const narratedIndex = alignment.wordOfSpan[candidate];
+        if (narratedIndex >= 0) {
+          element.currentTime = alignment.narratedWords[narratedIndex].start;
+          return;
+        }
+      }
+      element.currentTime = 0;
+    },
+    [alignment, words.length]
+  );
+
+  // Switching the source pauses everything and carries the position over:
+  // the text position is the shared truth between both paces.
+  const selectSource = useCallback(
+    (next: 'read' | 'listen') => {
+      if (!narrated || next === activeSource) return;
+      if (next === 'listen') {
+        setPlaying(false);
+        seekMediaToWord(Math.min(index, frames.length - 1));
+      } else {
+        media?.pause();
+      }
+      setSource(next);
+    },
+    [narrated, activeSource, index, frames.length, media, seekMediaToWord]
+  );
+
   // The reader owns the screen: no page scroll behind it while open.
   useEffect(() => {
     const previous = document.body.style.overflow;
@@ -129,16 +274,31 @@ export function RsvpReader({ title, words, hasNext, onClose, onFinished, onNext 
   }, [frames.length, index, onClose]);
 
   // One word back/forward; auto-repeats while the key is held. Leaves the
-  // completion screen if it was showing.
+  // completion screen if it was showing. On the listen source the narration
+  // follows the step.
   const step = useCallback(
     (delta: number) => {
-      setIndex((current) =>
-        Math.min(Math.max(current + delta, 0), Math.max(frames.length - 1, 0))
-      );
+      setIndex((current) => {
+        const next = Math.min(Math.max(current + delta, 0), Math.max(frames.length - 1, 0));
+        if (listening) seekMediaToWord(next);
+        return next;
+      });
       setFinished(false);
     },
-    [frames.length]
+    [frames.length, listening, seekMediaToWord]
   );
+
+  // One play/pause for both sources; playing again from the very end
+  // restarts the reading.
+  const toggle = useCallback(() => {
+    if (listening && media) {
+      if (media.paused) void media.play();
+      else media.pause();
+      return;
+    }
+    setIndex((currentIndex) => (currentIndex >= frames.length ? 0 : currentIndex));
+    setPlaying((current) => !current);
+  }, [frames.length, listening, media]);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -148,7 +308,7 @@ export function RsvpReader({ title, words, hasNext, onClose, onFinished, onNext 
       if (event.target instanceof HTMLInputElement) return;
       if (event.key === ' ') {
         event.preventDefault();
-        setPlaying((current) => !current);
+        toggle();
       }
       if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
         event.preventDefault();
@@ -157,13 +317,7 @@ export function RsvpReader({ title, words, hasNext, onClose, onFinished, onNext 
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [close, step]);
-
-  // Playing again from the very end restarts the reading.
-  const toggle = useCallback(() => {
-    setIndex((currentIndex) => (currentIndex >= frames.length ? 0 : currentIndex));
-    setPlaying((current) => !current);
-  }, [frames.length]);
+  }, [close, step, toggle]);
 
   // A tap anywhere reads as play/pause — unless a control was tapped
   // (those stop propagation) or the settings sheet is open (tap closes it).
@@ -180,11 +334,12 @@ export function RsvpReader({ title, words, hasNext, onClose, onFinished, onNext 
     (event: ChangeEvent<HTMLInputElement>) => {
       const next = Number(event.target.value);
       setIndex(next);
+      if (listening) seekMediaToWord(next);
       if (finished && next < frames.length) {
         setFinished(false);
       }
     },
-    [finished, frames.length]
+    [finished, frames.length, listening, seekMediaToWord]
   );
 
   const setWpm = useCallback((value: number) => {
@@ -204,6 +359,13 @@ export function RsvpReader({ title, words, hasNext, onClose, onFinished, onNext 
   }, []);
 
   const frame = frames[Math.min(index, frames.length - 1)];
+
+  // The transport reads from whichever source sets the pace.
+  const isPlaying = listening ? mediaState.playing : playing;
+  const elapsedSeconds = listening ? mediaState.currentTime : elapsedMs / 1000;
+  const remainingSeconds = listening
+    ? Math.max(0, mediaState.duration - mediaState.currentTime)
+    : Math.max(0, totalMs - elapsedMs) / 1000;
 
   if (frames.length === 0) return null;
 
@@ -261,7 +423,7 @@ export function RsvpReader({ title, words, hasNext, onClose, onFinished, onNext 
           </div>
           <span className={`${styles.guide} ${styles.guideBottom}`} />
         </div>
-        {!playing && !finished ? (
+        {!isPlaying && !finished ? (
           <p className={styles.tapHint}>{t('study.rsvpTapHint')}</p>
         ) : null}
       </div>
@@ -314,9 +476,31 @@ export function RsvpReader({ title, words, hasNext, onClose, onFinished, onNext 
         className={`ok-glass-strong ${styles.controls}`}
         onClick={(event) => event.stopPropagation()}
       >
+        {narrated ? (
+          <div className={styles.sourceSwitch} role="group" aria-label={t('study.rsvpSourceTitle')}>
+            <button
+              type="button"
+              className={styles.sourceOption}
+              aria-pressed={!listening}
+              onClick={() => selectSource('read')}
+            >
+              <IconRsvp width={18} height={18} />
+              {t('study.rsvpSourceRead')}
+            </button>
+            <button
+              type="button"
+              className={styles.sourceOption}
+              aria-pressed={listening}
+              onClick={() => selectSource('listen')}
+            >
+              <IconAudio width={18} height={18} />
+              {t('study.rsvpSourceListen')}
+            </button>
+          </div>
+        ) : null}
         <div className={styles.timeline}>
           <span className={styles.time} aria-label={t('study.rsvpElapsed')}>
-            {formatClock(elapsedMs / 1000)}
+            {formatClock(elapsedSeconds)}
           </span>
           <input
             type="range"
@@ -329,25 +513,33 @@ export function RsvpReader({ title, words, hasNext, onClose, onFinished, onNext 
             onChange={handleSeek}
           />
           <span className={styles.time} aria-label={t('study.rsvpRemaining')}>
-            −{formatClock(Math.max(0, totalMs - elapsedMs) / 1000)}
+            −{formatClock(remainingSeconds)}
           </span>
         </div>
         <div className={styles.actions}>
-          <button
-            type="button"
-            className={styles.speedButton}
-            aria-expanded={settingsOpen}
-            onClick={() => setSettingsOpen((current) => !current)}
-          >
-            {t('study.rsvpWpm', { wpm })}
-          </button>
+          {listening ? (
+            // The narration sets the pace: nothing to configure here.
+            <span className={styles.sourceBadge}>
+              <IconAudio width={16} height={16} />
+              {t('study.rsvpListening')}
+            </span>
+          ) : (
+            <button
+              type="button"
+              className={styles.speedButton}
+              aria-expanded={settingsOpen}
+              onClick={() => setSettingsOpen((current) => !current)}
+            >
+              {t('study.rsvpWpm', { wpm })}
+            </button>
+          )}
           <button
             type="button"
             className={styles.playButton}
-            aria-label={t(playing ? 'study.pause' : 'study.play')}
+            aria-label={t(isPlaying ? 'study.pause' : 'study.play')}
             onClick={toggle}
           >
-            {playing ? <IconPause width={26} height={26} /> : <IconPlay width={26} height={26} />}
+            {isPlaying ? <IconPause width={26} height={26} /> : <IconPlay width={26} height={26} />}
           </button>
         </div>
       </div>

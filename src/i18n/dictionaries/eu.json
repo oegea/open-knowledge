@@ -226,7 +226,11 @@
     "rsvpGoNext": "Joan hurrengo materialera",
     "rsvpBackToText": "Itzuli testura",
     "speedReading": "Irakurketa azkarra",
-    "bionicToggle": "Irakurketa bionikoa"
+    "bionicToggle": "Irakurketa bionikoa",
+    "rsvpSourceTitle": "Irakurri ala entzun",
+    "rsvpSourceRead": "Irakurri",
+    "rsvpSourceListen": "Entzun",
+    "rsvpListening": "Narrazioa"
   },
   "auth": {
     "register": "Sortu nortasuna",

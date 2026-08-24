@@ -222,6 +222,50 @@
   gap: var(--ok-space-2);
 }
 
+/* Read/listen source switch for narrated materials: one segmented pill,
+   one transport — never a second play button. */
+.sourceSwitch {
+  align-self: center;
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--ok-border);
+  border-radius: var(--ok-radius-full);
+  margin-bottom: var(--ok-space-1);
+}
+
+.sourceOption {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ok-space-2);
+  min-height: 34px;
+  padding: 0 var(--ok-space-4);
+  border-radius: var(--ok-radius-full);
+  font-size: var(--ok-text-sm);
+  font-weight: 600;
+  color: var(--ok-fg-muted);
+  transition:
+    background var(--ok-duration-fast) var(--ok-ease),
+    color var(--ok-duration-fast) var(--ok-ease);
+}
+
+.sourceOption[aria-pressed='true'] {
+  background: var(--ok-primary);
+  color: var(--ok-primary-fg);
+}
+
+/* Shown in place of the speed chip while the narration sets the pace. */
+.sourceBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ok-space-2);
+  min-height: var(--ok-touch-target);
+  padding: 0 var(--ok-space-3);
+  font-size: var(--ok-text-sm);
+  font-weight: 600;
+  color: var(--ok-fg-muted);
+}
+
 .timeline {
   display: flex;
   align-items: center;

@@ -226,7 +226,11 @@
     "rsvpGoNext": "次の教材へ進む",
     "rsvpBackToText": "本文に戻る",
     "speedReading": "速読",
-    "bionicToggle": "バイオニックリーディング"
+    "bionicToggle": "バイオニックリーディング",
+    "rsvpSourceTitle": "読むか聴くか",
+    "rsvpSourceRead": "読む",
+    "rsvpSourceListen": "聴く",
+    "rsvpListening": "ナレーション"
   },
   "auth": {
     "register": "アカウントを作成",

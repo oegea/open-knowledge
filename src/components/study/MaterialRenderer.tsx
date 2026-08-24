@@ -4,6 +4,7 @@ import { MaterialPrimitive } from '@/modules/course/domain/Material';
 import { Prose } from '../shared/Prose';
 import { ExamPlayer } from './ExamPlayer';
 import { MediaMaterial } from './MediaMaterial';
+import { RsvpNarration } from './RsvpReader';
 
 interface MaterialRendererProps {
   material: MaterialPrimitive;
@@ -13,6 +14,8 @@ interface MaterialRendererProps {
   playerDock?: HTMLElement | null;
   /** Bionic reading (ADR 0019): bold fixation prefixes in the text. */
   bionic?: boolean;
+  /** Narration (media + transcript) of audio/video materials, for RSVP. */
+  onNarration?: (narration: RsvpNarration | null) => void;
   onExamPassed: () => Promise<void> | void;
   onExamFinished?: (answers: Record<string, string>, passed: boolean) => Promise<void> | void;
 }
@@ -22,6 +25,7 @@ export function MaterialRenderer({
   coverImage,
   playerDock,
   bionic = false,
+  onNarration,
   onExamPassed,
   onExamFinished,
 }: MaterialRendererProps) {
@@ -38,6 +42,7 @@ export function MaterialRenderer({
           coverImage={coverImage}
           playerDock={playerDock}
           bionic={bionic}
+          onNarration={onNarration}
         />
       );
 

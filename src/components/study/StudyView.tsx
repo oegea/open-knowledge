@@ -18,7 +18,7 @@ import { IconBionic, IconCheck, IconChevronDown, IconRsvp } from '../ui/icons';
 import { WORD_ATTRIBUTE } from '../shared/rehypeWordSpans';
 import { MaterialRenderer } from './MaterialRenderer';
 import { ReadingProgress } from './ReadingProgress';
-import { RsvpReader } from './RsvpReader';
+import { RsvpNarration, RsvpReader } from './RsvpReader';
 import { useBionicReading } from './useBionicReading';
 import styles from './StudyView.module.css';
 
@@ -59,6 +59,9 @@ export function StudyView({
   const [rsvpWords, setRsvpWords] = useState<string[] | null>(null);
   // Bionic reading (ADR 0019): a device preference, off until hydration.
   const [bionic, toggleBionic] = useBionicReading();
+  // Narration of the current material (media + transcript), reported by
+  // MediaMaterial so the RSVP reader can offer the audio as pace source.
+  const [narration, setNarration] = useState<RsvpNarration | null>(null);
   const contentRef = useRef<HTMLElement | null>(null);
   const progressRepository = useMemo(
     () => (authenticated ? new HttpProgressRepository() : new LocalStorageProgressRepository()),
@@ -451,6 +454,7 @@ export function StudyView({
             coverImage={course.coverImage}
             playerDock={playerDock}
             bionic={bionic}
+            onNarration={setNarration}
             onExamPassed={handleComplete}
             onExamFinished={handleExamFinished}
           />
@@ -486,6 +490,7 @@ export function StudyView({
           title={current.material.title}
           words={rsvpWords}
           hasNext={next !== null}
+          narration={narration}
           onClose={closeRsvp}
           onFinished={handleComplete}
           onNext={handleRsvpNext}

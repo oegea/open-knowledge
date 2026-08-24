@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom';
 import { MaterialPrimitive } from '@/modules/course/domain/Material';
 import { Prose } from '../shared/Prose';
 import { MiniPlayer } from './MiniPlayer';
+import { RsvpNarration } from './RsvpReader';
 import { NarratedProse } from './NarratedProse';
 import { useDelayedUnmount } from './useDelayedUnmount';
 import { useMediaState } from './useMediaState';
@@ -26,6 +27,12 @@ interface MediaMaterialProps {
   playerDock?: HTMLElement | null;
   /** Bionic reading (ADR 0019): bold fixation prefixes in the notes. */
   bionic?: boolean;
+  /**
+   * Reports the material's narration (media element + timed transcript) so
+   * the RSVP reader can offer the audio as pace source; called with null
+   * while either half is missing.
+   */
+  onNarration?: (narration: RsvpNarration | null) => void;
 }
 
 /**
@@ -34,7 +41,13 @@ interface MediaMaterialProps {
  * with playback. The media element stays the source of truth for playback;
  * React only mirrors what the mini player needs to display.
  */
-export function MediaMaterial({ material, coverImage, playerDock, bionic = false }: MediaMaterialProps) {
+export function MediaMaterial({
+  material,
+  coverImage,
+  playerDock,
+  bionic = false,
+  onNarration,
+}: MediaMaterialProps) {
   const mediaRef = useRef<HTMLMediaElement | null>(null);
   const [media, setMedia] = useState<HTMLMediaElement | null>(null);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -64,6 +77,11 @@ export function MediaMaterial({ material, coverImage, playerDock, bionic = false
     mediaRef.current = element;
     setMedia(element);
   }, []);
+
+  useEffect(() => {
+    onNarration?.(media && transcript ? { media, transcript } : null);
+    return () => onNarration?.(null);
+  }, [media, transcript, onNarration]);
 
   useEffect(() => {
     const card = cardRef.current;

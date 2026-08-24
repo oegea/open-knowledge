@@ -87,6 +87,42 @@ test.describe('RSVP reading mode', () => {
     await expect(page.locator('[data-word] b').first()).toBeVisible();
   });
 
+  test('narrated materials can be listened to from inside the reader', async ({ page }) => {
+    const { courseId, audioMaterialId } = loadState();
+
+    await page.goto(`/courses/${courseId}/study/${audioMaterialId}`);
+    await page.getByRole('button', { name: 'Lector RSVP', exact: true }).click();
+    const reader = page.getByRole('dialog', { name: 'Lectura rápida (RSVP)' });
+    await expect(reader).toBeVisible();
+
+    // The read/listen switch appears only here, defaulting to reading.
+    await expect(reader.getByRole('button', { name: 'Leer', pressed: true })).toBeVisible();
+
+    // Listening: the single play button drives the page's own audio.
+    await reader.getByRole('button', { name: 'Escuchar', exact: true }).click();
+    await reader.getByRole('button', { name: 'Reproducir' }).click();
+    await expect
+      .poll(async () => page.evaluate(() => !document.querySelector('audio')!.paused))
+      .toBe(true);
+
+    // Seeking by words drags the narration along ("visibles." narrates at
+    // 3s) — deterministic, unlike waiting on headless media playback.
+    await reader.getByRole('slider').focus();
+    for (let word = 0; word < 6; word += 1) {
+      await page.keyboard.press('ArrowRight');
+    }
+    await expect(reader.getByText('visibles.')).toBeVisible();
+    await expect
+      .poll(async () => page.evaluate(() => document.querySelector('audio')!.currentTime))
+      .toBeGreaterThanOrEqual(3);
+
+    // Handing back to reading pauses the audio — one transport, two paces.
+    await reader.getByRole('button', { name: 'Leer', exact: true }).click();
+    await expect
+      .poll(async () => page.evaluate(() => document.querySelector('audio')!.paused))
+      .toBe(true);
+  });
+
   test('audio with notes offers the reading mode; audio without text does not', async ({
     page,
   }) => {

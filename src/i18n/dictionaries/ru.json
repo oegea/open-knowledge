@@ -226,7 +226,11 @@
     "rsvpGoNext": "Перейти к следующему материалу",
     "rsvpBackToText": "Вернуться к тексту",
     "speedReading": "Быстрое чтение",
-    "bionicToggle": "Бионическое чтение"
+    "bionicToggle": "Бионическое чтение",
+    "rsvpSourceTitle": "Читать или слушать",
+    "rsvpSourceRead": "Читать",
+    "rsvpSourceListen": "Слушать",
+    "rsvpListening": "Озвучка"
   },
   "auth": {
     "register": "Создать личность",

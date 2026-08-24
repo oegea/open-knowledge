@@ -226,7 +226,11 @@
     "rsvpGoNext": "前往下一个材料",
     "rsvpBackToText": "返回正文",
     "speedReading": "快速阅读",
-    "bionicToggle": "仿生阅读"
+    "bionicToggle": "仿生阅读",
+    "rsvpSourceTitle": "阅读或收听",
+    "rsvpSourceRead": "阅读",
+    "rsvpSourceListen": "收听",
+    "rsvpListening": "朗读"
   },
   "auth": {
     "register": "创建身份",
