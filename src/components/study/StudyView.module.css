@@ -646,6 +646,19 @@
     flex-direction: column;
     grid-column: 1;
     justify-self: end;
+    /* A subtle extra step away from the reading column so the text
+       breathes on its left: up to a space-6 where the viewport has slack,
+       and never further left than the header's edge where it does not.
+       The middle term is the grid's actual slack — left column width
+       ((100vw − measure) / 2 − page padding − gap) minus the rail and the
+       header margin — so the margin absorbs exactly the room available. */
+    margin-right: clamp(
+      var(--ok-space-3),
+      calc(
+        (100vw - var(--ok-measure-reading)) / 2 - 18rem - var(--ok-space-5) - var(--ok-space-3)
+      ),
+      var(--ok-space-6)
+    );
     width: 18rem;
     position: sticky;
     /* A subtle breather below the sticky header (which ends ~4.5rem down). */
