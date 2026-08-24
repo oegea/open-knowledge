@@ -261,7 +261,7 @@ describe('RsvpReader', () => {
 
       fireEvent.click(screen.getByRole('button', { name: 'Listen' }));
       act(() => setMediaTime(narration.media, 1.1));
-      fireEvent.click(screen.getByRole('button', { name: 'Read', exact: true }));
+      fireEvent.click(screen.getByRole('button', { name: 'Read' }));
 
       expect(narration.media.pause).toHaveBeenCalled();
       expect(visibleWord()).toContain('solar.');
