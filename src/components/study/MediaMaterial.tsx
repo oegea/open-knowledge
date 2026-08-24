@@ -39,10 +39,19 @@ export function MediaMaterial({ material, coverImage, playerDock }: MediaMateria
   const [playerVisible, setPlayerVisible] = useState(true);
   const { playing, currentTime, duration } = useMediaState(media);
   const transcript = useTimedTranscript(material.transcriptPath);
-  // The dock only earns its space once playback is a thing: playing, or
-  // paused somewhere past the start. Reading a chapter you never played
-  // must look exactly like plain reading.
-  const engaged = playing || currentTime > 0;
+  // The dock only earns its space once playback is a thing. Reading a
+  // chapter you never played must look exactly like plain reading — but
+  // once play was pressed the engagement sticks: pausing right at the
+  // start (before the media clock even moves) must not yank the docked
+  // controls away.
+  const [everPlayed, setEverPlayed] = useState(false);
+  useEffect(() => {
+    if (!media) return;
+    const onPlay = () => setEverPlayed(true);
+    media.addEventListener('play', onPlay);
+    return () => media.removeEventListener('play', onPlay);
+  }, [media]);
+  const engaged = playing || everPlayed || currentTime > 0;
   const miniDocked = Boolean(playerDock) && !playerVisible && engaged;
   const [miniMounted, miniLeaving] = useDelayedUnmount(miniDocked, MINI_EXIT_MS);
   // Whether the notes keep the narrated word in view; NarratedProse turns

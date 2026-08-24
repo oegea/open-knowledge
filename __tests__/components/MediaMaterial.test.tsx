@@ -177,6 +177,26 @@ describe('MediaMaterial', () => {
       await waitFor(() => expect(within(dock).queryByRole('region')).toBeNull());
     });
 
+    it('keeps the dock after pausing at the very start of playback', () => {
+      const { audio, dock } = renderMaterial({ transcriptPath: null });
+      act(() => intersectionCallback?.([{ isIntersecting: false }]));
+
+      // Play pressed, but paused again before the media clock even moved
+      // (currentTime still 0): the engagement must stick — losing the
+      // docked controls here would strand the reader without them.
+      Object.defineProperty(audio, 'paused', { value: false, configurable: true });
+      act(() => {
+        fireEvent(audio, new Event('play'));
+      });
+      Object.defineProperty(audio, 'paused', { value: true, configurable: true });
+      act(() => {
+        fireEvent(audio, new Event('pause'));
+      });
+
+      const region = within(dock).getByRole('region', { name: /now playing/i });
+      expect(within(region).getByRole('button', { name: /^play$/i })).toBeInTheDocument();
+    });
+
     it('scrolls back to the player from the docked title', async () => {
       const { audio, dock } = renderMaterial({ transcriptPath: null });
       act(() => setTime(audio, 12));
