@@ -128,17 +128,36 @@ export function RsvpReader({ title, words, hasNext, onClose, onFinished, onNext 
     onClose(Math.min(index, frames.length - 1));
   }, [frames.length, index, onClose]);
 
+  // One word back/forward; auto-repeats while the key is held. Leaves the
+  // completion screen if it was showing.
+  const step = useCallback(
+    (delta: number) => {
+      setIndex((current) =>
+        Math.min(Math.max(current + delta, 0), Math.max(frames.length - 1, 0))
+      );
+      setFinished(false);
+    },
+    [frames.length]
+  );
+
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') close();
+      // With the position slider focused the browser already moves it (and
+      // onChange steps the word): skip the global handler to avoid doubling.
+      if (event.target instanceof HTMLInputElement) return;
       if (event.key === ' ') {
         event.preventDefault();
         setPlaying((current) => !current);
       }
+      if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+        event.preventDefault();
+        step(event.key === 'ArrowRight' ? 1 : -1);
+      }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [close]);
+  }, [close, step]);
 
   // Playing again from the very end restarts the reading.
   const toggle = useCallback(() => {

@@ -110,6 +110,35 @@ describe('RsvpReader', () => {
       expect(props.onNext).toHaveBeenCalledTimes(1);
     });
 
+    it('steps one word back and forward with the arrow keys', () => {
+      renderReader();
+
+      fireEvent.keyDown(window, { key: 'ArrowRight' });
+      expect(visibleWord()).toContain('sistema');
+
+      fireEvent.keyDown(window, { key: 'ArrowRight' });
+      expect(visibleWord()).toContain('solar.');
+
+      fireEvent.keyDown(window, { key: 'ArrowLeft' });
+      expect(visibleWord()).toContain('sistema');
+
+      // The start clamps: stepping back twice more stays on the first word.
+      fireEvent.keyDown(window, { key: 'ArrowLeft' });
+      fireEvent.keyDown(window, { key: 'ArrowLeft' });
+      expect(visibleWord()).not.toContain('sistema');
+    });
+
+    it('leaves arrow keys to the browser while the position slider is focused', () => {
+      renderReader();
+
+      fireEvent.keyDown(screen.getByRole('slider', { name: 'Reading position' }), {
+        key: 'ArrowRight',
+      });
+
+      // The global handler must not double the slider's own stepping.
+      expect(visibleWord()).not.toContain('sistema');
+    });
+
     it('closes reporting the word the reading stopped at', () => {
       const { props } = renderReader();
 

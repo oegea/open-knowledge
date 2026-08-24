@@ -35,8 +35,9 @@ over the text.
   ORP letter in the Ember accent, laid out on a `1fr auto 1fr` grid so the
   ORP letter stays centered regardless of the word's mass.
 - **A tap anywhere is play/pause** (controls stop propagation; with the
-  settings sheet open, a tap closes it instead). Escape and the space bar
-  work on keyboards.
+  settings sheet open, a tap closes it instead). On keyboards, space
+  toggles playback, the arrow keys step word by word (auto-repeating
+  while held), and Escape leaves.
 - Speed is chosen from predefined values (200–700 wpm, default 300);
   every sentence ends with a pause chosen from three predefined levels
   (short — the default —, medium, long). Longer words and clause commas
