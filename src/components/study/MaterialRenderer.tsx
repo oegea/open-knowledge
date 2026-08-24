@@ -24,7 +24,8 @@ export function MaterialRenderer({
 }: MaterialRendererProps) {
   switch (material.type) {
     case 'markdown':
-      return <Prose content={material.markdown} />;
+      // Word spans double as RSVP tokens and exit-scroll anchors (ADR 0018).
+      return <Prose content={material.markdown} annotateWords />;
 
     case 'audio':
     case 'video':

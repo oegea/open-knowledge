@@ -1,0 +1,421 @@
+/* Full-screen RSVP reader: a calm, distraction-free room. The word sits
+   between two guides whose ticks mark the ORP anchor; everything else stays
+   quiet at the edges. */
+
+.reader {
+  position: fixed;
+  inset: 0;
+  z-index: var(--ok-z-overlay);
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(60rem 40rem at 15% -10%, var(--ok-wash-a), transparent 60%),
+    radial-gradient(50rem 36rem at 110% 110%, var(--ok-wash-b), transparent 60%),
+    var(--ok-bg);
+  color: var(--ok-fg);
+  animation: readerIn var(--ok-duration-med) var(--ok-ease);
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
+}
+
+@keyframes readerIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  gap: var(--ok-space-3);
+  padding: var(--ok-space-3);
+}
+
+.iconButton {
+  min-width: var(--ok-touch-target);
+  min-height: var(--ok-touch-target);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--ok-radius-full);
+  color: var(--ok-fg-muted);
+  transition: background var(--ok-duration-fast) var(--ok-ease);
+}
+
+.iconButton:hover,
+.iconButton[aria-expanded='true'] {
+  background: var(--ok-primary-soft);
+  color: var(--ok-primary);
+}
+
+.title {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  font-size: var(--ok-text-sm);
+  font-weight: 600;
+  color: var(--ok-fg-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------------------ */
+/* Stage: guides + the word                                            */
+/* ------------------------------------------------------------------ */
+
+.stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: var(--ok-space-6);
+  padding: 0 var(--ok-space-4);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.guides {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-5);
+  width: min(100%, 34rem);
+  margin: 0 auto;
+}
+
+.guide {
+  position: relative;
+  height: 1px;
+  background: var(--ok-border-strong);
+}
+
+/* Ticks pointing inward at the ORP anchor. */
+.guide::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  width: 1px;
+  height: 0.8rem;
+  background: var(--ok-border-strong);
+}
+
+.guideTop::after {
+  top: 0;
+}
+
+.guideBottom::after {
+  bottom: 0;
+}
+
+/* 1fr | auto | 1fr keeps the ORP letter box centered on the anchor no
+   matter how the word's mass is distributed around it. */
+.wordRow {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: baseline;
+  font-family: var(--ok-font-reading);
+  /* Baseline; the component caps it inline for very long words. */
+  font-size: clamp(2.1rem, 9vw, 3.4rem);
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  white-space: pre;
+}
+
+.wordBefore {
+  justify-self: end;
+}
+
+.wordOrp {
+  color: var(--ok-accent);
+}
+
+.wordAfter {
+  justify-self: start;
+}
+
+.tapHint {
+  text-align: center;
+  font-size: var(--ok-text-sm);
+  color: var(--ok-fg-subtle);
+  animation: hintIn var(--ok-duration-slow) var(--ok-ease);
+}
+
+@keyframes hintIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Settings sheet                                                      */
+/* ------------------------------------------------------------------ */
+
+.settings {
+  margin: 0 var(--ok-space-3) var(--ok-space-3);
+  padding: var(--ok-space-4);
+  border-radius: var(--ok-radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-2);
+  animation: hintIn var(--ok-duration-med) var(--ok-ease);
+}
+
+.settingsLabel {
+  font-size: var(--ok-text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ok-fg-muted);
+}
+
+.chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ok-space-2);
+}
+
+.chip {
+  min-height: 36px;
+  padding: 0 var(--ok-space-3);
+  border-radius: var(--ok-radius-full);
+  border: 1px solid var(--ok-border);
+  font-size: var(--ok-text-sm);
+  font-weight: 600;
+  color: var(--ok-fg-muted);
+  transition:
+    background var(--ok-duration-fast) var(--ok-ease),
+    color var(--ok-duration-fast) var(--ok-ease),
+    border-color var(--ok-duration-fast) var(--ok-ease);
+}
+
+.chip[aria-pressed='true'] {
+  background: var(--ok-primary);
+  border-color: var(--ok-primary);
+  color: var(--ok-primary-fg);
+}
+
+/* ------------------------------------------------------------------ */
+/* Bottom controls                                                     */
+/* ------------------------------------------------------------------ */
+
+.controls {
+  margin: 0 var(--ok-space-3) var(--ok-space-3);
+  padding: var(--ok-space-3) var(--ok-space-4) var(--ok-space-4);
+  border-radius: var(--ok-radius-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-2);
+}
+
+.timeline {
+  display: flex;
+  align-items: center;
+  gap: var(--ok-space-3);
+}
+
+.time {
+  font-family: var(--ok-font-mono);
+  font-size: var(--ok-text-xs);
+  color: var(--ok-fg-muted);
+  min-width: 3.2rem;
+  text-align: center;
+}
+
+.slider {
+  flex: 1;
+  appearance: none;
+  height: 6px;
+  border-radius: var(--ok-radius-full);
+  background: var(--ok-border);
+  outline-offset: 4px;
+}
+
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--ok-radius-full);
+  background: var(--ok-primary);
+  border: 3px solid var(--ok-bg-raised);
+  box-shadow: var(--ok-shadow-1);
+}
+
+.slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: var(--ok-radius-full);
+  background: var(--ok-primary);
+  border: 3px solid var(--ok-bg-raised);
+  box-shadow: var(--ok-shadow-1);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ok-space-3);
+}
+
+.speedButton {
+  min-height: var(--ok-touch-target);
+  padding: 0 var(--ok-space-4);
+  border-radius: var(--ok-radius-full);
+  border: 1px solid var(--ok-border);
+  font-size: var(--ok-text-sm);
+  font-weight: 700;
+  color: var(--ok-fg-muted);
+  font-variant-numeric: tabular-nums;
+  transition: background var(--ok-duration-fast) var(--ok-ease);
+}
+
+.speedButton:hover,
+.speedButton[aria-expanded='true'] {
+  background: var(--ok-primary-soft);
+  color: var(--ok-primary);
+}
+
+.playButton {
+  min-width: 56px;
+  min-height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--ok-radius-full);
+  background: var(--ok-primary);
+  color: var(--ok-primary-fg);
+  box-shadow: var(--ok-shadow-2);
+  transition:
+    background var(--ok-duration-fast) var(--ok-ease),
+    transform var(--ok-duration-fast) var(--ok-ease);
+}
+
+.playButton:hover {
+  background: var(--ok-primary-hover);
+}
+
+.playButton:active {
+  transform: scale(0.96);
+}
+
+/* ------------------------------------------------------------------ */
+/* Completion screen                                                   */
+/* ------------------------------------------------------------------ */
+
+.finished {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ok-space-3);
+  padding: var(--ok-space-5);
+  text-align: center;
+  background:
+    radial-gradient(46rem 34rem at 50% -10%, var(--ok-wash-b), transparent 65%),
+    radial-gradient(50rem 40rem at 50% 120%, var(--ok-wash-a), transparent 65%),
+    var(--ok-bg);
+  animation: readerIn var(--ok-duration-slow) var(--ok-ease);
+  cursor: default;
+}
+
+.finishedBadge {
+  width: 76px;
+  height: 76px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--ok-radius-full);
+  background: linear-gradient(135deg, var(--ok-lagoon-400), var(--ok-accent));
+  color: #ffffff;
+  box-shadow: var(--ok-shadow-3);
+  animation: badgeIn var(--ok-duration-slow) var(--ok-ease);
+}
+
+@keyframes badgeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.finishedTitle {
+  font-size: var(--ok-text-2xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.finishedBody {
+  color: var(--ok-fg-muted);
+  max-width: 28rem;
+}
+
+.finishedActions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--ok-space-2);
+  width: min(100%, 20rem);
+  margin-top: var(--ok-space-3);
+}
+
+.finishedPrimary {
+  min-height: var(--ok-touch-target);
+  padding: 0 var(--ok-space-5);
+  border-radius: var(--ok-radius-full);
+  background: var(--ok-primary);
+  color: var(--ok-primary-fg);
+  font-weight: 700;
+  box-shadow: var(--ok-shadow-2);
+  transition: background var(--ok-duration-fast) var(--ok-ease);
+}
+
+.finishedPrimary:hover {
+  background: var(--ok-primary-hover);
+}
+
+.finishedSecondary {
+  min-height: var(--ok-touch-target);
+  padding: 0 var(--ok-space-5);
+  border-radius: var(--ok-radius-full);
+  border: 1px solid var(--ok-border-strong);
+  color: var(--ok-fg-muted);
+  font-weight: 600;
+  transition: background var(--ok-duration-fast) var(--ok-ease);
+}
+
+.finishedSecondary:hover {
+  background: var(--ok-primary-soft);
+  color: var(--ok-primary);
+}
+
+/* Wider screens: the reader keeps its focus column; controls stop hugging
+   the edges. */
+@media (min-width: 768px) {
+  .controls,
+  .settings {
+    width: min(100%, 40rem);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .finishedActions {
+    flex-direction: row;
+    justify-content: center;
+    width: auto;
+  }
+}

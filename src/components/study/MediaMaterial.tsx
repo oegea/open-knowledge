@@ -94,7 +94,9 @@ export function MediaMaterial({ material, coverImage, playerDock }: MediaMateria
         followControlDocked={miniDocked}
       />
     ) : (
-      <Prose content={material.markdown} />
+      // Annotated even without a transcript: the word spans feed the RSVP
+      // reading mode of the notes (ADR 0018).
+      <Prose content={material.markdown} annotateWords />
     )
   ) : null;
 

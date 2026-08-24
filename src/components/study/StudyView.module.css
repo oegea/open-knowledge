@@ -327,6 +327,14 @@
   transform: translateY(-1px);
 }
 
+.metaRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ok-space-3);
+  flex-wrap: wrap;
+}
+
 .breadcrumb {
   font-size: var(--ok-text-sm);
   font-weight: 700;
@@ -335,6 +343,31 @@
   align-items: baseline;
   gap: var(--ok-space-3);
   flex-wrap: wrap;
+}
+
+/* Entry to the RSVP reading mode: a quiet pill by the material meta, always
+   in the same place — visible without floating over the text. */
+.rsvpButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ok-space-2);
+  min-height: 36px;
+  padding: 0 var(--ok-space-3);
+  border-radius: var(--ok-radius-full);
+  border: 1px solid var(--ok-border);
+  font-size: var(--ok-text-sm);
+  font-weight: 600;
+  color: var(--ok-fg-muted);
+  transition:
+    background var(--ok-duration-fast) var(--ok-ease),
+    color var(--ok-duration-fast) var(--ok-ease),
+    border-color var(--ok-duration-fast) var(--ok-ease);
+}
+
+.rsvpButton:hover {
+  background: var(--ok-primary-soft);
+  border-color: var(--ok-primary);
+  color: var(--ok-primary);
 }
 
 .readingTime {

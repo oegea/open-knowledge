@@ -174,6 +174,19 @@ export function IconFollow(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+/** RSVP reading mode: the word between its two guides, ticks at the ORP. */
+export function IconRsvp(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base(props)}>
+      <path d="M3.5 5.5h17" />
+      <path d="M3.5 18.5h17" />
+      <path d="M12 5.5v2.6" />
+      <path d="M12 18.5v-2.6" />
+      <path d="M8 12h8" />
+    </svg>
+  );
+}
+
 export function IconChevronDown(props: SVGProps<SVGSVGElement>) {
   return (
     <svg {...base(props)}>

@@ -103,18 +103,20 @@ describe('MediaMaterial', () => {
   });
 
   describe('Basic Behaviour', () => {
-    it('plays without a transcript exactly like before: player plus plain notes', async () => {
+    it('plays without a transcript: player plus notes, annotated but not narrated', async () => {
       const { container } = renderMaterial({ transcriptPath: null });
 
       expect(container.querySelector('audio')).toHaveAttribute('src', '/api/media/audio/a.mp3');
-      expect(screen.getByText('El agua empezó a moverse.')).toBeInTheDocument();
+      // Notes carry word spans even without narration: they feed the RSVP
+      // reading mode (ADR 0018) — but nothing is aligned or highlighted.
+      expect(screen.getByText('moverse.')).toBeInTheDocument();
       expect(global.fetch).not.toHaveBeenCalled();
-      expect(container.querySelector('[data-word]')).toBeNull();
+      expect(container.querySelector('[data-narrated]')).toBeNull();
     });
 
     it('highlights the narrated word as playback advances', async () => {
       const { audio } = renderMaterial();
-      await waitFor(() => expect(screen.getByText('empezó')).toBeInTheDocument());
+      await waitFor(() => expect(screen.getByText('empezó')).toHaveAttribute('data-narrated'));
 
       act(() => setTime(audio, 2.3));
 
@@ -128,7 +130,7 @@ describe('MediaMaterial', () => {
 
     it('seeks the media when a narrated word is tapped', async () => {
       const { audio } = renderMaterial();
-      await waitFor(() => expect(screen.getByText('Nadie')).toBeInTheDocument());
+      await waitFor(() => expect(screen.getByText('Nadie')).toHaveAttribute('data-narrated'));
       let seeked = -1;
       Object.defineProperty(audio, 'currentTime', {
         get: () => 0,
@@ -257,7 +259,7 @@ describe('MediaMaterial', () => {
 
       act(() => setTime(audio, 1.5));
 
-      expect(screen.getByText('El agua empezó a moverse.')).toBeInTheDocument();
+      expect(screen.getByText('moverse.')).toBeInTheDocument();
       expect(document.querySelector('[aria-current="true"]')).toBeNull();
     });
   });

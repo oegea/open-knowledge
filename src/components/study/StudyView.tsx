@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { CoursePrimitive } from '@/modules/course/domain/Course';
@@ -14,9 +14,11 @@ import { mergeProgress } from '@/modules/study/application/mergeProgress';
 import { LocalStorageProgressRepository } from '@/modules/study/infrastructure/LocalStorageProgressRepository';
 import { HttpProgressRepository } from '@/modules/study/infrastructure/HttpProgressRepository';
 import { useI18n } from '@/i18n/I18nProvider';
-import { IconCheck, IconChevronDown } from '../ui/icons';
+import { IconCheck, IconChevronDown, IconRsvp } from '../ui/icons';
+import { WORD_ATTRIBUTE } from '../shared/rehypeWordSpans';
 import { MaterialRenderer } from './MaterialRenderer';
 import { ReadingProgress } from './ReadingProgress';
+import { RsvpReader } from './RsvpReader';
 import styles from './StudyView.module.css';
 
 interface StudyViewProps {
@@ -51,6 +53,10 @@ export function StudyView({
   // Hosts the mini player of audio/video materials while their player is
   // scrolled away; sits above the navigation footer, where players belong.
   const [playerDock, setPlayerDock] = useState<HTMLElement | null>(null);
+  // RSVP reading mode (ADR 0018): non-null while the reader is open, holding
+  // the display tokens captured from the rendered word spans.
+  const [rsvpWords, setRsvpWords] = useState<string[] | null>(null);
+  const contentRef = useRef<HTMLElement | null>(null);
   const progressRepository = useMemo(
     () => (authenticated ? new HttpProgressRepository() : new LocalStorageProgressRepository()),
     [authenticated]
@@ -172,6 +178,36 @@ export function StudyView({
     router,
   ]);
 
+  // The reader consumes the words React already rendered (the same spans
+  // NarratedProse aligns to), so what is read is exactly what is displayed.
+  const openRsvp = useCallback(() => {
+    const container = contentRef.current;
+    if (!container) return;
+    const words = Array.from(
+      container.querySelectorAll<HTMLElement>(`[${WORD_ATTRIBUTE}]`),
+      (span) => span.textContent ?? ''
+    );
+    if (words.length > 0) setRsvpWords(words);
+  }, []);
+
+  // Leaving the reader lands the page on the word the reading stopped at.
+  const closeRsvp = useCallback((wordIndex: number) => {
+    setRsvpWords(null);
+    window.setTimeout(() => {
+      const span = contentRef.current?.querySelectorAll<HTMLElement>(`[${WORD_ATTRIBUTE}]`)[
+        wordIndex
+      ];
+      if (!span) return;
+      const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+      span.scrollIntoView({ block: 'center', behavior: reduced ? 'auto' : 'smooth' });
+    }, 0);
+  }, []);
+
+  const handleRsvpNext = useCallback(() => {
+    setRsvpWords(null);
+    void handleNext();
+  }, [handleNext]);
+
   const refreshProgress = useCallback(async () => {
     setProgress(
       await getCourseProgress({ courseId: course.id!, progressRepository })
@@ -235,6 +271,11 @@ export function StudyView({
     current.material.type === 'markdown'
       ? Math.max(1, Math.round(current.material.markdown.split(/\s+/).length / 200))
       : null;
+
+  // RSVP works on any material with text: markdown lessons, and audio/video
+  // only when they carry notes. Exams are answered, not read.
+  const rsvpEligible =
+    current.material.type !== 'exam' && current.material.markdown.trim().length > 0;
 
   const ratio = progress ? progress.completionRatio(orderedMaterialIds) : 0;
   const isCompleted = progress?.isMaterialCompleted(currentMaterialId) ?? false;
@@ -345,7 +386,7 @@ export function StudyView({
           </nav>
         </aside>
 
-        <main className={styles.content}>
+        <main className={styles.content} ref={contentRef}>
           {courseCompleted ? (
             <aside className={`ok-glass ${styles.completedBanner}`} role="status">
               <p className={styles.completedTitle}>🎉 {t('study.courseCompleted')}</p>
@@ -368,14 +409,22 @@ export function StudyView({
             </aside>
           ) : null}
 
-          <p className={styles.breadcrumb}>
-            {current.sectionIndex + 1} · {current.sectionTitle}
-            {readingMinutes !== null ? (
-              <span className={styles.readingTime}>
-                {t('study.readingTime', { min: readingMinutes })}
-              </span>
+          <div className={styles.metaRow}>
+            <p className={styles.breadcrumb}>
+              {current.sectionIndex + 1} · {current.sectionTitle}
+              {readingMinutes !== null ? (
+                <span className={styles.readingTime}>
+                  {t('study.readingTime', { min: readingMinutes })}
+                </span>
+              ) : null}
+            </p>
+            {rsvpEligible ? (
+              <button type="button" className={styles.rsvpButton} onClick={openRsvp}>
+                <IconRsvp width={18} height={18} />
+                {t('study.rsvpOpen')}
+              </button>
             ) : null}
-          </p>
+          </div>
           <h1 className={styles.materialTitle}>{current.material.title}</h1>
 
           <MaterialRenderer
@@ -412,6 +461,17 @@ export function StudyView({
           ) : null}
         </main>
       </div>
+
+      {rsvpWords ? (
+        <RsvpReader
+          title={current.material.title}
+          words={rsvpWords}
+          hasNext={next !== null}
+          onClose={closeRsvp}
+          onFinished={handleComplete}
+          onNext={handleRsvpNext}
+        />
+      ) : null}
 
       {/* Positioning and backdrop blur live on separate elements: iOS Safari
           mis-anchors position:fixed elements that carry backdrop-filter. */}
