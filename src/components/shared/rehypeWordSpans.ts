@@ -32,7 +32,48 @@ export const WORD_ATTRIBUTE = 'data-word';
 /** Elements whose text is never narrated word by word. */
 const SKIPPED_TAGS = new Set(['script', 'style']);
 
-export function rehypeWordSpans() {
+export interface RehypeWordSpansOptions {
+  /**
+   * Bionic reading: bold the fixation prefix of every word (the first ~40%
+   * of its letters), guiding the eye through the text. The second facet of
+   * the speed-reading concept, next to the RSVP reader (ADR 0019).
+   */
+  bionic?: boolean;
+}
+
+/**
+ * Letters of a word's core (surrounding punctuation ignored) that form the
+ * bionic fixation prefix: ~40% of the word, at least one letter.
+ */
+export function bionicPrefixLength(text: string): number {
+  const leading = text.match(/^[^\p{L}\p{N}]+/u)?.[0].length ?? 0;
+  const trailing = text.match(/[^\p{L}\p{N}]+$/u)?.[0].length ?? 0;
+  const coreLength = text.length - leading - trailing;
+  if (coreLength <= 0) return 0;
+  return Math.max(1, Math.ceil(coreLength * 0.4));
+}
+
+/** Children of a word span: plain text, or split around the bold prefix. */
+function wordChildren(text: string, bionic: boolean): HastNode[] {
+  const prefixLength = bionic ? bionicPrefixLength(text) : 0;
+  if (prefixLength === 0) return [{ type: 'text', value: text }];
+  const leading = text.match(/^[^\p{L}\p{N}]+/u)?.[0].length ?? 0;
+  const children: HastNode[] = [];
+  if (leading > 0) children.push({ type: 'text', value: text.slice(0, leading) });
+  children.push({
+    type: 'element',
+    tagName: 'b',
+    properties: {},
+    children: [{ type: 'text', value: text.slice(leading, leading + prefixLength) }],
+  });
+  if (leading + prefixLength < text.length) {
+    children.push({ type: 'text', value: text.slice(leading + prefixLength) });
+  }
+  return children;
+}
+
+export function rehypeWordSpans(options: RehypeWordSpansOptions = {}) {
+  const bionic = options.bionic ?? false;
   return (tree: HastParent) => {
     let counter = 0;
 
@@ -47,7 +88,7 @@ export function rehypeWordSpans() {
                 type: 'element',
                 tagName: 'span',
                 properties: { dataWord: String(counter++) },
-                children: [{ type: 'text', value: piece.text }],
+                children: wordChildren(piece.text, bionic),
               });
             } else {
               next.push({ type: 'text', value: piece.text });

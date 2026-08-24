@@ -207,7 +207,7 @@
     "backToPlayer": "Повернутися до плеєра",
     "seek": "Позиція відтворення",
     "followNarration": "Стежити за озвученням",
-    "rsvpOpen": "Швидке читання",
+    "rsvpOpen": "RSVP-рідер",
     "rsvpTitle": "Швидке читання (RSVP)",
     "rsvpExit": "Вийти зі швидкого читання",
     "rsvpSettings": "Налаштування читання",
@@ -224,7 +224,9 @@
     "rsvpCompletedTitle": "Матеріал завершено!",
     "rsvpCompletedBody": "Ви дійшли до кінця. Чудовий темп читання.",
     "rsvpGoNext": "Перейти до наступного матеріалу",
-    "rsvpBackToText": "Повернутися до тексту"
+    "rsvpBackToText": "Повернутися до тексту",
+    "speedReading": "Швидке читання",
+    "bionicToggle": "Біонічне читання"
   },
   "auth": {
     "register": "Створити особу",

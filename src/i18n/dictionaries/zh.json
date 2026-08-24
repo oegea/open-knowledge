@@ -207,7 +207,7 @@
     "backToPlayer": "返回播放器",
     "seek": "播放位置",
     "followNarration": "跟随朗读",
-    "rsvpOpen": "快速阅读",
+    "rsvpOpen": "RSVP 阅读器",
     "rsvpTitle": "快速阅读（RSVP）",
     "rsvpExit": "退出快速阅读",
     "rsvpSettings": "阅读设置",
@@ -224,7 +224,9 @@
     "rsvpCompletedTitle": "已完成本材料！",
     "rsvpCompletedBody": "你已读到结尾，阅读节奏很好。",
     "rsvpGoNext": "前往下一个材料",
-    "rsvpBackToText": "返回正文"
+    "rsvpBackToText": "返回正文",
+    "speedReading": "快速阅读",
+    "bionicToggle": "仿生阅读"
   },
   "auth": {
     "register": "创建身份",

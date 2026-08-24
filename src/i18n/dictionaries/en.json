@@ -207,7 +207,7 @@
     "backToPlayer": "Back to the player",
     "seek": "Playback position",
     "followNarration": "Follow the narration",
-    "rsvpOpen": "Speed reading",
+    "rsvpOpen": "RSVP reader",
     "rsvpTitle": "Speed reading (RSVP)",
     "rsvpExit": "Exit speed reading",
     "rsvpSettings": "Reading settings",
@@ -224,7 +224,9 @@
     "rsvpCompletedTitle": "Material completed!",
     "rsvpCompletedBody": "You reached the end. Nice reading pace.",
     "rsvpGoNext": "Go to the next material",
-    "rsvpBackToText": "Back to the text"
+    "rsvpBackToText": "Back to the text",
+    "speedReading": "Speed reading",
+    "bionicToggle": "Bionic reading"
   },
   "auth": {
     "register": "Create identity",

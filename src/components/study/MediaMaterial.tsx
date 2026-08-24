@@ -24,6 +24,8 @@ interface MediaMaterialProps {
    * mini player is simply not offered.
    */
   playerDock?: HTMLElement | null;
+  /** Bionic reading (ADR 0019): bold fixation prefixes in the notes. */
+  bionic?: boolean;
 }
 
 /**
@@ -32,7 +34,7 @@ interface MediaMaterialProps {
  * with playback. The media element stays the source of truth for playback;
  * React only mirrors what the mini player needs to display.
  */
-export function MediaMaterial({ material, coverImage, playerDock }: MediaMaterialProps) {
+export function MediaMaterial({ material, coverImage, playerDock, bionic = false }: MediaMaterialProps) {
   const mediaRef = useRef<HTMLMediaElement | null>(null);
   const [media, setMedia] = useState<HTMLMediaElement | null>(null);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -101,11 +103,12 @@ export function MediaMaterial({ material, coverImage, playerDock }: MediaMateria
         following={following}
         onFollowingChange={setFollowing}
         followControlDocked={miniDocked}
+        bionic={bionic}
       />
     ) : (
       // Annotated even without a transcript: the word spans feed the RSVP
       // reading mode of the notes (ADR 0018).
-      <Prose content={material.markdown} annotateWords />
+      <Prose content={material.markdown} annotateWords bionic={bionic} />
     )
   ) : null;
 

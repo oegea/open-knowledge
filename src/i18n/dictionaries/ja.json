@@ -207,7 +207,7 @@
     "backToPlayer": "プレーヤーに戻る",
     "seek": "再生位置",
     "followNarration": "ナレーションに追従",
-    "rsvpOpen": "速読モード",
+    "rsvpOpen": "RSVP リーダー",
     "rsvpTitle": "速読モード（RSVP）",
     "rsvpExit": "速読モードを終了",
     "rsvpSettings": "読書設定",
@@ -224,7 +224,9 @@
     "rsvpCompletedTitle": "この教材を完了しました！",
     "rsvpCompletedBody": "最後まで読みました。良いペースです。",
     "rsvpGoNext": "次の教材へ進む",
-    "rsvpBackToText": "本文に戻る"
+    "rsvpBackToText": "本文に戻る",
+    "speedReading": "速読",
+    "bionicToggle": "バイオニックリーディング"
   },
   "auth": {
     "register": "アカウントを作成",

@@ -345,8 +345,14 @@
   flex-wrap: wrap;
 }
 
-/* Entry to the RSVP reading mode: a quiet pill by the material meta, always
-   in the same place — visible without floating over the text. */
+/* The speed-reading controls: RSVP reader + bionic toggle, quiet pills by
+   the material meta — always in the same place, never floating. */
+.speedReading {
+  display: flex;
+  gap: var(--ok-space-2);
+  flex-wrap: wrap;
+}
+
 .rsvpButton {
   display: inline-flex;
   align-items: center;
@@ -368,6 +374,12 @@
   background: var(--ok-primary-soft);
   border-color: var(--ok-primary);
   color: var(--ok-primary);
+}
+
+.rsvpButton[aria-pressed='true'] {
+  background: var(--ok-primary);
+  border-color: var(--ok-primary);
+  color: var(--ok-primary-fg);
 }
 
 .readingTime {

@@ -23,6 +23,8 @@ interface NarratedProseProps {
    * otherwise this component floats its own chip.
    */
   followControlDocked?: boolean;
+  /** Bionic reading (ADR 0019): bold fixation prefixes in the notes. */
+  bionic?: boolean;
 }
 
 /**
@@ -58,6 +60,7 @@ export function NarratedProse({
   following,
   onFollowingChange,
   followControlDocked = false,
+  bionic = false,
 }: NarratedProseProps) {
   const { t } = useI18n();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -213,7 +216,13 @@ export function NarratedProse({
 
   return (
     <>
-      <Prose ref={containerRef} content={content} annotateWords onClick={handleWordClick} />
+      <Prose
+        ref={containerRef}
+        content={content}
+        annotateWords
+        bionic={bionic}
+        onClick={handleWordClick}
+      />
       {playing && !following && !followControlDocked ? (
         <button type="button" className={`ok-glass-strong ${styles.followChip}`} onClick={resumeFollowing}>
           <IconFollow width={18} height={18} />

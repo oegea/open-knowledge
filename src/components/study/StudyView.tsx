@@ -14,11 +14,12 @@ import { mergeProgress } from '@/modules/study/application/mergeProgress';
 import { LocalStorageProgressRepository } from '@/modules/study/infrastructure/LocalStorageProgressRepository';
 import { HttpProgressRepository } from '@/modules/study/infrastructure/HttpProgressRepository';
 import { useI18n } from '@/i18n/I18nProvider';
-import { IconCheck, IconChevronDown, IconRsvp } from '../ui/icons';
+import { IconBionic, IconCheck, IconChevronDown, IconRsvp } from '../ui/icons';
 import { WORD_ATTRIBUTE } from '../shared/rehypeWordSpans';
 import { MaterialRenderer } from './MaterialRenderer';
 import { ReadingProgress } from './ReadingProgress';
 import { RsvpReader } from './RsvpReader';
+import { useBionicReading } from './useBionicReading';
 import styles from './StudyView.module.css';
 
 interface StudyViewProps {
@@ -56,6 +57,8 @@ export function StudyView({
   // RSVP reading mode (ADR 0018): non-null while the reader is open, holding
   // the display tokens captured from the rendered word spans.
   const [rsvpWords, setRsvpWords] = useState<string[] | null>(null);
+  // Bionic reading (ADR 0019): a device preference, off until hydration.
+  const [bionic, toggleBionic] = useBionicReading();
   const contentRef = useRef<HTMLElement | null>(null);
   const progressRepository = useMemo(
     () => (authenticated ? new HttpProgressRepository() : new LocalStorageProgressRepository()),
@@ -419,10 +422,25 @@ export function StudyView({
               ) : null}
             </p>
             {rsvpEligible ? (
-              <button type="button" className={styles.rsvpButton} onClick={openRsvp}>
-                <IconRsvp width={18} height={18} />
-                {t('study.rsvpOpen')}
-              </button>
+              <div
+                className={styles.speedReading}
+                role="group"
+                aria-label={t('study.speedReading')}
+              >
+                <button type="button" className={styles.rsvpButton} onClick={openRsvp}>
+                  <IconRsvp width={18} height={18} />
+                  {t('study.rsvpOpen')}
+                </button>
+                <button
+                  type="button"
+                  className={styles.rsvpButton}
+                  aria-pressed={bionic}
+                  onClick={toggleBionic}
+                >
+                  <IconBionic width={18} height={18} />
+                  {t('study.bionicToggle')}
+                </button>
+              </div>
             ) : null}
           </div>
           <h1 className={styles.materialTitle}>{current.material.title}</h1>
@@ -432,6 +450,7 @@ export function StudyView({
             material={current.material}
             coverImage={course.coverImage}
             playerDock={playerDock}
+            bionic={bionic}
             onExamPassed={handleComplete}
             onExamFinished={handleExamFinished}
           />

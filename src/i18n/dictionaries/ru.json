@@ -207,7 +207,7 @@
     "backToPlayer": "Вернуться к плееру",
     "seek": "Позиция воспроизведения",
     "followNarration": "Следовать за озвучкой",
-    "rsvpOpen": "Быстрое чтение",
+    "rsvpOpen": "RSVP-ридер",
     "rsvpTitle": "Быстрое чтение (RSVP)",
     "rsvpExit": "Выйти из быстрого чтения",
     "rsvpSettings": "Настройки чтения",
@@ -224,7 +224,9 @@
     "rsvpCompletedTitle": "Материал завершён!",
     "rsvpCompletedBody": "Вы дочитали до конца. Отличный темп чтения.",
     "rsvpGoNext": "Перейти к следующему материалу",
-    "rsvpBackToText": "Вернуться к тексту"
+    "rsvpBackToText": "Вернуться к тексту",
+    "speedReading": "Быстрое чтение",
+    "bionicToggle": "Бионическое чтение"
   },
   "auth": {
     "register": "Создать личность",

@@ -174,6 +174,20 @@ export function IconFollow(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+/** Bionic reading: text lines whose leading fixation is set heavier. */
+export function IconBionic(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base(props)}>
+      <path d="M4 7h5" strokeWidth={3.2} />
+      <path d="M12.5 7h7.5" />
+      <path d="M4 12h4" strokeWidth={3.2} />
+      <path d="M11.5 12h8.5" />
+      <path d="M4 17h5.5" strokeWidth={3.2} />
+      <path d="M13 17h7" />
+    </svg>
+  );
+}
+
 /** RSVP reading mode: the word between its two guides, ticks at the ORP. */
 export function IconRsvp(props: SVGProps<SVGSVGElement>) {
   return (

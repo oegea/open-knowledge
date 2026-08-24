@@ -12,17 +12,22 @@ interface ProseProps {
    * reading keeps the DOM lean.
    */
   annotateWords?: boolean;
+  /**
+   * Bionic reading (ADR 0019): bold the fixation prefix of every word.
+   * Requires `annotateWords`.
+   */
+  bionic?: boolean;
   onClick?: MouseEventHandler<HTMLDivElement>;
   ref?: Ref<HTMLDivElement>;
 }
 
 /** Long-form markdown rendering with the reading typography of the brand. */
-export function Prose({ content, annotateWords = false, onClick, ref }: ProseProps) {
+export function Prose({ content, annotateWords = false, bionic = false, onClick, ref }: ProseProps) {
   return (
     <div ref={ref} className={styles.prose} onClick={onClick}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
-        rehypePlugins={annotateWords ? [rehypeWordSpans] : undefined}
+        rehypePlugins={annotateWords ? [[rehypeWordSpans, { bionic }]] : undefined}
       >
         {content}
       </ReactMarkdown>

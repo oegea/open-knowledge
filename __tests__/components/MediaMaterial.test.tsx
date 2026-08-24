@@ -16,7 +16,16 @@ jest.mock('next/navigation', () => ({
 jest.mock('remark-gfm', () => ({ __esModule: true, default: () => undefined }));
 jest.mock('react-markdown', () => ({
   __esModule: true,
-  default: ({ children, rehypePlugins }: { children: string; rehypePlugins?: (() => (tree: unknown) => void)[] }) => {
+  default: ({
+    children,
+    rehypePlugins,
+  }: {
+    children: string;
+    rehypePlugins?: (
+      | ((options?: unknown) => (tree: unknown) => void)
+      | [(options?: unknown) => (tree: unknown) => void, unknown]
+    )[];
+  }) => {
     type Node = { type: string; value?: string; tagName?: string; properties?: Record<string, string>; children?: Node[] };
     const tree: Node = {
       type: 'root',
@@ -26,7 +35,10 @@ jest.mock('react-markdown', () => ({
         children: [{ type: 'text', value: paragraph }],
       })),
     };
-    (rehypePlugins ?? []).forEach((plugin) => plugin()(tree));
+    (rehypePlugins ?? []).forEach((entry) => {
+      const [plugin, options] = Array.isArray(entry) ? entry : [entry, undefined];
+      plugin(options)(tree);
+    });
     const toReact = (node: Node, key: number): ReactNode => {
       if (node.type === 'text') return node.value;
       const props: Record<string, unknown> = { key };
@@ -112,6 +124,28 @@ describe('MediaMaterial', () => {
       expect(screen.getByText('moverse.')).toBeInTheDocument();
       expect(global.fetch).not.toHaveBeenCalled();
       expect(container.querySelector('[data-narrated]')).toBeNull();
+    });
+
+    it('bolds the fixation prefix of every notes word when bionic reading is on', async () => {
+      const dock = document.createElement('div');
+      const material = MaterialMother.createPrimitive({
+        type: 'audio',
+        markdown: NOTES,
+        mediaPath: '/api/media/audio/a.mp3',
+        transcriptPath: null,
+      });
+      const { container } = render(
+        <I18nProvider locale="en" dictionary={en}>
+          <MediaMaterial material={material} playerDock={dock} bionic />
+        </I18nProvider>
+      );
+
+      // "agua" keeps its full text in the span, with "ag" set heavier.
+      const word = Array.from(container.querySelectorAll('[data-word]')).find(
+        (span) => span.textContent === 'agua'
+      );
+      expect(word).toBeDefined();
+      expect(word!.querySelector('b')).toHaveTextContent('ag');
     });
 
     it('highlights the narrated word as playback advances', async () => {

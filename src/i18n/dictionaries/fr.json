@@ -207,7 +207,7 @@
     "backToPlayer": "Revenir au lecteur",
     "seek": "Position de lecture",
     "followNarration": "Suivre la narration",
-    "rsvpOpen": "Lecture rapide",
+    "rsvpOpen": "Lecteur RSVP",
     "rsvpTitle": "Lecture rapide (RSVP)",
     "rsvpExit": "Quitter la lecture rapide",
     "rsvpSettings": "Réglages de lecture",
@@ -224,7 +224,9 @@
     "rsvpCompletedTitle": "Matériel terminé !",
     "rsvpCompletedBody": "Vous êtes arrivé à la fin. Bon rythme de lecture.",
     "rsvpGoNext": "Passer au matériel suivant",
-    "rsvpBackToText": "Revenir au texte"
+    "rsvpBackToText": "Revenir au texte",
+    "speedReading": "Lecture rapide",
+    "bionicToggle": "Lecture bionique"
   },
   "auth": {
     "register": "Créer une identité",

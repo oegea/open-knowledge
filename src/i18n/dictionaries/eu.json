@@ -207,7 +207,7 @@
     "backToPlayer": "Itzuli erreproduzitzailera",
     "seek": "Erreprodukzio-posizioa",
     "followNarration": "Jarraitu narrazioa",
-    "rsvpOpen": "Irakurketa azkarra",
+    "rsvpOpen": "RSVP irakurgailua",
     "rsvpTitle": "Irakurketa azkarra (RSVP)",
     "rsvpExit": "Irten irakurketa azkarretik",
     "rsvpSettings": "Irakurketa-ezarpenak",
@@ -224,7 +224,9 @@
     "rsvpCompletedTitle": "Materiala osatuta!",
     "rsvpCompletedBody": "Amaierara iritsi zara. Irakurketa-erritmo ona.",
     "rsvpGoNext": "Joan hurrengo materialera",
-    "rsvpBackToText": "Itzuli testura"
+    "rsvpBackToText": "Itzuli testura",
+    "speedReading": "Irakurketa azkarra",
+    "bionicToggle": "Irakurketa bionikoa"
   },
   "auth": {
     "register": "Sortu nortasuna",
