@@ -20,3 +20,4 @@
 | [0016](./0016-timed-transcripts-for-narrated-materials.md) | Timed transcripts for narrated audio/video materials |
 | [0017](./0017-commit-conventions.md) | Commit conventions |
 | [0018](./0018-rsvp-reading-mode.md) | RSVP reading mode for text materials |
+| [0019](./0019-bionic-reading.md) | Bionic reading, the second facet of speed reading |
