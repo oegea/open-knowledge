@@ -19,3 +19,4 @@
 | [0015](./0015-course-categories-by-name.md) | Course categories associate by name |
 | [0016](./0016-timed-transcripts-for-narrated-materials.md) | Timed transcripts for narrated audio/video materials |
 | [0017](./0017-commit-conventions.md) | Commit conventions |
+| [0018](./0018-rsvp-reading-mode.md) | RSVP reading mode for text materials |
