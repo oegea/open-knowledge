@@ -6,6 +6,7 @@ export interface SeededState {
   adminSecret: string;
   courseId: string;
   audioMaterialId: string;
+  bareAudioMaterialId: string;
   newsPostId: string;
   categoryId: string;
 }

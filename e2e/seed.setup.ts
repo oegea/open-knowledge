@@ -149,6 +149,23 @@ setup('seed a fresh instance', async ({ request }) => {
   const audioMaterialId = (await audioMaterialResponse.json()).course.sections[0].materials[2]
     .id as string;
 
+  // Audio with no notes at all: the study view must offer plain playback
+  // only (no RSVP reading mode without text).
+  const bareAudioResponse = await request.post(
+    `/api/courses/${courseId}/sections/${sectionId}/materials`,
+    {
+      data: {
+        title: 'Ambiente: sonido del observatorio',
+        type: 'audio',
+        mediaPath: audioPath,
+        required: false,
+      },
+    }
+  );
+  expect(bareAudioResponse.status()).toBe(201);
+  const bareAudioMaterialId = (await bareAudioResponse.json()).course.sections[0].materials[3]
+    .id as string;
+
   const publishResponse = await request.post(`/api/courses/${courseId}/publish`);
   expect(publishResponse.ok()).toBeTruthy();
 
@@ -201,6 +218,7 @@ setup('seed a fresh instance', async ({ request }) => {
     adminSecret: challenge.secret,
     courseId,
     audioMaterialId,
+    bareAudioMaterialId,
     newsPostId,
     categoryId,
   });
