@@ -192,7 +192,7 @@ export function RsvpReader({ title, words, hasNext, onClose, onFinished, onNext 
   // anchored at the center: cap the font size by the widest half-word.
   const maxSideChars = Math.max(frame.orpIndex + 1, frame.text.length - frame.orpIndex);
   const wordFontSize = `min(clamp(2.1rem, 9vw, 3.4rem), calc((min(100vw, 34rem) - 2rem) / ${(
-    maxSideChars * 2 * 0.62
+    maxSideChars * 2 * 0.55
   ).toFixed(2)}))`;
 
   return (
