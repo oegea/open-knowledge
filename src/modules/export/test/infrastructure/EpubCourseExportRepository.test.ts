@@ -1,4 +1,5 @@
 import AdmZip from 'adm-zip';
+import sharp from 'sharp';
 import { EpubCourseExportRepository } from '../../infrastructure/EpubCourseExportRepository';
 import * as CourseMother from '../../../course/test/helpers/CourseMother';
 import * as SectionMother from '../../../course/test/helpers/SectionMother';
@@ -32,20 +33,48 @@ describe('EpubCourseExportRepository (integration)', () => {
     expect(entries[0].getData().toString()).toBe('application/epub+zip');
   });
 
-  it('renders a book-style cover: image, title, authors and brand only', async () => {
+  it('opens with a composed portrait JPEG cover, alone on its page', async () => {
     const zip = await exportZip();
     const cover = entryText(zip, 'OEBPS/cover.xhtml');
 
-    expect(cover).toContain('epub:type="cover titlepage"');
-    expect(cover).toContain('Introduction to Astronomy');
-    expect(cover).toContain('Carl S.');
-    expect(cover).toContain('My Library');
-    expect(cover).toContain('https://library.example');
-    expect(cover).toContain('images/cover-image.png');
+    expect(cover).toContain('epub:type="cover"');
+    expect(cover).toContain('src="images/cover.jpg"');
+    expect(cover).toContain('alt="Introduction to Astronomy"');
+
+    const image = zip.getEntry('OEBPS/images/cover.jpg')!.getData();
+    // JPEG magic number, and book proportions (2:3 portrait).
+    expect(image.subarray(0, 3)).toEqual(Buffer.from([0xff, 0xd8, 0xff]));
+    const { width, height } = await sharp(image).metadata();
+    expect(width).toBe(1600);
+    expect(height).toBe(2400);
+  });
+
+  it('follows with a title page: title, authors and brand only', async () => {
+    const zip = await exportZip();
+    const titlePage = entryText(zip, 'OEBPS/titlepage.xhtml');
+
+    expect(titlePage).toContain('epub:type="titlepage"');
+    expect(titlePage).toContain('Introduction to Astronomy');
+    expect(titlePage).toContain('Carl S.');
+    expect(titlePage).toContain('My Library');
+    expect(titlePage).toContain('https://library.example');
+    expect(titlePage).toContain('images/logo-image.png');
     // Notices moved to the credits page.
-    expect(cover).not.toContain('AI-assisted');
-    expect(cover).not.toContain('License');
-    expect(cover).not.toContain('Responsible');
+    expect(titlePage).not.toContain('AI-assisted');
+    expect(titlePage).not.toContain('License');
+    expect(titlePage).not.toContain('Responsible');
+  });
+
+  it('still composes a cover when the course has no image', async () => {
+    const repository = new EpubCourseExportRepository(MediaRepositoryMother.create());
+    const result = await repository.export(
+      CourseMother.create({ published: true }),
+      ExportContextMother.create({ coverMediaPath: null, logoMediaPath: null })
+    );
+    const zip = new AdmZip(result.data);
+
+    expect(zip.getEntry('OEBPS/images/cover.jpg')).not.toBeNull();
+    expect(entryText(zip, 'OEBPS/titlepage.xhtml')).not.toContain('<img');
   });
 
   it('moves description, license and notices to the credits page', async () => {
@@ -60,21 +89,41 @@ describe('EpubCourseExportRepository (integration)', () => {
     expect(credits).toContain('Generated with Open Knowledge.');
   });
 
-  it('orders the spine as cover, credits, chapters and lists both in the nav', async () => {
+  it('orders the spine as cover, title page, credits, chapters and lists them in the nav', async () => {
     const zip = await exportZip();
     const opf = entryText(zip, 'OEBPS/content.opf');
     const nav = entryText(zip, 'OEBPS/nav.xhtml');
 
     const spine = opf.slice(opf.indexOf('<spine>'));
     expect(spine.indexOf('idref="cover"')).toBeGreaterThan(-1);
-    expect(spine.indexOf('idref="cover"')).toBeLessThan(spine.indexOf('idref="credits"'));
+    expect(spine.indexOf('idref="cover"')).toBeLessThan(spine.indexOf('idref="titlepage"'));
+    expect(spine.indexOf('idref="titlepage"')).toBeLessThan(spine.indexOf('idref="credits"'));
     expect(spine.indexOf('idref="credits"')).toBeLessThan(spine.indexOf('idref="chapter-1"'));
 
     expect(opf).toContain('properties="cover-image"');
     expect(opf).toContain('<meta name="cover" content="cover-image"/>');
 
-    expect(nav).toContain('href="cover.xhtml"');
+    expect(nav).toContain('href="titlepage.xhtml"');
     expect(nav).toContain('>Credits<');
+  });
+
+  it('groups chapters by section in the nav and opens each with its section', async () => {
+    const zip = await exportZip({
+      sections: [
+        SectionMother.createPrimitive({
+          title: 'First steps',
+          materials: [MaterialMother.createPrimitive({ title: 'The Solar System' })],
+        }),
+      ],
+    });
+    const nav = entryText(zip, 'OEBPS/nav.xhtml');
+    const chapter = entryText(zip, 'OEBPS/chapter-1.xhtml');
+
+    expect(nav).toMatch(
+      /<span class="part">First steps<\/span>\s*<ol><li><a href="chapter-1.xhtml">The Solar System<\/a>/
+    );
+    expect(chapter).toContain('<p class="kicker">1 · First steps</p>');
+    expect(chapter).toContain('<h1>The Solar System</h1>');
   });
 
   it('self-closes void elements so chapters stay valid XML', async () => {

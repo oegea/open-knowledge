@@ -11,26 +11,51 @@ import {
 import { collectBibliography } from '../domain/bibliography';
 import { MediaRepository } from '../../media/domain/MediaRepository';
 import { FilesystemMediaRepository } from '../../media/infrastructure/FilesystemMediaRepository';
+import { renderEpubCover } from './EpubCoverImage';
 
+/*
+ * Reading apps repaint text for night and sepia themes but usually keep
+ * author backgrounds: nothing here sets a light background behind text, so
+ * every block stays legible whatever theme the reader picks.
+ */
 const EPUB_CSS = `
-body { font-family: Georgia, serif; line-height: 1.6; margin: 5%; }
-h1, h2, h3 { font-family: Helvetica, Arial, sans-serif; line-height: 1.25; }
+body { font-family: Georgia, "Iowan Old Style", serif; line-height: 1.65; margin: 5%; }
+p { margin: 0 0 0.9em; orphans: 2; widows: 2; }
+h1, h2, h3, h4 { font-family: Helvetica, Arial, sans-serif; line-height: 1.22; page-break-after: avoid; break-after: avoid; }
+h1 { font-size: 1.7em; margin: 0 0 1em; padding-bottom: 0.45em; border-bottom: 2px solid #189ea6; }
+h2 { font-size: 1.3em; margin: 1.8em 0 0.6em; }
+h3 { font-size: 1.1em; margin: 1.5em 0 0.5em; }
 a { color: #0e7c86; }
-blockquote { border-left: 3px solid #0e7c86; margin-left: 0; padding-left: 1em; font-style: italic; }
-code { font-family: monospace; background: #eef2f5; padding: 0.1em 0.3em; border-radius: 3px; }
-pre { background: #131a21; color: #eef2f5; padding: 1em; border-radius: 6px; overflow-x: auto; }
-pre code { background: none; color: inherit; }
+ul, ol { margin: 0 0 0.9em; padding-left: 1.4em; }
+li { margin-bottom: 0.3em; }
+img { max-width: 100%; height: auto; }
+hr { border: none; border-top: 1px solid #94a2af; width: 30%; margin: 2em auto; }
+blockquote { border-left: 3px solid #189ea6; margin: 1.2em 0; padding: 0.1em 0 0.1em 1em; font-style: italic; }
+code { font-family: monospace; font-size: 0.9em; }
+pre { background: #131a21; color: #eef2f5; padding: 1em; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; font-size: 0.85em; line-height: 1.5; }
+pre code { color: inherit; font-size: inherit; }
+table { border-collapse: collapse; margin: 1.2em 0; font-family: Helvetica, Arial, sans-serif; font-size: 0.9em; }
+th, td { border-bottom: 1px solid #94a2af; padding: 0.4em 0.9em 0.4em 0; text-align: left; vertical-align: top; }
+th { border-bottom-width: 2px; }
 .meta { color: #66757f; font-size: 0.9em; }
-.cover { text-align: center; }
-.cover img.cover-image { max-width: 100%; border-radius: 8px; }
-.cover h1 { font-size: 1.9em; margin: 1.2em 0 0.4em; }
-.cover .authors { color: #66757f; font-size: 1.05em; margin-top: 0; }
-.cover .brand { margin-top: 4em; border-top: 1px solid #dfe6eb; padding-top: 1.5em; }
-.cover .brand img.logo { max-height: 3em; }
-.cover .brand .library { font-family: Helvetica, Arial, sans-serif; font-weight: bold; margin: 0.4em 0 0.1em; }
-.cover .brand .url { color: #66757f; font-size: 0.85em; margin: 0; }
+.kicker { font-family: Helvetica, Arial, sans-serif; font-size: 0.75em; font-weight: bold; letter-spacing: 0.12em; text-transform: uppercase; color: #0e7c86; margin: 0 0 0.6em; }
+body.cover-page { margin: 0; padding: 0; text-align: center; }
+.cover { margin: 0; padding: 0; }
+.cover img.cover-image { max-width: 100%; max-height: 100vh; }
+.titlepage { text-align: center; padding-top: 18%; }
+.titlepage h1 { font-size: 2.1em; border: none; margin: 0 0 0.5em; padding: 0; }
+.titlepage .rule { width: 3.5em; border: none; border-top: 3px solid #189ea6; margin: 1.4em auto; }
+.titlepage .authors { color: #66757f; font-size: 1.1em; margin: 0; }
+.titlepage .brand { margin-top: 5em; }
+.titlepage .brand img.logo { max-height: 3em; }
+.titlepage .brand .library { font-family: Helvetica, Arial, sans-serif; font-weight: bold; margin: 0.4em 0 0.1em; }
+.titlepage .brand .url { color: #66757f; font-size: 0.85em; margin: 0; }
 .credits { font-size: 0.95em; }
-.notice { border: 1px solid #dfe6eb; border-radius: 8px; padding: 1em; margin: 1.5em 0; }
+.notice { border: 1px solid #94a2af; border-radius: 8px; padding: 1em; margin: 1.5em 0; }
+.notice p:last-child { margin-bottom: 0; }
+nav ol { list-style: none; padding-left: 0; }
+nav ol ol { padding-left: 1.2em; margin: 0.3em 0 0.8em; }
+nav .part { font-family: Helvetica, Arial, sans-serif; font-weight: bold; }
 `;
 
 /**
@@ -49,12 +74,12 @@ function escapeXml(value: string): string {
     .replace(/"/g, '&quot;');
 }
 
-function xhtml(title: string, body: string): string {
+function xhtml(title: string, body: string, bodyClass?: string): string {
   return `<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
 <head><title>${escapeXml(title)}</title><link rel="stylesheet" type="text/css" href="style.css"/></head>
-<body>${body}</body>
+<body${bodyClass ? ` class="${bodyClass}"` : ''}>${body}</body>
 </html>`;
 }
 
@@ -106,21 +131,53 @@ export class EpubCourseExportRepository implements CourseExportRepository {
       manifestImages.push({ id, href, mime, isCover });
       return href;
     };
-    const coverHref = await addImage(context.coverMediaPath, 'cover-image', true);
+    // The cover is composed as a portrait JPEG (see EpubCoverImage). If the
+    // renderer fails for any reason the raw course image stands in, as before.
+    let coverHref: string | null = null;
+    try {
+      const courseImage = context.coverMediaPath
+        ? await this.mediaRepository.retrieve(context.coverMediaPath)
+        : null;
+      const cover = await renderEpubCover({
+        title: course.getTitle(),
+        authors: course.getAuthors(),
+        libraryName: context.libraryName,
+        image: courseImage?.data ?? null,
+      });
+      coverHref = 'images/cover.jpg';
+      zip.addFile(`OEBPS/${coverHref}`, cover);
+      manifestImages.push({ id: 'cover-image', href: coverHref, mime: 'image/jpeg', isCover: true });
+    } catch {
+      coverHref = await addImage(context.coverMediaPath, 'cover-image', true);
+    }
     const logoHref = await addImage(context.logoMediaPath, 'logo-image', false);
 
     const dateText = context.generatedAt.toISOString().slice(0, 10);
 
-    // Cover page, book style: image, title, authors and publisher brand.
     let libraryUrl: string;
     try {
       libraryUrl = new URL(context.courseUrl).origin;
     } catch {
       libraryUrl = context.courseUrl;
     }
-    const coverBody = `<section epub:type="cover titlepage" class="cover">
-${coverHref ? `<p><img class="cover-image" src="${coverHref}" alt=""/></p>` : ''}
+
+    // Cover: the composed image alone, as a printed book's jacket. Without
+    // an image there is nothing to show and the title page opens the book.
+    if (coverHref) {
+      const coverBody = `<section epub:type="cover" class="cover">
+<img class="cover-image" src="${coverHref}" alt="${escapeXml(course.getTitle())}"/>
+</section>`;
+      zip.addFile(
+        'OEBPS/cover.xhtml',
+        Buffer.from(xhtml(course.getTitle(), coverBody, 'cover-page'))
+      );
+    }
+
+    // Title page: title, authors and publisher brand, set by the reader's
+    // own fonts (so it also covers scripts the cover image cannot letter).
+    const titleBody = `<section epub:type="titlepage" class="titlepage">
 <h1>${escapeXml(course.getTitle())}</h1>
+<hr class="rule"/>
 ${course.getAuthors().length > 0 ? `<p class="authors">${escapeXml(course.getAuthors().join(', '))}</p>` : ''}
 <div class="brand">
 ${logoHref ? `<img class="logo" src="${logoHref}" alt="${escapeXml(context.libraryName)}"/>` : ''}
@@ -128,7 +185,7 @@ ${logoHref ? `<img class="logo" src="${logoHref}" alt="${escapeXml(context.libra
 <p class="url">${escapeXml(libraryUrl)}</p>
 </div>
 </section>`;
-    zip.addFile('OEBPS/cover.xhtml', Buffer.from(xhtml(course.getTitle(), coverBody)));
+    zip.addFile('OEBPS/titlepage.xhtml', Buffer.from(xhtml(course.getTitle(), titleBody)));
 
     // Credits page: description, provenance, AI and Open Knowledge notices.
     const creditsBody = `<section epub:type="copyright-page" class="credits">
@@ -151,19 +208,23 @@ ${course.isAiAssisted() ? `<div class="notice">
 </section>`;
     zip.addFile('OEBPS/credits.xhtml', Buffer.from(xhtml(strings.credits, creditsBody)));
 
-    // One chapter per material, in pedagogical order.
-    const materials = course
-      .getSections()
-      .getSections()
-      .flatMap((section) => section.getMaterials().getMaterials());
-
+    // One chapter per material, in pedagogical order. Each opens with its
+    // section as a kicker, and the table of contents groups them by section.
     const chapters: { id: string; href: string; title: string }[] = [];
-    for (const [index, material] of materials.entries()) {
-      const id = `chapter-${index + 1}`;
-      const href = `${id}.xhtml`;
-      const body = `<h1>${escapeXml(material.getTitle())}</h1>\n${await this.materialBody(material, context)}`;
-      zip.addFile(`OEBPS/${href}`, Buffer.from(xhtml(material.getTitle(), body)));
-      chapters.push({ id, href, title: material.getTitle() });
+    const parts: { title: string; chapters: { href: string; title: string }[] }[] = [];
+    const sections = course.getSections().getSections();
+    for (const [sectionIndex, section] of sections.entries()) {
+      const part = { title: section.getTitle(), chapters: [] as { href: string; title: string }[] };
+      for (const material of section.getMaterials().getMaterials()) {
+        const id = `chapter-${chapters.length + 1}`;
+        const href = `${id}.xhtml`;
+        const kicker = `<p class="kicker">${sectionIndex + 1} · ${escapeXml(section.getTitle())}</p>`;
+        const body = `${kicker}\n<h1>${escapeXml(material.getTitle())}</h1>\n${await this.materialBody(material, context)}`;
+        zip.addFile(`OEBPS/${href}`, Buffer.from(xhtml(material.getTitle(), body)));
+        chapters.push({ id, href, title: material.getTitle() });
+        part.chapters.push({ href, title: material.getTitle() });
+      }
+      if (part.chapters.length > 0) parts.push(part);
     }
 
     // Bibliography & sources, aggregated from the course and its materials.
@@ -180,8 +241,13 @@ ${course.isAiAssisted() ? `<div class="notice">
     }
 
     // Navigation document.
-    const navItems = chapters
-      .map((chapter) => `<li><a href="${chapter.href}">${escapeXml(chapter.title)}</a></li>`)
+    const navItems = parts
+      .map(
+        (part) =>
+          `<li><span class="part">${escapeXml(part.title)}</span>\n<ol>${part.chapters
+            .map((chapter) => `<li><a href="${chapter.href}">${escapeXml(chapter.title)}</a></li>`)
+            .join('\n')}</ol></li>`
+      )
       .concat(
         bibliography.length > 0
           ? [`<li><a href="bibliography.xhtml">${escapeXml(strings.bibliography)}</a></li>`]
@@ -193,9 +259,9 @@ ${course.isAiAssisted() ? `<div class="notice">
       Buffer.from(`<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
-<head><title>${escapeXml(strings.toc)}</title></head>
+<head><title>${escapeXml(strings.toc)}</title><link rel="stylesheet" type="text/css" href="style.css"/></head>
 <body><nav epub:type="toc"><h1>${escapeXml(strings.toc)}</h1>
-<ol><li><a href="cover.xhtml">${escapeXml(course.getTitle())}</a></li>
+<ol><li><a href="titlepage.xhtml">${escapeXml(course.getTitle())}</a></li>
 <li><a href="credits.xhtml">${escapeXml(strings.credits)}</a></li>${navItems}</ol>
 </nav></body></html>`)
     );
@@ -204,7 +270,10 @@ ${course.isAiAssisted() ? `<div class="notice">
     const manifestEntries = [
       `<item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>`,
       `<item id="style" href="style.css" media-type="text/css"/>`,
-      `<item id="cover" href="cover.xhtml" media-type="application/xhtml+xml"/>`,
+      ...(coverHref
+        ? [`<item id="cover" href="cover.xhtml" media-type="application/xhtml+xml"/>`]
+        : []),
+      `<item id="titlepage" href="titlepage.xhtml" media-type="application/xhtml+xml"/>`,
       `<item id="credits" href="credits.xhtml" media-type="application/xhtml+xml"/>`,
       ...chapters.map(
         (chapter) =>
@@ -219,7 +288,8 @@ ${course.isAiAssisted() ? `<div class="notice">
       ),
     ].join('\n    ');
     const spineEntries = [
-      `<itemref idref="cover"/>`,
+      ...(coverHref ? [`<itemref idref="cover"/>`] : []),
+      `<itemref idref="titlepage"/>`,
       `<itemref idref="credits"/>`,
       ...chapters.map((chapter) => `<itemref idref="${chapter.id}"/>`),
       ...(bibliography.length > 0 ? [`<itemref idref="bibliography"/>`] : []),
