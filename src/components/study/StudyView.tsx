@@ -395,6 +395,12 @@ export function StudyView({
         <main className={styles.content} ref={contentRef}>
           {courseCompleted ? (
             <aside className={`ok-glass ${styles.completedBanner}`} role="status">
+              {/* A one-off burst of paper for finishing the course. */}
+              <span className={styles.confetti} aria-hidden="true">
+                {Array.from({ length: 14 }, (_, index) => (
+                  <i key={index} />
+                ))}
+              </span>
               <p className={styles.completedTitle}>🎉 {t('study.courseCompleted')}</p>
               {authenticated ? (
                 <button

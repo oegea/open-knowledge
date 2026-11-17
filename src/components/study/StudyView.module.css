@@ -292,6 +292,160 @@
   flex-direction: column;
   gap: var(--ok-space-3);
   border-left: 3px solid var(--ok-success);
+  position: relative;
+}
+
+/* Confetti: fourteen pieces thrown up from the banner, then falling away.
+   Purely decorative, plays once, and is removed under reduced motion. */
+.confetti {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.confetti i {
+  position: absolute;
+  width: 8px;
+  height: 12px;
+  border-radius: 2px;
+  opacity: 0;
+  animation: confettiBurst 1500ms cubic-bezier(0.15, 0.7, 0.3, 1) both;
+}
+
+.confetti i:nth-child(1) {
+  --x: -69px;
+  --y: -12px;
+  --spin: 240deg;
+  background: var(--ok-lagoon-400);
+  animation-delay: 0ms;
+}
+
+.confetti i:nth-child(2) {
+  --x: -99px;
+  --y: -41px;
+  --spin: -270deg;
+  background: var(--ok-ember-300);
+  animation-delay: 40ms;
+}
+
+.confetti i:nth-child(3) {
+  --x: -69px;
+  --y: -48px;
+  --spin: 300deg;
+  background: var(--ok-lagoon-600);
+  animation-delay: 80ms;
+}
+
+.confetti i:nth-child(4) {
+  --x: -83px;
+  --y: -88px;
+  --spin: -330deg;
+  background: var(--ok-ember-500);
+  animation-delay: 120ms;
+}
+
+.confetti i:nth-child(5) {
+  --x: -50px;
+  --y: -84px;
+  --spin: 360deg;
+  background: var(--ok-success);
+  animation-delay: 0ms;
+}
+
+.confetti i:nth-child(6) {
+  --x: -24px;
+  --y: -71px;
+  --spin: -390deg;
+  background: var(--ok-lagoon-400);
+  animation-delay: 40ms;
+}
+
+.confetti i:nth-child(7) {
+  --x: -12px;
+  --y: -111px;
+  --spin: 420deg;
+  background: var(--ok-ember-300);
+  animation-delay: 80ms;
+}
+
+.confetti i:nth-child(8) {
+  --x: 10px;
+  --y: -88px;
+  --spin: -450deg;
+  background: var(--ok-lagoon-600);
+  animation-delay: 120ms;
+}
+
+.confetti i:nth-child(9) {
+  --x: 40px;
+  --y: -120px;
+  --spin: 480deg;
+  background: var(--ok-ember-500);
+  animation-delay: 0ms;
+}
+
+.confetti i:nth-child(10) {
+  --x: 53px;
+  --y: -89px;
+  --spin: -510deg;
+  background: var(--ok-success);
+  animation-delay: 40ms;
+}
+
+.confetti i:nth-child(11) {
+  --x: 55px;
+  --y: -58px;
+  --spin: 540deg;
+  background: var(--ok-lagoon-400);
+  animation-delay: 80ms;
+}
+
+.confetti i:nth-child(12) {
+  --x: 96px;
+  --y: -66px;
+  --spin: -570deg;
+  background: var(--ok-ember-300);
+  animation-delay: 120ms;
+}
+
+.confetti i:nth-child(13) {
+  --x: 87px;
+  --y: -36px;
+  --spin: 600deg;
+  background: var(--ok-lagoon-600);
+  animation-delay: 0ms;
+}
+
+.confetti i:nth-child(14) {
+  --x: 70px;
+  --y: -12px;
+  --spin: -630deg;
+  background: var(--ok-ember-500);
+  animation-delay: 40ms;
+}
+
+@keyframes confettiBurst {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg) scale(0.6);
+  }
+  45% {
+    opacity: 1;
+    transform: translate(var(--x), var(--y)) rotate(calc(var(--spin) * 0.6)) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(var(--x) * 1.25), calc(var(--y) + 90px)) rotate(var(--spin)) scale(0.9);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confetti {
+    display: none;
+  }
 }
 
 .completedTitle {
