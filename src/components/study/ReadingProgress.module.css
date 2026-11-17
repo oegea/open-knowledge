@@ -11,6 +11,7 @@
 .fill {
   height: 100%;
   background: linear-gradient(90deg, var(--ok-primary), var(--ok-accent));
+  box-shadow: 0 0 10px color-mix(in srgb, var(--ok-primary) 55%, transparent);
   transform-origin: left;
   transform: scaleX(0);
   transition: transform 80ms linear;

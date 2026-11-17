@@ -9,6 +9,9 @@
   display: flex;
   flex-direction: column;
   gap: var(--ok-space-4);
+  font-optical-sizing: auto;
+  font-kerning: normal;
+  hanging-punctuation: first;
 }
 
 .prose h1,
@@ -23,10 +26,18 @@
 
 .prose h1 {
   font-size: var(--ok-text-2xl);
+  letter-spacing: -0.02em;
 }
 
 .prose h2 {
   font-size: var(--ok-text-xl);
+  letter-spacing: -0.015em;
+  margin-top: var(--ok-space-5);
+}
+
+/* Nothing above the first block: it sits flush with the container. */
+.prose > :first-child {
+  margin-top: 0;
 }
 
 .prose h3 {
@@ -38,6 +49,16 @@
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
+  text-decoration-color: color-mix(in srgb, var(--ok-primary) 40%, transparent);
+  border-radius: 2px;
+  transition:
+    text-decoration-color var(--ok-duration-fast) var(--ok-ease),
+    background var(--ok-duration-fast) var(--ok-ease);
+}
+
+.prose a:hover {
+  text-decoration-color: currentColor;
+  background: var(--ok-primary-soft);
 }
 
 .prose strong {
@@ -52,12 +73,37 @@
   gap: var(--ok-space-2);
 }
 
+.prose ul > li::marker {
+  color: var(--ok-primary);
+}
+
+.prose ol > li::marker {
+  color: var(--ok-primary);
+  font-family: var(--ok-font-ui);
+  font-weight: 700;
+  font-size: 0.9em;
+}
+
 .prose blockquote {
-  border-left: 3px solid var(--ok-primary);
-  padding: var(--ok-space-2) var(--ok-space-4);
-  background: var(--ok-primary-soft);
-  border-radius: 0 var(--ok-radius-md) var(--ok-radius-md) 0;
+  position: relative;
+  padding: var(--ok-space-3) var(--ok-space-4) var(--ok-space-3) var(--ok-space-5);
+  background: linear-gradient(
+    100deg,
+    var(--ok-primary-soft),
+    color-mix(in srgb, var(--ok-accent-soft) 55%, transparent)
+  );
+  border-radius: var(--ok-radius-md);
   font-style: italic;
+  overflow: hidden;
+}
+
+/* The quote bar runs from lagoon to ember. */
+.prose blockquote::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--ok-primary), var(--ok-accent));
 }
 
 .prose code {
@@ -70,11 +116,14 @@
 }
 
 .prose pre {
-  background: var(--ok-mist-900);
+  background: linear-gradient(160deg, var(--ok-mist-900), var(--ok-lagoon-900) 160%);
   color: var(--ok-mist-100);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--ok-radius-md);
+  box-shadow: var(--ok-shadow-2);
   padding: var(--ok-space-4);
   overflow-x: auto;
+  line-height: 1.6;
 }
 
 .prose pre code {
@@ -91,29 +140,51 @@
 }
 
 .prose table {
-  border-collapse: collapse;
-  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  /* Shrink-wrapped but never wider than the column: wide tables scroll. */
+  width: fit-content;
+  max-width: 100%;
   font-family: var(--ok-font-ui);
   font-size: var(--ok-text-sm);
   display: block;
   overflow-x: auto;
+  border: 1px solid var(--ok-border);
+  border-radius: var(--ok-radius-md);
+  background: var(--ok-bg-raised);
 }
 
 .prose th,
 .prose td {
-  border: 1px solid var(--ok-border);
-  padding: var(--ok-space-2) var(--ok-space-3);
+  border-bottom: 1px solid var(--ok-border);
+  padding: var(--ok-space-2) var(--ok-space-4);
   text-align: left;
 }
 
+.prose tr:last-child > td {
+  border-bottom: none;
+}
+
 .prose th {
-  background: var(--ok-bg-raised);
+  background: var(--ok-primary-soft);
+  color: var(--ok-primary);
   font-weight: 700;
+}
+
+.prose tbody tr {
+  transition: background var(--ok-duration-fast) var(--ok-ease);
+}
+
+@media (hover: hover) {
+  .prose tbody tr:hover {
+    background: color-mix(in srgb, var(--ok-primary-soft) 60%, transparent);
+  }
 }
 
 .prose hr {
   border: none;
-  border-top: 1px solid var(--ok-border);
+  height: 1px;
+  background: var(--ok-gradient-hairline);
   margin: var(--ok-space-4) 0;
 }
 
