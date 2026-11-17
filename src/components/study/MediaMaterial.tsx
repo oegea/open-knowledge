@@ -96,7 +96,9 @@ export function MediaMaterial({
   const toggle = useCallback(() => {
     const element = mediaRef.current;
     if (!element) return;
-    if (element.paused) void element.play();
+    // A pause() arriving before playback starts rejects this promise with an
+    // AbortError; that is the user changing their mind, not a failure.
+    if (element.paused) element.play().catch(() => {});
     else element.pause();
   }, []);
 

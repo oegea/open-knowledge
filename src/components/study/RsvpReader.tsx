@@ -292,7 +292,8 @@ export function RsvpReader({
   // restarts the reading.
   const toggle = useCallback(() => {
     if (listening && media) {
-      if (media.paused) void media.play();
+      // Interrupted by an immediate pause(): expected, not an error.
+      if (media.paused) media.play().catch(() => {});
       else media.pause();
       return;
     }
