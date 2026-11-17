@@ -11,6 +11,13 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
+    // Second bucket keyed by the account: X-Forwarded-For is client-controlled
+    // on instances without a proxy, so the per-IP limit alone would let the
+    // 6-digit code be brute-forced by rotating that header.
+    const identifierKey = String(body?.identifier ?? '').trim().toLowerCase().slice(0, 64);
+    if (identifierKey && !allowRequest(`login-id:${identifierKey}`, 10, 15 * 60 * 1000)) {
+      return Response.json({ error: 'Too many login attempts' }, { status: 429 });
+    }
     const user = await identityFactory.loginUser(body.identifier, body.code);
     const { token } = await identityFactory.createSession(user.getId()!);
 

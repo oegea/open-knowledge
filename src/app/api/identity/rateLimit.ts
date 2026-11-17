@@ -4,6 +4,22 @@
  */
 const buckets = new Map<string, number[]>();
 
+/** Longest window any caller uses; older timestamps can never count again. */
+const MAX_WINDOW_MS = 60 * 60 * 1000;
+/** Sweep threshold: keys are attacker-influenced, so the map must stay bounded. */
+const MAX_BUCKETS = 10_000;
+
+function sweep(now: number): void {
+  for (const [key, timestamps] of buckets) {
+    if (timestamps.every((t) => t <= now - MAX_WINDOW_MS)) buckets.delete(key);
+  }
+  // Still over the cap (a flood of live keys): drop the oldest insertions.
+  for (const key of buckets.keys()) {
+    if (buckets.size <= MAX_BUCKETS) break;
+    buckets.delete(key);
+  }
+}
+
 export function allowRequest(
   key: string,
   limit: number,
@@ -22,6 +38,7 @@ export function allowRequest(
   }
   timestamps.push(now);
   buckets.set(key, timestamps);
+  if (buckets.size > MAX_BUCKETS) sweep(now);
   return true;
 }
 
