@@ -273,119 +273,6 @@
   border-radius: var(--ok-radius-full);
 }
 
-/* ------------------------------------------------------------------ */
-/* Featured course: the newest course as a full card inside the hero    */
-/* ------------------------------------------------------------------ */
-.feature {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: stretch;
-  overflow: hidden;
-  margin-top: var(--ok-space-5);
-  animation: featureIn 700ms var(--ok-ease) 260ms backwards;
-  transition:
-    transform var(--ok-duration-med) var(--ok-ease),
-    box-shadow var(--ok-duration-med) var(--ok-ease),
-    border-color var(--ok-duration-med) var(--ok-ease);
-}
-
-.feature:hover {
-  transform: perspective(60rem) rotateX(var(--ok-rx, 0deg)) rotateY(var(--ok-ry, 0deg))
-    translateY(-4px);
-  border-color: color-mix(in srgb, var(--ok-primary) 45%, var(--ok-glass-border));
-  box-shadow: var(--ok-shadow-3);
-}
-
-@keyframes featureIn {
-  from {
-    opacity: 0;
-    transform: translateY(16px) scale(0.97);
-  }
-}
-
-/* Phones: a compact row — thumbnail left, text right. */
-.featureCoverWrap {
-  position: relative;
-  flex: 0 0 38%;
-  min-height: 6.5rem;
-  overflow: hidden;
-}
-
-.featureCover {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform var(--ok-duration-slow) var(--ok-ease);
-}
-
-.feature:hover .featureCover {
-  transform: scale(1.05);
-}
-
-.featureBody {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ok-space-1);
-  min-width: 0;
-  padding: var(--ok-space-3) var(--ok-space-4);
-}
-
-.featureLabel {
-  font-size: var(--ok-text-xs);
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--ok-primary);
-}
-
-.featureTitle {
-  font-size: var(--ok-text-md);
-  font-weight: 700;
-  line-height: var(--ok-leading-tight);
-}
-
-.featureDescription {
-  display: none;
-  color: var(--ok-fg-muted);
-  font-size: var(--ok-text-sm);
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.featureMeta {
-  display: flex;
-  align-items: center;
-  gap: var(--ok-space-2);
-  margin-top: auto;
-  padding-top: var(--ok-space-1);
-  font-size: var(--ok-text-xs);
-  font-weight: 600;
-  color: var(--ok-fg-muted);
-}
-
-.featureIso {
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  border: 1.5px solid currentColor;
-  border-radius: var(--ok-radius-sm);
-  padding: 0 5px;
-}
-
-.featureArrow {
-  margin-left: auto;
-  font-size: var(--ok-text-md);
-  color: var(--ok-primary);
-  transition: transform var(--ok-duration-med) var(--ok-ease);
-}
-
-.feature:hover .featureArrow {
-  transform: translateX(4px);
-}
-
 .search {
   display: flex;
   align-items: center;
@@ -639,39 +526,9 @@
   }
 }
 
-/* Wide screens: text and search on the left, the featured course on the right. */
 @media (min-width: 900px) {
-  .heroWithFeature {
-    display: grid;
-    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
-    align-items: center;
-    gap: var(--ok-space-7);
-    min-height: 26rem;
-    padding: var(--ok-space-7) var(--ok-space-6);
-  }
-
-  /* The card stands upright: cover on top, full description below. */
-  .heroWithFeature .feature {
-    flex-direction: column;
-    margin-top: 0;
-  }
-
-  .heroWithFeature .featureCoverWrap {
-    flex: none;
-    aspect-ratio: 16 / 9;
-  }
-
-  .heroWithFeature .featureBody {
-    gap: var(--ok-space-2);
-    padding: var(--ok-space-4);
-  }
-
-  .heroWithFeature .featureTitle {
-    font-size: var(--ok-text-lg);
-  }
-
-  .heroWithFeature .featureDescription {
-    display: -webkit-box;
+  .hero {
+    padding: var(--ok-space-8) var(--ok-space-6) var(--ok-space-7);
   }
 
   .search {
@@ -684,17 +541,14 @@
     grid-template-columns: repeat(3, 1fr);
   }
 
+  /* A statement-sized headline; the measure keeps long custom titles tidy. */
   .heroTitle {
-    font-size: var(--ok-text-4xl);
-  }
-
-  .heroWithFeature .heroTitle {
     font-size: var(--ok-text-5xl);
     letter-spacing: -0.04em;
-    max-width: 13ch;
+    max-width: 18ch;
   }
 
-  .heroWithFeature .heroText {
+  .heroText {
     font-size: var(--ok-text-xl);
   }
 

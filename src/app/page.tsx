@@ -8,13 +8,7 @@ import { getDictionary, translate } from '@/i18n/dictionary';
 import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
 import { IconLibrary, IconSearch } from '@/components/ui/icons';
-import {
-  PageTransition,
-  SharedElement,
-  categoryTransition,
-  courseCoverTransition,
-} from '@/components/ui/PageTransition';
-import { LOCALES } from '@/i18n/config';
+import { PageTransition, SharedElement, categoryTransition } from '@/components/ui/PageTransition';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -49,9 +43,7 @@ export default async function LandingPage({ searchParams }: PageProps<'/'>) {
     }))
     .sort((a, b) => a.name.localeCompare(b.name, locale));
 
-  // The newest course is featured in the hero as a full, readable card.
   const heroImage = settings.getHeroImagePath();
-  const latest = heroImage ? null : (allPublished.getCourses()[0] ?? null);
 
   const countLabel = (count: number) =>
     count === 1
@@ -64,9 +56,7 @@ export default async function LandingPage({ searchParams }: PageProps<'/'>) {
       <PageTransition>
         <main className={styles.main}>
           <section
-            className={`${styles.hero} ${heroImage ? styles.heroWithImage : ''} ${
-              latest ? styles.heroWithFeature : ''
-            }`}
+            className={`${styles.hero} ${heroImage ? styles.heroWithImage : ''}`}
             data-parallax
           >
             {settings.getHeroImagePath() ? (
@@ -110,43 +100,6 @@ export default async function LandingPage({ searchParams }: PageProps<'/'>) {
                 />
               </form>
             </div>
-            {latest ? (
-              <Link
-                href={`/courses/${latest.getSlug() || latest.getId()}`}
-                className={`ok-glass ${styles.feature}`}
-                aria-label={`${translate(dictionary, 'landing.latestCourse')}: ${latest.getTitle()}`}
-                data-spotlight
-                data-tilt
-              >
-                <SharedElement name={courseCoverTransition(latest.getId()!)}>
-                  <span className={styles.featureCoverWrap}>
-                    {latest.getCoverImage() ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={latest.getCoverImage()!} alt="" className={styles.featureCover} />
-                    ) : (
-                      <span className={styles.cardCoverFallback} aria-hidden="true" />
-                    )}
-                  </span>
-                </SharedElement>
-                <span className={styles.featureBody}>
-                  <span className={styles.featureLabel}>
-                    {translate(dictionary, 'landing.latestCourse')}
-                  </span>
-                  <span className={styles.featureTitle}>{latest.getTitle()}</span>
-                  <span className={styles.featureDescription}>{latest.getDescription()}</span>
-                  <span className={styles.featureMeta}>
-                    <span className={styles.featureIso}>
-                      {LOCALES.find((entry) => entry.code === latest.getLanguage())?.iso ??
-                        latest.getLanguage().toUpperCase()}
-                    </span>
-                    {latest.getCategory() ? <span>{latest.getCategory()}</span> : null}
-                    <span className={styles.featureArrow} aria-hidden="true">
-                      →
-                    </span>
-                  </span>
-                </span>
-              </Link>
-            ) : null}
           </section>
 
           {allPublished.isEmpty() ? (

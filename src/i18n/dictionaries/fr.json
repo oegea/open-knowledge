@@ -309,7 +309,6 @@
   "landing": {
     "categories": "Parcourir par catégorie",
     "viewAll": "Voir tous les cours",
-    "latestCourse": "Dernier cours publié",
     "courseCount": "{count} cours",
     "courseCountOne": "1 cours"
   }

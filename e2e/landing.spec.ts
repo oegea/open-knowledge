@@ -14,18 +14,6 @@ test.describe('Categories landing page', () => {
     await expect(card.locator('img')).toBeVisible();
   });
 
-  test('the hero features the latest course and opens it', async ({ page }) => {
-    await page.goto('/');
-
-    const featured = page.getByRole('link', { name: /Último curso publicado/ });
-    await expect(featured).toContainText('Introducción a la Astronomía');
-    await featured.click();
-    await expect(page).toHaveURL(/\/courses\/[^/?]+$/);
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-      'Introducción a la Astronomía'
-    );
-  });
-
   test('a filtered catalog opens with the category banner', async ({ page }) => {
     await page.goto('/');
 

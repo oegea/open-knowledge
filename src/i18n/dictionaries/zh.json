@@ -309,7 +309,6 @@
   "landing": {
     "categories": "按分类浏览",
     "viewAll": "查看全部课程",
-    "latestCourse": "最新课程",
     "courseCount": "{count} 门课程",
     "courseCountOne": "1 门课程"
   }
