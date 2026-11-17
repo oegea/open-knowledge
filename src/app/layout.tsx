@@ -5,6 +5,7 @@ import { getLocale } from '@/i18n/getLocale';
 import { getDictionary } from '@/i18n/dictionary';
 import { I18nProvider } from '@/i18n/I18nProvider';
 import settingsFactory from '@/modules/settings/application/factory';
+import { MotionEffects } from '@/components/ui/MotionEffects';
 import './globals.css';
 
 const manrope = Manrope({
@@ -67,6 +68,7 @@ export default async function RootLayout({ children }: LayoutProps<'/'>) {
         <I18nProvider locale={locale} dictionary={dictionary}>
           {children}
         </I18nProvider>
+        <MotionEffects />
       </body>
     </html>
   );

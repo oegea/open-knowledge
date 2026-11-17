@@ -130,6 +130,19 @@
   --ok-duration-fast: 150ms;
   --ok-duration-med: 250ms;
   --ok-duration-slow: 420ms;
+  /* Scroll reveals (see MotionEffects) — slower, so entering content glides. */
+  --ok-duration-reveal: 700ms;
+
+  /* Brand gradients — theme-aware because they are built from the aliases. */
+  --ok-gradient-hairline: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--ok-primary) 45%, transparent) 30%,
+    color-mix(in srgb, var(--ok-accent) 45%, transparent) 70%,
+    transparent
+  );
+  /* Soft colored halo for hovered primary surfaces. */
+  --ok-glow-primary: 0 8px 24px color-mix(in srgb, var(--ok-primary) 32%, transparent);
 
   /* Touch ergonomics */
   --ok-touch-target: 44px;
@@ -285,6 +298,47 @@ body::before {
   pointer-events: none;
 }
 
+/* A third, slowly drifting wash: the backdrop breathes instead of sitting
+   still. Transform-only, so it stays on the compositor. */
+body::after {
+  content: '';
+  position: fixed;
+  z-index: -1;
+  top: 18%;
+  left: 50%;
+  width: 46rem;
+  height: 34rem;
+  margin-left: -23rem;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--ok-wash-a), transparent);
+  opacity: 0.7;
+  pointer-events: none;
+  animation: ok-ambient-drift 28s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes ok-ambient-drift {
+  from {
+    transform: translate3d(-14vw, -4vh, 0) scale(1);
+  }
+  to {
+    transform: translate3d(14vw, 8vh, 0) scale(1.18);
+  }
+}
+
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
+}
+
+p,
+li,
+blockquote {
+  text-wrap: pretty;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -315,7 +369,68 @@ video {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    /* Without this, looping ambient animations would strobe at 0.01ms. */
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+
+  body::after {
+    animation: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Scroll reveal + cursor spotlight (driven by MotionEffects)          */
+/* ------------------------------------------------------------------ */
+
+/* Below-the-fold content waits here until it scrolls into view. Entry
+   keyframes are switched off for good: the reveal replaces them. */
+[data-reveal-state] {
+  animation: none !important;
+}
+
+[data-reveal-state='pending'] {
+  opacity: 0 !important;
+  transform: translate3d(0, 1.25rem, 0) !important;
+}
+
+[data-reveal-state='run'] {
+  transition:
+    opacity var(--ok-duration-reveal) var(--ok-ease) var(--ok-reveal-delay, 0ms),
+    transform var(--ok-duration-reveal) var(--ok-ease) var(--ok-reveal-delay, 0ms) !important;
+}
+
+@media print {
+  [data-reveal-state] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* A soft light that follows the cursor across a surface. */
+[data-spotlight] {
+  position: relative;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-spotlight]::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      22rem circle at var(--ok-mx, 50%) var(--ok-my, 0%),
+      color-mix(in srgb, var(--ok-primary) 16%, transparent),
+      transparent 62%
+    );
+    opacity: 0;
+    transition: opacity var(--ok-duration-slow) var(--ok-ease);
+    pointer-events: none;
+  }
+
+  [data-spotlight]:hover::after {
+    opacity: 1;
   }
 }
 
