@@ -15,12 +15,29 @@ export async function getCurrentUser(): Promise<User | null> {
   return await identityFactory.getSessionUser(token);
 }
 
-export function buildSessionCookie(token: string, maxAgeSeconds: number): string {
-  return `${SESSION_COOKIE}=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${maxAgeSeconds}`;
+/**
+ * True when the browser reached the instance over HTTPS, directly or through
+ * a TLS-terminating proxy. Plain-HTTP self-hosting (localhost, LAN) keeps
+ * working: the cookie is only marked Secure when it can actually be sent.
+ */
+export function isSecureRequest(request: Request): boolean {
+  const forwarded = request.headers.get('x-forwarded-proto')?.split(',')[0].trim().toLowerCase();
+  if (forwarded) return forwarded === 'https';
+  try {
+    return new URL(request.url).protocol === 'https:';
+  } catch {
+    return false;
+  }
 }
 
-export function buildSessionClearCookie(): string {
-  return `${SESSION_COOKIE}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0`;
+export function buildSessionCookie(token: string, maxAgeSeconds: number, secure = false): string {
+  return `${SESSION_COOKIE}=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${maxAgeSeconds}${
+    secure ? '; Secure' : ''
+  }`;
+}
+
+export function buildSessionClearCookie(secure = false): string {
+  return `${SESSION_COOKIE}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0${secure ? '; Secure' : ''}`;
 }
 
 /** Guard for admin-only API routes. Returns an error Response or null. */

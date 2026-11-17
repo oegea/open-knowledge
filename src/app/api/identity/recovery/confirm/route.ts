@@ -1,7 +1,7 @@
 import type { NextRequest } from 'next/server';
 import identityFactory from '@/modules/identity/application/factory';
 import { SESSION_DURATION_MS } from '@/modules/identity/application/createSession';
-import { buildSessionCookie } from '@/app/serverAuth';
+import { buildSessionCookie, isSecureRequest } from '@/app/serverAuth';
 import { allowRequest, clientIp } from '../../rateLimit';
 
 export async function POST(request: NextRequest) {
@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
         user: { identifier: user.getIdentifier(), isAdmin: user.isAdmin() },
         recoveryCode,
       },
-      { headers: { 'Set-Cookie': buildSessionCookie(token, SESSION_DURATION_MS / 1000) } }
+      { headers: { 'Set-Cookie': buildSessionCookie(token, SESSION_DURATION_MS / 1000, isSecureRequest(request)) } }
     );
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Recovery failed';
