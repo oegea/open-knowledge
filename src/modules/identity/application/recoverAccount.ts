@@ -1,4 +1,4 @@
-import { randomBytes } from 'crypto';
+import { randomBytes, timingSafeEqual } from 'crypto';
 import { User } from '../domain/User';
 import { UserRepository } from '../domain/UserRepository';
 import { TotpRepository } from '../domain/TotpRepository';
@@ -91,9 +91,19 @@ async function verifyRecovery(
 
   const user = await userRepository.findByIdentifier(identifier);
   // Same error for unknown identifier and bad recovery code.
-  if (user === null || hashRecoveryCode(recoveryCode ?? '') !== user.getRecoveryCodeHash()) {
+  if (
+    user === null ||
+    !hashesMatch(hashRecoveryCode(recoveryCode ?? ''), user.getRecoveryCodeHash())
+  ) {
     throw new Error('[recoverAccount] Invalid identifier or recovery code');
   }
 
   return user;
+}
+
+/** Constant-time comparison of two hex digests. */
+function hashesMatch(candidate: string, stored: string): boolean {
+  const a = Buffer.from(candidate, 'utf8');
+  const b = Buffer.from(stored ?? '', 'utf8');
+  return a.length === b.length && timingSafeEqual(a, b);
 }
