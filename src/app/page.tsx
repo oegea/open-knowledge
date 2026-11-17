@@ -107,10 +107,11 @@ export default async function LandingPage({ searchParams }: PageProps<'/'>) {
             </h2>
             <ul className={styles.grid}>
               {categoryCards.map((category) => (
-                <li key={category.name}>
+                <li key={category.name} data-reveal>
                   <Link
                     href={`/courses?category=${encodeURIComponent(category.name)}`}
                     className={`ok-glass ${styles.card}`}
+                    data-spotlight
                   >
                     <span className={styles.cardCoverWrap}>
                       {category.imagePath ? (
@@ -137,8 +138,12 @@ export default async function LandingPage({ searchParams }: PageProps<'/'>) {
                   </Link>
                 </li>
               ))}
-              <li>
-                <Link href="/courses" className={`ok-glass ${styles.card} ${styles.viewAllCard}`}>
+              <li data-reveal>
+                <Link
+                  href="/courses"
+                  className={`ok-glass ${styles.card} ${styles.viewAllCard}`}
+                  data-spotlight
+                >
                   <span className={`${styles.cardCoverWrap} ${styles.viewAllCover}`}>
                     <IconLibrary className={styles.viewAllIcon} />
                   </span>

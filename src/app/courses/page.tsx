@@ -138,8 +138,12 @@ export default async function CoursesPage({ searchParams }: PageProps<'/courses'
         ) : (
           <ul className={styles.grid}>
             {courses.getCourses().map((course) => (
-              <li key={course.getId()}>
-                <Link href={`/courses/${course.getSlug() || course.getId()}`} className={`ok-glass ${styles.card}`}>
+              <li key={course.getId()} data-reveal>
+                <Link
+                  href={`/courses/${course.getSlug() || course.getId()}`}
+                  className={`ok-glass ${styles.card}`}
+                  data-spotlight
+                >
                   <span className={styles.cardCoverWrap}>
                     {course.getCoverImage() ? (
                       // eslint-disable-next-line @next/next/no-img-element

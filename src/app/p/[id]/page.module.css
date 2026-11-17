@@ -9,6 +9,7 @@
 }
 
 .article {
+  animation: articleIn var(--ok-duration-slow) var(--ok-ease) backwards;
   padding: var(--ok-space-5);
   display: flex;
   flex-direction: column;
@@ -24,5 +25,12 @@
 @media (min-width: 768px) {
   .article {
     padding: var(--ok-space-7);
+  }
+}
+
+@keyframes articleIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
 }

@@ -62,7 +62,7 @@ export function CourseContents({
   return (
     <ol className={styles.sectionList}>
       {sections.map((section, index) => (
-        <li key={section.id} className={`ok-glass ${styles.section}`}>
+        <li key={section.id} className={`ok-glass ${styles.section}`} data-reveal>
           <p className={styles.sectionTitle}>
             <span className={styles.sectionNumber}>{index + 1}</span>
             {section.title}

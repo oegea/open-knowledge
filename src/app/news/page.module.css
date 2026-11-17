@@ -138,12 +138,14 @@
   height: 100%;
   overflow: hidden;
   transition:
-    transform var(--ok-duration-fast) var(--ok-ease),
-    box-shadow var(--ok-duration-fast) var(--ok-ease);
+    transform var(--ok-duration-med) var(--ok-ease),
+    box-shadow var(--ok-duration-med) var(--ok-ease),
+    border-color var(--ok-duration-med) var(--ok-ease);
 }
 
 .post:hover {
   transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--ok-primary) 45%, var(--ok-glass-border));
   box-shadow: var(--ok-shadow-3);
 }
 
@@ -210,6 +212,15 @@
   font-size: var(--ok-text-sm);
   font-weight: 600;
   color: var(--ok-primary);
+  display: inline-block;
+  transition: transform var(--ok-duration-med) var(--ok-ease);
+}
+
+@media (hover: hover) {
+  .post:hover .readMore,
+  .featured:hover .readMore {
+    transform: translateX(4px);
+  }
 }
 
 @media (min-width: 768px) {

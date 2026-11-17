@@ -47,6 +47,15 @@
   font-size: var(--ok-text-md);
   letter-spacing: -0.02em;
   color: var(--ok-primary);
+  /* Wordmark in a quiet brand gradient (a logo image is unaffected). */
+  background: linear-gradient(
+    100deg,
+    var(--ok-primary) 35%,
+    color-mix(in srgb, var(--ok-primary) 45%, var(--ok-accent))
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   min-height: var(--ok-touch-target);
   display: inline-flex;
   align-items: center;
@@ -130,6 +139,10 @@
 .navLink:hover {
   background: var(--ok-primary-soft);
   color: var(--ok-primary);
+}
+
+.navLink:active {
+  transform: scale(0.97);
 }
 
 .navLink[aria-current='page'] {

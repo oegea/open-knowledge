@@ -60,7 +60,7 @@ export default async function AccountPage() {
           ) : (
             <ul className={styles.certificateList}>
               {certificates.map((certificate) => (
-                <li key={certificate.getId()}>
+                <li key={certificate.getId()} data-reveal>
                   <Link
                     href={`/certificates/${certificate.getId()}`}
                     className={`ok-glass ${styles.certificateItem}`}

@@ -175,7 +175,7 @@ export default async function CourseDetailPage({ params }: PageProps<'/courses/[
             />
           </section>
 
-          <aside className={styles.aside}>
+          <aside className={styles.aside} data-reveal>
             <div className={`ok-glass ${styles.asideCard}`}>
               <h2 className={styles.asideTitle}>
                 {translate(dictionary, 'course.aboutCourse')}

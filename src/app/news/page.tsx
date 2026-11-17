@@ -84,10 +84,11 @@ export default async function NewsPage() {
             {rest.length > 0 ? (
               <ul className={styles.grid}>
                 {rest.map((post) => (
-                  <li key={post.getId()}>
+                  <li key={post.getId()} data-reveal>
                     <Link
                       href={`/news/${post.getSlug() || post.getId()}`}
                       className={`ok-glass ${styles.post}`}
+                      data-spotlight
                     >
                       {post.getImagePath() ? (
                         // eslint-disable-next-line @next/next/no-img-element

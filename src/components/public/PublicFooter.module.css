@@ -6,6 +6,19 @@
   align-items: center;
   gap: var(--ok-space-3);
   text-align: center;
+  position: relative;
+}
+
+/* Brand hairline closing the page. */
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: min(28rem, 70%);
+  height: 1px;
+  transform: translateX(-50%);
+  background: var(--ok-gradient-hairline);
 }
 
 .links {

@@ -35,13 +35,44 @@
 }
 
 .primary {
-  background: var(--ok-primary);
+  position: relative;
+  overflow: hidden;
+  /* Color transitions on hover; the fixed light overlay turns the flat
+     fill into a soft top-left to bottom-right gradient in both themes. */
+  background-color: var(--ok-primary);
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent 62%);
   color: var(--ok-primary-fg);
   box-shadow: var(--ok-shadow-1);
 }
 
 .primary:hover:not(:disabled) {
-  background: var(--ok-primary-hover);
+  background-color: var(--ok-primary-hover);
+  box-shadow: var(--ok-glow-primary);
+  transform: translateY(-1px);
+}
+
+.primary:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+/* A single sheen sweeps across on hover. */
+.primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -70%;
+  width: 45%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  transform: skewX(-18deg);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .primary:hover:not(:disabled)::after {
+    left: 130%;
+    transition: left 700ms var(--ok-ease);
+  }
 }
 
 .soft {

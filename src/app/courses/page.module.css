@@ -12,6 +12,26 @@
   font-size: var(--ok-text-2xl);
   line-height: var(--ok-leading-tight);
   letter-spacing: -0.02em;
+  /* Same quiet ink-to-lagoon sweep as the news heading. */
+  background: linear-gradient(100deg, var(--ok-fg) 40%, var(--ok-primary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  width: fit-content;
+  max-width: 100%;
+  animation: titleIn var(--ok-duration-slow) var(--ok-ease) both;
+}
+
+@keyframes titleIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .search {
@@ -26,13 +46,16 @@
   border-radius: var(--ok-radius-full);
   padding: 0 var(--ok-space-4);
   max-width: 30rem;
-  transition: box-shadow var(--ok-duration-fast) var(--ok-ease);
+  transition:
+    box-shadow var(--ok-duration-med) var(--ok-ease),
+    border-color var(--ok-duration-med) var(--ok-ease);
 }
 
 .search:focus-within {
+  border-color: color-mix(in srgb, var(--ok-primary) 55%, transparent);
   box-shadow:
     var(--ok-shadow-2),
-    0 0 0 3px var(--ok-primary-soft);
+    0 0 0 4px color-mix(in srgb, var(--ok-primary) 14%, transparent);
 }
 
 .searchIcon {
@@ -91,18 +114,27 @@
   transition:
     background var(--ok-duration-fast) var(--ok-ease),
     color var(--ok-duration-fast) var(--ok-ease),
-    border-color var(--ok-duration-fast) var(--ok-ease);
+    border-color var(--ok-duration-fast) var(--ok-ease),
+    transform var(--ok-duration-fast) var(--ok-ease),
+    box-shadow var(--ok-duration-med) var(--ok-ease);
 }
 
 .chip:hover {
   border-color: var(--ok-primary);
   color: var(--ok-primary);
+  transform: translateY(-1px);
+}
+
+.chip:active {
+  transform: scale(0.97);
 }
 
 .chip[aria-current='true'] {
-  background: var(--ok-primary);
+  background-color: var(--ok-primary);
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent 62%);
   border-color: var(--ok-primary);
   color: var(--ok-primary-fg);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--ok-primary) 28%, transparent);
 }
 
 .chipIso {
@@ -162,12 +194,16 @@
   height: 100%;
   transition:
     transform var(--ok-duration-med) var(--ok-ease),
-    box-shadow var(--ok-duration-med) var(--ok-ease);
+    box-shadow var(--ok-duration-med) var(--ok-ease),
+    border-color var(--ok-duration-med) var(--ok-ease);
 }
 
 .card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--ok-shadow-3);
+  border-color: color-mix(in srgb, var(--ok-primary) 45%, var(--ok-glass-border));
+  box-shadow:
+    var(--ok-shadow-3),
+    0 0 0 1px color-mix(in srgb, var(--ok-primary) 12%, transparent);
 }
 
 .cardCoverWrap {
