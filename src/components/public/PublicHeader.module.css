@@ -187,3 +187,22 @@
     display: none;
   }
 }
+
+/* Once the page scrolls, the floating header lifts off it with a deeper
+   shadow. Driven by the scroll position itself (no JavaScript); browsers
+   without scroll timelines keep the resting look. */
+@supports (animation-timeline: scroll()) {
+  .header {
+    animation: headerSettle linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 140px;
+  }
+
+  @keyframes headerSettle {
+    to {
+      box-shadow:
+        var(--ok-shadow-3),
+        inset 0 1px 0 var(--ok-glass-highlight);
+    }
+  }
+}
