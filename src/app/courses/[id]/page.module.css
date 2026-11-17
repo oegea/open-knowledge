@@ -18,7 +18,9 @@
   /* Hero sits on a dark atmosphere regardless of theme. */
   background: linear-gradient(135deg, var(--ok-mist-900), var(--ok-lagoon-900));
   box-shadow: var(--ok-shadow-3);
-  animation: heroIn var(--ok-duration-slow) var(--ok-ease);
+  /* No entrance animation on the box itself: it is the target a course
+     thumbnail morphs into, and fading it in would hollow out the morph.
+     Its contents still arrive in sequence (see .heroInfo). */
 }
 
 @keyframes heroIn {
@@ -201,11 +203,6 @@
   gap: var(--ok-space-3);
   padding: var(--ok-space-4);
   border-left: 3px solid var(--ok-accent);
-  background-image: linear-gradient(
-    90deg,
-    color-mix(in srgb, var(--ok-accent) 9%, transparent),
-    transparent 45%
-  );
   animation: heroIn var(--ok-duration-slow) var(--ok-ease) 120ms backwards;
 }
 
@@ -213,19 +210,6 @@
   color: var(--ok-accent);
   font-size: var(--ok-text-lg);
   flex-shrink: 0;
-  animation: aiTwinkle 3.6s ease-in-out infinite;
-}
-
-@keyframes aiTwinkle {
-  0%,
-  100% {
-    transform: scale(1) rotate(0deg);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(0.82) rotate(20deg);
-    opacity: 0.65;
-  }
 }
 
 .aiTitle {

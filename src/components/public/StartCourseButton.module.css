@@ -13,7 +13,8 @@
   position: relative;
   overflow: hidden;
   background-color: var(--ok-primary);
-  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.22), transparent 62%);
+  /* Darkening only — see Button.module.css for the contrast rationale. */
+  background-image: linear-gradient(135deg, transparent 35%, rgba(0, 0, 0, 0.14));
   color: var(--ok-primary-fg);
   font-weight: 700;
   border-radius: var(--ok-radius-full);
@@ -36,7 +37,7 @@
   transform: scale(0.97);
 }
 
-/* The page's main call to action catches a slow recurring glint. */
+/* A single sheen sweeps across on hover (no perpetual motion on a control). */
 .button::after {
   content: '';
   position: absolute;
@@ -44,25 +45,15 @@
   bottom: 0;
   left: -70%;
   width: 45%;
-  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.32), transparent);
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.3), transparent);
   transform: skewX(-18deg);
   pointer-events: none;
-  animation: glint 5.5s var(--ok-ease) 1.2s infinite;
 }
 
-@keyframes glint {
-  0%,
-  72% {
-    left: -70%;
-  }
-  100% {
+@media (hover: hover) {
+  .button:hover::after {
     left: 130%;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .button::after {
-    animation: none;
+    transition: left 700ms var(--ok-ease);
   }
 }
 

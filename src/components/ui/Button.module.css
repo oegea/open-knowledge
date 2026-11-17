@@ -37,10 +37,11 @@
 .primary {
   position: relative;
   overflow: hidden;
-  /* Color transitions on hover; the fixed light overlay turns the flat
-     fill into a soft top-left to bottom-right gradient in both themes. */
+  /* Color transitions on hover; the fixed overlay turns the flat fill into
+     a soft gradient. It only ever DARKENS the fill: lightening it would
+     drop the label below 4.5:1 in the light theme (white on lagoon). */
   background-color: var(--ok-primary);
-  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent 62%);
+  background-image: linear-gradient(135deg, transparent 35%, rgba(0, 0, 0, 0.14));
   color: var(--ok-primary-fg);
   box-shadow: var(--ok-shadow-1);
 }

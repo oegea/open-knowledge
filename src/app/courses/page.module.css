@@ -90,7 +90,11 @@
   display: flex;
   gap: var(--ok-space-2);
   overflow-x: auto;
-  padding-bottom: var(--ok-space-1);
+  /* A horizontal scroller also clips vertically: the padding is the room
+     the chips' hover lift, focus ring and active glow need, and the
+     negative margin gives that room back to the layout. */
+  padding: 6px 6px 14px;
+  margin: -6px -6px -10px;
   scrollbar-width: none;
 }
 
@@ -131,7 +135,7 @@
 
 .chip[aria-current='true'] {
   background-color: var(--ok-primary);
-  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent 62%);
+  background-image: linear-gradient(135deg, transparent 35%, rgba(0, 0, 0, 0.14));
   border-color: var(--ok-primary);
   color: var(--ok-primary-fg);
   box-shadow: 0 4px 14px color-mix(in srgb, var(--ok-primary) 28%, transparent);
@@ -199,7 +203,9 @@
 }
 
 .card:hover {
-  transform: translateY(-4px);
+  /* --ok-rx / --ok-ry come from MotionEffects (data-tilt); 0 without it. */
+  transform: perspective(60rem) rotateX(var(--ok-rx, 0deg)) rotateY(var(--ok-ry, 0deg))
+    translateY(-4px);
   border-color: color-mix(in srgb, var(--ok-primary) 45%, var(--ok-glass-border));
   box-shadow:
     var(--ok-shadow-3),

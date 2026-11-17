@@ -49,7 +49,7 @@
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
-  text-decoration-color: color-mix(in srgb, var(--ok-primary) 40%, transparent);
+  text-decoration-color: color-mix(in srgb, var(--ok-primary) 75%, transparent);
   border-radius: 2px;
   transition:
     text-decoration-color var(--ok-duration-fast) var(--ok-ease),
