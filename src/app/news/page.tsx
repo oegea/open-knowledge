@@ -7,6 +7,7 @@ import { getDictionary, translate } from '@/i18n/dictionary';
 import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
 import { Breadcrumbs } from '@/components/public/Breadcrumbs';
+import { PageTransition, SharedElement, newsImageTransition } from '@/components/ui/PageTransition';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -42,80 +43,86 @@ export default async function NewsPage() {
   return (
     <>
       <PublicHeader backHref="/" />
-      <main className={styles.main}>
-        <Breadcrumbs
-          label={translate(dictionary, 'nav.breadcrumb')}
-          items={[
-            { href: '/', label: translate(dictionary, 'nav.library') },
-            { label: translate(dictionary, 'news.title') },
-          ]}
-        />
-        <h1 className={styles.title}>{translate(dictionary, 'news.title')}</h1>
+      <PageTransition>
+        <main className={styles.main}>
+          <Breadcrumbs
+            label={translate(dictionary, 'nav.breadcrumb')}
+            items={[
+              { href: '/', label: translate(dictionary, 'nav.library') },
+              { label: translate(dictionary, 'news.title') },
+            ]}
+          />
+          <h1 className={styles.title}>{translate(dictionary, 'news.title')}</h1>
 
-        {posts.length === 0 ? (
-          <p className={`ok-glass ${styles.empty}`}>{translate(dictionary, 'news.empty')}</p>
-        ) : (
-          <>
-            {/* The latest post opens the page as a featured story. */}
-            <Link
-              href={`/news/${featured.getSlug() || featured.getId()}`}
-              className={`ok-glass ${styles.featured}`}
-            >
-              {featured.getImagePath() ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={featured.getImagePath()!}
-                  alt=""
-                  className={styles.featuredImage}
-                />
-              ) : (
-                <span className={styles.featuredFallback} aria-hidden="true" />
-              )}
-              <span className={styles.featuredScrim} aria-hidden="true" />
-              <span className={styles.featuredBody}>
-                {meta(featured)}
-                <span className={styles.featuredTitle}>{featured.getTitle()}</span>
-                <span className={styles.readMore}>
-                  {translate(dictionary, 'news.readMore')} →
+          {posts.length === 0 ? (
+            <p className={`ok-glass ${styles.empty}`}>{translate(dictionary, 'news.empty')}</p>
+          ) : (
+            <>
+              {/* The latest post opens the page as a featured story. */}
+              <Link
+                href={`/news/${featured.getSlug() || featured.getId()}`}
+                className={`ok-glass ${styles.featured}`}
+              >
+                {featured.getImagePath() ? (
+                  <SharedElement name={newsImageTransition(featured.getId()!)}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={featured.getImagePath()!}
+                      alt=""
+                      className={styles.featuredImage}
+                    />
+                  </SharedElement>
+                ) : (
+                  <span className={styles.featuredFallback} aria-hidden="true" />
+                )}
+                <span className={styles.featuredScrim} aria-hidden="true" />
+                <span className={styles.featuredBody}>
+                  {meta(featured)}
+                  <span className={styles.featuredTitle}>{featured.getTitle()}</span>
+                  <span className={styles.readMore}>
+                    {translate(dictionary, 'news.readMore')} →
+                  </span>
                 </span>
-              </span>
-            </Link>
+              </Link>
 
-            {rest.length > 0 ? (
-              <ul className={styles.grid}>
-                {rest.map((post) => (
-                  <li key={post.getId()} data-reveal>
-                    <Link
-                      href={`/news/${post.getSlug() || post.getId()}`}
-                      className={`ok-glass ${styles.post}`}
-                      data-spotlight
-                    >
-                      {post.getImagePath() ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={post.getImagePath()!}
-                          alt=""
-                          className={styles.postImage}
-                          loading="lazy"
-                        />
-                      ) : (
-                        <span className={styles.postImageFallback} aria-hidden="true" />
-                      )}
-                      <span className={styles.postBody}>
-                        {meta(post)}
-                        <span className={styles.postTitle}>{post.getTitle()}</span>
-                        <span className={styles.readMore}>
-                          {translate(dictionary, 'news.readMore')} →
+              {rest.length > 0 ? (
+                <ul className={styles.grid}>
+                  {rest.map((post) => (
+                    <li key={post.getId()} data-reveal>
+                      <Link
+                        href={`/news/${post.getSlug() || post.getId()}`}
+                        className={`ok-glass ${styles.post}`}
+                        data-spotlight
+                      >
+                        {post.getImagePath() ? (
+                          <SharedElement name={newsImageTransition(post.getId()!)}>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={post.getImagePath()!}
+                              alt=""
+                              className={styles.postImage}
+                              loading="lazy"
+                            />
+                          </SharedElement>
+                        ) : (
+                          <span className={styles.postImageFallback} aria-hidden="true" />
+                        )}
+                        <span className={styles.postBody}>
+                          {meta(post)}
+                          <span className={styles.postTitle}>{post.getTitle()}</span>
+                          <span className={styles.readMore}>
+                            {translate(dictionary, 'news.readMore')} →
+                          </span>
                         </span>
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            ) : null}
-          </>
-        )}
-      </main>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </>
+          )}
+        </main>
+      </PageTransition>
       <PublicFooter />
     </>
   );

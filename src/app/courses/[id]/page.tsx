@@ -13,6 +13,7 @@ import { PublicFooter } from '@/components/public/PublicFooter';
 import { StartCourseButton } from '@/components/public/StartCourseButton';
 import { Breadcrumbs } from '@/components/public/Breadcrumbs';
 import { getCurrentUser } from '@/app/serverAuth';
+import { PageTransition, SharedElement, courseCoverTransition } from '@/components/ui/PageTransition';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -84,192 +85,196 @@ export default async function CourseDetailPage({ params }: PageProps<'/courses/[
   return (
     <>
       <PublicHeader backHref="/courses" />
-      <main className={styles.main}>
-        <Breadcrumbs
-          label={translate(dictionary, 'nav.breadcrumb')}
-          items={[
-            { href: '/', label: translate(dictionary, 'nav.library') },
-            { href: '/courses', label: translate(dictionary, 'library.title') },
-            { label: course.getTitle() },
-          ]}
-        />
-        {/* Immersive hero: the cover becomes the atmosphere of the page. */}
-        <section className={styles.hero}>
-          {cover ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={cover} alt="" className={styles.heroBackdrop} aria-hidden="true" />
-          ) : null}
-          <div className={styles.heroScrim} aria-hidden="true" />
-          <div className={styles.heroContent}>
-            <div className={styles.heroInfo}>
-              <div className={styles.heroMeta}>
-                <span className={styles.heroIso}>
-                  {languageInfo?.iso ?? course.getLanguage()}
-                </span>
-                {course.getCategory() ? (
-                  <Link
-                    href={`/courses?category=${encodeURIComponent(course.getCategory()!)}`}
-                    className={styles.heroCategory}
-                  >
-                    {course.getCategory()}
-                  </Link>
+      <PageTransition>
+        <main className={styles.main}>
+          <Breadcrumbs
+            label={translate(dictionary, 'nav.breadcrumb')}
+            items={[
+              { href: '/', label: translate(dictionary, 'nav.library') },
+              { href: '/courses', label: translate(dictionary, 'library.title') },
+              { label: course.getTitle() },
+            ]}
+          />
+          {/* Immersive hero: the cover becomes the atmosphere of the page. */}
+          <SharedElement name={courseCoverTransition(course.getId()!)}>
+            <section className={styles.hero}>
+              {cover ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={cover} alt="" className={styles.heroBackdrop} aria-hidden="true" />
+              ) : null}
+              <div className={styles.heroScrim} aria-hidden="true" />
+              <div className={styles.heroContent}>
+                <div className={styles.heroInfo}>
+                  <div className={styles.heroMeta}>
+                    <span className={styles.heroIso}>
+                      {languageInfo?.iso ?? course.getLanguage()}
+                    </span>
+                    {course.getCategory() ? (
+                      <Link
+                        href={`/courses?category=${encodeURIComponent(course.getCategory()!)}`}
+                        className={styles.heroCategory}
+                      >
+                        {course.getCategory()}
+                      </Link>
+                    ) : null}
+                  </div>
+                  <h1 className={styles.heroTitle}>{course.getTitle()}</h1>
+                  <p className={styles.heroDescription}>{course.getDescription()}</p>
+                  <StartCourseButton
+                    courseId={course.getId()!}
+                    courseRef={courseRef}
+                    orderedMaterialIds={orderedMaterialIds}
+                    authenticated={user !== null}
+                  />
+                </div>
+                {cover ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={cover} alt="" className={styles.heroCover} />
                 ) : null}
               </div>
-              <h1 className={styles.heroTitle}>{course.getTitle()}</h1>
-              <p className={styles.heroDescription}>{course.getDescription()}</p>
-              <StartCourseButton
-                courseId={course.getId()!}
-                courseRef={courseRef}
-                orderedMaterialIds={orderedMaterialIds}
-                authenticated={user !== null}
-              />
-            </div>
-            {cover ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={cover} alt="" className={styles.heroCover} />
-            ) : null}
-          </div>
-        </section>
+            </section>
+          </SharedElement>
 
-        {course.isAiAssisted() ? (
-          <aside className={`ok-glass ${styles.aiNotice}`} role="note">
-            <span className={styles.aiIcon} aria-hidden="true">
-              ✦
-            </span>
-            <div>
-              <p className={styles.aiTitle}>{translate(dictionary, 'course.aiNoticeTitle')}</p>
-              <p className={styles.aiText}>{translate(dictionary, 'course.aiNotice')}</p>
-            </div>
-          </aside>
-        ) : null}
-
-        <div className={styles.layout}>
-          <section className={styles.contents}>
-            <h2 className={styles.contentsTitle}>
-              {translate(dictionary, 'course.contents')}
-              <span className={styles.contentsCount}>
-                {translate(dictionary, 'course.materialsCount', {
-                  count: orderedMaterialIds.length,
-                })}
+          {course.isAiAssisted() ? (
+            <aside className={`ok-glass ${styles.aiNotice}`} role="note">
+              <span className={styles.aiIcon} aria-hidden="true">
+                ✦
               </span>
-            </h2>
+              <div>
+                <p className={styles.aiTitle}>{translate(dictionary, 'course.aiNoticeTitle')}</p>
+                <p className={styles.aiText}>{translate(dictionary, 'course.aiNotice')}</p>
+              </div>
+            </aside>
+          ) : null}
 
-            <CourseContents
-              courseId={course.getId()!}
-              courseRef={courseRef}
-              authenticated={user !== null}
-              completedLabel={translate(dictionary, 'study.completed')}
-              sections={sections.map((section) => ({
-                id: section.getId()!,
-                title: section.getTitle(),
-                materials: section
-                  .getMaterials()
-                  .getMaterials()
-                  .map((material) => ({
-                    id: material.getId()!,
-                    title: material.getTitle(),
-                    type: material.getType(),
-                    typeLabel: translate(dictionary, `material.type.${material.getType()}`),
-                  })),
-              }))}
-            />
-          </section>
-
-          <aside className={styles.aside} data-reveal>
-            <div className={`ok-glass ${styles.asideCard}`}>
-              <h2 className={styles.asideTitle}>
-                {translate(dictionary, 'course.aboutCourse')}
+          <div className={styles.layout}>
+            <section className={styles.contents}>
+              <h2 className={styles.contentsTitle}>
+                {translate(dictionary, 'course.contents')}
+                <span className={styles.contentsCount}>
+                  {translate(dictionary, 'course.materialsCount', {
+                    count: orderedMaterialIds.length,
+                  })}
+                </span>
               </h2>
 
-              <dl className={styles.facts}>
-                <div className={styles.fact}>
-                  <dt>{translate(dictionary, 'admin.courseLanguage')}</dt>
-                  <dd>{languageInfo?.nativeName ?? course.getLanguage()}</dd>
-                </div>
-                {course.getCategory() ? (
+              <CourseContents
+                courseId={course.getId()!}
+                courseRef={courseRef}
+                authenticated={user !== null}
+                completedLabel={translate(dictionary, 'study.completed')}
+                sections={sections.map((section) => ({
+                  id: section.getId()!,
+                  title: section.getTitle(),
+                  materials: section
+                    .getMaterials()
+                    .getMaterials()
+                    .map((material) => ({
+                      id: material.getId()!,
+                      title: material.getTitle(),
+                      type: material.getType(),
+                      typeLabel: translate(dictionary, `material.type.${material.getType()}`),
+                    })),
+                }))}
+              />
+            </section>
+
+            <aside className={styles.aside} data-reveal>
+              <div className={`ok-glass ${styles.asideCard}`}>
+                <h2 className={styles.asideTitle}>
+                  {translate(dictionary, 'course.aboutCourse')}
+                </h2>
+
+                <dl className={styles.facts}>
                   <div className={styles.fact}>
-                    <dt>{translate(dictionary, 'admin.category')}</dt>
-                    <dd>{course.getCategory()}</dd>
+                    <dt>{translate(dictionary, 'admin.courseLanguage')}</dt>
+                    <dd>{languageInfo?.nativeName ?? course.getLanguage()}</dd>
+                  </div>
+                  {course.getCategory() ? (
+                    <div className={styles.fact}>
+                      <dt>{translate(dictionary, 'admin.category')}</dt>
+                      <dd>{course.getCategory()}</dd>
+                    </div>
+                  ) : null}
+                  <div className={styles.fact}>
+                    <dt>{translate(dictionary, 'course.contents')}</dt>
+                    <dd>
+                      {translate(dictionary, 'course.materialsCount', {
+                        count: orderedMaterialIds.length,
+                      })}
+                    </dd>
+                  </div>
+                  {course.getLicense() ? (
+                    <div className={styles.fact}>
+                      <dt>{translate(dictionary, 'course.license')}</dt>
+                      <dd>{course.getLicense()}</dd>
+                    </div>
+                  ) : null}
+                </dl>
+
+                {course.getAuthors().length > 0 ? (
+                  <div className={styles.asideBlock}>
+                    <h3 className={styles.asideBlockTitle}>
+                      {translate(dictionary, 'admin.authors')}
+                    </h3>
+                    <p className={styles.asideText}>{course.getAuthors().join(', ')}</p>
                   </div>
                 ) : null}
-                <div className={styles.fact}>
-                  <dt>{translate(dictionary, 'course.contents')}</dt>
-                  <dd>
-                    {translate(dictionary, 'course.materialsCount', {
-                      count: orderedMaterialIds.length,
-                    })}
-                  </dd>
+
+                <div className={styles.downloads}>
+                  <CourseDownloads
+                    label={`↓ ${translate(dictionary, 'course.download')}`}
+                    epubHref={`/api/courses/${courseRef}/export/epub`}
+                    pdfHref={`/api/courses/${courseRef}/export/pdf`}
+                    labels={{
+                      epub: 'EPUB',
+                      pdf: 'PDF',
+                      pdfNotesTitle: translate(dictionary, 'course.pdfNotesTitle'),
+                      pdfNotesQuestion: translate(dictionary, 'course.pdfNotesQuestion'),
+                      pdfNotesAccept: translate(dictionary, 'course.pdfNotesAccept'),
+                      pdfNotesDecline: translate(dictionary, 'course.pdfNotesDecline'),
+                      close: translate(dictionary, 'common.cancel'),
+                    }}
+                  />
+                  <ActionMenu
+                    label={`✦ ${translate(dictionary, 'course.studyWithAi')}`}
+                    items={[
+                      { label: 'ChatGPT', href: `https://chatgpt.com/?q=${tutorQuery}`, external: true },
+                      { label: 'Claude', href: `https://claude.ai/new?q=${tutorQuery}`, external: true },
+                    ]}
+                  />
                 </div>
-                {course.getLicense() ? (
-                  <div className={styles.fact}>
-                    <dt>{translate(dictionary, 'course.license')}</dt>
-                    <dd>{course.getLicense()}</dd>
+
+                {course.getSources().length > 0 ? (
+                  <div className={styles.asideBlock}>
+                    <h3 className={styles.asideBlockTitle}>
+                      {translate(dictionary, 'course.bibliography')}
+                    </h3>
+                    <ul className={styles.bibliographyList}>
+                      {course.getSources().map((source, index) => (
+                        <li key={index}>
+                          {source.getUrl() ? (
+                            <a
+                              href={source.getUrl()!}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={styles.bibliographyLink}
+                            >
+                              {sourceTitleWithArrow(source.getTitle())}
+                            </a>
+                          ) : (
+                            source.getTitle()
+                          )}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 ) : null}
-              </dl>
-
-              {course.getAuthors().length > 0 ? (
-                <div className={styles.asideBlock}>
-                  <h3 className={styles.asideBlockTitle}>
-                    {translate(dictionary, 'admin.authors')}
-                  </h3>
-                  <p className={styles.asideText}>{course.getAuthors().join(', ')}</p>
-                </div>
-              ) : null}
-
-              <div className={styles.downloads}>
-                <CourseDownloads
-                  label={`↓ ${translate(dictionary, 'course.download')}`}
-                  epubHref={`/api/courses/${courseRef}/export/epub`}
-                  pdfHref={`/api/courses/${courseRef}/export/pdf`}
-                  labels={{
-                    epub: 'EPUB',
-                    pdf: 'PDF',
-                    pdfNotesTitle: translate(dictionary, 'course.pdfNotesTitle'),
-                    pdfNotesQuestion: translate(dictionary, 'course.pdfNotesQuestion'),
-                    pdfNotesAccept: translate(dictionary, 'course.pdfNotesAccept'),
-                    pdfNotesDecline: translate(dictionary, 'course.pdfNotesDecline'),
-                    close: translate(dictionary, 'common.cancel'),
-                  }}
-                />
-                <ActionMenu
-                  label={`✦ ${translate(dictionary, 'course.studyWithAi')}`}
-                  items={[
-                    { label: 'ChatGPT', href: `https://chatgpt.com/?q=${tutorQuery}`, external: true },
-                    { label: 'Claude', href: `https://claude.ai/new?q=${tutorQuery}`, external: true },
-                  ]}
-                />
               </div>
-
-              {course.getSources().length > 0 ? (
-                <div className={styles.asideBlock}>
-                  <h3 className={styles.asideBlockTitle}>
-                    {translate(dictionary, 'course.bibliography')}
-                  </h3>
-                  <ul className={styles.bibliographyList}>
-                    {course.getSources().map((source, index) => (
-                      <li key={index}>
-                        {source.getUrl() ? (
-                          <a
-                            href={source.getUrl()!}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={styles.bibliographyLink}
-                          >
-                            {sourceTitleWithArrow(source.getTitle())}
-                          </a>
-                        ) : (
-                          source.getTitle()
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
-            </div>
-          </aside>
-        </div>
-      </main>
+            </aside>
+          </div>
+        </main>
+      </PageTransition>
       <PublicFooter />
     </>
   );

@@ -6,6 +6,7 @@ import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
 import { Prose } from '@/components/shared/Prose';
 import { Breadcrumbs } from '@/components/public/Breadcrumbs';
+import { PageTransition } from '@/components/ui/PageTransition';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -39,19 +40,21 @@ export default async function AuxiliaryPage({ params }: PageProps<'/p/[id]'>) {
   return (
     <>
       <PublicHeader backHref="/" />
-      <main className={styles.main}>
-        <Breadcrumbs
-          label={translate(dictionary, 'nav.breadcrumb')}
-          items={[
-            { href: '/', label: translate(dictionary, 'nav.library') },
-            { label: page.getTitle() },
-          ]}
-        />
-        <article className={`ok-glass ${styles.article}`}>
-          <h1 className={styles.title}>{page.getTitle()}</h1>
-          <Prose content={page.getMarkdown()} />
-        </article>
-      </main>
+      <PageTransition>
+        <main className={styles.main}>
+          <Breadcrumbs
+            label={translate(dictionary, 'nav.breadcrumb')}
+            items={[
+              { href: '/', label: translate(dictionary, 'nav.library') },
+              { label: page.getTitle() },
+            ]}
+          />
+          <article className={`ok-glass ${styles.article}`}>
+            <h1 className={styles.title}>{page.getTitle()}</h1>
+            <Prose content={page.getMarkdown()} />
+          </article>
+        </main>
+      </PageTransition>
       <PublicFooter />
     </>
   );

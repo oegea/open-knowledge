@@ -68,8 +68,8 @@
   --ok-accent-soft: var(--ok-ember-100);
 
   /* Ambient backdrop washes (behind glass surfaces) */
-  --ok-wash-a: rgba(56, 189, 194, 0.14);
-  --ok-wash-b: rgba(231, 155, 35, 0.08);
+  --ok-wash-a: rgba(56, 189, 194, 0.2);
+  --ok-wash-b: rgba(231, 155, 35, 0.11);
 
   /* Glass surfaces — "strong" backs popovers/sheets and stays near-opaque
      so content behind never competes with the foreground. */
@@ -100,6 +100,7 @@
   --ok-text-2xl: 1.75rem;
   --ok-text-3xl: 2.25rem;
   --ok-text-4xl: 3rem;
+  --ok-text-5xl: 3.75rem;
 
   --ok-leading-tight: 1.2;
   --ok-leading-normal: 1.5;
@@ -174,8 +175,8 @@
     --ok-accent: var(--ok-ember-300);
     --ok-accent-soft: rgba(247, 196, 109, 0.12);
 
-    --ok-wash-a: rgba(24, 158, 166, 0.16);
-    --ok-wash-b: rgba(231, 155, 35, 0.07);
+    --ok-wash-a: rgba(24, 158, 166, 0.24);
+    --ok-wash-b: rgba(231, 155, 35, 0.1);
 
     --ok-glass-bg: rgba(19, 26, 33, 0.6);
     --ok-glass-bg-strong: rgba(19, 26, 33, 0.95);
@@ -205,8 +206,8 @@
   --ok-primary-soft: var(--ok-lagoon-50);
   --ok-accent: var(--ok-ember-600);
   --ok-accent-soft: var(--ok-ember-100);
-  --ok-wash-a: rgba(56, 189, 194, 0.14);
-  --ok-wash-b: rgba(231, 155, 35, 0.08);
+  --ok-wash-a: rgba(56, 189, 194, 0.2);
+  --ok-wash-b: rgba(231, 155, 35, 0.11);
   --ok-glass-bg: rgba(255, 255, 255, 0.62);
   --ok-glass-bg-strong: rgba(255, 255, 255, 0.94);
   --ok-glass-border: rgba(255, 255, 255, 0.55);
@@ -231,8 +232,8 @@
   --ok-primary-soft: rgba(56, 189, 194, 0.12);
   --ok-accent: var(--ok-ember-300);
   --ok-accent-soft: rgba(247, 196, 109, 0.12);
-  --ok-wash-a: rgba(24, 158, 166, 0.16);
-  --ok-wash-b: rgba(231, 155, 35, 0.07);
+  --ok-wash-a: rgba(24, 158, 166, 0.24);
+  --ok-wash-b: rgba(231, 155, 35, 0.1);
   --ok-glass-bg: rgba(19, 26, 33, 0.6);
   --ok-glass-bg-strong: rgba(19, 26, 33, 0.95);
   --ok-glass-border: rgba(255, 255, 255, 0.12);
@@ -408,7 +409,9 @@ video {
   }
 }
 
-/* A soft light that follows the cursor across a surface. */
+/* A light that follows the cursor around a surface's EDGE. It is masked
+   to a thin ring so it never tints the background behind text (a filled
+   glow took muted card text below 4.5:1). */
 [data-spotlight] {
   position: relative;
 }
@@ -417,13 +420,22 @@ video {
   [data-spotlight]::after {
     content: '';
     position: absolute;
-    inset: 0;
+    inset: -1px;
+    padding: 1.5px;
     border-radius: inherit;
     background: radial-gradient(
-      22rem circle at var(--ok-mx, 50%) var(--ok-my, 0%),
-      color-mix(in srgb, var(--ok-primary) 16%, transparent),
-      transparent 62%
+      18rem circle at var(--ok-mx, 50%) var(--ok-my, 0%),
+      var(--ok-primary),
+      color-mix(in srgb, var(--ok-accent) 70%, transparent) 45%,
+      transparent 70%
     );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box exclude,
+      linear-gradient(#000 0 0);
     opacity: 0;
     transition: opacity var(--ok-duration-slow) var(--ok-ease);
     pointer-events: none;
@@ -431,6 +443,18 @@ video {
 
   [data-spotlight]:hover::after {
     opacity: 1;
+  }
+}
+
+/* Gradient-filled text must stay readable when it is selected, and when
+   the system replaces author colors (Windows high contrast). */
+::selection {
+  -webkit-text-fill-color: var(--ok-primary-fg);
+}
+
+@media (forced-colors: active) {
+  * {
+    -webkit-text-fill-color: currentColor !important;
   }
 }
 
@@ -453,4 +477,87 @@ video {
   border: 1px solid var(--ok-glass-border);
   box-shadow: var(--ok-shadow-2), inset 0 1px 0 var(--ok-glass-highlight);
   border-radius: var(--ok-radius-lg);
+}
+
+/* ------------------------------------------------------------------ */
+/* View transitions (see PageTransition / SharedElement)               */
+/* ------------------------------------------------------------------ */
+
+/* Registered so the angle itself can be animated (rotating borders). */
+@property --ok-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+/* The overlay must not swallow clicks while a transition runs. */
+::view-transition {
+  pointer-events: none;
+}
+
+/* Pages: the old one leaves fast, the new one settles in a little slower. */
+::view-transition-old(.page-out) {
+  animation: 140ms ease-in both ok-vt-fade-out;
+}
+
+::view-transition-new(.page-in) {
+  animation:
+    260ms ease-out 100ms both ok-vt-fade-in,
+    420ms var(--ok-ease) both ok-vt-rise;
+}
+
+/* Shared elements: a thumbnail grows into the hero it stands for. */
+::view-transition-group(.morph) {
+  animation-duration: 460ms;
+  animation-timing-function: var(--ok-ease);
+  z-index: 2;
+}
+
+::view-transition-image-pair(.morph) {
+  animation: 460ms ease both ok-vt-via-blur;
+}
+
+/* Both snapshots fill the moving box, so differing proportions crop
+   instead of squashing. */
+::view-transition-old(.morph),
+::view-transition-new(.morph) {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: var(--ok-radius-xl);
+  overflow: clip;
+}
+
+@keyframes ok-vt-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes ok-vt-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes ok-vt-rise {
+  from {
+    transform: translateY(14px);
+  }
+}
+
+@keyframes ok-vt-via-blur {
+  35% {
+    filter: blur(2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*),
+  ::view-transition-image-pair(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
 }

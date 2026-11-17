@@ -32,3 +32,12 @@ Visual and interaction quality is an explicit product requirement. Open Knowledg
 ## Amendment 2026-11-17 — richer motion and gradients
 
 The original rule was "animations must aid navigation comprehension, never decorate". In practice the interface read as static next to contemporary products, so the rule is relaxed: decorative motion is allowed as long as it stays subtle, is built from the motion tokens, never moves text or controls on its own, never hides content from users without JavaScript, and disappears under `prefers-reduced-motion`. The *Motion* and *Gradients* bullets above describe the resulting system.
+
+### Follow-up, same day — contrast and continuity
+
+Two lessons from the first pass are now rules:
+
+- **A gradient never lowers contrast.** Overlays on filled controls only darken the fill (a light overlay under white text took primary buttons from 4.95:1 to 3.46:1), glows are masked to an element's border ring instead of tinting the surface behind its text, and gradient text keeps at least 4.5:1 at every stop (3:1 for display sizes). Gradient-filled text stays legible when selected and in forced-colors mode.
+- **Tap targets do not move on their own.** Decorative floating applies to a visual layer inside a link, never to the link's own box.
+
+Navigation gained continuity through React view transitions (`PageTransition` and `SharedElement` in `src/components/ui/PageTransition.tsx`): pages cross-fade, and a course or news thumbnail morphs into the hero it leads to. Browsers without the View Transitions API simply navigate as before; reduced motion collapses the transitions to an instant swap.

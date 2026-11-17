@@ -15,7 +15,40 @@
   padding: var(--ok-space-7) var(--ok-space-4) var(--ok-space-6);
   animation: heroIn var(--ok-duration-slow) var(--ok-ease);
   border: 1px solid var(--ok-glass-border);
-  box-shadow: var(--ok-shadow-1);
+  box-shadow: var(--ok-shadow-2);
+}
+
+/* A streak of brand light travels slowly around the hero's edge. The
+   layer is masked down to a 1.5px ring, so it never sits behind text. */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--ok-angle),
+    transparent 0 58%,
+    var(--ok-primary) 76%,
+    var(--ok-accent) 88%,
+    transparent 97%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  animation: borderOrbit 10s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes borderOrbit {
+  to {
+    --ok-angle: 360deg;
+  }
 }
 
 .heroInner {
@@ -112,7 +145,10 @@
   .auroraBlob,
   .auroraBlobAlt,
   .auroraRing,
-  .heroTitle {
+  .heroTitle,
+  .hero::before,
+  .stackCard,
+  .stackFace {
     animation: none;
   }
 }
@@ -167,9 +203,9 @@
     100deg,
     var(--ok-fg) 13%,
     var(--ok-primary) 33%,
-    var(--ok-accent) 45%,
+    color-mix(in srgb, var(--ok-accent) 72%, var(--ok-fg)) 45%,
     var(--ok-primary) 60%,
-    var(--ok-accent) 82%
+    color-mix(in srgb, var(--ok-accent) 72%, var(--ok-fg)) 82%
   );
   background-size: 220% 100%;
   background-position: 0% 50%;
@@ -229,6 +265,118 @@
   height: 2px;
   background: linear-gradient(90deg, var(--ok-primary), var(--ok-accent));
   border-radius: var(--ok-radius-full);
+}
+
+/* ------------------------------------------------------------------ */
+/* Floating covers: the newest courses, fanned out inside the hero      */
+/* ------------------------------------------------------------------ */
+.heroStack {
+  position: relative;
+  z-index: 2;
+  height: 7.25rem;
+  /* Phones and tablets: a compact fan, never wider than a hand of cards. */
+  max-width: 21rem;
+  margin-top: var(--ok-space-5);
+}
+
+.stackCard {
+  --r: 0deg;
+  --depth: 0;
+  position: absolute;
+  top: var(--top, 0);
+  left: var(--left, 0);
+  width: 46%;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--ok-radius-md);
+  /* Individual transform properties, so the fan angle, the cursor
+     parallax and the hover lift never fight each other. */
+  rotate: var(--r);
+  translate: calc(var(--ok-px, 0) * var(--depth) * 1px) calc(var(--ok-py, 0) * var(--depth) * 1px);
+  transition:
+    translate 500ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    rotate var(--ok-duration-slow) var(--ok-ease),
+    scale var(--ok-duration-slow) var(--ok-ease);
+  animation: stackIn 800ms var(--ok-ease) var(--in-delay, 0ms) backwards;
+}
+
+.stackFace {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow:
+    0 14px 30px rgba(11, 17, 23, 0.28),
+    0 2px 6px rgba(11, 17, 23, 0.18);
+  transition: box-shadow var(--ok-duration-slow) var(--ok-ease);
+  animation: stackFloat var(--float, 7s) ease-in-out var(--in-delay, 0ms) infinite alternate;
+}
+
+.stackCard:nth-child(1) {
+  --r: -7deg;
+  --left: 0%;
+  --top: 0.6rem;
+  --depth: -10;
+  --float: 7s;
+  --in-delay: 240ms;
+  z-index: 1;
+}
+
+.stackCard:nth-child(2) {
+  --r: 3deg;
+  --left: 27%;
+  --top: 0rem;
+  --depth: 18;
+  --float: 8.5s;
+  --in-delay: 120ms;
+  z-index: 3;
+}
+
+.stackCard:nth-child(3) {
+  --r: 9deg;
+  --left: 54%;
+  --top: 0.9rem;
+  --depth: -24;
+  --float: 6.2s;
+  --in-delay: 360ms;
+  z-index: 2;
+}
+
+.stackCard:hover,
+.stackCard:focus-visible {
+  rotate: 0deg;
+  scale: 1.07;
+  z-index: 4;
+}
+
+.stackCard:hover .stackFace,
+.stackCard:focus-visible .stackFace {
+  box-shadow:
+    0 22px 44px rgba(11, 17, 23, 0.36),
+    0 0 0 2px color-mix(in srgb, var(--ok-primary) 70%, transparent);
+}
+
+.stackCover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes stackIn {
+  from {
+    opacity: 0;
+    scale: 0.82;
+  }
+}
+
+@keyframes stackFloat {
+  from {
+    transform: translateY(-5px);
+  }
+  to {
+    transform: translateY(6px);
+  }
 }
 
 .search {
@@ -355,7 +503,9 @@
 }
 
 .card:hover {
-  transform: translateY(-4px);
+  /* --ok-rx / --ok-ry come from MotionEffects (data-tilt); 0 without it. */
+  transform: perspective(60rem) rotateX(var(--ok-rx, 0deg)) rotateY(var(--ok-ry, 0deg))
+    translateY(-4px);
   border-color: color-mix(in srgb, var(--ok-primary) 45%, var(--ok-glass-border));
   box-shadow:
     var(--ok-shadow-3),
@@ -481,6 +631,47 @@
   }
 }
 
+/* Wide screens: text on the left, the covers become a large fan on the right. */
+@media (min-width: 900px) {
+  .heroWithStack {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    align-items: center;
+    gap: var(--ok-space-6);
+    min-height: 27rem;
+    padding: var(--ok-space-7) var(--ok-space-6);
+  }
+
+  .heroWithStack .heroStack {
+    height: 21rem;
+    max-width: none;
+    margin-top: 0;
+  }
+
+  .heroWithStack .stackCard {
+    width: 66%;
+    border-radius: var(--ok-radius-lg);
+  }
+
+  .heroWithStack .stackCard:nth-child(1) {
+    --left: 0%;
+    --top: 7.5rem;
+    --r: -9deg;
+  }
+
+  .heroWithStack .stackCard:nth-child(2) {
+    --left: 30%;
+    --top: 0.5rem;
+    --r: 5deg;
+  }
+
+  .heroWithStack .stackCard:nth-child(3) {
+    --left: 26%;
+    --top: 11.5rem;
+    --r: 12deg;
+  }
+}
+
 @media (min-width: 1024px) {
   .grid {
     grid-template-columns: repeat(3, 1fr);
@@ -488,6 +679,16 @@
 
   .heroTitle {
     font-size: var(--ok-text-4xl);
+  }
+
+  .heroWithStack .heroTitle {
+    font-size: var(--ok-text-5xl);
+    letter-spacing: -0.04em;
+    max-width: 13ch;
+  }
+
+  .heroWithStack .heroText {
+    font-size: var(--ok-text-xl);
   }
 
   .main {

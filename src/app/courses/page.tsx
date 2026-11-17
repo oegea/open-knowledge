@@ -7,6 +7,7 @@ import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
 import { Breadcrumbs } from '@/components/public/Breadcrumbs';
 import { IconSearch } from '@/components/ui/icons';
+import { PageTransition, SharedElement, courseCoverTransition } from '@/components/ui/PageTransition';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -51,129 +52,134 @@ export default async function CoursesPage({ searchParams }: PageProps<'/courses'
   return (
     <>
       <PublicHeader backHref="/" />
-      <main className={styles.main}>
-        <Breadcrumbs
-          label={translate(dictionary, 'nav.breadcrumb')}
-          items={
-            categoryFilter
-              ? [
-                  { href: '/', label: translate(dictionary, 'nav.library') },
-                  { href: '/courses', label: translate(dictionary, 'library.title') },
-                  { label: categoryFilter },
-                ]
-              : [
-                  { href: '/', label: translate(dictionary, 'nav.library') },
-                  { label: translate(dictionary, 'library.title') },
-                ]
-          }
-        />
-        <h1 className={styles.pageTitle}>
-          {categoryFilter ?? translate(dictionary, 'library.title')}
-        </h1>
-
-        <form className={styles.search} action="/courses" method="get" role="search">
-          {languageFilter ? <input type="hidden" name="language" value={languageFilter} /> : null}
-          {categoryFilter ? <input type="hidden" name="category" value={categoryFilter} /> : null}
-          <IconSearch className={styles.searchIcon} />
-          <input
-            type="search"
-            name="q"
-            defaultValue={queryFilter ?? ''}
-            placeholder={translate(dictionary, 'library.searchPlaceholder')}
-            aria-label={translate(dictionary, 'common.search')}
-            className={styles.searchInput}
+      <PageTransition>
+        <main className={styles.main}>
+          <Breadcrumbs
+            label={translate(dictionary, 'nav.breadcrumb')}
+            items={
+              categoryFilter
+                ? [
+                    { href: '/', label: translate(dictionary, 'nav.library') },
+                    { href: '/courses', label: translate(dictionary, 'library.title') },
+                    { label: categoryFilter },
+                  ]
+                : [
+                    { href: '/', label: translate(dictionary, 'nav.library') },
+                    { label: translate(dictionary, 'library.title') },
+                  ]
+            }
           />
-        </form>
+          <h1 className={styles.pageTitle}>
+            {categoryFilter ?? translate(dictionary, 'library.title')}
+          </h1>
 
-        {availableLanguages.length > 0 || availableCategories.length > 0 ? (
-          <nav className={styles.filters} aria-label={translate(dictionary, 'common.search')}>
-            {availableLanguages.length > 0 ? (
-              <div className={styles.filterRow}>
-                <Link
-                  href={filterHref(undefined, categoryFilter)}
-                  className={styles.chip}
-                  aria-current={!languageFilter ? 'true' : undefined}
-                >
-                  {translate(dictionary, 'library.all')}
-                </Link>
-                {availableLanguages.map((language) => {
-                  const info = LOCALES.find((candidate) => candidate.code === language);
-                  return (
-                    <Link
-                      key={language}
-                      href={filterHref(language, categoryFilter)}
-                      className={styles.chip}
-                      aria-current={languageFilter === language ? 'true' : undefined}
-                    >
-                      <span className={styles.chipIso}>{info?.iso ?? language.toUpperCase()}</span>
-                      {info?.nativeName ?? language}
-                    </Link>
-                  );
-                })}
-              </div>
-            ) : null}
+          <form className={styles.search} action="/courses" method="get" role="search">
+            {languageFilter ? <input type="hidden" name="language" value={languageFilter} /> : null}
+            {categoryFilter ? <input type="hidden" name="category" value={categoryFilter} /> : null}
+            <IconSearch className={styles.searchIcon} />
+            <input
+              type="search"
+              name="q"
+              defaultValue={queryFilter ?? ''}
+              placeholder={translate(dictionary, 'library.searchPlaceholder')}
+              aria-label={translate(dictionary, 'common.search')}
+              className={styles.searchInput}
+            />
+          </form>
 
-            {availableCategories.length > 0 ? (
-              <div className={styles.filterRow}>
-                {availableCategories.map((category) => (
+          {availableLanguages.length > 0 || availableCategories.length > 0 ? (
+            <nav className={styles.filters} aria-label={translate(dictionary, 'common.search')}>
+              {availableLanguages.length > 0 ? (
+                <div className={styles.filterRow}>
                   <Link
-                    key={category}
-                    href={filterHref(
-                      languageFilter,
-                      categoryFilter === category ? undefined : category
-                    )}
+                    href={filterHref(undefined, categoryFilter)}
                     className={styles.chip}
-                    aria-current={categoryFilter === category ? 'true' : undefined}
+                    aria-current={!languageFilter ? 'true' : undefined}
                   >
-                    {category}
+                    {translate(dictionary, 'library.all')}
                   </Link>
-                ))}
-              </div>
-            ) : null}
-          </nav>
-        ) : null}
+                  {availableLanguages.map((language) => {
+                    const info = LOCALES.find((candidate) => candidate.code === language);
+                    return (
+                      <Link
+                        key={language}
+                        href={filterHref(language, categoryFilter)}
+                        className={styles.chip}
+                        aria-current={languageFilter === language ? 'true' : undefined}
+                      >
+                        <span className={styles.chipIso}>{info?.iso ?? language.toUpperCase()}</span>
+                        {info?.nativeName ?? language}
+                      </Link>
+                    );
+                  })}
+                </div>
+              ) : null}
 
-        {courses.isEmpty() ? (
-          <p className={`ok-glass ${styles.empty}`}>{translate(dictionary, 'library.empty')}</p>
-        ) : (
-          <ul className={styles.grid}>
-            {courses.getCourses().map((course) => (
-              <li key={course.getId()} data-reveal>
-                <Link
-                  href={`/courses/${course.getSlug() || course.getId()}`}
-                  className={`ok-glass ${styles.card}`}
-                  data-spotlight
-                >
-                  <span className={styles.cardCoverWrap}>
-                    {course.getCoverImage() ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={course.getCoverImage()!}
-                        alt=""
-                        className={styles.cardCover}
-                        loading="lazy"
-                      />
-                    ) : (
-                      <span className={styles.cardCoverFallback} aria-hidden="true" />
-                    )}
-                    <span className={styles.cardCoverScrim} aria-hidden="true" />
-                    <span className={styles.cardMeta}>
-                      <span className={styles.cardIso}>{course.getLanguage().toUpperCase()}</span>
-                      {course.getCategory() ? (
-                        <span className={styles.cardCategory}>{course.getCategory()}</span>
-                      ) : null}
+              {availableCategories.length > 0 ? (
+                <div className={styles.filterRow}>
+                  {availableCategories.map((category) => (
+                    <Link
+                      key={category}
+                      href={filterHref(
+                        languageFilter,
+                        categoryFilter === category ? undefined : category
+                      )}
+                      className={styles.chip}
+                      aria-current={categoryFilter === category ? 'true' : undefined}
+                    >
+                      {category}
+                    </Link>
+                  ))}
+                </div>
+              ) : null}
+            </nav>
+          ) : null}
+
+          {courses.isEmpty() ? (
+            <p className={`ok-glass ${styles.empty}`}>{translate(dictionary, 'library.empty')}</p>
+          ) : (
+            <ul className={styles.grid}>
+              {courses.getCourses().map((course) => (
+                <li key={course.getId()} data-reveal>
+                  <Link
+                    href={`/courses/${course.getSlug() || course.getId()}`}
+                    className={`ok-glass ${styles.card}`}
+                    data-spotlight
+                    data-tilt
+                  >
+                    <SharedElement name={courseCoverTransition(course.getId()!)}>
+                      <span className={styles.cardCoverWrap}>
+                        {course.getCoverImage() ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={course.getCoverImage()!}
+                            alt=""
+                            className={styles.cardCover}
+                            loading="lazy"
+                          />
+                        ) : (
+                          <span className={styles.cardCoverFallback} aria-hidden="true" />
+                        )}
+                        <span className={styles.cardCoverScrim} aria-hidden="true" />
+                        <span className={styles.cardMeta}>
+                          <span className={styles.cardIso}>{course.getLanguage().toUpperCase()}</span>
+                          {course.getCategory() ? (
+                            <span className={styles.cardCategory}>{course.getCategory()}</span>
+                          ) : null}
+                        </span>
+                      </span>
+                    </SharedElement>
+                    <span className={styles.cardBody}>
+                      <span className={styles.cardTitle}>{course.getTitle()}</span>
+                      <span className={styles.cardDescription}>{course.getDescription()}</span>
                     </span>
-                  </span>
-                  <span className={styles.cardBody}>
-                    <span className={styles.cardTitle}>{course.getTitle()}</span>
-                    <span className={styles.cardDescription}>{course.getDescription()}</span>
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
-      </main>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </main>
+      </PageTransition>
       <PublicFooter />
     </>
   );

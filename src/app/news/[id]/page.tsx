@@ -7,6 +7,7 @@ import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
 import { Prose } from '@/components/shared/Prose';
 import { Breadcrumbs } from '@/components/public/Breadcrumbs';
+import { PageTransition, SharedElement, newsImageTransition } from '@/components/ui/PageTransition';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -44,34 +45,38 @@ export default async function NewsPostPage({ params }: PageProps<'/news/[id]'>) 
   return (
     <>
       <PublicHeader backHref="/news" />
-      <main className={styles.main}>
-        <Breadcrumbs
-          label={translate(dictionary, 'nav.breadcrumb')}
-          items={[
-            { href: '/', label: translate(dictionary, 'nav.library') },
-            { href: '/news', label: translate(dictionary, 'news.title') },
-            { label: post.getTitle() },
-          ]}
-        />
-        <article className={`ok-glass ${styles.article}`}>
-          {post.getImagePath() ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={post.getImagePath()!} alt="" className={styles.featuredImage} />
-          ) : null}
-          <p className={styles.meta}>
-            <time className={styles.date}>
-              {new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(post.getCreatedAt())}
-            </time>
-            {post.getAuthor() ? (
-              <span className={styles.author}>
-                {translate(dictionary, 'news.byAuthor', { author: post.getAuthor() })}
-              </span>
+      <PageTransition>
+        <main className={styles.main}>
+          <Breadcrumbs
+            label={translate(dictionary, 'nav.breadcrumb')}
+            items={[
+              { href: '/', label: translate(dictionary, 'nav.library') },
+              { href: '/news', label: translate(dictionary, 'news.title') },
+              { label: post.getTitle() },
+            ]}
+          />
+          <article className={`ok-glass ${styles.article}`}>
+            {post.getImagePath() ? (
+              <SharedElement name={newsImageTransition(post.getId()!)}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={post.getImagePath()!} alt="" className={styles.featuredImage} />
+              </SharedElement>
             ) : null}
-          </p>
-          <h1 className={styles.title}>{post.getTitle()}</h1>
-          <Prose content={post.getMarkdown()} />
-        </article>
-      </main>
+            <p className={styles.meta}>
+              <time className={styles.date}>
+                {new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(post.getCreatedAt())}
+              </time>
+              {post.getAuthor() ? (
+                <span className={styles.author}>
+                  {translate(dictionary, 'news.byAuthor', { author: post.getAuthor() })}
+                </span>
+              ) : null}
+            </p>
+            <h1 className={styles.title}>{post.getTitle()}</h1>
+            <Prose content={post.getMarkdown()} />
+          </article>
+        </main>
+      </PageTransition>
       <PublicFooter />
     </>
   );

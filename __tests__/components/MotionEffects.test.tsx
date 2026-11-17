@@ -126,4 +126,46 @@ describe('MotionEffects', () => {
     expect(card.style.getPropertyValue('--ok-mx')).toBe('100px');
     expect(card.style.getPropertyValue('--ok-my')).toBe('60px');
   });
+
+  it('leans tilt surfaces toward the cursor and reports parallax position', () => {
+    mockMatchMedia({ 'prefers-reduced-motion': false, hover: true });
+    render(
+      <section data-parallax data-top="100">
+        <a href="https://example.org" data-tilt data-top="100">
+          Card
+        </a>
+        <MotionEffects />
+      </section>
+    );
+
+    const card = screen.getByRole('link', { name: 'Card' });
+    // Top-right corner of the 300×120 box placed at (20, 100).
+    act(() => {
+      card.dispatchEvent(new MouseEvent('pointermove', { bubbles: true, clientX: 320, clientY: 100 }));
+    });
+    expect(card.style.getPropertyValue('--ok-rx')).toBe('5.00deg');
+    expect(card.style.getPropertyValue('--ok-ry')).toBe('5.00deg');
+    const section = card.parentElement!;
+    expect(section.style.getPropertyValue('--ok-px')).toBe('1.000');
+    expect(section.style.getPropertyValue('--ok-py')).toBe('-1.000');
+  });
+
+  it('keeps the spotlight but drops cursor-driven movement under reduced motion', () => {
+    mockMatchMedia({ 'prefers-reduced-motion': true, hover: true });
+    render(
+      <>
+        <a href="https://example.org" data-spotlight data-tilt data-top="100">
+          Card
+        </a>
+        <MotionEffects />
+      </>
+    );
+
+    const card = screen.getByRole('link', { name: 'Card' });
+    act(() => {
+      card.dispatchEvent(new MouseEvent('pointermove', { bubbles: true, clientX: 320, clientY: 100 }));
+    });
+    expect(card.style.getPropertyValue('--ok-mx')).toBe('300px');
+    expect(card.style.getPropertyValue('--ok-rx')).toBe('');
+  });
 });
