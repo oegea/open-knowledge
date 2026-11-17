@@ -15,6 +15,14 @@ export async function GET(request: NextRequest, ctx: RouteContext<'/api/media/[.
     return new Response('Not found', { status: 404 });
   }
 
+  // Uploads are served from the app's own origin: never let the browser
+  // sniff a different type, and neutralise scripts in SVGs opened directly
+  // (as <img> they are inert already; the CSP does not affect that use).
+  const hardening: Record<string, string> = { 'X-Content-Type-Options': 'nosniff' };
+  if (media.mime === 'image/svg+xml') {
+    hardening['Content-Security-Policy'] = "default-src 'none'; style-src 'unsafe-inline'; sandbox";
+  }
+
   const range = request.headers.get('range');
   const body = new Uint8Array(media.data);
   if (range) {
@@ -31,6 +39,7 @@ export async function GET(request: NextRequest, ctx: RouteContext<'/api/media/[.
             'Accept-Ranges': 'bytes',
             'Content-Length': String(end - start + 1),
             'Cache-Control': 'public, max-age=31536000, immutable',
+            ...hardening,
           },
         });
       }
@@ -43,6 +52,7 @@ export async function GET(request: NextRequest, ctx: RouteContext<'/api/media/[.
       'Content-Length': String(media.size),
       'Accept-Ranges': 'bytes',
       'Cache-Control': 'public, max-age=31536000, immutable',
+      ...hardening,
     },
   });
 }
