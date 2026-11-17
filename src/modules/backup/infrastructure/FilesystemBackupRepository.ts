@@ -10,6 +10,13 @@ const DB_FILE = 'openknowledge.db';
 const KEY_FILE = 'instance.key';
 const MEDIA_DIR = 'media';
 
+/** The database, the instance key, and files under media/ — nothing else. */
+function isBackupEntry(entryName: string): boolean {
+  const name = entryName.replace(/\\/g, '/');
+  if (name.startsWith('/') || name.split('/').includes('..')) return false;
+  return name === DB_FILE || name === KEY_FILE || name.startsWith(`${MEDIA_DIR}/`);
+}
+
 export class FilesystemBackupRepository implements BackupRepository {
   private readonly dataDir: string;
 
@@ -65,7 +72,16 @@ export class FilesystemBackupRepository implements BackupRepository {
     }
     fs.rmSync(path.join(this.dataDir, MEDIA_DIR), { recursive: true, force: true });
 
-    // ...and replace it with the archive, exactly as it was.
-    zip.extractAllTo(this.dataDir, true);
+    // ...and replace it with the archive, exactly as it was. Only the entries
+    // a backup is made of are written: anything else in an uploaded ZIP (a
+    // crafted archive, OS metadata from re-zipping) never reaches the disk.
+    for (const entry of zip.getEntries()) {
+      if (entry.isDirectory || !isBackupEntry(entry.entryName)) continue;
+      zip.extractEntryTo(entry, this.dataDir, true, true);
+    }
+
+    // The encryption key is owner-only when first generated; keep it so.
+    const keyPath = path.join(this.dataDir, KEY_FILE);
+    if (fs.existsSync(keyPath)) fs.chmodSync(keyPath, 0o600);
   }
 }
