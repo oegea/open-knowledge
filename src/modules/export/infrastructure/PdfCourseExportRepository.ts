@@ -1,6 +1,8 @@
 import PDFDocument from 'pdfkit';
 import sharp from 'sharp';
-import fontkit from 'fontkit';
+// Namespace import: fontkit's ES module build has no default export, so a
+// default import is undefined once Next loads it as an external package.
+import * as fontkit from 'fontkit';
 import fs from 'fs';
 import { marked, type Token, type Tokens } from 'marked';
 import path from 'path';
