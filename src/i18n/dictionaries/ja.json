@@ -309,6 +309,7 @@
   "landing": {
     "categories": "カテゴリから探す",
     "viewAll": "すべてのコースを見る",
+    "latestCourse": "最新のコース",
     "courseCount": "{count} 件のコース",
     "courseCountOne": "1 件のコース"
   }

@@ -309,6 +309,7 @@
   "landing": {
     "categories": "Arakatu kategoriaka",
     "viewAll": "Ikusi ikastaro guztiak",
+    "latestCourse": "Azken ikastaroa",
     "courseCount": "{count} ikastaro",
     "courseCountOne": "Ikastaro 1"
   }

@@ -309,6 +309,7 @@
   "landing": {
     "categories": "Explora per categoria",
     "viewAll": "Veure tots els cursos",
+    "latestCourse": "Últim curs publicat",
     "courseCount": "{count} cursos",
     "courseCountOne": "1 curs"
   }

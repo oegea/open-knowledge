@@ -8,7 +8,13 @@ import { getDictionary, translate } from '@/i18n/dictionary';
 import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
 import { IconLibrary, IconSearch } from '@/components/ui/icons';
-import { PageTransition, SharedElement, courseCoverTransition } from '@/components/ui/PageTransition';
+import {
+  PageTransition,
+  SharedElement,
+  categoryTransition,
+  courseCoverTransition,
+} from '@/components/ui/PageTransition';
+import { LOCALES } from '@/i18n/config';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -43,14 +49,9 @@ export default async function LandingPage({ searchParams }: PageProps<'/'>) {
     }))
     .sort((a, b) => a.name.localeCompare(b.name, locale));
 
-  // Up to three covers float in the hero as a way into the newest courses.
+  // The newest course is featured in the hero as a full, readable card.
   const heroImage = settings.getHeroImagePath();
-  const featured = heroImage
-    ? []
-    : allPublished
-        .getCourses()
-        .filter((course) => course.getCoverImage())
-        .slice(0, 3);
+  const latest = heroImage ? null : (allPublished.getCourses()[0] ?? null);
 
   const countLabel = (count: number) =>
     count === 1
@@ -64,7 +65,7 @@ export default async function LandingPage({ searchParams }: PageProps<'/'>) {
         <main className={styles.main}>
           <section
             className={`${styles.hero} ${heroImage ? styles.heroWithImage : ''} ${
-              featured.length > 0 ? styles.heroWithStack : ''
+              latest ? styles.heroWithFeature : ''
             }`}
             data-parallax
           >
@@ -98,40 +99,55 @@ export default async function LandingPage({ searchParams }: PageProps<'/'>) {
                     : translate(dictionary, 'library.courseCount', { count: allPublished.count() })}
                 </p>
               ) : null}
+              <form className={styles.search} action="/courses" method="get" role="search">
+                <IconSearch className={styles.searchIcon} />
+                <input
+                  type="search"
+                  name="q"
+                  placeholder={translate(dictionary, 'library.searchPlaceholder')}
+                  aria-label={translate(dictionary, 'common.search')}
+                  className={styles.searchInput}
+                />
+              </form>
             </div>
-            {featured.length > 0 ? (
-              <div className={styles.heroStack}>
-                {featured.map((course) => (
-                  <Link
-                    key={course.getId()}
-                    href={`/courses/${course.getSlug() || course.getId()}`}
-                    className={styles.stackCard}
-                    aria-label={course.getTitle()}
-                  >
-                    {/* The face floats; the link around it stays put, so the
-                        tap target never moves under a finger or a pointer. */}
-                    <span className={styles.stackFace}>
-                      <SharedElement name={courseCoverTransition(course.getId()!)}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={course.getCoverImage()!} alt="" className={styles.stackCover} />
-                      </SharedElement>
+            {latest ? (
+              <Link
+                href={`/courses/${latest.getSlug() || latest.getId()}`}
+                className={`ok-glass ${styles.feature}`}
+                aria-label={`${translate(dictionary, 'landing.latestCourse')}: ${latest.getTitle()}`}
+                data-spotlight
+                data-tilt
+              >
+                <SharedElement name={courseCoverTransition(latest.getId()!)}>
+                  <span className={styles.featureCoverWrap}>
+                    {latest.getCoverImage() ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={latest.getCoverImage()!} alt="" className={styles.featureCover} />
+                    ) : (
+                      <span className={styles.cardCoverFallback} aria-hidden="true" />
+                    )}
+                  </span>
+                </SharedElement>
+                <span className={styles.featureBody}>
+                  <span className={styles.featureLabel}>
+                    {translate(dictionary, 'landing.latestCourse')}
+                  </span>
+                  <span className={styles.featureTitle}>{latest.getTitle()}</span>
+                  <span className={styles.featureDescription}>{latest.getDescription()}</span>
+                  <span className={styles.featureMeta}>
+                    <span className={styles.featureIso}>
+                      {LOCALES.find((entry) => entry.code === latest.getLanguage())?.iso ??
+                        latest.getLanguage().toUpperCase()}
                     </span>
-                  </Link>
-                ))}
-              </div>
+                    {latest.getCategory() ? <span>{latest.getCategory()}</span> : null}
+                    <span className={styles.featureArrow} aria-hidden="true">
+                      →
+                    </span>
+                  </span>
+                </span>
+              </Link>
             ) : null}
           </section>
-
-          <form className={styles.search} action="/courses" method="get" role="search">
-            <IconSearch className={styles.searchIcon} />
-            <input
-              type="search"
-              name="q"
-              placeholder={translate(dictionary, 'library.searchPlaceholder')}
-              aria-label={translate(dictionary, 'common.search')}
-              className={styles.searchInput}
-            />
-          </form>
 
           {allPublished.isEmpty() ? (
             <p className={`ok-glass ${styles.empty}`}>{translate(dictionary, 'library.empty')}</p>
@@ -149,24 +165,26 @@ export default async function LandingPage({ searchParams }: PageProps<'/'>) {
                       data-spotlight
                       data-tilt
                     >
-                      <span className={styles.cardCoverWrap}>
-                        {category.imagePath ? (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img
-                            src={category.imagePath}
-                            alt=""
-                            className={styles.cardCover}
-                            loading="lazy"
-                          />
-                        ) : (
-                          <span className={styles.cardCoverFallback} aria-hidden="true">
-                            <span className={styles.cardFallbackInitial}>
-                              {category.name.charAt(0).toUpperCase()}
+                      <SharedElement name={categoryTransition(category.name)}>
+                        <span className={styles.cardCoverWrap}>
+                          {category.imagePath ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={category.imagePath}
+                              alt=""
+                              className={styles.cardCover}
+                              loading="lazy"
+                            />
+                          ) : (
+                            <span className={styles.cardCoverFallback} aria-hidden="true">
+                              <span className={styles.cardFallbackInitial}>
+                                {category.name.charAt(0).toUpperCase()}
+                              </span>
                             </span>
-                          </span>
-                        )}
-                        <span className={styles.cardCoverScrim} aria-hidden="true" />
-                      </span>
+                          )}
+                          <span className={styles.cardCoverScrim} aria-hidden="true" />
+                        </span>
+                      </SharedElement>
                       <span className={styles.cardBody}>
                         <span className={styles.cardTitle}>{category.name}</span>
                         <span className={styles.cardCount}>{countLabel(category.count)}</span>

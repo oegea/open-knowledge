@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import courseFactory from '@/modules/course/application/factory';
+import categoryFactory from '@/modules/category/application/factory';
 import { getLocale } from '@/i18n/getLocale';
 import { getDictionary, translate } from '@/i18n/dictionary';
 import { LOCALES } from '@/i18n/config';
@@ -7,7 +8,13 @@ import { PublicHeader } from '@/components/public/PublicHeader';
 import { PublicFooter } from '@/components/public/PublicFooter';
 import { Breadcrumbs } from '@/components/public/Breadcrumbs';
 import { IconSearch } from '@/components/ui/icons';
-import { PageTransition, SharedElement, courseCoverTransition } from '@/components/ui/PageTransition';
+import {
+  ContentSwap,
+  PageTransition,
+  SharedElement,
+  categoryTransition,
+  courseCoverTransition,
+} from '@/components/ui/PageTransition';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -40,6 +47,14 @@ export default async function CoursesPage({ searchParams }: PageProps<'/courses'
   ];
   const availableCategories = allPublished.getCategories();
 
+  // A filtered catalog opens with the category's own banner: the landing
+  // card the visitor just pressed grows into it.
+  const categoryImage = categoryFilter
+    ? ((await categoryFactory.listCategories())
+        .find((category) => category.getName() === categoryFilter)
+        ?.getImagePath() ?? null)
+    : null;
+
   const filterHref = (language?: string, category?: string) => {
     const query = new URLSearchParams();
     if (language) query.set('language', language);
@@ -69,9 +84,27 @@ export default async function CoursesPage({ searchParams }: PageProps<'/courses'
                   ]
             }
           />
-          <h1 className={styles.pageTitle}>
-            {categoryFilter ?? translate(dictionary, 'library.title')}
-          </h1>
+          {categoryFilter ? (
+            <SharedElement key={categoryFilter} name={categoryTransition(categoryFilter)}>
+              <header className={styles.categoryBanner}>
+                {categoryImage ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={categoryImage} alt="" className={styles.categoryBannerImage} />
+                ) : null}
+                <span className={styles.categoryBannerScrim} aria-hidden="true" />
+                <div className={styles.categoryBannerBody}>
+                  <h1 className={styles.categoryBannerTitle}>{categoryFilter}</h1>
+                  <p className={styles.categoryBannerCount}>
+                    {courses.count() === 1
+                      ? translate(dictionary, 'landing.courseCountOne')
+                      : translate(dictionary, 'landing.courseCount', { count: courses.count() })}
+                  </p>
+                </div>
+              </header>
+            </SharedElement>
+          ) : (
+            <h1 className={styles.pageTitle}>{translate(dictionary, 'library.title')}</h1>
+          )}
 
           <form className={styles.search} action="/courses" method="get" role="search">
             {languageFilter ? <input type="hidden" name="language" value={languageFilter} /> : null}
@@ -135,49 +168,55 @@ export default async function CoursesPage({ searchParams }: PageProps<'/courses'
             </nav>
           ) : null}
 
-          {courses.isEmpty() ? (
-            <p className={`ok-glass ${styles.empty}`}>{translate(dictionary, 'library.empty')}</p>
-          ) : (
-            <ul className={styles.grid}>
-              {courses.getCourses().map((course) => (
-                <li key={course.getId()} data-reveal>
-                  <Link
-                    href={`/courses/${course.getSlug() || course.getId()}`}
-                    className={`ok-glass ${styles.card}`}
-                    data-spotlight
-                    data-tilt
-                  >
-                    <SharedElement name={courseCoverTransition(course.getId()!)}>
-                      <span className={styles.cardCoverWrap}>
-                        {course.getCoverImage() ? (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img
-                            src={course.getCoverImage()!}
-                            alt=""
-                            className={styles.cardCover}
-                            loading="lazy"
-                          />
-                        ) : (
-                          <span className={styles.cardCoverFallback} aria-hidden="true" />
-                        )}
-                        <span className={styles.cardCoverScrim} aria-hidden="true" />
-                        <span className={styles.cardMeta}>
-                          <span className={styles.cardIso}>{course.getLanguage().toUpperCase()}</span>
-                          {course.getCategory() ? (
-                            <span className={styles.cardCategory}>{course.getCategory()}</span>
-                          ) : null}
+          <ContentSwap
+            id={`${languageFilter ?? ''}|${categoryFilter ?? ''}|${queryFilter ?? ''}`}
+          >
+            <div>
+              {courses.isEmpty() ? (
+                <p className={`ok-glass ${styles.empty}`}>{translate(dictionary, 'library.empty')}</p>
+              ) : (
+                <ul className={styles.grid}>
+                  {courses.getCourses().map((course) => (
+                    <li key={course.getId()} data-reveal>
+                      <Link
+                        href={`/courses/${course.getSlug() || course.getId()}`}
+                        className={`ok-glass ${styles.card}`}
+                        data-spotlight
+                        data-tilt
+                      >
+                        <SharedElement name={courseCoverTransition(course.getId()!)}>
+                          <span className={styles.cardCoverWrap}>
+                            {course.getCoverImage() ? (
+                              // eslint-disable-next-line @next/next/no-img-element
+                              <img
+                                src={course.getCoverImage()!}
+                                alt=""
+                                className={styles.cardCover}
+                                loading="lazy"
+                              />
+                            ) : (
+                              <span className={styles.cardCoverFallback} aria-hidden="true" />
+                            )}
+                            <span className={styles.cardCoverScrim} aria-hidden="true" />
+                            <span className={styles.cardMeta}>
+                              <span className={styles.cardIso}>{course.getLanguage().toUpperCase()}</span>
+                              {course.getCategory() ? (
+                                <span className={styles.cardCategory}>{course.getCategory()}</span>
+                              ) : null}
+                            </span>
+                          </span>
+                        </SharedElement>
+                        <span className={styles.cardBody}>
+                          <span className={styles.cardTitle}>{course.getTitle()}</span>
+                          <span className={styles.cardDescription}>{course.getDescription()}</span>
                         </span>
-                      </span>
-                    </SharedElement>
-                    <span className={styles.cardBody}>
-                      <span className={styles.cardTitle}>{course.getTitle()}</span>
-                      <span className={styles.cardDescription}>{course.getDescription()}</span>
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          )}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </ContentSwap>
         </main>
       </PageTransition>
       <PublicFooter />

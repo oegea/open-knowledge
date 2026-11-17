@@ -309,6 +309,7 @@
   "landing": {
     "categories": "Перегляд за категоріями",
     "viewAll": "Переглянути всі курси",
+    "latestCourse": "Новий курс",
     "courseCount": "{count} курсів",
     "courseCountOne": "1 курс"
   }

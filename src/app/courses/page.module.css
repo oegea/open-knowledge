@@ -34,6 +34,61 @@
   }
 }
 
+/* ------------------------------------------------------------------ */
+/* Category banner: what a landing category card grows into             */
+/* ------------------------------------------------------------------ */
+.categoryBanner {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 9.5rem;
+  overflow: hidden;
+  border-radius: var(--ok-radius-xl);
+  box-shadow: var(--ok-shadow-2);
+  /* Dark in both themes, like the course hero: the title is always light
+     on dark, whatever image (or none) sits behind it. */
+  background:
+    radial-gradient(90% 120% at 100% 0%, var(--ok-lagoon-600), transparent 60%),
+    radial-gradient(70% 110% at 0% 100%, color-mix(in srgb, var(--ok-ember-600) 55%, transparent), transparent 62%),
+    linear-gradient(135deg, var(--ok-mist-900), var(--ok-lagoon-900));
+}
+
+.categoryBannerImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.categoryBannerScrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(11, 17, 23, 0.15), rgba(11, 17, 23, 0.82));
+}
+
+.categoryBannerBody {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-1);
+  padding: var(--ok-space-5);
+  animation: titleIn var(--ok-duration-slow) var(--ok-ease) 120ms backwards;
+}
+
+.categoryBannerTitle {
+  font-size: var(--ok-text-2xl);
+  line-height: var(--ok-leading-tight);
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.categoryBannerCount {
+  font-size: var(--ok-text-sm);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.86);
+}
+
 .search {
   display: flex;
   align-items: center;
@@ -312,6 +367,18 @@
 
   .pageTitle {
     font-size: var(--ok-text-3xl);
+  }
+
+  .categoryBanner {
+    min-height: 13rem;
+  }
+
+  .categoryBannerBody {
+    padding: var(--ok-space-6);
+  }
+
+  .categoryBannerTitle {
+    font-size: var(--ok-text-4xl);
   }
 
   .main {

@@ -97,6 +97,9 @@
   top: -18rem;
   background: radial-gradient(circle, var(--ok-primary) 0%, transparent 65%);
   opacity: 0.28;
+  /* Drifts on its own and leans away from the cursor (data-parallax). */
+  translate: calc(var(--ok-px, 0) * -22px) calc(var(--ok-py, 0) * -14px);
+  transition: translate 600ms cubic-bezier(0.2, 0.7, 0.2, 1);
   animation: auroraDrift 14s ease-in-out infinite alternate;
 }
 
@@ -107,6 +110,8 @@
   bottom: -16rem;
   background: radial-gradient(circle, var(--ok-accent) 0%, transparent 65%);
   opacity: 0.2;
+  translate: calc(var(--ok-px, 0) * 26px) calc(var(--ok-py, 0) * 16px);
+  transition: translate 600ms cubic-bezier(0.2, 0.7, 0.2, 1);
   animation: auroraDrift 18s ease-in-out infinite alternate-reverse;
 }
 
@@ -146,9 +151,7 @@
   .auroraBlobAlt,
   .auroraRing,
   .heroTitle,
-  .hero::before,
-  .stackCard,
-  .stackFace {
+  .hero::before {
     animation: none;
   }
 }
@@ -245,7 +248,9 @@
 }
 
 .heroText {
-  color: var(--ok-fg-muted);
+  /* Deeper than the muted token: this text sits on the tinted aurora, where
+     plain muted measured 3.99:1 in the light theme. */
+  color: color-mix(in srgb, var(--ok-fg-muted) 50%, var(--ok-fg));
   max-width: 36rem;
   font-size: var(--ok-text-lg);
 }
@@ -253,7 +258,8 @@
 .heroCount {
   font-size: var(--ok-text-sm);
   font-weight: 700;
-  color: var(--ok-primary);
+  /* Deepened: plain primary measured 4.2:1 over the tinted hero (light). */
+  color: color-mix(in srgb, var(--ok-primary) 72%, var(--ok-fg));
   display: inline-flex;
   align-items: center;
   gap: var(--ok-space-2);
@@ -268,121 +274,123 @@
 }
 
 /* ------------------------------------------------------------------ */
-/* Floating covers: the newest courses, fanned out inside the hero      */
+/* Featured course: the newest course as a full card inside the hero    */
 /* ------------------------------------------------------------------ */
-.heroStack {
+.feature {
   position: relative;
   z-index: 2;
-  height: 7.25rem;
-  /* Phones and tablets: a compact fan, never wider than a hand of cards. */
-  max-width: 21rem;
-  margin-top: var(--ok-space-5);
-}
-
-.stackCard {
-  --r: 0deg;
-  --depth: 0;
-  position: absolute;
-  top: var(--top, 0);
-  left: var(--left, 0);
-  width: 46%;
-  aspect-ratio: 16 / 10;
-  border-radius: var(--ok-radius-md);
-  /* Individual transform properties, so the fan angle, the cursor
-     parallax and the hover lift never fight each other. */
-  rotate: var(--r);
-  translate: calc(var(--ok-px, 0) * var(--depth) * 1px) calc(var(--ok-py, 0) * var(--depth) * 1px);
-  transition:
-    translate 500ms cubic-bezier(0.2, 0.7, 0.2, 1),
-    rotate var(--ok-duration-slow) var(--ok-ease),
-    scale var(--ok-duration-slow) var(--ok-ease);
-  animation: stackIn 800ms var(--ok-ease) var(--in-delay, 0ms) backwards;
-}
-
-.stackFace {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border-radius: inherit;
+  display: flex;
+  align-items: stretch;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow:
-    0 14px 30px rgba(11, 17, 23, 0.28),
-    0 2px 6px rgba(11, 17, 23, 0.18);
-  transition: box-shadow var(--ok-duration-slow) var(--ok-ease);
-  animation: stackFloat var(--float, 7s) ease-in-out var(--in-delay, 0ms) infinite alternate;
+  margin-top: var(--ok-space-5);
+  animation: featureIn 700ms var(--ok-ease) 260ms backwards;
+  transition:
+    transform var(--ok-duration-med) var(--ok-ease),
+    box-shadow var(--ok-duration-med) var(--ok-ease),
+    border-color var(--ok-duration-med) var(--ok-ease);
 }
 
-.stackCard:nth-child(1) {
-  --r: -7deg;
-  --left: 0%;
-  --top: 0.6rem;
-  --depth: -10;
-  --float: 7s;
-  --in-delay: 240ms;
-  z-index: 1;
+.feature:hover {
+  transform: perspective(60rem) rotateX(var(--ok-rx, 0deg)) rotateY(var(--ok-ry, 0deg))
+    translateY(-4px);
+  border-color: color-mix(in srgb, var(--ok-primary) 45%, var(--ok-glass-border));
+  box-shadow: var(--ok-shadow-3);
 }
 
-.stackCard:nth-child(2) {
-  --r: 3deg;
-  --left: 27%;
-  --top: 0rem;
-  --depth: 18;
-  --float: 8.5s;
-  --in-delay: 120ms;
-  z-index: 3;
+@keyframes featureIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
 }
 
-.stackCard:nth-child(3) {
-  --r: 9deg;
-  --left: 54%;
-  --top: 0.9rem;
-  --depth: -24;
-  --float: 6.2s;
-  --in-delay: 360ms;
-  z-index: 2;
+/* Phones: a compact row — thumbnail left, text right. */
+.featureCoverWrap {
+  position: relative;
+  flex: 0 0 38%;
+  min-height: 6.5rem;
+  overflow: hidden;
 }
 
-.stackCard:hover,
-.stackCard:focus-visible {
-  rotate: 0deg;
-  scale: 1.07;
-  z-index: 4;
-}
-
-.stackCard:hover .stackFace,
-.stackCard:focus-visible .stackFace {
-  box-shadow:
-    0 22px 44px rgba(11, 17, 23, 0.36),
-    0 0 0 2px color-mix(in srgb, var(--ok-primary) 70%, transparent);
-}
-
-.stackCover {
+.featureCover {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform var(--ok-duration-slow) var(--ok-ease);
 }
 
-@keyframes stackIn {
-  from {
-    opacity: 0;
-    scale: 0.82;
-  }
+.feature:hover .featureCover {
+  transform: scale(1.05);
 }
 
-@keyframes stackFloat {
-  from {
-    transform: translateY(-5px);
-  }
-  to {
-    transform: translateY(6px);
-  }
+.featureBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-space-1);
+  min-width: 0;
+  padding: var(--ok-space-3) var(--ok-space-4);
+}
+
+.featureLabel {
+  font-size: var(--ok-text-xs);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ok-primary);
+}
+
+.featureTitle {
+  font-size: var(--ok-text-md);
+  font-weight: 700;
+  line-height: var(--ok-leading-tight);
+}
+
+.featureDescription {
+  display: none;
+  color: var(--ok-fg-muted);
+  font-size: var(--ok-text-sm);
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.featureMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--ok-space-2);
+  margin-top: auto;
+  padding-top: var(--ok-space-1);
+  font-size: var(--ok-text-xs);
+  font-weight: 600;
+  color: var(--ok-fg-muted);
+}
+
+.featureIso {
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  border: 1.5px solid currentColor;
+  border-radius: var(--ok-radius-sm);
+  padding: 0 5px;
+}
+
+.featureArrow {
+  margin-left: auto;
+  font-size: var(--ok-text-md);
+  color: var(--ok-primary);
+  transition: transform var(--ok-duration-med) var(--ok-ease);
+}
+
+.feature:hover .featureArrow {
+  transform: translateX(4px);
 }
 
 .search {
   display: flex;
   align-items: center;
   gap: var(--ok-space-2);
+  margin-top: var(--ok-space-3);
   background: var(--ok-glass-bg);
   -webkit-backdrop-filter: blur(var(--ok-glass-blur)) saturate(160%);
   backdrop-filter: blur(var(--ok-glass-blur)) saturate(160%);
@@ -631,44 +639,43 @@
   }
 }
 
-/* Wide screens: text on the left, the covers become a large fan on the right. */
+/* Wide screens: text and search on the left, the featured course on the right. */
 @media (min-width: 900px) {
-  .heroWithStack {
+  .heroWithFeature {
     display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
     align-items: center;
-    gap: var(--ok-space-6);
-    min-height: 27rem;
+    gap: var(--ok-space-7);
+    min-height: 26rem;
     padding: var(--ok-space-7) var(--ok-space-6);
   }
 
-  .heroWithStack .heroStack {
-    height: 21rem;
-    max-width: none;
+  /* The card stands upright: cover on top, full description below. */
+  .heroWithFeature .feature {
+    flex-direction: column;
     margin-top: 0;
   }
 
-  .heroWithStack .stackCard {
-    width: 66%;
-    border-radius: var(--ok-radius-lg);
+  .heroWithFeature .featureCoverWrap {
+    flex: none;
+    aspect-ratio: 16 / 9;
   }
 
-  .heroWithStack .stackCard:nth-child(1) {
-    --left: 0%;
-    --top: 7.5rem;
-    --r: -9deg;
+  .heroWithFeature .featureBody {
+    gap: var(--ok-space-2);
+    padding: var(--ok-space-4);
   }
 
-  .heroWithStack .stackCard:nth-child(2) {
-    --left: 30%;
-    --top: 0.5rem;
-    --r: 5deg;
+  .heroWithFeature .featureTitle {
+    font-size: var(--ok-text-lg);
   }
 
-  .heroWithStack .stackCard:nth-child(3) {
-    --left: 26%;
-    --top: 11.5rem;
-    --r: 12deg;
+  .heroWithFeature .featureDescription {
+    display: -webkit-box;
+  }
+
+  .search {
+    min-height: 3.25rem;
   }
 }
 
@@ -681,13 +688,13 @@
     font-size: var(--ok-text-4xl);
   }
 
-  .heroWithStack .heroTitle {
+  .heroWithFeature .heroTitle {
     font-size: var(--ok-text-5xl);
     letter-spacing: -0.04em;
     max-width: 13ch;
   }
 
-  .heroWithStack .heroText {
+  .heroWithFeature .heroText {
     font-size: var(--ok-text-xl);
   }
 

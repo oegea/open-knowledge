@@ -30,3 +30,21 @@ export function SharedElement({ name, children }: { name: string; children: Reac
 
 export const courseCoverTransition = (courseId: string) => `course-cover-${courseId}`;
 export const newsImageTransition = (postId: string) => `news-image-${postId}`;
+
+/** Category names are free text: encode them into a valid, stable identifier. */
+export const categoryTransition = (name: string) =>
+  `category-${Array.from(name.trim().toLowerCase())
+    .map((character) => character.codePointAt(0)!.toString(36))
+    .join('-')}`;
+
+/**
+ * Same-route crossfade: when `id` changes (a filter, a tab) the old content
+ * fades into the new one instead of swapping abruptly.
+ */
+export function ContentSwap({ id, children }: { id: string; children: ReactNode }) {
+  return (
+    <ViewTransition key={id} name="content-swap" share="auto" enter="auto" default="none">
+      {children}
+    </ViewTransition>
+  );
+}
